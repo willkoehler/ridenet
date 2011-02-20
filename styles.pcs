@@ -1,0 +1,1288 @@
+<?
+// Include only the essentials. Don't start a session here - it causes a big hit on Windows/IIS servers
+define("SHAREDBASE_DIR", $_SERVER["DOCUMENT_ROOT"] . "/Shared/");
+require(SHAREDBASE_DIR . "DBConnection.php");
+require(SHAREDBASE_DIR . "RequestHelpers.php");
+require(dirname(__FILE__) . "/script/data-helpers.php");
+require(dirname(__FILE__) . "/script/defaults.php");
+
+$oDB = oOpenDBConnection();
+$pt=SmartGetInt("T");
+$organizationID = $oDB->DBLookup("OrganizationID", "teams", "TeamID=$pt", 1);
+
+header("Content-Type: text/css");
+
+$rs=$oDB->query("SELECT PrimaryColor, SecondaryColor, PageBGColor, BodyBGColor, LinkColor
+                 FROM teams WHERE TeamID=$pt", __FILE__, __LINE__);
+$record=$rs->fetch_array();
+$rs->free();
+
+if($record==false || is_null($record['PrimaryColor']))
+{
+    // Use default colors - default colors depends on the domain (hard code for now)
+    $PrimaryColor = ($organizationID==2) ? PRIMARY_COLOR_CMT : PRIMARY_COLOR;
+    $SecondaryColor = ($organizationID==2) ? SECONDARY_COLOR_CMT : SECONDARY_COLOR;
+    $PageBGColor = ($organizationID==2) ? PAGE_BG_COLOR_CMT : PAGE_BG_COLOR;
+    $BodyBGColor = ($organizationID==2) ? BODY_BG_COLOR_CMT : BODY_BG_COLOR;
+    $LinkColor = ($organizationID==2) ? LINK_COLOR_CMT : LINK_COLOR;
+}
+else
+{    
+    // Use team color selections from the DB
+    $PrimaryColor = $record['PrimaryColor'];
+    $SecondaryColor = $record['SecondaryColor'];
+    $PageBGColor = $record['PageBGColor'];
+    $BodyBGColor = $record['BodyBGColor'];
+    $LinkColor = $record['LinkColor'];
+}
+
+
+// --- Calculate SecondaryBGColor. If the SecondaryColor has very little saturation to begin with, then
+// --- SecondaryBGColor is adjusted to be lighter. (make sure to copy any changes to this formula to sm-customize.js)
+$SecondaryHSV = rgbToHSV(hexToRGB($SecondaryColor));
+$SecondaryHSV['s'] *= .12;
+$SecondaryHSV['v'] = ($SecondaryHSV['s'] >= .03) ? $SecondaryHSV['v'] * .75 + .42 : $SecondaryHSV['v'] * .186 + .787;
+$SecondaryHSV['v'] = min($SecondaryHSV['v'], 1);
+$SecondaryHSV['v'] = max($SecondaryHSV['v'], .75);
+$SecondaryBGColor=rgbToHex(hsvToRGB($SecondaryHSV));
+
+// --- Calculate border color
+$PageBGHSV = rgbToHSV(hexToRGB($PageBGColor));
+$BorderHSV = Array('h'=>0, 's'=>0, 'v'=>0);
+$BorderHSV['v'] = $PageBGHSV['v'] * .5;
+$BorderColor=rgbToHex(hsvToRGB($BorderHSV));
+
+// --- Calculate menu text color and PrimaryHighlightColor (make sure to copy any changes to this formula to sm-customize.js)
+$PrimaryHSV = rgbToHSV(hexToRGB($PrimaryColor));
+$darkMenuText = (($PrimaryHSV['v'] > .65 && $PrimaryHSV['s'] < .35) ||
+                 ($PrimaryHSV['v'] > .65 && $PrimaryHSV['h'] > 42 && $PrimaryHSV['h'] < 185 ));  // special treatment for this range of hueus
+$MenuTextColor = $darkMenuText ? "333333" : "EEEEEE";
+$PrimaryHSV['v'] = ($PrimaryHSV['v'] > .5) ? $PrimaryHSV['v'] * .85 : $PrimaryHSV['v'] * 1.5;
+$PrimaryHighlightColor=rgbToHex(hsvToRGB($PrimaryHSV));
+
+// --- Calculate text color
+$TextColor = "333";
+$TextColor40 = "999";
+$TextColor50 = "888";
+$TextColor65 = "666";
+$TextColor75 = "555";
+
+
+function hexToRGB($hex)
+{
+    $r = hexdec(substr($hex, 0, 2)) / 255.0;
+    $g = hexdec(substr($hex, 2, 2)) / 255.0;
+    $b = hexdec(substr($hex, 4, 2)) / 255.0;
+    return Array("r"=>$r, "g"=>$g, "b"=>$b);
+}
+
+function rgbToHex($rgb)
+{
+    $r = zeropad(dechex($rgb['r']*255),2);
+    $g = zeropad(dechex($rgb['g']*255),2);
+    $b = zeropad(dechex($rgb['b']*255),2);
+    return(strtoupper($r . $g . $b));
+}
+
+function zeropad($num, $lim)
+{
+   return (strlen($num) >= $lim) ? $num : zeropad("0" . $num, $lim);
+}
+
+function hsvToRgb($hsv)
+{
+    $h = $hsv['h'];
+    $s = $hsv['s'];// / 100;
+    $v = $hsv['v'];// / 100;
+    $i = floor( ( $h / 60 ) % 6 );
+    $f = ( $h / 60 ) - $i;
+    $p = $v * ( 1 - $s );
+    $q = $v * ( 1 - $f * $s );
+    $t = $v * ( 1 - ( 1 - $f ) * $s );
+    switch($i) {
+        case 0: $r=$v; $g=$t; $b=$p; break;
+        case 1: $r=$q; $g=$v; $b=$p; break;
+        case 2: $r=$p; $g=$v; $b=$t; break;
+        case 3: $r=$p; $g=$q; $b=$v; break;
+        case 4: $r=$t; $g=$p; $b=$v; break;
+        case 5: $r=$v; $g=$p; $b=$q; break;
+    }
+    return Array("r"=>$r, "g"=>$g, "b"=>$b);
+}
+
+function rgbToHsv($rgb)
+{
+    $r = $rgb['r'];// / 255;
+    $g = $rgb['g'];// / 255;
+    $b = $rgb['b'];// / 255;
+    $min = min( min( $r, $g ), $b );
+    $max = max( max( $r, $g ), $b );
+    $delta = $max - $min;
+    switch ($max) {
+        case $min: $h = 0; break;
+        case $r:   $h = 60 * ( $g - $b ) / $delta;
+                   if ( $g < $b ) { $h += 360; }
+                   break;
+        case $g:   $h = ( 60 * ( $b - $r ) / $delta ) + 120; break;
+        case $b:   $h = ( 60 * ( $r - $g ) / $delta ) + 240; break;
+    }
+    $s = ( $max == 0 ) ? 0 : 1 - ( $min / $max );
+    return Array("h"=>$h, "s"=>$s, "v"=>$max);
+}
+?>
+
+
+@charset "UTF-8";
+body  {
+    margin: 0;
+    color: #000000;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 100%;
+    background: #<?=$BodyBGColor?> url('dynamic-images/body-bg-image.php?T=<?=$pt?>') repeat;
+    background-attachment:fixed;
+    color: #<?=$TextColor?>;
+}
+html {
+    overflow:auto;
+}
+
+img { -ms-interpolation-mode:bicubic; }     /* use bicubic smoothing when resizing images in IE7 */
+
+img.tight  {
+    vertical-align:bottom;  /* required in IE6 / IE7 to remove 3px bottom padding below image */
+    border: 0;
+}
+form {
+    padding: 0px;   /* required in IE6 / IE7 to remove padding around form */
+    margin: 0px;
+}
+
+#container {
+    width: 780px;  /* using 20px less than a full 800px width allows for browser chrome and avoids a horizontal scroll bar */
+    margin: 0 auto;
+    overflow: hidden;
+    text-align: left;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
+} 
+#sidebarHolderRight {
+    float: right; /* since this element is floated, a width must be given */
+    width: 179px;
+    padding-bottom: 80020px;    /* This is OK in IE7. Making the mainContent padding 80000 causes IE7  to render pages incorrectly */
+    margin-bottom: -80000px; /* this is a trick, working in conjunction with overflow:hidden in the container, to make both columns appear to be the same height */
+    background-color: #<?=$SecondaryBGColor?>;
+    border-left: 1px dotted #<?=$SecondaryColor?>;
+} 
+.sidebarBlock {
+    width: 160px;
+    padding: 8px 0px;
+    margin: 0px 10px;
+    border-bottom: 1px dotted #<?=$SecondaryColor?>;
+}
+.sidebarBlock p {
+    font: 11px "Helvetica Neue", Arial, sans-serif;
+    line-height: 13px;
+    margin: 0px 0px 6px;
+}
+.twoColFixHdr #mainContent {
+    float: left; /* since this element is floated, a width must be given */
+    width: 560px;
+    margin-bottom: -20000px; /* this is a trick, working in conjunction with overflow:hidden in the container, to make both columns appear to be the same height */
+    padding: 15px 20px 20020px 20px;    /* making this 80000 breaks IE7. 20000 works ok with sidebar at 80000. mainContent column contains the long content */
+    background-color: #<?=$PageBGColor?>;
+} 
+.oneColFixHdr #mainContent {
+    clear: both;
+    float: left;
+    width: 700px;
+    padding: 20px 40px; 
+    background-color: #<?=$PageBGColor?>;
+} 
+.oneColFixHdr #extraWideContent {
+    clear: both;
+    float: left;
+    width: 780px;
+    padding: 0px 0px;
+    background-color: #<?=$PageBGColor?>;
+} 
+
+#footer a {
+    color: #<?=$MenuTextColor?>;
+}
+#footer {
+    clear: both;
+    xpadding: 10px 0px; /* padding leaves extra space on top in IE7 - WTF!? */
+    background-color: #<?=$PrimaryColor?>;
+    position: relative;     /* required to make z-index work */
+    z-index: 10;
+} 
+#footer p {
+    margin: 0px;
+    text-align: center;
+    color: #<?=$MenuTextColor?>;
+    font: 11px Verdana, Geneva, sans-serif;
+}
+.clearfloat { /* this class should be placed on a div or break element and should be the final element before the close of a container that should fully contain a float */
+    clear: both;
+    height: 0px;
+    font-size: 1px;
+    line-height: 0px;
+}
+
+/*Top Menu */
+#topmenu {
+    background-color: #<?=$PrimaryColor?>;
+    height: 25px;
+    width: 780px;
+    text-align: left;
+}
+#nav {
+    width: 780px;
+    list-style: none;
+    background-repeat: repeat-x;
+    font: 12px Tahoma, TrebuchetMS, Arial, sans-serif;  /* TrebuchetMS is for iOS */
+    line-height: 14px;
+    margin: 0px;
+    padding: 0px;
+}
+#nav li {
+    float: left;
+    margin: 0px;
+    padding: 0px 2px;
+}
+#nav li a {
+    display: block;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    color: #<?=$MenuTextColor?>;
+    text-decoration: none;
+    margin: 3px 0px 0px 0px;
+    padding: 2px 10px 1px 10px;
+    height: 16px;
+}
+#nav li a:hover, #nav a#active {
+    background-color: #<?=$PrimaryHighlightColor?>;
+}
+
+#nav li a#logoff, #nav li a#login {
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    height: 13px;
+    background-color: #6DA3C3;
+    padding: 1px 8px 2px 8px;
+    margin: 4px 3px 0px 1px;
+    font: bold 10px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+#nav li a#login {
+    color: #F8F4F3;
+}
+
+#nav li a#logoff {
+    color: #E5D970;
+}
+
+#nav a#login:hover, #nav a#logoff:hover {
+    background-color: #6192AF;
+    text-decoration:none;
+}
+
+#nav #search-box {
+    float: right;
+    xwidth: 200px;
+    overflow: hidden;
+    margin: 3px 0px 0 0;
+}
+
+/*Sub Menu */
+#submenu {
+    background-color: #<?=$SecondaryBGColor?>;
+    height: 22px;
+    width: 780px;
+    overflow: hidden;
+    text-align: left;
+} 
+/* For two-column layout, submenu sits only on top of the left column, the right column goes all the way to the main menu */
+.twoColFixHdr #submenu {
+    width: 600px;
+    float: left;
+} 
+#subnav {
+    width: 780px;
+    list-style: none;
+    font: 11px Tahoma, TrebuchetMS, Arial, sans-serif;  /* TrebuchetMS is for iOS */
+    line-height: 13px;
+    margin: 0px;
+    padding: 0px;
+    color: #<?=$SecondaryColor?>;
+}
+.ext-mac #subnav {     /* mac fonts are naturally bolder than windows, make font slightly smaller to compensate */
+    font: 10px Tahoma, TrebuchetMS, Arial, sans-serif;  /* TrebuchetMS is for iOS */
+    line-height: 14px;
+}    
+#subnav li {
+    float: left;
+    margin: 0px;
+    padding: 0px 2px;
+    color: #<?=$SecondaryColor?>;
+}
+#subnav li a {
+    display: block;
+    -moz-border-radius: 8px 8px 0px 0px;
+    border-radius: 8px 8px 0px 0px;
+    color: #<?=$SecondaryColor?>;
+    text-decoration: none;
+    margin: 0px;
+    padding: 2px 10px 0px;
+    margin-top: 3px;
+    height: 17px;
+}
+#subnav li a:hover, #subnav a#active {
+    color: #<?=$PrimaryColor?>;
+    background-color: #<?=$PageBGColor?>;
+}
+
+#about p {
+    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 22px;
+    margin: 0px 0px 15px;
+    color: #555;
+}
+#about h1   {
+    font: 25px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #<?=$PrimaryColor?>;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    -webkit-font-smoothing: antialiased;
+}
+#about h2 {
+    font: 20px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #<?=$SecondaryColor?>;
+    margin: 0 0 4px;
+}
+#about .spacer {
+    clear:both;
+    height:50px;
+}
+
+p {
+    font: 13px 'Helvetica Neue', Arial, sans-serif;
+    line-height: 18px;
+    margin: 0px 0px 15px;
+    color: #<?=$TextColor75?>;
+}
+h1   {
+    font: 23px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #<?=$PrimaryColor?>;
+    margin: 0px; 
+    padding: 8px 0px 4px 0px; /* margin-top is broken in IE7 (POS) */
+}
+h2   {
+    font: 15px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #<?=$SecondaryColor?>;
+    margin: 0 0 4px;
+}
+h3   {
+    font: normal 14px 'Helvetica Neue', Arial, sans-serif;
+    color: #<?=$SecondaryColor?>;
+    margin: 0 0 4px;
+}
+
+.results-btn
+{
+    font: 11px 'Helvetica Neue', Arial, sans-serif;
+}
+
+.action-btn, .action-btn-sm {
+    font: 11px Arial, Helvetica, sans-serif;
+    text-align: center;
+    border: 1px solid #BBB;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    padding: 1px 5px;
+    text-decoration: none;
+    margin: 0px;
+    cursor: pointer;
+    background-color: #E5E5E5;
+    color: #<?=$PrimaryColor?>;
+}
+.action-btn:hover, .action-btn-sm:hover {
+    background-color: #<?=$SecondaryBGColor?>;
+}
+.action-btn.disabled, .action-btn-sm.disabled {
+    cursor: default;
+    background-color: #E5E5E5;
+    opacity: .6;
+    filter: alpha(opacity=60);
+}
+.action-btn:hover.disabled, .action-btn-sm:hover.disabled {
+    background-color: #E5E5E5;
+}
+.action-btn-sm {
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    padding: 1px 3px;
+    font: 9px Arial, Helvetica, sans-serif;
+}
+.ext-webkit .action-btn {
+    padding: 1px 5px 2px 5px;
+}
+.ext-ie .action-btn-sm {
+    padding: 1px 3px 0px 3px;
+}
+
+.tm-banner-bg {     /* will show through transparent areas in banner sample in team manager page */
+    background: url('images/transparent.png') repeat;
+}
+
+.more-btn
+{
+    color: #444;
+    font: 9px 'Helvetica Neue', Arial, sans-serif;
+    cursor: pointer;
+    text-align:left;
+    padding:2px 0px 0px 12px;
+    width:50px;
+    height: 9px;
+    margin:5px auto 0px auto;
+    background: url('images/more-arrow.gif') no-repeat 0px 5px;
+    white-space: nowrap;
+}
+.more-btn:hover
+{
+    text-decoration: underline;
+}
+
+.delete-x-btn
+{
+    color: red;
+    font: 12px Arial, Helvetica, sans-serif;
+}
+
+.edit-report-btn
+{
+    color: green;
+    font: 12px Arial, Helvetica, sans-serif;
+}
+
+.team-home .text
+{
+    font:14px 'Helvetica Neue', Arial, sans-serif;
+    line-height:17px;
+    color: #<?=$TextColor75?>;
+}
+.team-home .photo
+{
+    float:left;
+    width:340px;
+    height:204px;
+    margin: 2px 20px 15px 0
+}
+.team-home .help-info
+{
+    clear: both;
+    padding:8px 20px;
+    border: 1px solid #CCC;
+    background-color: #FFFDCC;
+    font:12px Tahoma, Helvetica, Arial, sans-serif;
+}
+/* need to restrict ul styles to team-home div to avoid interfearing with ExtJS calendar */
+.team-home ul { list-style: disc; }
+.team-home ol { list-style: decimal; }
+.team-home li { margin-left: 20px; padding-left: 5px; }
+
+.ridenet-mini-ad
+{
+    width: 80px;
+    text-align: center;
+    font:9px arial;
+}
+.ridenet-mini-ad a
+{
+    color:#8180A5;
+}
+
+
+.block-table
+{
+    padding: 15px 25px;
+    background-color: #<?=$SecondaryBGColor?>;
+    border-top: 2px solid #<?=$SecondaryColor?>;
+    border-right: 2px solid #<?=$SecondaryColor?>;
+    border-bottom: 2px solid #<?=$SecondaryColor?>;
+    border-left: 2px solid #<?=$SecondaryColor?>;
+    -moz-border-radius: 16px;
+    border-radius: 16px;
+}
+.block-table .header
+{
+    text-align: center;
+    font: 16px Tahoma, Helvetica, Arial, sans-serif;
+    padding: 3px 3px 15px;
+    color: #<?=$SecondaryColor?>;
+}
+.block-table2
+{
+    padding: 6px 6px 10px;
+    border-top: 1px solid #<?=$BorderColor?>;
+    border-right: 1px solid #<?=$BorderColor?>;
+    border-bottom: 1px solid #<?=$BorderColor?>;
+    border-left: 1px solid #<?=$BorderColor?>;
+}
+.block-table2 .header
+{
+    text-align: center;
+    font: 16px Tahoma, Helvetica, Arial, sans-serif;
+    padding: 3px 3px 8px;
+    color: #<?=$SecondaryColor?>;
+}
+
+.commute-ride-group
+{
+    float:left;
+}
+.commute-ride-group .header
+{
+    text-align: left;
+    border-bottom: 1px solid #<?=$BorderColor?>;
+    margin-bottom: 1px;
+    font: 15px 'Helvetica Neue', Arial, sans-serif;
+    color: #<?=$TextColor50?>;
+}
+.commute-ride-group .header-info
+{
+    font:13px 'Helvetica Neue', Arial, sans-serif;
+}
+.commute-ride-group .photobox
+{
+    margin:1px;
+    border:1px solid silver;
+    position:relative;
+    float:left;
+}
+.commute-ride-group .photobox .dimmed
+{
+    opacity:.5;
+    filter: alpha(opacity=50);
+}
+.commute-ride-group .countbox
+{
+    background-color:#E5D40E;
+    color:black;
+    padding:2px;
+    font:bold 9px Tahoma, Helvetica, Arial, sans-serif;
+    position:absolute;
+    z-order:5;
+    bottom:0px;
+    right:0px;
+    text-align:center;
+}
+.commute-ride-group .countbox-sm
+{
+    background-color:#E5D40E;
+    color:black;
+    padding:1px 2px;
+    font:bold 7px Tahoma, Helvetica, Arial, sans-serif;
+    position:absolute;
+    z-order:5;
+    bottom:0px;
+    right:0px;
+    text-align:center;
+}
+.commute-ride-group .no-data
+{
+    font:12px Tahoma, Helvetica, Arial, sans-serif;
+    padding:2px;
+}
+
+.commute-team-rank .rank
+{
+    font:14px Tahoma, Helvetica, Arial, sans-serif;
+    padding-right:10px;
+    color: #<?=$TextColor50?>;
+    text-align:right;
+}
+.commute-team-rank .data
+{
+    border-bottom:1px solid #<?=$BorderColor?>;
+    font:12px Tahoma, Helvetica, Arial, sans-serif;
+    padding:1px
+}
+.commute-team-rank .days-month
+{
+    font:bold 14px Tahoma, Helvetica, Arial, sans-serif;
+    padding-right:5px;
+}
+.commute-team-rank .days-month-label
+{
+    font:11px Tahoma, Helvetica, Arial, sans-serif;
+    color: #<?=$TextColor50?>;
+}
+.team-name-callout
+{
+    font:bold 13px Tahoma, Helvetica, Arial, sans-serif;
+    text-align:center
+}
+.commute-team-rank .no-data
+{
+    font:14px Verdana, Geneva, sans-serif;
+}
+
+.rider-callout .primary
+{
+    font:bold 14px Tahoma, Helvetica, Arial, sans-serif;
+    line-height: 17px;
+    white-space:nowrap;
+}
+.rider-callout .secondary
+{
+    font:11px Tahoma, Helvetica, Arial, sans-serif;
+    white-space:nowrap;
+    color: #<?=$TextColor50?>;
+}
+.rider-callout .stats
+{
+    white-space:nowrap;
+    font: 12px 'Helvetica Neue', Arial, sans-serif;
+    color: #<?=$TextColor50?>;
+}
+.rider-callout .ridetext
+{
+    font:13px 'Helvetica Neue', Arial, sans-serif;
+    color: #<?=$TextColor75?>;
+    line-height:1.25em;
+}
+.rider-callout .ridetag
+{
+    font:12px 'Helvetica Neue', Arial, sans-serif;
+    color: #<?=$TextColor50?>;
+}
+
+div#ride-class-key .header
+{
+    font:bold 11px 'Helvetica Neue', Arial, sans-serif;
+    border-bottom:1px solid #<?=$BorderColor?>;
+}
+div#ride-class-key .details
+{
+    font:11px 'Helvetica Neue', Arial, sans-serif;
+}
+
+table#race-report .header
+{
+    font: 14px Verdana, Geneva, sans-serif;
+    text-align: center;
+    color: #<?=$TextColor50?>;
+    border-bottom: 1px solid #<?=$BorderColor?>;
+    padding-bottom: 2px;
+}
+table#race-report .data
+{
+    font: 13px Verdana, Geneva, sans-serif;
+    text-align: left;
+}
+
+table#post-results .header
+{
+    font: bold 13px 'Helvetica Neue', Arial, sans-serif;
+    text-align: left;
+}
+
+table#results .header, table#results .header-sm
+{
+    font: bold 13px Verdana, Geneva, sans-serif;
+    text-align: left;
+    border-bottom: 1px solid #<?=$BorderColor?>;
+    padding-bottom: 1px;
+}
+table#results .header-sm
+{
+    font: bold 13px 'Helvetica Neue', Arial, sans-serif;
+}
+table#results .data
+{
+    font: 13px Verdana, Geneva, sans-serif;
+    text-align: left;
+    padding-right: 1px;
+    padding-bottom: 1px;
+}
+table#results .data-sm
+{
+    font: 13px 'Helvetica Neue', Arial, sans-serif;
+}
+
+table#profile-table .header
+{
+    font: 13px 'Helvetica Neue', Arial, sans-serif;
+    color: #<?=$TextColor65?>;
+    text-align: left;
+    border-bottom: 1px dotted #<?=$BorderColor?>;
+    padding-bottom: 1px;
+}
+table#profile-table .data
+{
+    font: 13px 'Helvetica Neue', Arial, sans-serif;
+    text-align: left;
+    padding: 1px;
+}
+
+.no-data-rp
+{
+    font: 13px Verdana, Geneva, sans-serif;
+    border-bottom: 1px dotted #<?=$BorderColor?>;
+    border-top: 1px dotted #<?=$BorderColor?>;
+    padding: 3px;
+}
+
+table#event-list .header
+{
+    font: 12px 'Helvetica Neue', Arial, sans-serif;
+    border-bottom: 1px solid #<?=$BorderColor?>;
+    text-align: left;
+    background-color: #<?=$SecondaryBGColor?>;
+    color: #<?=$TextColor65?>;
+}
+table#event-list .data
+{
+    font: 12px 'Helvetica Neue', Arial, sans-serif;
+    text-align: left;
+}
+table#event-list .data #highlight
+{
+    background-color: #E4E477;
+}
+table#event-list .section-header
+{
+    font: 16px Verdana, Geneva, sans-serif;
+    border-bottom: 1pt solid #<?=$BorderColor?>;
+    padding: 1px 1px;
+}
+table#event-list .nav-buttons
+{
+    font: 12px Arial, Helvetica, sans-serif;
+}
+
+table#ride-log .header
+{
+    border-color: #<?=$BorderColor?>;
+}
+table#ride-log .week-header
+{
+    font: bold 12px Arial, Helvetica, sans-serif;
+    border-bottom: 1px dotted #<?=$BorderColor?>;
+    text-align: left;
+    padding: 2px 5px;
+    background-color: #<?=$SecondaryBGColor?>;
+}
+table#ride-log .summary
+{
+    font:11px Arial, Helvetica, sans-serif;
+    color: #<?=$TextColor75?>;
+}
+table#ride-log .instructions
+{
+    font:11px Arial, Helvetica, sans-serif;
+    color: #<?=$SecondaryColor?>;
+}
+table#ride-log .data, table#ride-log .comment
+{
+    font: 12px Arial, Helvetica, sans-serif;
+    border-bottom: 1px dotted #<?=$BorderColor?>;
+    padding: 1px;
+    text-align: left;
+}
+table#ride-log .comment
+{
+    font: 11px Arial, Helvetica, sans-serif;
+}
+
+.team-board-instructions
+{
+    font: 10px Arial, Helvetica, sans-serif;
+    color: #<?=$TextColor50?>
+}
+div.ridenet-wall .wrapper
+{
+    padding:10px 0 0 20px;
+    overflow: hidden;
+}
+div.ridenet-wall .picture
+{
+    float:left;
+    margin-right:10px;
+}
+div.ridenet-wall .title
+{
+    font:13px 'Helvetica Neue', Arial, sans-serif;
+    white-space:nowrap;
+    color: #<?=$TextColor50?>
+}
+div.ridenet-wall .icon
+{
+    float:left;
+    margin-right:2px;
+}
+div.ridenet-wall .bullet
+{
+    font: 13px Helvetica, Arial, sans-serif;
+    line-height: 10px;
+}
+div.ridenet-wall .body
+{
+    float:left;
+    width:370px;
+    padding-top:3px;
+    font:11px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Tahoma, sans-serif;
+    color: #<?=$TextColor75?>;
+    line-height:1.25em;
+}
+div.ridenet-wall .tag
+{
+    font:11px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Tahoma, sans-serif;
+    color: #<?=$TextColor50?>;
+}
+div.ridenet-wall .day-header
+{
+    margin-top: 15px;
+    padding: 1px 10px;
+    font: 13px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Tahoma, sans-serif;
+    color: #<?=$TextColor65?>;
+    background-color: #<?=$SecondaryBGColor?>;
+    border: 1px solid #C4C4C4;
+}
+div.ridenet-wall .day-header-age
+{
+    font: 9px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Tahoma, sans-serif;
+    color: #<?=$TextColor50?>;
+    position:relative;
+    top:-1px;
+}
+div.ridenet-wall .divider
+{
+    clear:both;
+    padding-top:4px;
+    border-bottom:1px dotted #CCC;
+}
+div.ridenet-wall .delete-x
+{
+    font:bold 11px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Tahoma, sans-serif;
+    padding: 1px 2px;
+    margin-right:5px;
+    color: #<?=$TextColor50?>;
+    cursor: pointer;
+    float:right;
+    visibility: hidden;
+}
+div.ridenet-wall .delete-x:hover
+{
+    color: #FFF;
+    background-color: #<?=$TextColor50?>; 
+}
+
+table#event-detail
+{
+    font: 12px Arial, Helvetica, sans-serif;
+    line-height: 14px;
+}
+table#event-detail .label
+{
+    font-weight: bold;
+    text-align: right;
+    padding: 1px 5px 1px 1px;
+}
+table#event-detail .text
+{
+    padding: 1px;
+    text-align: left;
+}
+table#event-detail .submit  /* fine-tune submit button */
+{
+    padding-bottom:2px;     /* needed in Windows FF to center text in button */
+    height:22px;
+    width:60px
+}
+
+table#profile
+{
+    font: 12px Arial, Helvetica, sans-serif;
+    line-height: 14px;
+}
+table#profile .label
+{
+    font-weight: bold;
+    text-align: right;
+    padding: 0 5px 0 0;
+}
+table#profile .text
+{
+    padding: 0px;
+    text-align: left;
+}
+
+table#login
+{
+    font: 12px Arial, Helvetica, sans-serif;
+    line-height: 14px;
+}
+table#login .label
+{
+    font-weight: bold;
+    text-align: right;
+    padding: 0 5px 0 0;
+}
+table#login .text
+{
+    padding: 0px;
+    text-align: left;
+}
+
+table#results-breakdown
+{
+    border-color: #<?=$BorderColor?>;
+}
+table#results-breakdown .title
+{
+    font: bold 13px Tahoma, Helvetica, Arial, sans-serif;
+    padding: 0px 5px 1px 0px;
+}
+table#results-breakdown .header, table#results-breakdown .header-sm, table#results-breakdown .header-xsm
+{
+    text-align: center;
+    font: 12px Verdana, Geneva, sans-serif;
+    border: 1px dotted #<?=$BorderColor?>;
+}
+table#results-breakdown .header-sm
+{
+    font: 11px Verdana, Geneva, sans-serif;
+}
+table#results-breakdown .header-xsm
+{
+    font: 10px Verdana, Geneva, sans-serif;
+}
+table#results-breakdown .data, table#results-breakdown .data-sm, table#results-breakdown .data-xsm
+{
+    text-align: center;
+    font: 12px Verdana, Geneva, sans-serif;
+    border: 1px dotted #<?=$BorderColor?>;
+    background-color: #EEE;
+}
+table#results-breakdown .data-sm
+{
+    font: 11px Verdana, Geneva, sans-serif;
+}
+table#results-breakdown .data-xsm
+{
+    font: 10px Verdana, Geneva, sans-serif;
+}
+
+.find-name
+{
+    font:bold 11px "lucida grande", tahoma, verdana, arial, sans-serif;
+    color: #02448B;
+}
+.find-info
+{
+    font:11px "lucida grande", tahoma, verdana, arial, sans-serif;
+    padding-top: 1px;
+    color: #666;
+}
+.find-info2
+{
+    font:9px "lucida grande", tahoma, verdana, arial, sans-serif;
+    padding-top: 2px;
+    color: #999;
+}
+
+.table-divider
+{
+    background-color: #<?=$BorderColor?>;
+    height:1px;
+    line-height:1px;
+    font-size:1px;
+}
+
+.table-spacer
+{
+    height:1px;
+    line-height:1px;
+    font-size:1px;
+}
+
+ul.help
+{   /* Use image for bullet to work around IE8 bug - bullet's are hidden with <ul> in ExtJS Window until mouse hovers over window  */
+    list-style-image:url("images/help-bullet.gif");
+}
+li.help
+{
+    margin-left: 30px; margin-top: 10px; padding-left: 5px;
+}
+.help-body
+{
+    font: 13px 'Helvetica Neue', Arial, sans-serif;
+}
+.help-title
+{
+    font: 18px 'Helvetica Neue', Arial, sans-serif;
+    color: #0072BF;
+    margin: 0 0 10px;
+}
+#help-btn
+{
+    font:12px 'Helvetica Neue', Arial, sans-serif;
+    cursor:pointer;
+    color:#5074AF;
+    background: url('images/help-icon.png') no-repeat;
+    padding: 2px 0px 0px 20px;
+}
+
+.link-box
+{
+    padding: 8px;
+    cursor: pointer;
+    border: 1px solid #<?=$PageBGColor?>;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+}
+.link-box:hover
+{
+    border: 1px solid #<?=$SecondaryColor?>;
+    background-color: #<?=$SecondaryBGColor?>;
+}
+
+div.ellipses   /* show ellipses when text overruns specified width */
+{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+a
+{
+    color: #<?=$LinkColor?>;
+    text-decoration: none;
+}
+a:hover
+{
+    color: #<?=$LinkColor?>;
+    text-decoration: underline;
+}
+
+.action-photo
+{
+    border: 2px solid #<?=$BorderColor?>;
+}
+
+.photo-caption
+{
+    color: #<?=$TextColor50?>;
+    font: 12px 'Helvetica Neue', Arial, sans-serif;
+    text-align: left;
+    margin: 0px;
+}
+.profile-photo-caption
+{
+    font: bold 11px 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    xmargin: 0px;
+}
+
+.event-thumbnail
+{
+    margin:3px;
+    float:left;
+    border:1px solid #777;
+    height:73px;
+    width:73px;
+}
+
+.tw-wrap
+{
+    height:20px;
+    width:55px;
+    float:left;
+    margin-left:5px;
+    xoverflow:hidden;
+}
+
+.fb-wrap
+{
+    height:18px;
+    xwidth:60px;
+    float:left;
+    margin-left:5px;
+    xoverflow:hidden;
+}
+
+.linkcolor
+{
+    color: #<?=$LinkColor?>;
+}
+
+.text40
+{
+    color: #<?=$TextColor40?>;
+}
+.text50
+{
+    color: #<?=$TextColor50?>;
+}
+.text75
+{
+    color: #<?=$TextColor75?>;
+}
+.primary-color
+{
+    color: #<?=$PrimaryColor?>;
+}
+.secondary-color
+{
+    color: #<?=$SecondaryColor?>;
+}
+.secondary-background
+{
+    background-color: #<?=$SecondaryBGColor?>;
+}
+.link-color
+{
+    color: #<?=$LinkColor?>;
+}
+
+.sub
+{
+    vertical-align:-20%;
+    font-size:.75em
+}
+
+
+table#calendar
+{
+    border:2px solid silver;
+    border-collapse:collapse;
+    margin: 0 auto;
+}
+table#calendar .month
+{
+    background-color: #999999;
+    color: black;
+    text-align: center;
+    font: 12px Verdana, Geneva, sans-serif;
+    padding: 0px 0px 2px 0px;
+}
+table#calendar .cell
+{
+    border: 1px solid black;
+    text-align: center;
+    font: 11px Arial, Helvetica, sans-serif;
+    width: 19px;
+    line-height: 17px;
+}
+table#calendar .weekday
+{
+    background-color: #555555;
+    color: white;
+    font: 11px Arial, Helvetica, sans-serif;
+    line-height: 18px;
+}
+table#calendar .day
+{
+    background-color: #D84C58;
+    color: black;
+    height: 15px;
+}
+table#calendar .has-events
+{
+    background-color: #D84C58;
+    height: 15px;
+}
+table#calendar .has-events div:hover
+{
+    background-color: #E7D242;
+}
+table#calendar .has-events a:visited
+{
+    color: #E7D242;
+    text-decoration: none;
+}
+table#calendar .has-events a:link
+{
+    color: #E7D242;
+    text-decoration: none;
+}
+table#calendar .has-events a:hover
+{
+    color: black;
+    text-decoration: none;
+}
+table#calendar .notaday
+{
+    background-color: white;
+    font: 1px verdana;
+}
+table#calendar a
+{
+    color: #D84C58;
+    text-decoration: none;
+}
+
+.calendar-event-list
+{
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10px;
+    line-height: 13px;
+}
+
+#roster-view .thumb {    /* draw frame around img */
+    background: #DDD;
+    padding: 3px;
+}
+#roster-view .thumb-wrap { 
+    width: 86px;
+    height: 105px;   /* reserve space for full profile image height */
+    margin: 0 auto;
+    xtext-align: center;
+}
+#roster-view .rider-wrap {
+    cursor: pointer;
+    float: left;
+    margin: 4px;
+    padding: 5px;
+    width: 124px;
+    height: 140px;
+}
+#roster-view .name, #roster-view .category, #roster-view .details {
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font: bold 11px Arial, Helvetica, sans-serif;
+    line-height: 12px;
+}
+#roster-view .category {
+    font: 10px Arial, Helvetica, sans-serif;
+    line-height: 11px;
+    color: #666;
+}
+#roster-view .details {
+    font: 9px Arial, Helvetica, sans-serif;
+    line-height: 10px;
+    color: #666;
+}
+#roster-view .x-view-over {
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    background: #E5E5E5;
+    border-top: 1px solid #CCC;
+    padding-top: 4px;
+}
+
+.manage-site-instructions {
+    color:#1E008C;
+    font: 12px Tahoma, Helvetica, Arial, sans-serif;
+    line-height: 14px;
+    background-color: #DDD;
+    border: 1px solid #999;
+    padding: 4px 8px;
+}    
