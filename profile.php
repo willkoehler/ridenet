@@ -35,7 +35,8 @@ else
 // --- get rider information
 $rs = $oDB->query("SELECT RiderType, CONCAT(FirstName, ' ', LastName) AS RiderName, YearsCycling, Height, Weight,
                           BornIn, ResideIn, Occupation, FavoriteFood, FavoriteRide, FavoriteQuote, WhyIRide,
-                          MyCommute, URL, CommuteMapURL, RacingTeamID, CommutingTeamID, YTDMiles, CEDaysMonth, CMilesDay,
+                          MyCommute, URL, CommuteMapURL, RacingTeamID, CommutingTeamID,
+                          IFNULL(YTDMiles, 0) AS YTDMiles, IFNULL(CEDaysMonth, 0) AS CEDaysMonth,
                           tr.TeamID AS RacingTeamID, tr.TeamName AS RacingTeamName, tr.Domain AS RacingDomain,
                           tc.TeamID AS CommutingTeamID, tc.TeamName AS CommutingTeamName, tc.Domain AS CommutingDomain,   
                           FLOOR(DATEDIFF(NOW(), DateOfBirth) / 365.25) AS Age
@@ -193,22 +194,20 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
                       </table>
                     </td></tr>
                   <? } ?>
-                  <?if($riderInfo['YTDMiles'] || $riderInfo['CEDaysMonth']) { ?>
-                    <tr><td colspan=2 align=left>
-                      <table cellspacing=0 cellpadding=0>
-                        <tr>
-                          <td class=label width=110>
-                            <img class="tight" src="images/ridelog/commute.png" style="position:relative;top:-1px" height=12>
-                            <img class="tight" src="images/ridelog/errand.png" style="position:relative;top:-1px" height=12>
-                            Days/Month:
-                          </td>
-                          <td class=text id='cedays-month' width=30><?=$riderInfo['CEDaysMonth']?></td>
-                          <td class=label width=65>Miles YTD:</td>
-                          <td class=text id='ytd-miles'><?=($riderInfo['YTDMiles'])?></td>
-                        </tr>
-                      </table>
-                    </td></tr>
-                  <? } ?>
+                  <tr><td colspan=2 align=left>
+                    <table cellspacing=0 cellpadding=0>
+                      <tr>
+                        <td class=label width=110>
+                          <img class="tight" src="images/ridelog/commute.png" style="position:relative;top:-1px" height=12>
+                          <img class="tight" src="images/ridelog/errand.png" style="position:relative;top:-1px" height=12>
+                          Days/Month:
+                        </td>
+                        <td class=text id='cedays-month' width=30><?=$riderInfo['CEDaysMonth']?></td>
+                        <td class=label width=65>Miles YTD:</td>
+                        <td class=text id='ytd-miles'><?=($riderInfo['YTDMiles'])?></td>
+                      </tr>
+                    </table>
+                  </td></tr>
                   <tr><td class="table-spacer" colspan=2 style="height:5px">&nbsp;</td></tr>
                   <?if(!is_null($riderInfo['BornIn'])) { ?>
                     <tr>
