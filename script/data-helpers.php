@@ -203,8 +203,8 @@ function UpdateRiderStats($oDB, $riderID)
     $record = $rs->fetch_array();
     $CEDaysMonth365 = round($record['CEDays365']/(365/30.5));
     $CEDaysMonth180 = round($record['CEDays180']/(180/30.5));
-    $CEDaysMonth60 = ceil($record['CEDays60']/(60/30.5));       // (round up for 60 day range)
-    $CEDaysMonth30 = ceil($record['CEDays30']/(30/30.5));       // (round up for 30 day range)
+    $CEDaysMonth60 = round($record['CEDays60']/(60/30.5));
+    $CEDaysMonth30 = round($record['CEDays30']/(30/30.5));
     $CEDaysMonth = max($CEDaysMonth365, $CEDaysMonth180, $CEDaysMonth60, $CEDaysMonth30);
     $CMilesDay = ($record['CDays365']) ? round($record['CMiles365']/$record['CDays365']) : 0;
     $YTDMiles = intval($oDB->DBLookup("IFNULL(SUM(Distance),0)", "ride_log", "RiderID=$riderID AND Year(Date) = Year(NOW())"));
