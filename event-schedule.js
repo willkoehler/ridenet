@@ -89,6 +89,7 @@ function clickEventFilter(el)
         document.cookie = "ScheduleFilterTypes=" + eventTypes + "; expires=" + expires + "; domain=" + g_domainRoot;
         updateEventSchedule();
     }
+    _gaq.push(['_trackEvent', 'Action', 'Filter Events', 'Event Type']);   // log event in Google Analytics
 }
 
 function updateEventSchedule()
@@ -242,8 +243,8 @@ function C_FilterDialog()
             }, this);
         }
 
-        // open window
-        this.window.show(params.animateTarget);
+        _gaq.push(['_trackEvent', 'Action', 'Filter Events', 'State']);   // log event in Google Analytics
+        this.window.show(params.animateTarget);     // open window
     }
 
     this.cancelButtonClick = function()

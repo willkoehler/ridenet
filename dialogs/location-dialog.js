@@ -128,8 +128,8 @@ function C_LocationDialog()
             }, this);
         }
 
-        // open window
-        this.window.show(params.animateTarget);
+        _gaq.push(['_trackEvent', 'Action', 'Set Location']);   // log event in Google Analytics
+        this.window.show(params.animateTarget);     // open window
     }
 
     this.cancelButtonClick = function()

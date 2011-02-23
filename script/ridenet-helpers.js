@@ -194,6 +194,7 @@ function C_HelpDialog(msg)
             });
         }
 
+        _gaq.push(['_trackEvent', 'Action', 'Help Dialog']);    // log event in Google Analytics
         this.window.show(params.animateTarget);
     }
 }
