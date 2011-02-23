@@ -749,7 +749,7 @@ table#event-list .data
     font: 12px 'Helvetica Neue', Arial, sans-serif;
     text-align: left;
 }
-table#event-list .data #highlight
+table#event-list #highlight
 {
     background-color: #E4E477;
 }

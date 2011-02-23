@@ -65,6 +65,7 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
       $PrevWeek = 0;
       $PrevDay = 0;
       $FirstWeek = true;
+      $thisWeek = false;
       if($rs->num_rows==0)
       { ?>
         <!-- No Rides Found -->
@@ -90,14 +91,14 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
         {
           $eventDate = new DateTime($record['CalendarDate']);
           $firstDayOfWeek = new DateTime($record['FirstDayOfWeek']);
-          $thisDay = ($eventDate->format("n/j/Y")==date_format(new DateTime(), "n/j/Y")) ? true : false;
           if($eventDate->format("W")!=$PrevWeek && $FirstWeek == false)
           { ?>
           <!-- End of week. Table divider and spacing below -->
-            <tr><td class="table-spacer" style="height:5px" colspan=5>&nbsp;</td></tr>
+            <tr><td class="table-spacer" <?if($thisWeek) {?>id="highlight"<? } ?> style="height:5px" colspan=5>&nbsp;</td></tr>
             <tr><td class="table-divider" colspan=5>&nbsp;</td></tr>
             <tr><td class="table-spacer" style="height:20px" colspan=5>&nbsp;</td></tr>
 <?        }
+          $thisWeek = ($eventDate->format("W")==date_format(new DateTime(), "W")) ? true : false;
           if($eventDate->format("W")!=$PrevWeek)
           { ?>
           <!-- Beginning of week. Week header and table header -->
@@ -125,29 +126,29 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
                 <td class=data style="padding:1px 0px;" align=left>&nbsp;</td>
               <? } ?>
             </tr>
-            <tr><td class="table-spacer" style="height:5px" colspan=5>&nbsp;</td></tr>
+            <tr><td class="table-spacer" <?if($thisWeek) {?>id="highlight"<? } ?> style="height:5px" colspan=5>&nbsp;</td></tr>
 <?          $PrevWeek = $eventDate->format("W");
             $PrevDay = $eventDate->format("j");
             $FirstWeek = false;
           }
           if($eventDate->format("j")!=$PrevDay) { ?>
           <!-- End of Day. Table divider and spacing between days -->
-            <tr><td class="table-spacer" style="height:5px" colspan=5>&nbsp;</td></tr>
+            <tr><td class="table-spacer" <?if($thisWeek) {?>id="highlight"<? } ?> style="height:5px" colspan=5>&nbsp;</td></tr>
             <tr><td class="table-divider" colspan=5>&nbsp;</td></tr>
-            <tr><td class="table-spacer" style="height:5px" colspan=5>&nbsp;</td></tr>
+            <tr><td class="table-spacer" <?if($thisWeek) {?>id="highlight"<? } ?> style="height:5px" colspan=5>&nbsp;</td></tr>
             <? $PrevDay = $eventDate->format("j") ?>
           <? } ?>
           <!-- Ride Row -->
           <tr class=data riderow=1>
-            <td width="65" <?if($thisDay) {?>id="highlight"<? } ?> style="padding:0px 2px;"><b><?=$eventDate->format("D n/j")?></b></td>
-            <td width="60" <?if($thisDay) {?>id="highlight"<? } ?>><?=$eventDate->format("g:i a")?></td>
-            <td width="50" <?if($thisDay) {?>id="highlight"<? } ?> style="font-weight:bold;font-family:courier new;"><?=BuildRideClass($record)?></td>
-            <td width="255" <?if($thisDay) {?>id="highlight"<? } ?>><div class=ellipses style="width:245px">
+            <td width="65" <?if($thisWeek) {?>id="highlight"<? } ?> style="padding:0px 2px;"><b><?=$eventDate->format("D n/j")?></b></td>
+            <td width="60" <?if($thisWeek) {?>id="highlight"<? } ?>><?=$eventDate->format("g:i a")?></td>
+            <td width="50" <?if($thisWeek) {?>id="highlight"<? } ?> style="font-weight:bold;font-family:courier new;"><?=BuildRideClass($record)?></td>
+            <td width="255" <?if($thisWeek) {?>id="highlight"<? } ?>><div class=ellipses style="width:245px">
               <a href=calendar-detail.php?CID=<?=$record['CalendarID']?>>
                 <?=$record['EventName']?>
               </a>
             </div></td>
-            <td width="190" <?if($thisDay) {?>id="highlight"<? } ?>><div class="ellipses text75" style="width:180px">
+            <td width="190" <?if($thisWeek) {?>id="highlight"<? } ?>><div class="ellipses text75" style="width:180px">
               <?=$record['GeneralArea']?> <span class="text50">[<?=number_format($record['Distance'],0)?>]</span>
             </div></td>
             <?if(CheckLogin()) { ?>
@@ -160,7 +161,7 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
             <? } ?>
           </tr>
         <?}?>
-        <!-- Table footer with previous and next buttons -->
+        <!-- Table footer -->
           <tr><td class="table-spacer" style="height:5px" colspan=5>&nbsp;</td></tr>
           <tr><td class="table-divider" colspan=5>&nbsp;</td></tr>
           <tr><td class="table-spacer" style="height:10px" colspan=5>&nbsp;</td></tr>
