@@ -11,12 +11,12 @@ if(!CheckSession())
 }
 else
 {
-// --- save the attendance record
+// --- save the attendace record
     $values['RiderID'] = GetUserID();
-    $values['CalendarID'] = SmartGetInt("CalendarID");
+    $values['RaceID'] = SmartGetInt("RaceID");
     $values['Attending'] = SmartGetCheckbox("Attending");
     $values['Notify'] = SmartGetCheckbox("Notify");
-    $result = InsertOrUpdateRecord2($oDB, "calendar_attendance", "AttendanceID", $attendanceID, $values);
+    $result = InsertOrUpdateRecord2($oDB, "event_attendance", "AttendanceID", $attendanceID, $values);
 }
 
 // --- Encode response and send back to form

@@ -7,19 +7,17 @@ Ext.onReady(function()
     Ext.QuickTips.init();
 // --- Create dialogs
     g_updateDialog = new C_PostUpdateDialog();
-    g_rideDialog = new C_RideDialog();
-    g_locationDialog = new C_LocationDialog();
+    g_eventDialog = new C_EventDialog();
 // --- add listeners to show/hide delete buttons
     addHoverListeners();
 });
 
 
-function clickEditRide(calendarID)
+function clickEditEvent(raceID)
 {
-    g_rideDialog.show({
-        calendarID: calendarID,
-        makeCopy: false,
-        animateTarget: 'edit-btn' + calendarID,
+    g_eventDialog.show({
+        raceID: raceID,
+        animateTarget: 'edit-btn' + raceID,
         callback: function() { window.location.reload(); }
     });
 }
@@ -28,11 +26,11 @@ function clickPostUpdate(id, params)
 {
     g_updateDialog.show({
         animateTarget: id,
-        callback: updateCalendarUpdates,
+        callback: updateEventUpdates,
         riderID: params.riderID,
         racingTeamID: params.racingTeamID,
         postedToID: params.postedToID,
-        postType: 1,
+        postType: 2,
         riderName: params.riderName,
         teamName: params.teamName,
         title: 'Update for ' + params.postingTo
@@ -46,7 +44,7 @@ function clickDeleteMessage(messageID)
         msg: "Are you sure you want to delete this message?",
         fn: function(btn) { if(btn=='yes') {
         // --- Mask this page and post delete request
-            Ext.get('calendar-updates').mask("Deleting");
+            Ext.get('event-updates').mask("Deleting");
             Ext.Ajax.request({
                 url: 'data/delete-message.php',
                 params: {ID: messageID},
@@ -66,18 +64,18 @@ function handleDeleteSuccess(response, options)
     var result = Ext.decode(response.responseText);
     if(result.success == false)
     {
-        Ext.get('calendar-updates').unmask();
+        Ext.get('event-updates').unmask();
         Ext.Msg.alert("Delete Message Failed", "Error deleting message: " + result.message);
     }
     else
     {
-        updateCalendarUpdates();
+        updateEventUpdates();
     }
 }
 
 function handleDeleteFailure(response)
 {
-    Ext.get('calendar-updates').unmask();
+    Ext.get('event-updates').unmask();
     Ext.Msg.alert("Delete Message Failed", "Error deleting message. Server did not respond");
 }
 
@@ -99,74 +97,51 @@ function addHoverListeners()
 
 function getMoreUpdates(length)
 {
-    g_calendarUpdatesLength += length;
-    updateCalendarUpdates();
+    g_eventUpdatesLength += length;
+    updateEventUpdates();
 }
 
-function updateCalendarUpdates()
+function updateEventUpdates()
 {
-    Ext.get('calendar-updates').mask("Updating");
+    Ext.get('event-updates').mask("Updating");
     Ext.Ajax.request({
-        url: 'dynamic-sections/calendar-updates.php?pb&CalendarID=' + g_calendarID + '&l=' + g_calendarUpdatesLength,
+        url: 'dynamic-sections/event-updates.php?pb&RaceID=' + g_raceID + '&l=' + g_eventUpdatesLength,
         success: function(response, options)
         {
-            Ext.get('calendar-updates').update(response.responseText);
+            Ext.get('event-updates').update(response.responseText);
             addHoverListeners();    // add listeners to hide/show delete buttons
-            Ext.get('calendar-updates').unmask();
+            Ext.get('event-updates').unmask();
         }
     });
 }
-
-function getMoreWall(length)
-{
-    g_calendarWallLength += length;
-    updateCalendarWall();
-}
-
-function updateCalendarWall()
-{
-    if(Ext.fly('calendar-wall'))
-    {
-        Ext.fly('calendar-wall').mask("Updating");
-        Ext.Ajax.request({
-            url: 'dynamic-sections/calendar-wall.php?pb&CalendarID=' + g_calendarID + '&l=' + g_calendarWallLength,
-            success: function(response, options)
-            {
-                Ext.fly('calendar-wall').update(response.responseText);
-                Ext.fly('calendar-wall').unmask();
-            }
-        });
-    }
-}
-
 
 function C_Attendance()
 {
     this.form = null;
     
     // -------------------------------------------------------------------------------------------
-    //  Create the calendar attendance form.
+    //  Create the event attendance form.
     //  params object has the following parameters:
     //      parent          - id of div to render form in
-    //      calendarID      - id of calendar event
-    //      attendanceID    - id of calendar_attendance record, or -1 if no record exist
-    //      attending       - true = rider is attending this ride
-    //      notify          - true = rider will be notified of updates posted to this ride
+    //      raceID          - id of the event
+    //      attendanceID    - id of event_attendance record, or -1 if no record exist
+    //      attending       - true = rider is attending this event
+    //      notify          - true = rider will be notified of updates posted to this event
     // -------------------------------------------------------------------------------------------
     this.create = function(params)
     {
         this.holder = params.parent;
-        this.calendarID = params.calendarID;
+        this.raceID = params.raceID;
 
         this.form = new Ext.FormPanel({
             baseCls: 'x-plain',     // (gives panel a transparent background)
             cls: 'centered',        // center this panel on the page
-            url: 'data/post-calendar-attendance.php',          // URL used to submit results of form
+            url: 'data/post-event-attendance.php',          // URL used to submit results of form
             bodyStyle:'padding-top:5px',
             hideLabels: 'true',
             width: 330,
             layout: 'column',
-            baseParams: { AttendanceID: params.attendanceID, CalendarID: params.calendarID },
+            baseParams: { AttendanceID: params.attendanceID, RaceID: params.raceID },
             items: [{
                 xtype: 'container',
                 width: 100,
@@ -191,7 +166,7 @@ function C_Attendance()
                     hideLabel: true,
                     name: 'Notify',
                     checked: params.notify,
-                    boxLabel: '&nbsp;Email me ride updates',
+                    boxLabel: '&nbsp;Email me event updates',
                     listeners: { scope: this, check: function(cb, checked) {
                         Ext.getCmp('save-status-btn').enable();
                     }}
@@ -215,7 +190,7 @@ function C_Attendance()
 
     this.onClickSave = function()
     {
-    // --- disable entire ride details block containing the form
+    // --- disable entire event details block containing the form
         Ext.fly(this.holder).up(".block-table").mask("Please Wait...");
     // --- submit form data
         this.form.getForm().submit({ reset: false, success: this.onPostSuccess, failure: this.onPostFailure, scope: this });
@@ -228,15 +203,13 @@ function C_Attendance()
         this.form.getForm().baseParams.AttendanceID = action.result.AttendanceID;
         // Update list of attending riders. Hide list if there are no riders attending
         Ext.Ajax.request({
-            url: 'dynamic-sections/calendar-attendance.php?pb&CalendarID=' + this.calendarID,
+            url: 'dynamic-sections/event-attendance.php?pb&RaceID=' + this.raceID,
             scope: this,
             success: function(response, options)
             {
                 Ext.fly('attending-holder').update(response.responseText, true);    // true-->eval scripts in response text to generate new rider callouts
                 Ext.fly('attending-holder').up("tr").setStyle("display", (response.responseText) ? "table-row" : "none");
                 Ext.fly(this.holder).up(".block-table").unmask();
-                // change in attendance may also cause changes in the ride log entries listed
-                updateCalendarWall();
             }
         });
     }

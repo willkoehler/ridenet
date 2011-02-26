@@ -15,14 +15,21 @@ else
     $values['RiderID'] = GetUserID();
     $values['TeamID'] = $oDB->DBLookup("RacingTeamID", "rider", "RiderID=" . GetUserID());
     $values['Date'] =  "'" . date("Y-m-d H:i") . "'";
-    $values['PostType'] = 1;
+    $values['PostType'] = SmartGetInt("PostType");
     $values['Text'] = SmartGetString("Message");
-    $values['PostedToID'] = SmartGetInt("CalendarID");
+    $values['PostedToID'] = SmartGetInt("PostedToID");
     $result = InsertOrUpdateRecord2($oDB, "posts", "PostID", -1, $values);
     
     if($result['success'])
     {
-        CalendarUpdateEmail($oDB, $result['PostID']);
+        switch($values['PostType']) {
+            case 1:
+                CalendarUpdateEmail($oDB, $result['PostID']);
+                break;
+            case 2:
+                EventUpdateEmail($oDB, $result['PostID']);
+                break;
+        }
     }
 }
 

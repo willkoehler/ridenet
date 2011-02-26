@@ -1,9 +1,9 @@
-function C_PostCalendarUpdateDialog()
+function C_PostUpdateDialog()
 {
     this.window = null;
 
     // -------------------------------------------------------------------------------------------
-    //  Show post calendar update dialog.
+    //  Show post update dialog.
     //  params object has the following parameters:
     //      callback    - Function that will be called when update is posted
     //      scope       - scope in which to execute the callback function. (The callback function's
@@ -11,6 +11,8 @@ function C_PostCalendarUpdateDialog()
     //      animateTarget   - id of HTML target to animate opening/closing window
     //      riderID         - ID of rider posting the update
     //      racingTeamID    - Racing team ID of rider posting the update
+    //      postedToID      - ID of Ride / Event this update is posted for
+    //      postType        - 1 -> Ride  2 -> Event
     //      riderName       - name of the rider posting the update
     //      teamName        - name of the rider's team
     //      title           - Title of pop up window
@@ -19,13 +21,15 @@ function C_PostCalendarUpdateDialog()
     {
         this.callback = params.callback;
         this.callbackScope = params.scope;
+        this.postedToID = params.postedToID;
+        this.postType = params.postType;
 
         if( ! this.window)
         {
             
             this.form = new Ext.form.FormPanel({
                 baseCls: 'x-plain',     // (gives panel a gray background - by default panels have white backgrounds)
-                url:'data/post-calendar-update.php',
+                url:'data/post-update.php',
                 labelAlign: 'right',
                 bodyStyle:'padding:5px 5px 0',
                 buttonAlign:'center',
@@ -98,7 +102,8 @@ function C_PostCalendarUpdateDialog()
             // perform actions when window opens
             this.window.on('show', function() {
                 this.form.getForm().reset();  // clear form contents
-                this.form.getForm().baseParams.CalendarID = g_calendarID;
+                this.form.getForm().baseParams.PostedToID = this.postedToID;
+                this.form.getForm().baseParams.PostType = this.postType;
                 this.setMessage('', 'black');                               // clear message area
                 this.form.getForm().findField('Message').focus(true, 300);     // set initial focus
             }, this);
@@ -120,8 +125,8 @@ function C_PostCalendarUpdateDialog()
 
     this.saveButtonClick = function()
     {
-    // --- show posting calendar update in message area
-        this.setMessage("Posting Ride Update...", "black", true);
+    // --- show posting update in message area
+        this.setMessage("Posting Update...", "black", true);
     // --- disable dialog
         this.window.getEl().mask();
     // --- submit form data

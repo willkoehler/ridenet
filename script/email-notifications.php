@@ -169,4 +169,50 @@ function CalendarUpdateEmail($oDB, $postID)
 }
 
 
+//----------------------------------------------------------------------------------
+//  EventUpdateEmail()
+//
+//  Sends an email message to a list of users when an event update is posted
+//
+//  PARAMETERS:
+//    oDB         - a mysqli connection object (used to read mail configuration)
+//    postID      - ID of the post
+//
+//  RETURN: none
+//-----------------------------------------------------------------------------------
+function EventUpdateEmail($oDB, $postID)
+{
+    $posts = $oDB->query("SELECT CONCAT(FirstName, ' ', LastName) AS RiderName, RiderID, PostedToID AS RaceID, Text, EventName
+                          FROM posts
+                          JOIN event ON (PostedToID = RaceID)
+                          JOIN rider USING (RiderID)
+                          WHERE PostID=$postID", __FILE__, __LINE__);
+    $post = $posts->fetch_array();
+    $posts->free();
+    $recipients = $oDB->query("SELECT CONCAT(FirstName, ' ', LastName) AS RiderName, RiderEmail, Domain
+                               FROM event_attendance
+                               JOIN rider USING (RiderID)
+                               JOIN teams ON (rider.RacingTeamID = teams.TeamID)
+                               WHERE RaceID={$post['RaceID']} AND Notify=1 AND RiderID<>{$post['RiderID']}", __FILE__, __LINE__);
+    $subject = "Event Update - {$post['EventName']}";
+    while(($recipient = $recipients->fetch_array())!=false)
+    {
+        $to = $recipient['RiderName'] . " <" . $recipient['RiderEmail'] . ">";
+        $msg = "{$post['RiderName']} posted an update to {$post['EventName']}:\n\n" .
+               "\"{$post['Text']}\"\n\n" .
+               "You received this email because you checked \"Email me event updates\" on the event information page. " .
+               "For details go to the event information page: " .
+               BuildTeamBaseURL($recipient['Domain']) . "/event-detail.php?RaceID={$post['RaceID']}";
+        if(SendMail($to, $subject, $msg, "noreply@ridenet.net"))
+        {
+            $oDB->RecordActivity("Email OK: " . addslashes($to), $post['RaceID']);
+        }
+        else
+        {
+            $oDB->RecordActivity("Email Error: " . addslashes($to), $post['RaceID']);
+        }
+    }
+}
+
+
 ?>

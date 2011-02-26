@@ -69,7 +69,7 @@ function C_EventDialog()
                             listWidth: 150,
                             allowBlank: false,
                             blankText: 'You must select an event type',
-                            store: new Ext.data.ArrayStore({ fields: ['id', 'text', 'img'], data: rideTypeLookup }),
+                            store: new Ext.data.ArrayStore({ fields: ['id', 'text', 'img'], data: eventTypeLookup }),
                             tpl:'<tpl for="."><div class="x-combo-list-item"><table cellpadding=0 cellspacing=0><tr>\
                                    <td xclass="item-status-label" style="width:90px;padding-left:5px">{text}</td>\
                                    <td><img xstyle="padding-right:10px" src="images/event-types/{img}"></td>\
@@ -86,7 +86,7 @@ function C_EventDialog()
                             name: 'EventName',
                             width: 310,
                             allowBlank: false,
-                            blankText: 'You must a name for this event'
+                            blankText: 'You must enter a name for this event'
                         }]
                     }] // end of column container
                 },{
@@ -123,7 +123,9 @@ function C_EventDialog()
                             xtype: 'textfield',
                             fieldLabel: 'Web Site',
                             name: 'WebPage',
-                            width: 310
+                            width: 310,
+                            allowBlank: false,
+                            blankText: 'You must enter the event website'
                         }]
                     }] // end of column container
                 },{

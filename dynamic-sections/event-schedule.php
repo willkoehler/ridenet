@@ -138,11 +138,7 @@ function RenderEventSchedule($oDB, $pt, $ScheduleFilterStates, $ScheduleFilterTy
             <tr class=data>
               <td width="65" style="padding:0px 2px;" align=left><b><?=$eventDate->format("D n/j")?></b></td>
               <td width="320" align=left><div class=ellipses style="width:310px">
-                <?if($record['WebPage']!="") { ?>
-                  <a href="http://<?=$record['WebPage']?>" title="<?=$record['EventName']?>" target='_blank'><?=$record['EventName']?></a>
-                <? } else { ?>
-                  <?=$record['EventName']?>
-                <? } ?>
+                <a href="event-detail.php?RaceID=<?=$record['RaceID']?>" title="<?=$record['EventName']?>"><?=$record['EventName']?></a>
                 <?if($record['AddedAge'] < 14) { ?>
                   <img border=0 src="images/redstar2.png" title="Added <?=$record['DateAdded'] ?>">
                 <? } ?>
@@ -154,7 +150,7 @@ function RenderEventSchedule($oDB, $pt, $ScheduleFilterStates, $ScheduleFilterTy
               <td width="70" align=left>
                 <?// --- Show link for race attendance or link for results ?>
                 <?if($record['EventAge'] < 0) {?>
-                  <a href="event-attendance.php?RaceID=<?=$record['RaceID']?>" title="Click here if you are planning on going" class="results-btn">Who's&nbsp;Going?</a>
+                  <a href="event-detail.php?RaceID=<?=$record['RaceID']?>" title="Click here if you are planning on going" class="results-btn">Who's&nbsp;Going?</a>
                 <? } elseif($record['HasResults']) { ?>
                   <a href="results-detail.php?RaceID=<?=$record['RaceID']?>" title="Click Here for Race Results" class="results-btn">RESULTS</a>
                 <? } ?>

@@ -36,8 +36,7 @@ $ShowYear = (isset($_REQUEST['Year'])) ? SmartGetInt("Year") : date("Y");
     g_stateFilter = "<?=$ScheduleFilterStates?>";
     g_typeFilter = "<?=$ScheduleFilterTypes?>";
     stateLookup = <?$oDB->DumpToJSArray("SELECT StateID, StateName, StateAbbr FROM ref_states ORDER BY StateName")?>
-    eventTypeLookup = <?$oDB->DumpToJSArray("SELECT RideTypeID, RideType FROM ref_event_type ORDER BY RideType")?>
-    rideTypeLookup = <?$oDB->DumpToJSArray("SELECT RideTypeID, RideType, Picture FROM ref_event_type ORDER BY RideType")?>
+    eventTypeLookup = <?$oDB->DumpToJSArray("SELECT RideTypeID, RideType, Picture FROM ref_event_type ORDER BY RideType")?>
   </script>
 <!-- Insert tracker for Google Analytics -->
   <?InsertGoogleAnalyticsTracker()?>

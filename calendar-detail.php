@@ -50,7 +50,7 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
 <!-- Code-behind modules for this page (minify before including)-->
   <?MinifyAndInclude("calendar-detail.js")?>
   <?MinifyAndInclude("dialogs/calendar-event-dialog.js")?>
-  <?MinifyAndInclude("dialogs/post-calendar-update-dialog.js")?>
+  <?MinifyAndInclude("dialogs/post-update-dialog.js")?>
   <?MinifyAndInclude("dialogs/location-dialog.js")?>
   <?MinifyAndInclude("script/ridenet-helpers.js")?>
   <script type="text/javascript">
@@ -89,7 +89,8 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
     <div class='clearfloat'></div>
 
 <?  $vDate = SmartGetDate("Date");
-    $sql = "SELECT c.*, FirstName, LastName, RiderID, AddedBy,
+    $sql = "SELECT CalendarID, EventName, Location, CalendarDate, ClassX, ClassA, ClassB, ClassC, ClassD, Comments, MapURL,
+                   FirstName, LastName, RiderID, AddedBy,
                    postedTeam.TeamName AS PostedTeamName, postedTeam.Domain AS PostedDomain,
                    CONCAT(City, ', ', State, ' ', ZipCode) AS GeneralArea,
                    CalculateDistance(Longitude, Latitude, $CalendarLongitude, $CalendarLatitude) AS Distance,
@@ -99,8 +100,7 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
             LEFT JOIN teams postedTeam ON (c.TeamID = postedTeam.TeamID)
             LEFT JOIN ref_intensity USING (IntensityID)
             LEFT JOIN ref_zipcodes USING (ZipCodeID) 
-            WHERE CalendarID=$calendarID
-            ORDER BY TIME(CalendarDate)";
+            WHERE CalendarID=$calendarID";
     $rs = $oDB->query($sql, __FILE__, __LINE__);
     if(($record=$rs->fetch_array())==false)
     {
@@ -108,7 +108,7 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
     }
     else
     { 
-      $attendanceOpen = ($record['EventAgeHours'] < 168);   // don't allow attence to be changed 7 days after the ride ?>
+      $attendanceOpen = ($record['EventAgeHours'] < 168);   // don't allow attendance to be changed 7 days after the ride ?>
       <div style="height:10px"><!--vertical spacer--></div>
       <div class="block-table centered" id="ride-details" style="width:500px;position:relative">
         <!--- Edit button. Allow ride to be edit for 12 hours after the ride -->
@@ -213,7 +213,7 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
                              WHERE RiderID=" . GetUserID(), __FILE__, __LINE__);
           $loggedInRider = $rs->fetch_array();
           $rs->free();?>
-          <div style="float:right;position:relative;top:6px;" class='action-btn' id='post-message-btn' onclick="clickPostUpdate(this.id, { riderID:<?=$loggedInRider['RiderID']?>, racingTeamID: <?=$loggedInRider['RacingTeamID']?>, riderName: '<?=htmlentities($loggedInRider['RiderName'])?>', teamName: '<?=htmlentities($loggedInRider['TeamName'])?>', postingTo: '<?=$record['EventName']?>' });">
+          <div style="float:right;position:relative;top:6px;" class='action-btn' id='post-message-btn' onclick="clickPostUpdate(this.id, { riderID:<?=$loggedInRider['RiderID']?>, racingTeamID: <?=$loggedInRider['RacingTeamID']?>, postedToID: <?=$calendarID?>, riderName: '<?=htmlentities($loggedInRider['RiderName'])?>', teamName: '<?=htmlentities($loggedInRider['TeamName'])?>', postingTo: '<?=$record['EventName']?>' });">
             + Post Update
           </div>
         <? } else { ?>
