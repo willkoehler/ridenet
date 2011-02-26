@@ -155,24 +155,6 @@ function C_FilterDialog()
                             width: 200,
                             height: 300
                         }]
-/*                    },{
-                    // === Event Type Selection ===
-                        xtype:'container', layout:'form', width:180, items: [{
-                            xtype: 'grid',
-                            cls: 'compact-grid',   // render grid more compactly
-                            fieldLabel: 'Show these event types',
-                            id: 'type-grid',
-                            bodyStyle: 'border: 1px solid silver',
-                            ds: new Ext.data.SimpleStore({ fields: ['id', 'name'], id: 0, data: eventTypeLookup}),
-                            columns: [
-                                sm2,         // this renders the column with the row-selection checkboxes
-                                {header: 'Select Event Types', width: 100, dataIndex: 'name', sortable: true, id: 'autoexpand'}
-                            ],
-                            sm: sm2,
-                            autoExpandColumn: 'autoexpand',
-                            width: 170,
-                            height: 300
-                        }]*/
                     }] // end of fieldset
                 },{
             // === Message Field (just above buttons) ===
@@ -227,17 +209,6 @@ function C_FilterDialog()
                     states = states.split(",");                         // split into array
                     Ext.getCmp('state-grid').getSelectionModel().selectRowsById(states);
                 }
-            // select event types in the list based on values in ScheduleFilterTypes cookie
-/*                if(g_typeFilter=='All')
-                {
-                    Ext.getCmp('type-grid').getSelectionModel().selectAll();
-                }
-                else
-                {
-                    types = g_typeFilter.substring(1, g_typeFilter.length-1);
-                    types = types.split(",");
-                    Ext.getCmp('type-grid').getSelectionModel().selectRowsById(types);
-                }*/
             // clear status message
                 this.setMessage('', 'black');                              // clear message area
             }, this);
@@ -258,10 +229,6 @@ function C_FilterDialog()
         {
             Ext.Msg.alert("Preferences", "You must select at least one State");
         }
-/*        else if(Ext.getCmp('type-grid').getSelectionModel().hasSelection()==false)
-        {
-            Ext.Msg.alert("Preferences", "You must select at least one Event Type");
-        }*/
         else
         {
             var list="";
@@ -276,16 +243,6 @@ function C_FilterDialog()
                 list = Ext.getCmp('state-grid').getSelectionList();
             }
             document.cookie = "ScheduleFilterStates=" + list + "; expires=" + expires + "; domain=" + g_domainRoot;
-        // save type selections in cookie
-/*            if(Ext.getCmp('type-grid').getSelectionModel().getCount() == Ext.getCmp('type-grid').getStore().getCount())
-            {
-                list = "All";
-            }
-            else
-            {
-                list = Ext.getCmp('type-grid').getSelectionList();
-            }
-            document.cookie = "ScheduleFilterTypes=" + list + "; expires=" + expires + "; domain=" + g_domainRoot;*/
         // reload page (defer is needed to make sure spinning loading icon displays before reload starts
             this.setMessage('Updating...', 'black', true);
             (function() { window.location.reload(); }).defer(200);
