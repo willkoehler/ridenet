@@ -16,7 +16,7 @@ function C_SignupDialog()
                 baseCls: 'x-plain',     // (gives panel a gray background - by default panels have white backgrounds)
                 url:'data/rider-signup.php',
                 labelAlign: 'right',
-                bodyStyle:'padding:0px',
+                bodyStyle:'padding: 7px 15px 0px 15px',
                 buttonAlign:'center',
                 defaults: {hideLabel: true},
                 baseParams: { },    // additional parameters passed to post request
@@ -24,12 +24,12 @@ function C_SignupDialog()
             // === Welcome Text ===
                     xtype: 'displayfield',
                     hideLabel: true,
-                    style: 'margin:10px 15px 10px 15px; font: 13px "Helvetica Neue", Arial; color:#444',
+                    style: 'margin:0 0 10px 0; font: 13px "Helvetica Neue", Arial; color:#444',
                     html: 'We are growing RideNet slowly so we can focus on creating a great experience for our users. \
                            Enter your name and email below and we\'ll invite you as soon as we can. <b>OR</b> find a team \
                            that is already on RideNet and ask them to create an account for you.'
                 },{
-                    xtype:'container', style: 'margin-left:15px', layout:'column', items: [{
+                    xtype:'container', layout:'column', items: [{
                         xtype:'container', layout:'form', width:170, hideLabels: true, items: [{
                         // === Name ===
                             xtype: 'textfield',
@@ -40,7 +40,7 @@ function C_SignupDialog()
                             blankText: 'You must enter your name'
                         }]
                     },{
-                        xtype:'container', layout:'form', width:240, hideLabels: true, items: [{
+                        xtype:'container', layout:'form', width:230, hideLabels: true, items: [{
                         // === Email ===
                             xtype: 'textfield',
                             emptyText: 'email (name@example.com)',
@@ -55,40 +55,30 @@ function C_SignupDialog()
                 // === Rider Description ===
                     xtype: 'textarea',
                     name: 'RiderDescription',
-                    style: 'margin-left:15px',
                     emptyText: 'Tell us what kind of riding you do',
-                    width: 400,
-                    height: 50,
-                    allowBlank: false,
-                    blankText: 'Tell us more about you'
-                },{
-                    xtype: 'displayfield',
-                    hideLabel: true,
-                    style: 'margin:15px 0px 7px 15px; font: 13px "Helvetica Neue", Arial; color:#444',
-                    html: 'If you ride with a local team, tell us about your team'
-                },{
-                // === Team Name ===
-                    xtype: 'textfield',
-                    style: 'margin-left:15px',
-                    emptyText: 'Team Name',
-                    name: 'TeamName',
-                    width: 400
-                },{
-                // === Team Description ===
-                    xtype: 'textarea',
-                    style: 'margin-left:15px',
-                    emptyText: 'Tell us about your team',
-                    name: 'TeamDescription',
                     width: 400,
                     height: 50
                 },{
-                    xtype: 'container', cls: 'form-spacer', height:10
+                    xtype: 'displayfield',
+                    hideLabel: true,
+                    style: 'margin:15px 0 0 0; font: 13px "Helvetica Neue", Arial; color:#444',
+                    html: 'If you ride with a local team/club, enter the name.'
+                },{
+                // === Team Name ===
+                    xtype: 'textfield',
+                    emptyText: 'Team/Club Name',
+                    name: 'TeamName',
+                    width: 400
+                },{
+                    xtype: 'container', cls: 'form-spacer', height:5
                 },{
             // === Message Field (just above buttons) ===
                     xtype: 'container',
                     id: 'status-msg',
                     style: 'display:none',   // start off hidden initially
                     cls: 'form-status'
+                },{
+                    xtype: 'container', cls: 'form-spacer', height:5
                 }],
 
                 buttons: [{
@@ -158,7 +148,6 @@ function C_SignupDialog()
 
     this.onPostSuccess = function(form, action)
     {
-//        Ext.Msg.alert("RideNet Sign Up", "Thank you for signing up with RideNet. We will contact you shortly with login information.");
         Ext.Msg.show({
             title: "RideNet Sign Up",
             msg: "<span style='font-size:14px'>Thank you for signing up with RideNet! We will send you a welcome email with login information. This process may take up to 24 hours.</span>",
