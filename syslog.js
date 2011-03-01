@@ -75,12 +75,6 @@ function C_ReportForm(parentElement)
                 loadMask: true,
                 store: this.ds,
                 columns: columns
-//                listeners: { scope: this,
-//                    click: function(list, index, node, e) {
-//                        var row = list.getStore().getAt(index);
-//                        window.open(buildTeamBaseURL(row.data.Domain) + "/profile.php?RiderID=" + row.data.RiderID, "profile");
-//                    }
-//                }
             }]
         });
 
