@@ -45,7 +45,7 @@ $range = (isset($_REQUEST['R'])) ? $_REQUEST['R'] : "L30";
     <?InsertMainMenu($oDB, $pt, "Ranking")?>
   </div>
   <!-- This submenu is outside the header div so it floats side by side with the right column -->
-  <?InsertRankingsMenu("Teams")?>
+  <?InsertCommutingMenu("Teams")?>
 
   <div id="sidebarHolderRight">
     <?ColumbusFoundationSidebar($oDB)?>

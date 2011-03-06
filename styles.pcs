@@ -373,6 +373,11 @@ p {
     margin: 0px 0px 15px;
     color: #<?=$TextColor75?>;
 }
+p.newp {
+    font:14px 'Helvetica Neue', Arial, sans-serif;
+    line-height:17px;
+    color: #<?=$TextColor75?>;
+}    
 h1   {
     font: 23px 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #<?=$PrimaryColor?>;

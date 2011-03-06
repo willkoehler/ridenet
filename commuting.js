@@ -16,13 +16,13 @@ function getMore(length)
 
 function updateRideBoard()
 {
-    Ext.get('ice-bikers-wall').mask("Updating");
+    Ext.get('commuting-wall').mask("Updating");
     Ext.Ajax.request({
-        url: 'dynamic-sections/ice-bikers.php?pb&l=' + g_rideBoardLength,
+        url: 'dynamic-sections/commuting.php?pb&l=' + g_rideBoardLength,
         success: function(response, options)
         {
-            Ext.get('ice-bikers-wall').update(response.responseText);
-            Ext.get('ice-bikers-wall').unmask();
+            Ext.get('commuting-wall').update(response.responseText);
+            Ext.get('commuting-wall').unmask();
         }
     });
 }

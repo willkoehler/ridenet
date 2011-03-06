@@ -7,14 +7,14 @@ if(isset($_REQUEST['pb']))
     $length = $_REQUEST['l'];
 
     $oDB = oOpenDBConnection();
-    RenderIceBikers($oDB, $length);
+    RenderCommutingWall($oDB, $length);
 }
 
 
 //----------------------------------------------------------------------------------
-//  RenderIceBikers()
+//  RenderCommutingWall()
 //
-//  This function renders the content of the Ice Bikers ride board.
+//  This function renders the content of the commuting home wall
 //
 //  PARAMETERS:
 //    oDB       - database connection (mysqli object)
@@ -22,7 +22,7 @@ if(isset($_REQUEST['pb']))
 //
 //  RETURN: none
 //-----------------------------------------------------------------------------------
-function RenderIceBikers($oDB, $length)
+function RenderCommutingWall($oDB, $length)
 {
   $sql = "SELECT Date, tbt.Sort, tbt.Type, tbt.Image, -RideLogID AS Sort2, 0 AS DeleteID,
                  RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RacingTeamID, CommutingTeamID, TeamName, Domain,

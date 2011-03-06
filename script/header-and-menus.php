@@ -178,7 +178,7 @@ function InsertMainMenu($oDB, $pt, $highlight="")
           <li><a href="event-schedule.php" <?if($highlight=="Schedule") {?>id="active"<?}?>>EVENTS</a></li>
           <li><a href="calendar.php" <?if($highlight=="Calendar") {?>id="active"<?}?>>RIDES</a></li>
           <li><a href="racing-results.php" <?if($highlight=="Results") {?>id="active"<?}?>>RACING</a></li>
-          <li><a href="commute-ice-bikers.php" <?if($highlight=="Ranking") {?>id="active"<?}?>>COMMUTING</a></li>
+          <li><a href="commuting.php" <?if($highlight=="Ranking") {?>id="active"<?}?>>COMMUTING</a></li>
         <? } else { ?>
         <!-- Team Site Menu -->
           <li><a href="home.php" <?if($highlight=="Home") {?>id="active"<?}?>>HOME</a></li>
@@ -189,7 +189,7 @@ function InsertMainMenu($oDB, $pt, $highlight="")
             <li><a href="racing-results.php" <?if($highlight=="Results") {?>id="active"<?}?>>RACING</a></li>
           <? } ?>
           <? if($bCommuting) { ?>
-            <li><a href="commute-ice-bikers.php" <?if($highlight=="Ranking") {?>id="active"<?}?>>COMMUTING</a></li>
+            <li><a href="commuting.php" <?if($highlight=="Ranking") {?>id="active"<?}?>>COMMUTING</a></li>
           <? } ?>
         <? } ?>
         <li><a href="profile.php" <?if($highlight=="YourProfile") {?>id="active"<?}?>>YOUR PROFILE</a></li>
@@ -262,7 +262,7 @@ function InsertResultsMenu($year, $highlight="")
 
 
 //----------------------------------------------------------------------------------
-//  InsertRankingsMenu()
+//  InsertCommutingMenu()
 //
 //  This function inserts the rankings sub-menu onto the page
 //
@@ -271,11 +271,11 @@ function InsertResultsMenu($year, $highlight="")
 //
 //  RETURN: none
 //-----------------------------------------------------------------------------------
-function InsertRankingsMenu($highlight="")
+function InsertCommutingMenu($highlight="")
 { ?>
     <div id="submenu">
       <ul id="subnav">
-        <li><a href="commute-ice-bikers.php" <?if($highlight=="IceBikers") {?>id="active"<?}?>>ICE BIKERS</a></li>
+        <li><a href="commuting.php" <?if($highlight=="Commuting") {?>id="active"<?}?>>HOME</a></li>
         <li><a href="commute-team-rank.php" <?if($highlight=="Teams") {?>id="active"<?}?>>TEAMS</a></li>
         <li><a href="commute-rider-rank.php?g=1" <?if($highlight=="1") {?>id="active"<?}?>>&nbsp;<img src='images/stars/star1.png' width=10>&nbsp;1 to 4</a></li>
         <li><a href="commute-rider-rank.php?g=2" <?if($highlight=="2") {?>id="active"<?}?>>&nbsp;<img src='images/stars/star2.png' width=10>&nbsp;5 to 9</a></li>
