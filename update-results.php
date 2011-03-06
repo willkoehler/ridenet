@@ -72,7 +72,7 @@ CheckLoginAndRedirect();
               $rs = $oDB->query($sql, __FILE__, __LINE__);
               while(($record=$rs->fetch_array())!=false) { ?>
                 <option value="<?=$record['RaceID']?>">
-                  <?=date_create($record['RaceDate'])->format("M j")?> | <?=$record['City']?>, <?=$record['StateAbbr']?> | <?=$record['EventName']?>
+                  <?=date_create($record['RaceDate'])->format("M j")?> | <?=LimitString($record['City'],25)?>, <?=$record['StateAbbr']?> | <?=LimitString($record['EventName'],60)?>
                 </option>
               <? } ?>
             </select></td>
