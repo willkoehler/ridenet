@@ -87,6 +87,7 @@ function RenderEventSchedule($oDB, $pt, $ScheduleFilterStates, $ScheduleFilterTy
           while(($record = $rs->fetch_array())!=false)
           {
             $eventDate = new DateTime($record['RaceDate']);
+            $thisWeek = ($eventDate->format("W")==date_format(new DateTime(), "W")) ? true : false;
             if($eventDate->format("n")!=$PrevMonth && $FirstMonth == false)
             { ?>
             <!-- End of month. Table divider and spacing below -->
@@ -136,18 +137,18 @@ function RenderEventSchedule($oDB, $pt, $ScheduleFilterStates, $ScheduleFilterTy
             <? } ?>
             <!-- Event Row -->
             <tr class=data>
-              <td width="65" style="padding:0px 2px;" align=left><b><?=$eventDate->format("D n/j")?></b></td>
-              <td width="320" align=left><div class=ellipses style="width:310px">
+              <td width="65" <?if($thisWeek) {?>id="highlight"<? } ?> style="padding:0px 2px;" align=left><b><?=$eventDate->format("D n/j")?></b></td>
+              <td width="320" <?if($thisWeek) {?>id="highlight"<? } ?> align=left><div class=ellipses style="width:310px">
                 <a href="event-detail.php?RaceID=<?=$record['RaceID']?>" title="<?=$record['EventName']?>"><?=$record['EventName']?></a>
                 <?if($record['AddedAge'] < 14) { ?>
                   <img border=0 src="images/redstar2.png" title="Added <?=$record['DateAdded'] ?>">
                 <? } ?>
               </div></td>
-              <td width="45" align="left"><img border=0 style="padding:0px 0px" src='images/event-types/<?=$record['Picture']?>' title='<?=$record['RideType']?>'></td>
-              <td width="155" align=left><div class=ellipses style="width:145px">
+              <td width="45" <?if($thisWeek) {?>id="highlight"<? } ?> align="left"><img border=0 style="padding:0px 0px" src='images/event-types/<?=$record['Picture']?>' title='<?=$record['RideType']?>'></td>
+              <td width="155" <?if($thisWeek) {?>id="highlight"<? } ?> align=left><div class=ellipses style="width:145px">
                 <?=$record['Location']?>
               </div></td>
-              <td width="70" align=left>
+              <td width="70" <?if($thisWeek) {?>id="highlight"<? } ?> align=left>
                 <?// --- Show link for race attendance or link for results ?>
                 <?if($record['EventAge'] < 0) {?>
                   <a href="event-detail.php?RaceID=<?=$record['RaceID']?>" title="Click here if you are planning on going" class="results-btn">Who's&nbsp;Going?</a>

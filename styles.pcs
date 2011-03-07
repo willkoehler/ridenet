@@ -756,7 +756,7 @@ table#event-list .data
 }
 table#event-list #highlight
 {
-    background-color: #E4E477;
+    background-color: #F4F282;
 }
 table#event-list .section-header
 {
