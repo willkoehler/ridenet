@@ -1,9 +1,9 @@
-function C_SignupDialog()
+function C_ResetPWDialog()
 {
     this.window = null;
 
     // -------------------------------------------------------------------------------------------
-    //  Show signup dialog.
+    //  Show reset password dialog.
     //  params object has the following parameters:
     //      animateTarget   - id of HTML target to animate opening/closing window
     // -------------------------------------------------------------------------------------------
@@ -14,63 +14,31 @@ function C_SignupDialog()
             
             this.form = new Ext.form.FormPanel({
                 baseCls: 'x-plain',     // (gives panel a gray background - by default panels have white backgrounds)
-                url:'data/rider-signup.php',
+                url:'data/reset-password.php',
                 labelAlign: 'right',
                 bodyStyle:'padding: 7px 15px 0px 15px',
                 buttonAlign:'center',
                 defaults: {hideLabel: true},
                 baseParams: { },    // additional parameters passed to post request
                 items: [{
-            // === Welcome Text ===
+            // === Instructions ===
                     xtype: 'displayfield',
                     hideLabel: true,
                     style: 'margin:0 0 10px 0; font: 13px "Helvetica Neue", Arial; color:#444',
-                    html: 'We are growing RideNet slowly so we can focus on creating a great experience for our users. \
-                           Enter your name and email below and we\'ll invite you as soon as we can. <b>OR</b> find a team \
-                           that is already on RideNet and ask them to create an account for you.'
+                    html: 'Enter your email address and we will send you a new password. If you \
+                           continue to have trouble logging in, send us an email at \
+                           <a href="mailto:info@ridenet.net">info@ridenet.net</a>'
                 },{
-                    xtype:'container', layout:'column', items: [{
-                        xtype:'container', layout:'form', width:170, hideLabels: true, items: [{
-                        // === Name ===
-                            xtype: 'textfield',
-                            emptyText: 'Full Name',
-                            name: 'RiderName',
-                            width: 160,
-                            allowBlank: false,
-                            blankText: 'You must enter your name'
-                        }]
-                    },{
-                        xtype:'container', layout:'form', width:230, hideLabels: true, items: [{
-                        // === Email ===
-                            xtype: 'textfield',
-                            emptyText: 'email (name@example.com)',
-                            name: 'RiderEmail',
-                            width: 230,
-                            vtype: 'email',
-                            allowBlank: false,
-                            blankText: 'You must enter your email'
-                        }]
-                    }]
-                },{
-                // === Rider Description ===
-                    xtype: 'textarea',
-                    name: 'RiderDescription',
-                    emptyText: 'Tell us what kind of riding you do',
-                    width: 400,
-                    height: 50
-                },{
-                    xtype: 'displayfield',
-                    hideLabel: true,
-                    style: 'margin:15px 0 0 0; font: 13px "Helvetica Neue", Arial; color:#444',
-                    html: 'If you ride with a local team/club, enter the name.'
-                },{
-                // === Team Name ===
+                // === Email ===
                     xtype: 'textfield',
-                    emptyText: 'Team/Club Name',
-                    name: 'TeamName',
-                    width: 400
+                    emptyText: 'email (name@example.com)',
+                    name: 'Email',
+                    width: 330,
+                    vtype: 'email',
+                    allowBlank: false,
+                    blankText: 'You must enter your email'
                 },{
-                    xtype: 'container', cls: 'form-spacer', height:5
+                    xtype: 'container', cls: 'form-spacer', height:3
                 },{
             // === Message Field (just above buttons) ===
                     xtype: 'container',
@@ -78,24 +46,32 @@ function C_SignupDialog()
                     style: 'display:none',   // start off hidden initially
                     cls: 'form-status'
                 },{
-                    xtype: 'container', cls: 'form-spacer', height:5
+                    xtype: 'container', cls: 'form-spacer', height:3
                 }],
 
                 buttons: [{
-                    text: 'Request Membership',
-                    width: 140,
+                    text: 'Reset Password',
+                    width: 120,
                     handler: this.saveButtonClick,
                     scope: this
                 },{
                     text: 'Cancel',
                     handler: this.cancelButtonClick,
                     scope: this
+                }],
+
+                keys: [{
+                    // Add keymap so pressing <Enter> saves changes
+                    key: [10,13],
+                    scope: this,
+                    stopEvent: true,
+                    fn: this.saveButtonClick
                 }]
             });
 
             this.window = new Ext.Window({
-                title: 'RideNet Sign Up',
-                width: 460,             // (height will be calculated based on content)
+                title: 'Reset Password',
+                width: 390,             // (height will be calculated based on content)
                 autoHeight: true,       // allows calls to syncSize() to resize the window based on content
                 forceLayout: true,      // force window to calculate layout (i.e. height) before opening
                 resizable: false,
@@ -109,6 +85,7 @@ function C_SignupDialog()
             this.window.on('show', function() {
                 this.form.getForm().reset();            // clear form contents
                 this.setMessage('', 'black');           // clear message area
+                this.form.getForm().findField('Email').focus(true, 200);  // set initial focus
             }, this);
         }
 
@@ -119,14 +96,12 @@ function C_SignupDialog()
     this.cancelButtonClick = function()
     {
         this.window.hide();
-        // log an event in Google Analytics
-        _gaq.push(['_trackEvent', 'Signup', 'Cancel']);
     }
 
     this.saveButtonClick = function()
     {
     // --- show sending message in message area
-        this.setMessage("Processing Membership Request...", "black", true);
+        this.setMessage("Resetting Password...", "black", true);
     // --- disable dialog
         this.window.getEl().mask();
     // --- submit form data
@@ -141,15 +116,13 @@ function C_SignupDialog()
     this.onPostSuccess = function(form, action)
     {
         Ext.Msg.show({
-            title: "RideNet Sign Up",
-            msg: "<span style='font-size:14px'>Thank you for signing up with RideNet! We will send you a welcome email with login information. This process may take up to 24 hours.</span>",
+            title: "Reset Password",
+            msg: "<span style='font-size:14px'>Your password was reset. Check your email for a new temporary password.</span>",
             closable: false,
             buttons: Ext.MessageBox.OK,
             fn: function(btn) { 
                 this.window.getEl().unmask();
                 this.window.hide();
-                // log an event in Google Analytics
-                _gaq.push(['_trackEvent', 'Signup', 'Request']);
             },
             scope: this
         });
@@ -165,11 +138,11 @@ function C_SignupDialog()
                 break;
             case Ext.form.Action.SERVER_INVALID:
             // --- failure message returned from code on the server
-                this.setMessage("Error requesting membership: " + action.result.message, "red");
+                this.setMessage(action.result.message, "red");
                 break;
             case Ext.form.Action.CONNECT_FAILURE:
             // --- Failed to connect to server
-                this.setMessage("Error requesting membership: Server did not respond", "red");
+                this.setMessage("Error resetting password: Server did not respond", "red");
                 break;
         }
     }

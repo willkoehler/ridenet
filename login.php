@@ -35,7 +35,9 @@ $riderEmail = isset($_COOKIE['RiderEmail']) ? $_COOKIE['RiderEmail'] : "";
   <!-- Include site stylesheets -->
     <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
   <!-- Code-behind modules for this page (minify before including)-->
+    <?MinifyAndInclude("login.js")?>
     <?MinifyAndInclude("dialogs/signup-dialog.js")?>
+    <?MinifyAndInclude("dialogs/reset-pw-dialog.js")?>
     <?MinifyAndInclude("script/ridenet-helpers.js")?>
   <!-- Build javascript arrays for local/static combobox lookups -->
     <script type="text/javascript">
@@ -90,7 +92,8 @@ $riderEmail = isset($_COOKIE['RiderEmail']) ? $_COOKIE['RiderEmail'] : "";
             <tr>
               <td width="50%" align=center class="text50" colspan=2>
                 <a id="signup-btn" href="javascript:g_signupDialog.show({animateTarget:'signup-btn'})">Signup for RideNet</a>
-                &nbsp;&bull;&nbsp;&nbsp;Email us to reset your password: <a href="mailto:info@ridenet.net">info@ridenet.net</a>
+                &nbsp;&bull;&nbsp;
+                <a id="resetpw-btn" href="javascript:g_resetPWDialog.show({animateTarget:'resetpw-btn'})">Forgot Password</a>
               </td>
             </tr>
           </table
@@ -108,32 +111,3 @@ $riderEmail = isset($_COOKIE['RiderEmail']) ? $_COOKIE['RiderEmail'] : "";
 
 </body>
 </html>
-
-<script language=javascript>
-  function OnLoad()
-  {
-      ctrlEmail = document.getElementById("id");
-      ctrlPW = document.getElementById("pw");
-      if(ctrlEmail.value=='')
-      {
-          // email address is blank, put cursor in email field
-          ctrlEmail.focus();
-      }
-      else
-      {
-          // email address is filled in (from cookie), put cursor in password field
-          ctrlPW.focus();
-      }
-  }
-
-  // This will be called when DOM is loaded and ready
-  Ext.onReady(function()
-  {
-  // --- Turn on validation errors beside the field globally and enable quick tips that will
-  // --- popup tooltip when mouse is hovered over field
-      Ext.form.Field.prototype.msgTarget = 'qtip';
-      Ext.QuickTips.init();
-  // --- create signup dialog
-      g_signupDialog = new C_SignupDialog();
-  });
-</script>
