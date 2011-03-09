@@ -22,7 +22,8 @@ $result['rowcount'] = $record['TotalRows'];
 $rs->free();
 
 // --- Get User records
-$rs = $oDB->query("SELECT TeamID, TeamName, Domain
+$rs = $oDB->query("SELECT TeamID, TeamName, Domain,
+                   IF(bRacing=0 AND bCommuting=0, 'Recreational Team', IF(bRacing=1 AND bCommuting=0, 'Racing Team', IF(bRacing=0 AND bCommuting=1, 'Commuting Team', IF(bRacing=1 AND bCommuting=1, 'Racing and Commuting Team', '')))) AS TeamType
                    FROM teams
                    WHERE $whereFilter ORDER BY TeamName LIMIT $start, $limit", __FILE__, __LINE__);
 

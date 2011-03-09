@@ -38,7 +38,9 @@ function C_ChangeTeamsDialog()
                 idProperty: 'TeamID',           // defines the primary key for the results
                 fields: [
                     {name: 'TeamID', type: 'int'},
-                    {name: 'TeamName'}
+                    {name: 'TeamName'},
+                    {name: 'TeamType'},
+                    {name: 'Domain'}
                 ],
                 proxy: new Ext.data.HttpProxy({ url: 'data/lookup-team.php' })
             });
@@ -61,9 +63,11 @@ function C_ChangeTeamsDialog()
                     valueField: 'TeamID',
                     hiddenName: 'RacingTeamID',
                     forceSelection: true,
+                    maxHeight: 450,
                     width: 300,
                     listWidth: 350,
                     pageSize: 100,
+                    triggerClass: 'x-form-search-trigger',
                     emptyText: 'Type the first few letters of the team name...',
                     allowBlank: false,
                     blankText: 'You must select a team',                    
@@ -77,7 +81,10 @@ function C_ChangeTeamsDialog()
                         }
                     }},
                     tpl:'<tpl for="."><div class="x-combo-list-item" style="border-bottom:1px solid #ccc"><table cellpadding=0 cellspacing=0><tr>\
-                           <td><div class="ellipses" style="padding-left:5px;width:210px">{TeamName}</div></td>\
+                           <td><div class="ellipses" style="padding-left:5px;width:210px">\
+                             <div class="find-name">{TeamName}</div>\
+                             <div class="find-info">{TeamType}</div>\
+                           </div></td>\
                            <td style="height:32px;width:120px;text-align:center"><img src="dynamic-images/team-logo-fit.php?T={TeamID}"></td>\
                          </tr></table>\
                          </div></tpl>'
@@ -90,15 +97,20 @@ function C_ChangeTeamsDialog()
                         valueField: 'TeamID',
                         hiddenName: 'CommutingTeamID',
                         forceSelection: true,
+                        maxHeight: 450,
                         width: 300,
                         listWidth: 350,
                         pageSize: 100,
+                        triggerClass: 'x-form-search-trigger',
                         emptyText: 'Type the first few letters of the team name...',
                         allowBlank: false,
                         blankText: 'You must select a team',                    
                         store: this.dsTeamLookup,
                         tpl:'<tpl for="."><div class="x-combo-list-item" style="border-bottom:1px solid #ccc"><table cellpadding=0 cellspacing=0><tr>\
-                               <td><div class="ellipses" style="padding-left:5px;width:210px">{TeamName}</div></td>\
+                               <td><div class="ellipses" style="padding-left:5px;width:210px">\
+                                 <div class="find-name">{TeamName}</div>\
+                                 <div class="find-info">{TeamType}</div>\
+                               </div></td>\
                                <td style="height:32px;width:120px;text-align:center"><img src="dynamic-images/team-logo-fit.php?T={TeamID}"></td>\
                              </tr></table>\
                              </div></tpl>'
@@ -175,17 +187,7 @@ function C_ChangeTeamsDialog()
 
             // perform actions when window opens
             this.window.on('show', function() {
-                if(this.racingTeamID!=this.commutingTeamID)
-                {
-                    this.form.getForm().findField('RacingTeamID').setValue(this.racingTeamID);          // Team ID that is posted with form
-                    this.form.getForm().findField('RacingTeamID').setRawValue(this.racingTeamName);     // Text displayed to the user
-                    this.form.getForm().findField('CommutingTeamID').setValue(this.commutingTeamID);
-                    this.form.getForm().findField('CommutingTeamID').setRawValue(this.commutingTeamName);
-                }
-                else
-                {
-                    this.form.getForm().reset();
-                }
+                this.form.getForm().reset();
                 Ext.getCmp('two-teams-cb').setValue((this.racingTeamID==this.commutingTeamID) ? 0 : 1);
                 this.checkMutipleTeams();
                 this.setMessage('', 'black');           // clear message area
