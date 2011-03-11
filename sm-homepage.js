@@ -55,61 +55,78 @@ function C_HomePageTab()
                 // === Home Page Title ===
                     xtype: 'textfield',
                     name: 'HomePageTitle',
-                    style: 'margin-left:25px',
+                    style: 'margin-left:15px',
                     emptyText: 'Type a title for your page',
-                    width: 600
-                },{
-                    xtype: 'container', cls: 'form-spacer', height:5
-                },{
-                // === Team Image ===
-                    xtype: 'displayfield',
-                    name: 'TeamImage',
-                    height: 272,
-                    width: 452,
-                    style: 'margin-left:85px;font-size:14px;padding:0px;border:1px solid #888',
-                    setValue: function(val) {
-                        this.value = val;
-                        if(this.rendered)
-                        {   
-                            var pendingUpload = Ext.getCmp("image-file").getValue();
-                            if(pendingUpload!="")
-                            {
-                                this.el.update('The image "' + pendingUpload + '" will be uploaded when you click "Save"');
-                            }
-                            else
-                            {
-                                this.el.update('<table cellpadding=0 cellspacing=0 height=100% width=100%>\
-                                                  <tr><td align=center>\
-                                                    <img src="dynamic-images/homepage-image.php?T=' + g_pt + '&x=' + Math.random() + '">\
-                                                  </td></tr>\
-                                                </table>');
-                            }
-                        }
-                    }
-                },{
-                // === Select Team Image File to Upload ===
-                    xtype: 'container', style: 'margin-left:85px;position:relative;left:5px;top:-32px;height:1px', items: [{
-                        xtype: 'fileuploadfield',
-                        name: 'ImageFile',
-                        id: 'image-file',
-                        emptyText: 'Choose new image file...',
-                        width: 250,
-                        buttonText: '',
-                        buttonCfg: { icon: 'images/choose-picture-icon.png' },
-                        listeners: { scope: this, 'fileselected' : function(fb, v) {
-                            this.form.getForm().findField("TeamImage").setValue(v);
-                        }}
-                    }]
-                },{
-                    xtype: 'container', cls: 'form-spacer', height:5
+                    width: 655
                 },{
                 // === Home Page Text ===
                     xtype: 'textarea',
                     name: 'HomePageText',
-                    style: 'margin-left:25px',
+                    style: 'margin-left:15px',
                     emptyText: 'Type Something About Your Team',
-                    width: 600,
+                    width: 655,
                     height: 180
+                },{
+                    xtype: 'container', cls: 'form-spacer', height:10
+                },{
+                    xtype: 'container', layout: 'column', items: [{
+                        xtype: 'container', style:'margin-left:15px', width: 452, items: [{
+                        // === Team Image ===
+                            xtype: 'displayfield',
+                            name: 'TeamImage',
+                            height: 272,
+                            width: 452,
+                            style: 'font-size:14px;padding:0px;border:1px solid #888',
+                            setValue: function(val) {
+                                this.value = val;
+                                if(this.rendered)
+                                {   
+                                    var pendingUpload = Ext.getCmp("image-file").getValue();
+                                    if(pendingUpload!="")
+                                    {
+                                        this.el.update('The image "' + pendingUpload + '" will be uploaded when you click "Save"');
+                                    }
+                                    else
+                                    {
+                                        this.el.update('<table cellpadding=0 cellspacing=0 height=100% width=100%>\
+                                                          <tr><td align=center>\
+                                                            <img src="dynamic-images/homepage-image.php?T=' + g_pt + '&x=' + Math.random() + '">\
+                                                          </td></tr>\
+                                                        </table>');
+                                    }
+                                }
+                            }
+                        },{
+                        // === Select Team Image File to Upload ===
+                            xtype: 'container', style: 'position:relative;left:5px;top:-29px;height:1px', items: [{
+                                xtype: 'fileuploadfield',
+                                name: 'ImageFile',
+                                id: 'image-file',
+                                emptyText: 'Choose new image file...',
+                                width: 250,
+                                buttonText: '',
+                                buttonCfg: { icon: 'images/choose-picture-icon.png' },
+                                listeners: { scope: this, 'fileselected' : function(fb, v) {
+                                    this.form.getForm().findField("TeamImage").setValue(v);
+                                }}
+                            }]
+                        }]
+                    },{
+                    // === HTML tips
+                        xtype: 'container',
+                        width: 200,
+                        style: 'padding-left:8px;font-size:12px',
+                        html: '<div style="margin-bottom:5px"><b>HTML Tips:</b></div>\
+                               You can use HTML tags to format your home page text\
+                               <ul class="tm-list">\
+                               <li class="tm-list">Place text inside &lt;b&gt;&lt;/b&gt; tags to make it <b>bold</b>.\
+                               <li class="tm-list">Place text inside &lt;i&gt;&lt;/i&gt; tags to make it <i>italic</i>.\
+                               <li class="tm-list">Use a &lt;br&gt; tag to start a new line or insert a blank line.\
+                               <li class="tm-list">Use a &lt;ul&gt; and &lt;li&gt; tags to create a bulleted list.<br>\
+                               &lt;ul&gt;<br>&nbsp;&nbsp;&lt;li&gt;List Item 1&lt;/li&gt;<br>&nbsp;&nbsp;&lt;li&gt;List Item 2&lt;/li&gt;<br>&lt;/ul&gt;\
+                               </ul>'
+                               
+                    }]
                 }]
             },{
                 xtype: 'container', id:'htmlhome', items: [{    

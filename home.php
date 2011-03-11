@@ -82,9 +82,9 @@ $TeamWallLength = 30;
         <img class="photo" src="/dynamic-images/homepage-image.php?T=<?=$pt?>">
         <div class="text">
           <?if(is_null($team['HomePageText'])) { ?>
-            <?=ConvertToHTML(SampleHomePageText($team['OrganizationID']))?>
+            <?=SampleHomePageText($team['OrganizationID'])?>
           <? } else { ?>
-            <?=ConvertToHTML($team['HomePageText'])?>
+            <?=$team['HomePageText']?>
           <? } ?>
         </div>
       </div><script type="text/javascript">createMoreWrapper('', 280, 'MORE');</script>

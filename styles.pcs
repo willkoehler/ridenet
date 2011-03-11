@@ -441,6 +441,9 @@ h3   {
 .tm-banner-bg {     /* will show through transparent areas in banner sample in team manager page */
     background: url('images/transparent.png') repeat;
 }
+/* list used in team-manager forms */
+ul.tm-list { list-style: disc; }
+li.tm-list { margin-left: 20px; margin-top: 10px; padding-left: 0px; }
 
 .more-btn
 {
@@ -493,8 +496,8 @@ h3   {
     background-color: #FFFDCC;
     font:12px Tahoma, Helvetica, Arial, sans-serif;
 }
-/* need to restrict ul styles to team-home div to avoid interfearing with ExtJS calendar */
-.team-home ul { list-style: disc; }
+/* need to restrict ul styles to team-home div to avoid interfering with ExtJS calendar */
+.team-home ul { list-style: disc; overflow: auto}
 .team-home ol { list-style: decimal; }
 .team-home li { margin-left: 20px; padding-left: 5px; }
 

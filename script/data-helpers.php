@@ -62,23 +62,26 @@ function SampleHomePageText($organizationID)
     {
         // 2 BY 20120
         $text = "The goal of 2 BY 2012 is for each citizen of central Ohio to bicycle " .
-                "to work or school 2 days per month by the Columbus bicentennial in 2012.\n\n" .
+                "to work or school, or run an errand by bike, two days a month by the " .
+                "Columbus bicentennial in 2012.<br>\n" .
+                "<br>\n" .
                 "2 BY 2012 is both a challenge and a movement. As citizens of Columbus " .
                 "rise to the challenge and change the way we get to work, we can start " .
                 "a movement that will significantly benefit our lives, our economy and " .
-                "our community. " .
-                "<b>Join the movement today</b> by going to 'Your Profile', updating your rider " .
-                "bio and logging your first ride! Then get on your bike and spread the " .
-                "word. When we ride, we make a difference.";
+                "our community. <b>Join the movement today</b> by going to 'Your Profile', " .
+                "updating your rider bio and logging your first ride! Then get on your bike " .
+                "and spread the word. When we ride, we make a difference.";
     }
     else
     {
         // RideNet
         $text = "<b>Welcome to RideNet!</b> Get started by going to 'Your Profile' and " .
                 "updating your rider bio. While you're there you can log rides and " .
-                "post race results.\n\n" .
+                "post race results.<br>\n" .
+                "<br>\n" .
                 "Be sure to check out the Events page to find tours and races in your region. " .
-                "Check out the Rides page to find out where other cyclists are riding in your area.\n\n" .
+                "Check out the Rides page to find out where other cyclists are riding in your area.<br>\n" .
+                "<br>\n" .
                 "Brand your RideNet site with custom colors are graphics. Upload your own photo " .
                 "for the home page and use this space to tell the world something interesting " .
                 "about your team. What's your mission? Why do you ride?";
