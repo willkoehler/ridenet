@@ -69,9 +69,11 @@ function RenderRideLog($oDB, $riderID, $length, $editable)
             {
               $previousWeek = $currentWeek;
               // lookup totals for the week
+              $weekStart = date_create($record['FirstDayOfWeek'])->format('Y-m-d');
+              $weekEnd = AddDays(date_create($record['FirstDayOfWeek']),6)->format('Y-m-d');
               $sql = "SELECT Count(*) AS Rides, SUM(Distance) AS Distance, SUM(Duration) AS Duration
                       FROM ride_log
-                      WHERE RiderID=$riderID AND WEEK(Date, 3)=$currentWeek AND YEAR(Date)=$currentYear";
+                      WHERE RiderID=$riderID AND Date BETWEEN '$weekStart' AND '$weekEnd'";
               $rs2 = $oDB->query($sql, __FILE__, __LINE__);
               $totals = $rs2->fetch_array();
               $rs2->free(); ?>
