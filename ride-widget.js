@@ -10,7 +10,7 @@ function C_RideWidget(params)
     this.width = (params.width || 450) + "px";
     this.interval = (params.interval || 6000);
     this.preload = (params.preload || 1);
-    this.maxage = (params.maxage || 18);
+    this.maxage = (params.maxage || 10);
     this.title = (params.title || "Everyone's Riding... Are You?");
     this.headfoot = (typeof params.headfoot === 'undefined') ? true : params.headfoot;
     this.photos = (typeof params.photos === 'undefined') ? true : params.photos;

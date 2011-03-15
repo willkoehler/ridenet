@@ -399,10 +399,13 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
     <?if($editable) { ?>
       <div style="height:30px"><!--vertical spacer--></div>
       <h3>Who Else is on RideNet:</h3>
-<?    $sql = "SELECT RiderID, RacingTeamID, CEDaysMonth, Domain
-               FROM rider LEFT JOIN teams ON (CommutingTeamID = TeamID)
-               WHERE rider.Archived=0
-               ORDER BY CEDaysMonth DESC
+<?    $sql = "SELECT RiderID, RacingTeamID, Domain, SUM(LENGTH(Comment)) AS Comments
+            FROM rider
+            LEFT JOIN ride_log USING (RiderID)
+            LEFT JOIN teams ON (CommutingTeamID = TeamID)
+            WHERE rider.Archived=0 AND (ride_log.Date BETWEEN ADDDATE(NOW(), -31) AND NOW())
+            GROUP BY RiderID
+            ORDER BY Comments DESC
                LIMIT 0,35";
       $rs = $oDB->query($sql, __FILE__, __LINE__); ?>
       <div class="commute-ride-group" style="margin-left:35px;width:160px">
