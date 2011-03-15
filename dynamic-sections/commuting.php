@@ -24,7 +24,7 @@ if(isset($_REQUEST['pb']))
 //-----------------------------------------------------------------------------------
 function RenderCommutingWall($oDB, $length)
 {
-  $sql = "SELECT Date, tbt.Sort, tbt.Type, tbt.Image, -RideLogID AS Sort2, 0 AS DeleteID,
+  $sql = "SELECT Date, tbt.Type, tbt.Image, 0 AS DeleteID,
                  RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RacingTeamID, CommutingTeamID, TeamName, Domain,
                  DATEDIFF(NOW(), Date) AS Age, Comment AS PostText,
                  Distance, Duration, RideLogType, RideLogTypeImage, IFNULL(Weather, 'N/A') AS Weather, IFNULL(WeatherImage, 'none.png') AS WeatherImage,
@@ -36,7 +36,7 @@ function RenderCommutingWall($oDB, $length)
           LEFT JOIN ref_weather USING (WeatherID)
           LEFT JOIN ref_team_board_type tbt ON (TeamBoardTypeID=1)
           WHERE RideLogTypeID<>6
-          ORDER BY Date Desc, Sort, Sort2
+          ORDER BY Date Desc, RideLogID Desc
           LIMIT $length";
 
   $rs = $oDB->query($sql, __FILE__, __LINE__);

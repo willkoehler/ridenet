@@ -26,7 +26,7 @@ if(isset($_REQUEST['pb']))
 //-----------------------------------------------------------------------------------
 function RenderEventUpdates($oDB, $raceID, $length)
 {
-  $sql = "SELECT Date, 2 AS Sort, tbt.Type, tbt.Image, -PostID AS Sort2, PostID as DeleteID,
+  $sql = "SELECT Date, tbt.Type, tbt.Image, PostID as DeleteID,
                  RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, posts.TeamID AS RacingTeamID, posts.TeamID AS CommutingTeamID, TeamName, Domain,
                  DATEDIFF(NOW(), Date) AS Age, Text AS PostText,
                  0 AS Distance, 0 AS Duration, '' AS RideLogType, '' AS RideLogTypeImage, '' AS Weather, '' AS WeatherImage,
@@ -37,7 +37,7 @@ function RenderEventUpdates($oDB, $raceID, $length)
           LEFT JOIN ref_team_board_type tbt ON (TeamBoardTypeID=3)
           WHERE (PostType=2 AND PostedToID=$raceID)
 
-          ORDER BY DATE(Date) Desc, Sort, Sort2
+          ORDER BY Date DESC, PostID DESC
           LIMIT 0,$length";
 
   $rs = $oDB->query($sql, __FILE__, __LINE__);

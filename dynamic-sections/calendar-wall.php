@@ -27,7 +27,7 @@ if(isset($_REQUEST['pb']))
 //-----------------------------------------------------------------------------------
 function RenderCalendarWall($oDB, $calendarID, $length)
 {
-  $sql = "SELECT Date, 1 AS Sort, tbt.Type, tbt.Image, -RideLogID AS Sort2, 0 AS DeleteID,
+  $sql = "SELECT Date, tbt.Type, tbt.Image, 0 AS DeleteID,
                  ride_log.RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RacingTeamID, CommutingTeamID, TeamName, Domain,
                  DATEDIFF(NOW(), Date) AS Age, Comment AS PostText,
                  Distance, Duration, RideLogType, RideLogTypeImage, IFNULL(Weather, 'N/A') AS Weather, IFNULL(WeatherImage, 'none.png') AS WeatherImage,
@@ -42,7 +42,7 @@ function RenderCalendarWall($oDB, $calendarID, $length)
           LEFT JOIN ref_team_board_type tbt ON (TeamBoardTypeID=1)
           WHERE CalendarID=$calendarID AND ride_log.Date = DATE(calendar.CalendarDate) AND Attending=1
 
-          ORDER BY DATE(Date) Desc, Sort, Sort2
+          ORDER BY DATE(Date) Desc, RiderID
           LIMIT 0,$length";
 
   $rs = $oDB->query($sql, __FILE__, __LINE__);
