@@ -110,6 +110,8 @@ function C_HomePageTab()
                                     this.form.getForm().findField("TeamImage").setValue(v);
                                 }}
                             }]
+                        },{
+                            xtype: 'container', cls: 'text50', html: '(Picture will be resized and cropped to 450px high x 270px wide)'
                         }]
                     },{
                     // === HTML tips
@@ -119,9 +121,9 @@ function C_HomePageTab()
                         html: '<div style="margin-bottom:5px"><b>HTML Tips:</b></div>\
                                You can use HTML tags to format your home page text\
                                <ul class="tm-list">\
+                               <li class="tm-list">Use a &lt;br&gt; tag to start a new line or insert a blank line.\
                                <li class="tm-list">Place text inside &lt;b&gt;&lt;/b&gt; tags to make it <b>bold</b>.\
                                <li class="tm-list">Place text inside &lt;i&gt;&lt;/i&gt; tags to make it <i>italic</i>.\
-                               <li class="tm-list">Use a &lt;br&gt; tag to start a new line or insert a blank line.\
                                <li class="tm-list">Use a &lt;ul&gt; and &lt;li&gt; tags to create a bulleted list.<br>\
                                &lt;ul&gt;<br>&nbsp;&nbsp;&lt;li&gt;List Item 1&lt;/li&gt;<br>&nbsp;&nbsp;&lt;li&gt;List Item 2&lt;/li&gt;<br>&lt;/ul&gt;\
                                </ul>'
