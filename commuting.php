@@ -66,7 +66,7 @@ $RideBoardLength = 30;
     <p>
       To help new commuters coming on the scene, Consider Biking is coordinating "bike bus service"
       from the 4 quadrants of the city into downtown. We're looking for veteran commuters to "drive" the buses
-      and show the newbies the ropes. <a href="bike-bus.php">Learn more about bike bus service...</a>
+      and show the newbies the ropes. <a href="bike-bus.php">Read more...</a>
     </p>
 <?  // Get top 22 commuters sorted by Commute/Errand days in the last 30 days
     $sql = "SELECT CONCAT(FirstName, ' ', LastName) AS RiderName, RiderID, RacingTeamID, CEDaysMonth, Domain,
