@@ -1,7 +1,7 @@
 <?
 // --- Year to start data
 define("START_YEAR", 2001);
-define("CURRENT_YEAR", 2010);
+define("CURRENT_YEAR", 2011);
 
 // --- default RideNet colors
 define("PRIMARY_COLOR", '286baa');
