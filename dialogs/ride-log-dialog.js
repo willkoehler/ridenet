@@ -33,7 +33,8 @@ function C_RideLogDialog()
                 {name: 'Distance', type: 'int'},
                 {name: 'Duration'},
                 {name: 'WeatherID', type: 'int'},
-                {name: 'Comment'}
+                {name: 'Comment'},
+                {name: 'Link'}
             ]);
 
             this.form = new Ext.form.FormPanel({
@@ -133,16 +134,25 @@ function C_RideLogDialog()
                         width: 570,
                         height: 40
                     }]
+/*                },{
+                    xtype: 'container', cls: 'form-spacer', height:4
                 },{
-            // === Tips ===
-/*                    xtype: 'displayfield',
+                    xtype: 'displayfield',
                     hideLabel: true,
                     style: 'padding-left:65px; font: 11px arial;color:#666',
-                    html: '<b>Tip:</b> Use the keyboard. Press &lt;Tab&gt; to move between boxes. Press &lt;Enter&gt; to save changes.\
-                           To quickly select a Ride Type or Weather, press the down arrow or type the first few letters of the word.'
-                },{*/
-/*                    xtype: 'container', cls: 'form-spacer', height:2
-                },{*/
+                    html: '<b>Link to Something:</b> Garmin Connect, Training Peaks, Route Map, Power file, etc...'*/
+                },{
+                    xtype:'container', layout:'form', labelWidth:60, items: [{
+                    // === Comments ===
+                        xtype: 'textfield',
+                        fieldLabel: 'Link',
+                        name: 'Link',
+                        maxLength: 140,
+                        vtype: 'url',
+                        emptyText: 'Link to something: Route map, Garmin Connect, TrainingPeaks, power file, etc.',
+                        width: 570
+                    }]
+                },{
             // === Message Field (just above buttons) ===
                     xtype: 'container',
                     id: 'status-msg',

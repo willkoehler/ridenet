@@ -45,6 +45,45 @@ function CheckAndReportSQLError($oDB, $filename, $line)     //!!!! test this fun
 
 
 //----------------------------------------------------------------------------------
+//  BuildRideLogComment()
+//
+//  Builds the text for a ride log comment, inserting a link at the end of the
+//  comment if applicable. We attempt to give the link a meaningful name based
+//  on the URL.
+//
+//  PARAMETERS:
+//    comment   - ride log comment
+//    link      - link URL associated with the ride log
+//
+//  RETURN: ride log comment with link appended
+//-----------------------------------------------------------------------------------
+function BuildRideLogComment($comment, $link)
+{
+    if(is_null($link))
+    {
+        $result = $comment;
+    }
+    elseif(preg_match('/garmin/i', $link))
+    {
+        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Garmin]</a>";
+    }
+    elseif(preg_match('/trainingpeaks/i', $link))
+    {
+        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Power]</a>";
+    }
+    elseif(preg_match('/mapmyride|bikely/i', $link))
+    {
+        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Map]</a>";
+    }
+    else
+    {
+        $result = $comment . " <a href=\"$link\" target=\"_blank\">$link</a>";
+    }
+    return($result);
+}
+
+
+//----------------------------------------------------------------------------------
 //  SampleHomePageText()
 //
 //  Generates sample text for teams that have not customized their Home Page yet

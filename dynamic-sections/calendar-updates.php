@@ -28,7 +28,7 @@ function RenderCalendarUpdates($oDB, $calendarID, $length)
 {
   $sql = "SELECT Date, tbt.Type, tbt.Image, PostID as DeleteID,
                  RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, posts.TeamID AS RacingTeamID, posts.TeamID AS CommutingTeamID, TeamName, Domain,
-                 DATEDIFF(NOW(), Date) AS Age, Text AS PostText,
+                 DATEDIFF(NOW(), Date) AS Age, Text AS PostText, NULL AS Link,
                  0 AS Distance, 0 AS Duration, '' AS RideLogType, '' AS RideLogTypeImage, '' AS Weather, '' AS WeatherImage,
                  0 AS RaceID, '' AS EventName
           FROM posts

@@ -110,7 +110,7 @@ function RenderWall($rs, $pt, $showTime=false, $showHeaders=true, $emptyMessage=
             <?if($record['Weather']!="N/A") { ?>
               <img style="position:relative;top:3px" src="/images/weather/<?=$record['WeatherImage']?>" height='14' title="<?=$record['Weather']?>">
             <? } ?>
-            <?=htmlentities($record['PostText'])?><span class="tag">&nbsp;<span class="bullet">&bull;</span> <?=$distanceText?></span>
+            <?=BuildRideLogComment(htmlentities($record['PostText']), $record['Link'])?><span class="tag">&nbsp;<span class="bullet">&bull;</span> <?=$distanceText?></span>
           </div>
           <? break; ?>
         <? case 'Race Result': ?>

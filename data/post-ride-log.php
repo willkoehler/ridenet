@@ -18,6 +18,7 @@ else
     $values['WeatherID'] = SmartGetInt('WeatherID');
     $values['Duration'] = (SmartGet('Duration')=="opt.") ? "NULL" : SmartGetDuration('Duration');
     $values['Comment'] = (SmartGet('Comment')=="140 characters max") ? "NULL" : SmartGetString('Comment');
+    $values['Link'] = (SmartGet('Link')=="Link to something: Route map, Garmin Connect, TrainingPeaks, power file, etc.") ? "NULL" : SmartGetString('Link');
     $values['DateCreated'] =  "'" . date("Y-m-d") . "'";
     // convert distance from kilometers to miles if distance value contains "k"
     $values['Distance'] = (SmartGet('Distance')=="opt.") ? "NULL" : (strpos(SmartGet('Distance'), "k") ? SmartGetInt('Distance') * .62 : SmartGetInt('Distance'));

@@ -31,7 +31,7 @@ function RenderTeamWall($oDB, $teamID, $length)
     $sql = "SELECT * FROM (
                 SELECT Date, tbt.Type, tbt.Image, RideLogID AS Sort2, 0 AS DeleteID,
                        RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RacingTeamID, CommutingTeamID, TeamName, Domain,
-                       DATEDIFF(NOW(), Date) AS Age, Comment AS PostText,
+                       DATEDIFF(NOW(), Date) AS Age, Comment AS PostText, Link,
                        Distance, Duration, RideLogType, RideLogTypeImage, IFNULL(Weather, 'N/A') AS Weather, IFNULL(WeatherImage, 'none.png') AS WeatherImage,
                        0 AS RaceID, '' AS EventName
                 FROM ride_log
@@ -49,7 +49,7 @@ function RenderTeamWall($oDB, $teamID, $length)
             SELECT * FROM (
                 SELECT results.DateAdded AS Date, tbt.Type, tbt.Image, RiderID AS Sort2, 0 AS DeleteID,
                        RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RacingTeamID, CommutingTeamID, TeamName, Domain,
-                       DATEDIFF(NOW(), results.DateAdded) AS Age, IF(LENGTH(Report)>140, CONCAT(SUBSTRING(Report, 1, 140),'...'), Report) AS PostText,
+                       DATEDIFF(NOW(), results.DateAdded) AS Age, IF(LENGTH(Report)>140, CONCAT(SUBSTRING(Report, 1, 140),'...'), Report) AS PostText, NULL AS Link,
                        0 AS Distance, 0 AS Duration, '' AS RideLogType, '' AS RideLogTypeImage, '' AS Weather, '' AS WeatherImage,
                        RaceID, EventName
                 FROM results
@@ -69,7 +69,7 @@ function RenderTeamWall($oDB, $teamID, $length)
             SELECT * FROM (
                 SELECT Date, tbt.Type, tbt.Image, PostID AS Sort2, PostID as DeleteID,
                        RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, posts.TeamID AS RacingTeamID, posts.TeamID AS CommutingTeamID, TeamName, Domain,
-                       DATEDIFF(NOW(), Date) AS Age, Text AS PostText,
+                       DATEDIFF(NOW(), Date) AS Age, Text AS PostText, NULL AS Link,
                        0 AS Distance, 0 AS Duration, '' AS RideLogType, '' AS RideLogTypeImage, '' AS Weather, '' AS WeatherImage,
                        0 AS RaceID, '' AS EventName
                 FROM posts
