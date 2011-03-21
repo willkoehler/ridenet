@@ -111,7 +111,7 @@ $TeamWallLength = 30;
                          WHERE RiderID = " . GetUserID(), __FILE__, __LINE__);
       $loggedInRider = $rs->fetch_array();
       $rs->free();?>
-      <div style="float:right;position:relative;top:6px;" class='action-btn' id='post-message-btn' onclick="clickPostMessage(this.id, { riderID:<?=$loggedInRider['RiderID']?>, racingTeamID: <?=$loggedInRider['RacingTeamID']?>, riderName: '<?=htmlentities($loggedInRider['RiderName'])?>', teamName: '<?=htmlentities($loggedInRider['TeamName'])?>', postingTo: '<?=htmlentities($team['TeamName'])?>' });">
+      <div style="float:right;position:relative;top:6px;" class='action-btn' id='post-message-btn' onclick="clickPostMessage(this.id, { riderID:<?=$loggedInRider['RiderID']?>, racingTeamID: <?=$loggedInRider['RacingTeamID']?>, riderName: '<?=htmlentities(addslashes($loggedInRider['RiderName']))?>', teamName: '<?=htmlentities(addslashes($loggedInRider['TeamName']))?>', postingTo: '<?=htmlentities(addslashes($team['TeamName']))?>' });">
         + Post Message
       </div>
     <? } else { ?>
