@@ -450,22 +450,26 @@ function AdSidebar()
 {
 ?>
     <div class="sidebarBlock">
-      <div style="text-align:center" id="ad-roadid">
-        <a href = "http://www.roadid.com/?referrer=6900">
-          <img border="0" src="http://www.roadid.com/affiliates/showban.asp?referrer=6900&img=logo_1.gif" width=105>
+      <h3 style="text-align:center">RideNet Clothing</h3>
+      <div style="text-align:center">
+        <a href = "clothing.php">
+          <img src="images/clothing/ridenet-jersey1.png" id="ad-clothing" border=0 height=100>
         </a>
+        <div style="height:4px"></div>
+        <p style="margin:0">
+          Order by April 1st
+        </p>
       </div>
       <script type="text/javascript">
           new Ext.ToolTip({
-              target: 'ad-roadid',
+              target: 'ad-clothing',
               anchor: 'top',
               anchorOffset: 50,
               dismissDelay: 0,
               showDelay: 200,
               width: 250,
-              html: "<b>Ride Safe:</b> In the event of an accident, if you can't speak for yourself, \
-                     your Road ID will. Available in 6 different styles. It's not just a piece of gear \
-                     - it's peace of mind.",
+              html: "<b>RideNet Clothing:</b> We're selling clothing to promote RideNet.\
+                     A portion of each order will be donated to Consider Biking to support 2BY2012. ",
               padding: 5
             });
       </script>

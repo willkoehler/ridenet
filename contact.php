@@ -29,7 +29,8 @@ RecordPageView($oDB);
       <h1>Contact Us</h1>
       <h2 class="text75" xstyle="font-size:15px">
         For support, feedback, questions, problems and praise, please contact us via email<br><br>
-        email: <a href="mailto:info@ridenet.net">info@ridenet.net</a>
+        email: <a href="mailto:info@ridenet.net">info@ridenet.net</a><br><br>
+        Questions about RideNet clothing: <a href="mailto:clothing@ridenet.net">clothing@ridenet.net</a>
       </h2>
       <div style="height:60px"></div>
 

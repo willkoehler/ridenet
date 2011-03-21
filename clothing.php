@@ -53,32 +53,33 @@ $RideBoardLength = 30;
         Click to Order Now!<br>
       </a>
       <a href="https://www.bikereg.com/events/register.asp?eventid=13099" target="_blank">
-        <img src="images/clothing/order-btn3.jpg" border=0 width=155>
+        <img src="images/clothing/order-btn3.png" border=0 width=155>
       </a>
     </div>
     <h2><ul style="list-style: square;line-height:25px;font-size:16px">
       <li>High quality fabric and construction - Verge Elite Collection
       <li>Flat lock stitching. Tagless labeling. Hidden zipper
       <li>Orders are handled securely through BikeReg.com
+      <li>Orders Due April 1st - Delivery in May
       <li>A portion of each sale supports <a href="http://www.2by2012.com/" target="_blank">Consider Biking's 2BY2012 program</a>
     </ul></h2>
     <div style="height:20px"></div>
     
     <div style="float:left">
       <a href="https://www.bikereg.com/events/register.asp?eventid=13099" target="_blank">
-        <img src="images/clothing/ridenet-jersey1.jpg" border=0>
+        <img src="images/clothing/ridenet-jersey1.png" border=0>
       </a>
       <p class=photo-caption style="text-align:center">Jersey Front</p>
     </div>
     <div style="float:left">
       <a href="https://www.bikereg.com/events/register.asp?eventid=13099" target="_blank">
-        <img src="images/clothing/ridenet-jersey2.jpg" border=0>
+        <img src="images/clothing/ridenet-jersey2.png" border=0>
       </a>
       <p class=photo-caption style="text-align:center">Jersey Back</p>
     </div>
     <div style="float:left">
       <a href="https://www.bikereg.com/events/register.asp?eventid=13099" target="_blank">
-        <img src="images/clothing/ridenet-shorts.jpg" border=0>
+        <img src="images/clothing/ridenet-shorts.png" border=0>
       </a>
       <p class=photo-caption style="text-align:center">Shorts</p>
     </div>

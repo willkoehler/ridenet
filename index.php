@@ -56,10 +56,10 @@ RecordPageView($oDB);
         <script type='text/javascript' src='../ride-widget.js'></script> 
         <script type="text/javascript">
           var rideWidget = new C_RideWidget({
-              height: 390,
+              height: 590,
               width: 450,
               interval: 6000,
-              preload: 5,
+              preload: 8,
               headfoot: false,
               scrollbar: false,
               domainRoot: '<?=GetDomainRoot()?>',
@@ -79,7 +79,7 @@ RecordPageView($oDB);
       </div>
     </div>
     <div style="float:left;width:170px;margin-left:10px">
-      <div style="width:180px;height:100px;margin-top:10px;-moz-border-radius: 8px;border-radius: 8px;border: 1px solid #CCC;background-color:#EEE;padding:15px 10px">
+      <div style="width:180px;margin-top:10px;-moz-border-radius: 8px;border-radius: 8px;border: 1px solid #CCC;background-color:#EEE;padding:15px 10px">
         <div style="margin-top:0px;font:16px helvetica;color:#333">Sign Up for RideNet.</div>
         <div style="margin-top:5px;font:12px helvetica;color:#888">
             RideNet is FREE for teams and individuals. Create your RideNet profile today!
@@ -89,6 +89,17 @@ RecordPageView($oDB);
         </div>
         <div id="join-btn"></div>
       </div>
+
+      <div style="width:200px;margin-top:10px;-moz-border-radius: 8px;border-radius: 8px;border: 1px solid #CCC;background-color:#EEE;padding:15px 0 10px 0;text-align:center">
+        <div style="margin-top:0px;font:16px helvetica;color:#333">Buy RideNet Clothing.</div>
+        <a href="clothing.php">
+          <img style="margin:5px 0 0 0;" src="images/clothing/ridenet-jersey1.png" Height=110 border=0>
+        </a>
+        <p style="margin:5px 0 0 0;font-size:12px;color:#888">
+          Order by April 1st
+        </p>
+      </div>
+
       <div style="margin:20px 0px 2px 5px;font:16px 'Helvetica Neue', Helvetica, Arial, sans-serif" class="primary-color">
         Who's on RideNet...
       </div>
