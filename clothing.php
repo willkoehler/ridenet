@@ -58,7 +58,8 @@ $RideBoardLength = 30;
     </div>
     <h2><ul style="list-style: square;line-height:25px;font-size:16px">
       <li>High quality fabric and construction - Verge Elite Collection
-      <li>Flat lock stitching. Tagless labeling. Hidden zipper.
+      <li>Flat lock stitching. Tagless labeling. Hidden zipper
+      <li>Reflective Piping on the back of the jersey
       <li>Orders are handled securely through BikeReg.com
       <li>A portion of each sale supports <a href="http://www.2by2012.com/" target="_blank">Consider Biking's 2BY2012 program</a>
     </ul></h2>
