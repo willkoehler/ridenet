@@ -69,12 +69,11 @@ $RideBoardLength = 30;
       and show the newbies the ropes. <a href="bike-bus.php">Read more...</a>
     </p>
     <a href="clothing.php">
-      <img style="float:right;margin:35px 10px 0 20px;" src="images/clothing/ridenet-jersey1.png" Height=60 border=0>
+      <img style="float:right;margin:15px 20px 0 20px;" src="images/clothing/ridenet-jersey1.png" Height=60 border=0>
     </a>
-    <h1>Buy RideNet Clothing</h1>
+    <h1>RideNet Clothing</h1>
     <p>
-      We're selling clothing to promote RideNet. We secured a deal on high quality Verge clothing - 
-      the same stuff used by local racing teams. A portion of each order will be
+      We're selling cycling clothing to promote RideNet. A portion of each order will be
       donated to Consider Biking to support 2BY2012. <a href="clothing.php" style="color:red">Details...</a>
     </p>
 <?  // Get top 22 commuters sorted by Commute/Errand days in the last 30 days

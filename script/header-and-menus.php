@@ -468,7 +468,7 @@ function AdSidebar()
               dismissDelay: 0,
               showDelay: 200,
               width: 250,
-              html: "<b>RideNet Clothing:</b> We're selling clothing to promote RideNet.\
+              html: "<b>RideNet Cycling Kits:</b> We're selling cycling clothing to promote RideNet.\
                      A portion of each order will be donated to Consider Biking to support 2BY2012. ",
               padding: 5
             });

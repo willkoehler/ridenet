@@ -23,7 +23,7 @@ $RideBoardLength = 30;
   <meta property="og:title" content="Buy RideNet Clothing" />
   <meta property="og:image" content="http://ridenet.net/images/clothing/ridenet-jersey1.jpg" />
   <meta property="og:site_name" content="RideNet" />
-  <meta property="og:description" content="We're selling clothing to promote RideNet. A portion of each order will be donated to Consider Biking to support 2BY2012" />
+  <meta property="og:description" content="We're selling cycling kits to promote RideNet. A portion of each order will be donated to Consider Biking to support 2BY2012" />
   <meta property="fb:app_id" content="147642135282357" />
 </head>
 
@@ -38,7 +38,7 @@ $RideBoardLength = 30;
 
   <div id="mainContent">
     <div style="float:left">
-      <h1>RideNet Clothing</h1>
+      <h1>RideNet Cycling Kits</h1>
     </div>
     <div style="float:left;margin-left:10px;position:relative;left:0px;top:12px">
       <?SocialMediaButtons("RideNet clothing for sale")?>
@@ -58,9 +58,8 @@ $RideBoardLength = 30;
     </div>
     <h2><ul style="list-style: square;line-height:25px;font-size:16px">
       <li>High quality fabric and construction - Verge Elite Collection
-      <li>Flat lock stitching. Tagless labeling. Hidden zipper
+      <li>Flat lock stitching. Tagless labeling. Hidden zipper.
       <li>Orders are handled securely through BikeReg.com
-      <li>Orders Due April 1st - Delivery in May
       <li>A portion of each sale supports <a href="http://www.2by2012.com/" target="_blank">Consider Biking's 2BY2012 program</a>
     </ul></h2>
     <div style="height:20px"></div>
