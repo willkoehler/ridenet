@@ -384,6 +384,12 @@ h1   {
     margin: 0px; 
     padding: 8px 0px 4px 0px; /* margin-top is broken in IE7 (POS) */
 }
+h1 a {
+    color: #<?=$PrimaryColor?> !important;
+}
+h1 a:hover {
+    text-decoration: none;
+}
 h2   {
     font: 15px 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #<?=$SecondaryColor?>;

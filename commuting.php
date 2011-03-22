@@ -57,7 +57,7 @@ $RideBoardLength = 30;
 
   <div id="mainContent">
     <div style="float:left">
-      <h1>Take a Ride on the Bike Bus</h1>
+      <h1><a href="bike-bus.php">Take a Ride on the Bike Bus</a></h1>
     </div>
     <div style="float:left;margin-left:10px;position:relative;left:0px;top:12px">
       <?SocialMediaButtons("Stay up to date with the Central Ohio commuting scene")?>
@@ -71,7 +71,7 @@ $RideBoardLength = 30;
     <a href="clothing.php">
       <img style="float:right;margin:15px 20px 0 20px;" src="images/clothing/ridenet-jersey1.png" Height=60 border=0>
     </a>
-    <h1>RideNet Clothing</h1>
+    <h1><a href="clothing.php">RideNet Clothing</a></h1>
     <p>
       We're selling cycling clothing to promote RideNet. A portion of each order will be
       donated to Consider Biking to support 2BY2012. <a href="clothing.php" style="color:red">Details...</a>
