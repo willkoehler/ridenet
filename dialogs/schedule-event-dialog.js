@@ -39,6 +39,7 @@ function C_EventDialog()
                 bodyStyle:'padding:5px 5px 0',
                 buttonAlign:'right',
                 reader: reader,
+                labelWidth: 80,
                 baseParams: { },    // additional parameters passed to post request
                 items: [{
                     xtype:'container', layout:'column', items: [{
@@ -78,17 +79,13 @@ function C_EventDialog()
                         }]
                     }] // end of column container
                 },{
-                    xtype:'container', layout:'column', items: [{
-                        xtype:'container', layout:'form', width:440, labelWidth:80, items: [{
-                        // === Event Name ===
-                            xtype: 'textfield',
-                            fieldLabel: 'Event Name',
-                            name: 'EventName',
-                            width: 310,
-                            allowBlank: false,
-                            blankText: 'You must enter a name for this event'
-                        }]
-                    }] // end of column container
+                    // === Event Name ===
+                        xtype: 'textfield',
+                        fieldLabel: 'Event Name',
+                        name: 'EventName',
+                        width: 310,
+                        allowBlank: false,
+                        blankText: 'You must enter a name for this event'
                 },{
                     xtype:'container', layout:'column', items: [{
                         xtype:'container', layout:'form', width:313, labelWidth:80, items: [{
@@ -117,17 +114,13 @@ function C_EventDialog()
                         }]
                     }] // end of column container
                 },{
-                    xtype:'container', layout:'column', items: [{
-                        xtype:'container', layout:'form', width:440, labelWidth:80, items: [{
-                        // === Web Site ===
-                            xtype: 'textfield',
-                            fieldLabel: 'Web Site',
-                            name: 'WebPage',
-                            width: 310,
-                            allowBlank: false,
-                            blankText: 'You must enter the event website'
-                        }]
-                    }] // end of column container
+                // === Web Site ===
+                    xtype: 'textfield',
+                    fieldLabel: 'Web Site',
+                    name: 'WebPage',
+                    width: 310,
+                    allowBlank: false,
+                    blankText: 'You must enter the event website'
                 },{
                     xtype: 'container', cls: 'form-spacer', height:5
                 },{

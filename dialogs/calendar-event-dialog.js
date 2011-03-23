@@ -63,6 +63,7 @@ function C_RideDialog()
                 labelAlign: 'right',
                 bodyStyle:'padding:5px 5px 0',
                 buttonAlign:'right',
+                labelWidth:80,
                 reader: reader,
                 baseParams: { },    // additional parameters passed to post request
                 items: [{
@@ -93,68 +94,48 @@ function C_RideDialog()
                         }]
                     }] // end of column container
                 },{
-                    xtype:'container', layout:'column', items: [{
-                        xtype:'container', layout:'form', width:420, labelWidth:80, items: [{
-                        // === Event Name ===
-                            xtype: 'textfield',
-                            fieldLabel: 'Ride Name',
-                            name: 'EventName',
-                            width: 310,
-                            allowBlank: false,
-                            blankText: 'You must enter a name for this ride'
-                        }]
-                    }] // end of column container
+                    // === Ride Name ===
+                        xtype: 'textfield',
+                        fieldLabel: 'Ride Name',
+                        name: 'EventName',
+                        width: 310,
+                        allowBlank: false,
+                        blankText: 'You must enter a name for this ride'
                 },{
-                    xtype:'container', layout:'column', items: [{
-                        xtype:'container', layout:'form', width:420, labelWidth:80, items: [{
-                        // === Location ===
-                            xtype: 'textfield',
-                            fieldLabel: 'Meet At',
-                            name: 'Location',
-                            width: 310,
-                            allowBlank: false,
-                            blankText: 'You must enter the location of this ride'
-                        }]
-                    }] // end of column container
+                    // === Location ===
+                        xtype: 'textfield',
+                        fieldLabel: 'Meet At',
+                        name: 'Location',
+                        width: 310,
+                        allowBlank: false,
+                        blankText: 'You must enter the location of this ride'
                 },{
-                    xtype:'container', layout:'column', items: [{
-                        xtype:'container', layout:'form', width:420, labelWidth:80, items: [{
-                        // === Zip Code ===
-                            xtype: 'remotecombobox',
-                            fieldLabel: 'Zip Code',
-                            displayField: 'text',
-                            valueField: 'id',
-                            hiddenName: 'ZipCodeID',
-                            forceSelection: true,
-                            id: 'zip-code',
-                            width:310,
-                            allowBlank: false,
-                            blankText: 'Zip code is required so rides can be filtered by location',
-                            store: this.dsZipCodeLookup
-                        }]
-                    }] // end of column container
+                    // === Zip Code ===
+                        xtype: 'remotecombobox',
+                        fieldLabel: 'Zip Code',
+                        displayField: 'text',
+                        valueField: 'id',
+                        hiddenName: 'ZipCodeID',
+                        forceSelection: true,
+                        id: 'zip-code',
+                        width:310,
+                        allowBlank: false,
+                        blankText: 'Zip code is required so rides can be filtered by location',
+                        store: this.dsZipCodeLookup
                 },{
-                    xtype:'container', layout:'column', items: [{
-                        xtype:'container', layout:'form', width:420, labelWidth:80, items: [{
-                        // === Comments ===
-                            xtype: 'textarea',
-                            fieldLabel: 'Comments',
-                            name: 'Comments',
-                            width: 310,
-                            height: 120
-                        }]
-                    }] // end of column container
+                    // === Comments ===
+                        xtype: 'textarea',
+                        fieldLabel: 'Comments',
+                        name: 'Comments',
+                        width: 310,
+                        height: 120
                 },{
-                    xtype:'container', layout:'column', items: [{
-                        xtype:'container', layout:'form', width:420, labelWidth:80, items: [{
-                        // === Map URL ===
-                            xtype: 'textfield',
-                            fieldLabel: 'Map URL',
-                            name: 'MapURL',
-                            emptyText: '(optional)',
-                            width: 310
-                        }]
-                    }] // end of column container
+                    // === Map URL ===
+                        xtype: 'textfield',
+                        fieldLabel: 'Map URL',
+                        name: 'MapURL',
+                        emptyText: '(optional)',
+                        width: 310
                 },{
                     xtype: 'container', cls: 'form-spacer', height:7
                 },{
