@@ -90,7 +90,7 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
 
 <?  $vDate = SmartGetDate("Date");
     $sql = "SELECT CalendarID, EventName, Location, CalendarDate, ClassX, ClassA, ClassB, ClassC, ClassD, Comments, MapURL,
-                   FirstName, LastName, RiderID, AddedBy,
+                   FirstName, LastName, RiderID, AddedBy, c.Archived,
                    postedTeam.TeamName AS PostedTeamName, postedTeam.Domain AS PostedDomain,
                    CONCAT(City, ', ', State, ' ', ZipCode) AS GeneralArea,
                    CalculateDistance(Longitude, Latitude, $CalendarLongitude, $CalendarLatitude) AS Distance,
@@ -105,6 +105,10 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
     if(($record=$rs->fetch_array())==false)
     {
       exit ("Invalid Ride ID");
+    }
+    elseif($record['Archived'])
+    {
+      exit ("This ride has been deleted");
     }
     else
     { 

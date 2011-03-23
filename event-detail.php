@@ -61,7 +61,7 @@ $notify = $oDB->DBLookup("Notify", "event_attendance", "AttendanceID=$attendance
 
 <?  $vDate = SmartGetDate("Date");
     $sql = "SELECT RaceID, RaceDate, EventName, WebPage, RideType, City, StateAbbr, AddedBy,
-                   (TIMESTAMPDIFF(DAY, RaceDate, NOW())) AS EventAgeDays
+                   (TIMESTAMPDIFF(DAY, RaceDate, NOW())) AS EventAgeDays, Archived
             FROM event
             LEFT JOIN ref_states USING (StateID)
             LEFT JOIN ref_event_type USING (RideTypeID)
@@ -70,6 +70,10 @@ $notify = $oDB->DBLookup("Notify", "event_attendance", "AttendanceID=$attendance
     if(($record=$rs->fetch_array())==false)
     {
       exit ("Invalid Event ID");
+    }
+    elseif($record['Archived'])
+    {
+      exit ("This event has been deleted");
     }
     else
     { 
