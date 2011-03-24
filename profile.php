@@ -353,40 +353,61 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
       </div>
     </div>
 
-    <!-- RIDES ATTENDANCE -->
-<?  $sql = "SELECT CalendarID, CalendarDate, EventName, ClassX, ClassA, ClassB, ClassC, ClassD,
-                   CONCAT(City, ', ', State, ' ', ZipCode) AS GeneralArea,
-                   IF(DATEDIFF(NOW(), CalendarDate)>=0, '', '*') AS Future
-            FROM calendar c JOIN calendar_attendance ca USING (CalendarID) LEFT JOIN ref_zipcodes USING (ZipCodeID)
-            WHERE c.Archived=0 AND ca.RiderID=$RiderID AND Attending=1
-            ORDER BY CalendarDate DESC
+    <!-- UPCOMING RIDES AND EVENTS-->
+<?  $sql = "SELECT CalendarID AS ID, 0 AS Type, CalendarDate AS Date, EventName AS Name,
+                   CONCAT(City, ', ', State) AS Location, '' AS Image
+            FROM calendar c
+            JOIN calendar_attendance ca USING (CalendarID)
+            LEFT JOIN ref_zipcodes USING (ZipCodeID)
+            WHERE c.Archived=0 AND ca.RiderID=$RiderID AND Attending=1 AND DATEDIFF(NOW(), CalendarDate)<=0
+            
+            UNION
+            
+            SELECT RaceID AS ID, 1 AS Type, RaceDate AS Date, EventName AS Name,
+                   CONCAT(City, ', ', StateAbbr) AS Location, Picture AS Image
+            FROM event e
+            JOIN event_attendance ea USING (RaceID)
+            JOIN ref_states USING (StateID)
+            JOIN ref_event_type USING (RideTypeID)
+            WHERE e.Archived=0 AND ea.RiderID=$RiderID AND Attending=1 AND DATEDIFF(NOW(), RaceDate)<=0 
+            
+            ORDER BY Date
             LIMIT 50";
     $rs = $oDB->query($sql, __FILE__, __LINE__);
     if($rs->num_rows > 0) {?>
       <div style="height:30px"><!--vertical spacer--></div>
-      <h3>Ride Attendance</h3>
+      <h3>Upcoming Rides and Events</h3>
       <div style="height:2px"><!--vertical spacer--></div>
       <div class=centered style="width:630px">
         <div id='more-content3'>
           <table id="profile-table" cellpadding=0 cellspacing=0>
             <tr>
               <td class=header style="padding-left:4px;">Date</td>
-              <td class=header style="text-align:center">&nbsp;</td>
-              <td class=header>Ride</td>
+              <td class=header colspan=2>Ride/Event</td>
               <td class=header>Location</td>
             </tr>
             <? while(($record = $rs->fetch_array())!=false) { ?>
               <!-- Ride Row -->
               <tr>
-                <td class=data width="70" style="padding-left:4px;"><?=date_create($record['CalendarDate'])->format("n/j/Y")?></td>
-                <td class=data width="15"><b><?=$record['Future']?></b></td>
+                <td class=data width="75" style="padding-left:4px;"><?=date_create($record['Date'])->format("n/j/Y")?></td>
+                <td class=data width="35" style="padding-left:4px;">
+                  <?if($record['Type']==0) { ?>
+                    <img src="images/ridelog/recreational.png" class="tight" style="margin-left:7px" height=15>
+                  <? } else { ?>
+                    <img src="images/event-types/<?=$record['Image']?>" class="tight" height=15>
+                  <? } ?>
+                </td>
                 <td class=data width="335"><div class=ellipses style="width:325px">
-                  <a href=calendar-detail.php?CID=<?=$record['CalendarID']?>>
-                    <?=$record['EventName']?>
+                  <?if($record['Type']==0) { ?>
+                    <a href=calendar-detail.php?CID=<?=$record['ID']?>>
+                  <? } else { ?>
+                    <a href=event-detail.php?RaceID=<?=$record['ID']?>>
+                  <? } ?>
+                    <?=$record['Name']?>
                   </a>
                 </div></td>
                 <td class=data width="175"><div class=ellipses style="width:165px">
-                  <?=$record['GeneralArea']?>
+                  <?=$record['Location']?>
                 </div></td>
               </tr>
             <?}?>
