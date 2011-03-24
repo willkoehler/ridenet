@@ -53,7 +53,7 @@ $notify = $oDB->DBLookup("Notify", "event_attendance", "AttendanceID=$attendance
 <div id="container">
   <div id="header">
     <?InsertPageBanner($oDB, $pt)?>
-    <?InsertMainMenu($oDB, $pt, "Event")?>
+    <?InsertMainMenu($oDB, $pt, "Schedule")?>
   </div>
   
   <div id="mainContent">
