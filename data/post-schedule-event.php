@@ -47,10 +47,6 @@ else
         $values['AddedBy'] = GetUserID();
         $values['DateAdded'] = "'" . date("Y-m-d") . "'";
     }
-    // --- remove "http://" from web address if it is present (we add this ourselves when rendering the race schedule)
-    $values['WebPage'] = str_replace("http://", "", $values['WebPage']);
-    $values['WebPage'] = str_replace("https://", "", $values['WebPage']);
-
     $result = InsertOrUpdateRecord2($oDB, "event", "RaceID", $raceID, $values);
 }
 

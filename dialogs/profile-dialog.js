@@ -250,7 +250,8 @@ function C_ProfileDialog()
                                 xtype: 'textfield',
                                 fieldLabel: 'Commute Map',
                                 name: 'CommuteMapURL',
-                                width: 280
+                                width: 280,
+                                vtype: 'url'
                             }]
                         },{
                         // === Info ===
@@ -264,7 +265,8 @@ function C_ProfileDialog()
                             xtype: 'textfield',
                             fieldLabel: 'Website/Blog URL',
                             name: 'URL',
-                            width: 430
+                            width: 430,
+                            vtype: 'url'
                         }]
                     }]
                 },{
@@ -446,7 +448,7 @@ function C_ProfileDialog()
     {
         if(!this.form.getForm().isValid())
         {
-            this.setMessage("Fields highlighted in red are required. Please fill in all required fields", "red");
+            this.setMessage("Profile information is not complete. Fix fields marked in red.", "red");
         }
         else
         {
@@ -497,7 +499,7 @@ function C_ProfileDialog()
         switch(action.failureType) {
             case Ext.form.Action.CLIENT_INVALID:
             // --- client-side validation failed
-                this.setMessage("Fields highlighted in red are required. Please fill in all required fields", "red");
+                this.setMessage("Profile information is not complete. Fix fields marked in red.", "red");
                 break;
             case Ext.form.Action.SERVER_INVALID:
             // --- failure message returned from code on the server

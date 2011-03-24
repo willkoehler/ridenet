@@ -102,7 +102,7 @@ $notify = $oDB->DBLookup("Notify", "event_attendance", "AttendanceID=$attendance
           </tr>
           <tr>
             <td class="label">Event Website:</td>
-            <td class="text"><a href="http://<?=$record['WebPage']?>" target="_blank"><?=LimitString("http://" . $record['WebPage'],55)?></a></td>
+            <td class="text"><a href="<?=$record['WebPage']?>" target="_blank"><?=LimitString($record['WebPage'],55)?></a></td>
           </tr>
           <!-- List of who's going -->
           <tr <?if($oDB->DBCount("event_attendance", "RaceID=$raceID AND (Attending=1 OR Notify=1)")==0) { ?> style="display:none" <? } ?>>

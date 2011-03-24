@@ -53,11 +53,6 @@ else
     $values['DateOfBirth'] = SmartGetDate('DateOfBirth');
     $values['URL'] = SmartGetString('URL');
     $values['CommuteMapURL'] = SmartGetString('CommuteMapURL');
-    // --- remove "http://" from web address if it is present (we add this ourselves later)
-    $values['URL'] = str_replace("http://", "", $values['URL']);
-    $values['URL'] = str_replace("https://", "", $values['URL']);
-    $values['CommuteMapURL'] = str_replace("http://", "", $values['CommuteMapURL']);
-    $values['CommuteMapURL'] = str_replace("https://", "", $values['CommuteMapURL']);
     $result = InsertOrUpdateRecord2($oDB, "rider", "RiderID", $riderID, $values);
 
     // ==== Store Uploaded Pictures ====

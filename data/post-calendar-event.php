@@ -50,9 +50,6 @@ else
         $values['AddedBy'] = GetUserID();
         $values['TeamID'] = $postingTeamID;
     }
-    // --- remove "http://" from map URL if it is present (we add this ourselves later)
-    $values['MapURL'] = str_replace("http://", "", $values['MapURL']);
-    $values['MapURL'] = str_replace("https://", "", $values['MapURL']);
 
     $result = InsertOrUpdateRecord2($oDB, "calendar", "CalendarID", $calendarID, $values);
 }

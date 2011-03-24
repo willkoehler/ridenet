@@ -119,6 +119,7 @@ function C_EventDialog()
                     fieldLabel: 'Web Site',
                     name: 'WebPage',
                     width: 310,
+                    vtype: 'url',
                     allowBlank: false,
                     blankText: 'You must enter the event website'
                 },{
@@ -253,7 +254,7 @@ function C_EventDialog()
         switch(action.failureType) {
             case Ext.form.Action.CLIENT_INVALID:
             // --- client-side validation failed
-                this.setMessage("Fix fields marked in red and click 'Save' again", "red");
+                this.setMessage("Event information is not complete. Fix fields marked in red.", "red");
                 break;
             case Ext.form.Action.SERVER_INVALID:
             // --- failure message returned from code on the server

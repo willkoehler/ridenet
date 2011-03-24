@@ -135,7 +135,8 @@ function C_RideDialog()
                         fieldLabel: 'Map URL',
                         name: 'MapURL',
                         emptyText: '(optional)',
-                        width: 310
+                        width: 310,
+                        vtype: 'url'
                 },{
                     xtype: 'container', cls: 'form-spacer', height:7
                 },{

@@ -144,7 +144,7 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
           <?if($record['MapURL']!="") { ?>
           <tr>
             <td class="label" valign="top">Route&nbsp;Map:</td>
-            <td class="text"><a href="http://<?=$record['MapURL']?>" target="_blank"><?=LimitString("http://" . $record['MapURL'],55)?></a></td>
+            <td class="text"><a href="<?=$record['MapURL']?>" target="_blank"><?=LimitString($record['MapURL'],55)?></a></td>
           </tr>
           <? } ?>
           <?if($record['Comments']!="") { ?>

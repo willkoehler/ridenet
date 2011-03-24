@@ -257,7 +257,7 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
                       <td class=text>
                         <?=$riderInfo['MyCommute']?>
                         <?if(!is_null($riderInfo['CommuteMapURL'])) { ?>
-                          <a href="http://<?=$riderInfo['CommuteMapURL']?>" target="_blank">[Show Route Map]</a>
+                          <a href="<?=$riderInfo['CommuteMapURL']?>" target="_blank">[Show Route Map]</a>
                         <? } ?>
                       </td>
                     </tr>
@@ -265,7 +265,7 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
                   <?if(!is_null($riderInfo['URL'])) { ?>
                     <tr>
                       <td class=label valign=top>Website/Blog:</td>
-                      <td class=text><a href="http://<?=$riderInfo['URL']?>" target="_blank"><div class="ellipses" style="width:370px">http://<?=$riderInfo['URL']?></div></a></td>
+                      <td class=text><a href="<?=$riderInfo['URL']?>" target="_blank"><div class="ellipses" style="width:370px"><?=$riderInfo['URL']?></div></a></td>
                     </tr>
                   <? } ?>
                 </table>
