@@ -65,11 +65,11 @@ function BuildRideLogComment($comment, $link)
     }
     elseif(preg_match('/garmin/i', $link))
     {
-        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Garmin]</a>";
+        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Garmin Data]</a>";
     }
     elseif(preg_match('/trainingpeaks/i', $link))
     {
-        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Power]</a>";
+        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Power File]</a>";
     }
     elseif(preg_match('/mapmyride|bikely/i', $link))
     {
@@ -77,7 +77,7 @@ function BuildRideLogComment($comment, $link)
     }
     else
     {
-        $result = $comment . " <a href=\"$link\" target=\"_blank\">$link</a>";
+        $result = $comment . " <a href=\"$link\" target=\"_blank\">[More]</a>";
     }
     return($result);
 }
