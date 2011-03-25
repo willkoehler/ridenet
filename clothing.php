@@ -23,7 +23,7 @@ $RideBoardLength = 30;
   <meta property="og:title" content="Buy RideNet Clothing" />
   <meta property="og:image" content="http://ridenet.net/images/clothing/ridenet-jersey1.jpg" />
   <meta property="og:site_name" content="RideNet" />
-  <meta property="og:description" content="We're selling cycling kits to promote RideNet. A portion of each order will be donated to Consider Biking to support 2BY2012" />
+  <meta property="og:description" content="Safe roads, organized rides, bike commutes, fun racing. RideNet is connecting cyclists of all interests with bike advocacy in Ohio. Help spread the word with the new RideNet jersey. A portion of each order will be donated to Consider Biking to support 2BY2012" />
   <meta property="fb:app_id" content="147642135282357" />
 </head>
 
@@ -41,12 +41,15 @@ $RideBoardLength = 30;
       <h1>RideNet Cycling Kits</h1>
     </div>
     <div style="float:left;margin-left:10px;position:relative;left:0px;top:12px">
-      <?SocialMediaButtons("RideNet clothing for sale")?>
+      <?SocialMediaButtons("Help the RideNet community grow and support 2BY2012 with Verge's elite cycling jersey:")?>
     </div>
     <div class='clearfloat' style="height:10px"></div>
     <p class="newp">
-      We're selling clothing to promote RideNet! Orders are due by April 1st and will be available
-      for pickup in May (we'll e-mail you when they are ready).
+      We're selling clothing to promote RideNet! Orders will be collected through April 15th. When all the orders
+      are collected, we will send a bulk order to Verge for manufacturing. The clothing will be available late May
+      (we'll e-mail you when they are ready). You can pickup your clothing at one of 4 area bike shops - you choose
+      the shop when you place the order. If you have any questions, send us an email: <a href="mailto:clothing@ridenet.net">
+      clothing@ridenet.net</a>
     </p>
     <div style="float:right;margin:0px 0px 0 0;text-align:center">
       <a style="color:#B42A37;font: 16px arial" href="https://www.bikereg.com/events/register.asp?eventid=13099" target="_blank">
@@ -59,7 +62,6 @@ $RideBoardLength = 30;
     <h2><ul style="list-style: square;line-height:25px;font-size:16px">
       <li>High quality fabric and construction - Verge Elite Collection
       <li>Flat lock stitching. Tagless labeling. Hidden zipper
-      <li>Reflective Piping on the back of the jersey
       <li>Orders are handled securely through BikeReg.com
       <li>A portion of each sale supports <a href="http://www.2by2012.com/" target="_blank">Consider Biking's 2BY2012 program</a>
     </ul></h2>
