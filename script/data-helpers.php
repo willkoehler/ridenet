@@ -75,6 +75,10 @@ function BuildRideLogComment($comment, $link)
     {
         $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Map]</a>";
     }
+    elseif(preg_match('/runkeeper/i', $link))
+    {
+        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[RunKeeper]</a>";
+    }
     else
     {
         $result = $comment . " <a href=\"$link\" target=\"_blank\">[More]</a>";
