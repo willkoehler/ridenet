@@ -51,18 +51,18 @@ function C_RideWidget(params)
                </div>';
         if(this.headfoot && !this.fullscreen)   // don't show footer in full-screen mode
         {
-            html+='<div id="rwdgt-foot" style="font-size:12px;padding:8px"> \
-                     <div style="float:left;color:'+this.color.title+'"> \
+            html+='<div id="rwdgt-foot" style="font-size:12px;padding:4px 10px"> \
+                     <div style="float:left"> \
                        <a href="http://ridenet.net" target="_blank"> \
-                        <img src="http://'+this.domainRoot+'/images/ridenet-logo2.png" style="vertical-align:bottom;border:0;height:20px"> \
+                        <img src="http://'+this.domainRoot+'/images/widget-footer.png" border=0> \
                        </a> \
                      </div> \
-                     <div style="float:right;text-align:right;margin-right:5px;font-size:12px;color:'+this.color.title+'"> \
-                       <a href="http://ridenet.net" target="_blank" style="text-decoration:none;color:'+this.color.title+'"> \
-                         Ride, Log, Connect \
+                     <div style="float:right;padding-top:5px"> \
+                       <a href="http://ridenet.net" target="_blank" style="text-decoration:none;color:#FFF"> \
+                         Ride&bull;Post&bull;Connect \
                        </a> \
                      </div> \
-                     <br style="clear:both" /> \
+                     <div style="clear:both"></div> \
                    </div>';
         }
         html+='</div>';
