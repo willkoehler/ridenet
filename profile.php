@@ -355,21 +355,21 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
 
     <!-- UPCOMING RIDES AND EVENTS-->
 <?  $sql = "SELECT CalendarID AS ID, 0 AS Type, CalendarDate AS Date, EventName AS Name,
-                   CONCAT(City, ', ', State) AS Location, '' AS Image
+                   Attending, Notify, CONCAT(City, ', ', State) AS Location, '' AS Image
             FROM calendar c
             JOIN calendar_attendance ca USING (CalendarID)
             LEFT JOIN ref_zipcodes USING (ZipCodeID)
-            WHERE c.Archived=0 AND ca.RiderID=$RiderID AND Attending=1 AND DATEDIFF(NOW(), CalendarDate)<=0
+            WHERE c.Archived=0 AND ca.RiderID=$RiderID AND (Attending=1 OR Notify=1) AND DATEDIFF(NOW(), CalendarDate)<=0
             
             UNION
             
             SELECT RaceID AS ID, 1 AS Type, RaceDate AS Date, EventName AS Name,
-                   CONCAT(City, ', ', StateAbbr) AS Location, Picture AS Image
+                   Attending, Notify, CONCAT(City, ', ', StateAbbr) AS Location, Picture AS Image
             FROM event e
             JOIN event_attendance ea USING (RaceID)
             JOIN ref_states USING (StateID)
             JOIN ref_event_type USING (RideTypeID)
-            WHERE e.Archived=0 AND ea.RiderID=$RiderID AND Attending=1 AND DATEDIFF(NOW(), RaceDate)<=0 
+            WHERE e.Archived=0 AND ea.RiderID=$RiderID AND (Attending=1 OR Notify=1) AND DATEDIFF(NOW(), RaceDate)<=0 
             
             ORDER BY Date
             LIMIT 50";
@@ -389,15 +389,17 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
             <? while(($record = $rs->fetch_array())!=false) { ?>
               <!-- Ride Row -->
               <tr>
-                <td class=data width="75" style="padding-left:4px;"><?=date_create($record['Date'])->format("n/j/Y")?></td>
-                <td class=data width="35" style="padding-left:4px;">
+                <td class="data<?if($record['Attending']==0) { ?> faded<? } ?>" width="75" style="padding-left:4px;">
+                  <?=date_create($record['Date'])->format("D n/j")?>
+                </td>
+                <td class="data<?if($record['Attending']==0) { ?> faded<? } ?>" width="35" style="padding-left:4px;">
                   <?if($record['Type']==0) { ?>
                     <img src="images/ridelog/recreational.png" class="tight" style="margin-left:7px" height=15>
                   <? } else { ?>
                     <img src="images/event-types/<?=$record['Image']?>" class="tight" height=15>
                   <? } ?>
                 </td>
-                <td class=data width="335"><div class=ellipses style="width:325px">
+                <td class="data<?if($record['Attending']==0) { ?> faded<? } ?>" width="335"><div class=ellipses style="width:325px">
                   <?if($record['Type']==0) { ?>
                     <a href=calendar-detail.php?CID=<?=$record['ID']?>>
                   <? } else { ?>
@@ -406,7 +408,7 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
                     <?=$record['Name']?>
                   </a>
                 </div></td>
-                <td class=data width="175"><div class=ellipses style="width:165px">
+                <td class="data<?if($record['Attending']==0) { ?> faded<? } ?>" width="175"><div class=ellipses style="width:165px">
                   <?=$record['Location']?>
                 </div></td>
               </tr>

@@ -401,6 +401,11 @@ h3   {
     margin: 0 0 4px;
 }
 
+.faded {
+    opacity: .5;
+    filter: alpha(opacity=50);
+}
+
 .results-btn
 {
     font: 11px 'Helvetica Neue', Arial, sans-serif;
