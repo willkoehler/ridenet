@@ -79,6 +79,10 @@ function BuildRideLogComment($comment, $link)
     {
         $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[RunKeeper]</a>";
     }
+    elseif(preg_match('/youtube/i', $link))
+    {
+        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Video]</a>";
+    }
     else
     {
         $result = $comment . " <a href=\"$link\" target=\"_blank\">[More]</a>";
