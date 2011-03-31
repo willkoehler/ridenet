@@ -43,7 +43,7 @@ function AccountCreatedEmail($oDB, $newRiderID, $createdByID)
                    "- Update your rider bio. Click \"Edit Profile\" at the top of Your Profile page\n" .
                    "- Post race results. Choose \"Your Results\" from the menu in Your Profile page\n" .
                    "- Log some rides. Click \"+ Log A Ride\" on Your Profile page\n" .
-                   "- Find other riders/teams. Choose \"Find\" from the main menu.\n\n" .
+                   "- Find other riders/teams. Use the \"Search\" box in the main menu.\n\n" .
                    "If you have any questions about your account, email us at info@ridenet.net\n\n" .
                    "Welcome to RideNet: http://www.ridenet.net We're excited to have you on board.\n\n" .
                    "Sincerely,\n" .
@@ -66,7 +66,7 @@ function AccountCreatedEmail($oDB, $newRiderID, $createdByID)
                            "- Update your rider bio. Click \"Edit Profile\" at the top of Your Profile page\n" .
                            "- Post race results. Choose \"Your Results\" from the menu in Your Profile page\n" .
                            "- Log some rides. Click \"+ Log A Ride\" on Your Profile page\n" .
-                           "- Find other riders/teams. Choose \"Find\" from the main menu.\n\n" .
+                           "- Find other riders/teams. Use the \"Search\" box in the main menu.\n\n" .
                            "If you have any questions about your account, email your team admin: {$createdByInfo['FirstName']} " .
                            "{$createdByInfo['LastName']} {$createdByInfo['RiderEmail']}\n\n" .
                            "Welcome to RideNet: http://www.ridenet.net We're excited to have you on board.\n\n" .
@@ -91,7 +91,7 @@ function AccountCreatedEmail($oDB, $newRiderID, $createdByID)
                            "Some things you can do on RideNet:\n" .
                            "- Update your rider bio. Click \"Edit Profile\" at the top of Your Profile page\n" .
                            "- Log some rides. Click \"+ Log A Ride\" on Your Profile page\n" .
-                           "- Find other riders/teams. Choose \"Find\" from the main menu.\n\n" .
+                           "- Find other riders/teams. Use the \"Search\" box in the main menu.\n\n" .
                            "If you have any questions about your membership, email your team admin: {$createdByInfo['FirstName']} " .
                            "{$createdByInfo['LastName']} {$createdByInfo['RiderEmail']}\n\n" .
                            "The goal of 2 BY 2012 is for each citizen of central Ohio to bicycle to work or school at " .
