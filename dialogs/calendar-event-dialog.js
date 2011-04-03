@@ -42,14 +42,11 @@ function C_RideDialog()
                 {name: 'CalendarTime', mapping: 'CalendarDate', type: 'date', dateFormat: 'Y-m-d H:i:s'},
                 {name: 'EventName'},
                 {name: 'Location'},
-                {name: 'Directions'},
-                {name: 'IntensityID', type: 'int'},
                 {name: 'Comments'},
-                {name: 'Duration'},
-                {name: 'PostedBy', type: 'int'},
                 {name: 'ZipCodeID', type: 'int'},
                 {name: 'ZipCodeText'},
                 {name: 'MapURL'},
+                {name: 'Attending'},
                 {name: 'ClassX', type: 'bool'},
                 {name: 'ClassA', type: 'bool'},
                 {name: 'ClassB', type: 'bool'},
@@ -134,9 +131,14 @@ function C_RideDialog()
                         xtype: 'textfield',
                         fieldLabel: 'Map URL',
                         name: 'MapURL',
-                        emptyText: '(optional)',
                         width: 310,
                         vtype: 'url'
+                },{
+                    // === I'll Be There ===
+                        xtype: 'checkbox',
+                        name: 'Attending',
+                        width: 310,
+                        boxLabel: 'I\'ll be there <span style="color:#888"> - check if you are attending this ride</span>'
                 },{
                     xtype: 'container', cls: 'form-spacer', height:7
                 },{
@@ -288,6 +290,7 @@ function C_RideDialog()
                 {
                 // --- We are creating a new event, initialize form with default values
                     this.form.getForm().reset();  // clear form contents
+                    this.form.getForm().findField('Attending').setValue(1);     // default to attending
                     this.form.getForm().baseParams.CalendarID = -1;
                     this.window.setTitle("Add Ride");
                     Ext.get('delete-btn').hide();
