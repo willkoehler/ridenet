@@ -3,7 +3,7 @@ require("../script/app-master.php");
 require("../script/email-notifications.php");
 
 $oDB = oOpenDBConnection();
-AccountCreatedEmail($oDB, $_REQUEST['to'], $_REQUEST['from']);
+ob_start();
 ?>
 
 
@@ -18,3 +18,16 @@ AccountCreatedEmail($oDB, $_REQUEST['to'], $_REQUEST['from']);
   TO: <?=$oDB->DBLookup("CONCAT(FirstName, ' ', LastName)", "rider", "RiderID={$_REQUEST['to']}")?>
 </body>
 </html>
+
+<?
+// send headers to tell the browser to close the connection
+header("Content-Length: " . ob_get_length());
+header('Connection: close');
+ob_end_flush();
+ob_flush();
+flush();
+session_write_close();
+
+AccountCreatedEmail($oDB, $_REQUEST['to'], $_REQUEST['from']);
+//  sleep(10);
+?>

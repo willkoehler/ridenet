@@ -1,6 +1,7 @@
 <?
 require("../script/app-master.php");
 require("../script/email-notifications.php");
+require(SHAREDBASE_DIR . "BufferHelpers.php");
 $oDB = oOpenDBConnection();
 
 $riderID = SmartGetInt('RiderID');
@@ -76,13 +77,14 @@ else
         $values['Password'] = chr(34) . MakePasswordHash(SmartGet('PwUnencrypted')) . chr(34);
     }
     $result = InsertOrUpdateRecord2($oDB, "rider", "RiderID", $riderID, $values);
-
-    // Send email notification to new users
-    if($result['success'] && $riderID==-1)
-    {
-        AccountCreatedEmail($oDB, $result['RiderID'], GetUserID());
-    }
 }
-// --- Encode response and send back to form
-Echo json_encode($result);
+
+// Encode response, send to the browser, and close the connection.
+FlushAndClose(json_encode($result));
+
+// Send email notification to new users silently after page connection is closed
+if($result['success'] && $riderID==-1)
+{
+    AccountCreatedEmail($oDB, $result['RiderID'], GetUserID());
+}
 ?>

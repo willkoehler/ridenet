@@ -16,7 +16,7 @@ $msg = "Signup Request:\n\n" .
        "DESCRIPTION: $riderDescription\n\n" .
        "TEAM: $teamName";
 
-if(SendMail("signup@ridenet.net", "RideNet Signup Request!", $msg, "info@ridenet.net"))
+if(SendMail("signup@ridenet.net", "RideNet Signup Request", $msg, "info@ridenet.net"))
 {
     $result['success'] = true;
 }
@@ -27,6 +27,7 @@ else
     $result['errors'][] = array('id' => 'CtrlID', 'msg' => 'Error Msg' );     // needed so Ext returns failureType 'server'
 }
 
-// --- Encode response and send back to form
+// --- Encode response and send back to browser. The small delay caused by sending the email
+// --- is desireable in this case so we don't flush the response before sending the email
 Echo json_encode($result);
 ?>

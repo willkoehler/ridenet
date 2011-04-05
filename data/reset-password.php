@@ -28,6 +28,7 @@ else
     $result['success'] = true;
 }
 
-// --- Encode response and send back to form
+// --- Encode response and send back to browser. The small delay caused by sending the email
+// --- is desireable in this case so we don't flush the response before sending the email
 Echo json_encode($result);
 ?>
