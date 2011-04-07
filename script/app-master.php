@@ -24,24 +24,14 @@ require(dirname(__FILE__) . "/header-and-menus.php");
 define("SHAREDBASE_URL", GetFullDomainRoot() . "/Shared/");
 define("EXTBASE_URL", GetFullDomainRoot() . "/Ext3.2.2/");
 
-
-// Redirect users to the new ridenet.net domain
-$strFullURL = GetFullURL();
-if(strpos($strFullURL, "velobug.com") || strpos($strFullURL, "ridenet.org"))
-{ 
-  $oDB = oOpenDBConnection();
-  RecordPageView($oDB);
-  $newloc = str_ireplace("ridenet.org", "ridenet.net", $strFullURL);
-  $newloc = str_ireplace("velobug.com", "ridenet.net", $newloc);
-  ?>
-  <html>
-  <body style="font:15px helvetica;text-align:left">
-    <br>RideNet has moved to a new domain (<span style="color:orange">www.ridenet.net</span>).<br>
-    Please update any bookmarks you have made to this page.<br>
-    The new page location is:<br><br>
-    <span style="font-size:18px;color:black"><?=$newloc?></span>
-  </body>
-  </html>
-<?exit();
+// Redirect visitors from www.ridenet.net/ to ridenet.net/. Search engines honor this
+// redirect and will treat www.ridenet.net and ridenet.net as the same site
+$fullURL = GetFullURL();
+if(strpos($fullURL, "www.ridenet"))
+{
+    $newloc = str_ireplace("www.ridenet", "ridenet", $fullURL);
+    header("HTTP/1.1 301 Moved Permanently");
+    header("Location: $newloc");
+    exit();
 }
 ?>
