@@ -260,7 +260,7 @@ function C_HomePageTab()
         this.form.getForm().findField("TeamImage").setValue(g_pt);   // refresh team image
         this.form.getEl().unmask();
         // force browser to update cached image
-        forceReload.defer(350, this, ["dynamic-images/cache-buster.php", "homepage-image.php?T=" + g_pt]);
+        forceReload.defer(700, this, ["dynamic-images/cache-buster.php", "homepage-image.php?T=" + g_pt]);
         // force browser to update the dynamic images in its cache by reloading page.
 //        window.location.hash="#2";  // stay on the homepage tab
 //        window.location.reload();
