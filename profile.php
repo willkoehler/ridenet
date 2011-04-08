@@ -257,7 +257,7 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
                       <td class=text>
                         <?=$riderInfo['MyCommute']?>
                         <?if(!is_null($riderInfo['CommuteMapURL'])) { ?>
-                          <a href="<?=$riderInfo['CommuteMapURL']?>" target="_blank">[Show Route Map]</a>
+                          <a href="<?=$riderInfo['CommuteMapURL']?>" target="_blank">[Map]</a>
                         <? } ?>
                       </td>
                     </tr>
