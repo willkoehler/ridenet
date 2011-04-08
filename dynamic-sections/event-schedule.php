@@ -48,18 +48,19 @@ function RenderEventSchedule($oDB, $pt, $ScheduleFilterStates, $ScheduleFilterTy
       <!-- The Schedule -->
       <table id='event-list' border=0 cellpadding=0 cellspacing=0>
 <?      // List the Events
-        $sql = "SELECT e.RaceID, RaceDate, EventName, WebPage, DateAdded,
-                       AddedBy, RideType, Picture,
+        $sql = "SELECT e.RaceID, RaceDate, EventName, WebPage, e.DateAdded,
+                       AddedBy, RideType, Picture, City, StateAbbr,
                        CONCAT(City, ', ', StateAbbr) AS Location,
                        DATEDIFF(NOW(), RaceDate) AS EventAge,
-                       DATEDIFF(NOW(), DateAdded) AS AddedAge,
-                       IF((SELECT COUNT(*) FROM results WHERE RaceID=e.RaceID) > 0, 1, 0) AS HasResults
+                       DATEDIFF(NOW(), e.DateAdded) AS AddedAge,
+                       Count(r.RiderID) AS HasResults
                 FROM event e
-                LEFT JOIN ref_event_type t USING (RideTypeID)
+                LEFT JOIN ref_event_type USING (RideTypeID)
                 LEFT JOIN ref_states USING (StateID)
+                LEFT JOIN results r USING (RaceID)
                 $strWhere
                 GROUP BY e.RaceID
-                ORDER BY RaceDate, DateAdded";
+                ORDER BY RaceDate, RaceID";
         $rs = $oDB->query($sql, __FILE__, __LINE__);
         $PrevMonth = 0;
         $PrevWeek = 0;
@@ -67,9 +68,9 @@ function RenderEventSchedule($oDB, $pt, $ScheduleFilterStates, $ScheduleFilterTy
         if($rs->num_rows==0)
         { ?>
           <!-- No Events Found -->
-          <tr><td class="table-divider" colspan=5>&nbsp;</td></tr>
-          <tr><td class="table-spacer" style="height:5px" colspan=5>&nbsp;</td></tr>
-          <tr><td class=data colspan=4 width=525 style="font:13px arial">
+          <tr><td class="table-divider" colspan=6>&nbsp;</td></tr>
+          <tr><td class="table-spacer" style="height:5px" colspan=6>&nbsp;</td></tr>
+          <tr><td class=data colspan=5 width=525 style="font:13px arial">
             No events found matching your selections in <?=$ShowYear?>
           </td>
           <td align=right>
@@ -79,26 +80,26 @@ function RenderEventSchedule($oDB, $pt, $ScheduleFilterStates, $ScheduleFilterTy
               <span class='action-btn' onclick="window.location.href='login.php?Goto=<?=urlencode("../event-schedule.php?Year=$ShowYear")?>'">&nbsp;Login To Add an Event&nbsp;</span>
             <? } ?>
           </td></tr>
-          <tr><td class="table-spacer" style="height:5px" colspan=5>&nbsp;</td></tr>
-          <tr><td class="table-divider" colspan=5>&nbsp;</td></tr>
+          <tr><td class="table-spacer" style="height:5px" colspan=6>&nbsp;</td></tr>
+          <tr><td class="table-divider" colspan=6>&nbsp;</td></tr>
 <?      }
         else
         {
           while(($record = $rs->fetch_array())!=false)
           {
             $eventDate = new DateTime($record['RaceDate']);
-            $thisWeek = ($eventDate->format("W")==date_format(new DateTime(), "W")) ? true : false;
+            $thisWeek = ($eventDate->format("WY")==date_format(new DateTime(), "WY")) ? true : false;
             if($eventDate->format("n")!=$PrevMonth && $FirstMonth == false)
             { ?>
             <!-- End of month. Table divider and spacing below -->
-              <tr><td class="table-spacer" style="height:1px" colspan=5>&nbsp;</td></tr>
-              <tr><td class="table-divider" colspan=5>&nbsp;</td></tr>
-              <tr><td class="table-spacer" style="height:25px" colspan=5>&nbsp;</td></tr>
+              <tr><td class="table-spacer" style="height:1px" colspan=6>&nbsp;</td></tr>
+              <tr><td class="table-divider" colspan=6>&nbsp;</td></tr>
+              <tr><td class="table-spacer" style="height:25px" colspan=6>&nbsp;</td></tr>
 <?          }
             if($eventDate->format("n")!=$PrevMonth)
             { ?>
             <!-- Beginning of Month. Month Header -->
-              <tr><td colspan=5 class="section-header">
+              <tr><td colspan=6 class="section-header">
                 <table cellpadding=0 cellspacing=0 border=0 width=100%><tr>
                   <td width=150>&nbsp;</td>
                   <td align=center>
@@ -119,20 +120,21 @@ function RenderEventSchedule($oDB, $pt, $ScheduleFilterStates, $ScheduleFilterTy
                 <td class=header style="padding:1px 0px;" align=left>Type</td>
                 <td class=header style="padding:1px 0px;" align=left>Location</td>
                 <td class=header style="padding:1px 0px;" align=left>&nbsp;</td>
+                <td class=header style="padding:1px 0px;" align=left>&nbsp;</td>
                 <?if(CheckLogin()) { ?>
                   <td class=data style="padding:1px 0px;" align=left>&nbsp;</td>
                 <? } ?>
               </tr>
-              <tr><td class="table-spacer" style="height:1px" colspan=5>&nbsp;</td></tr>
+              <tr><td class="table-spacer" style="height:1px" colspan=6>&nbsp;</td></tr>
 <?            $PrevMonth = $eventDate->format("n");
               $PrevWeek = $eventDate->format("W");
               $FirstMonth = false;
             }
             if($eventDate->format("W")!=$PrevWeek) { ?>
             <!-- End of Week. Table divider and spacing between weeks -->
-              <tr><td class="table-spacer" style="height:1px" colspan=5>&nbsp;</td></tr>
-              <tr><td class="table-divider" colspan=5>&nbsp;</td></tr>
-              <tr><td class="table-spacer" style="height:1px" colspan=5>&nbsp;</td></tr>
+              <tr><td class="table-spacer" style="height:1px" colspan=6>&nbsp;</td></tr>
+              <tr><td class="table-divider" colspan=6>&nbsp;</td></tr>
+              <tr><td class="table-spacer" style="height:1px" colspan=6>&nbsp;</td></tr>
               <? $PrevWeek = $eventDate->format("W") ?>
             <? } ?>
             <!-- Event Row -->
@@ -145,8 +147,11 @@ function RenderEventSchedule($oDB, $pt, $ScheduleFilterStates, $ScheduleFilterTy
                 <? } ?>
               </div></td>
               <td width="45" <?if($thisWeek) {?>id="highlight"<? } ?> align="left"><img border=0 style="padding:0px 0px" src='images/event-types/<?=$record['Picture']?>' title='<?=$record['RideType']?>'></td>
-              <td width="155" <?if($thisWeek) {?>id="highlight"<? } ?> align=left><div class=ellipses style="width:145px">
-                <?=$record['Location']?>
+              <td width="120" <?if($thisWeek) {?>id="highlight"<? } ?> align=left><div class=ellipses style="width:110px">
+                <?=$record['City']?>
+              </div></td>
+              <td width="30" <?if($thisWeek) {?>id="highlight"<? } ?> align=left><div class=ellipses style="width:25px">
+                <?=$record['StateAbbr']?>
               </div></td>
               <td width="70" <?if($thisWeek) {?>id="highlight"<? } ?> align=left>
                 <?// --- Show link for race attendance or link for results ?>
@@ -167,7 +172,7 @@ function RenderEventSchedule($oDB, $pt, $ScheduleFilterStates, $ScheduleFilterTy
               <? } ?>
             </tr>
           <? } ?>
-        <tr><td class="table-divider" colspan=5>&nbsp;</td></tr>
+        <tr><td class="table-divider" colspan=6>&nbsp;</td></tr>
       <? } ?>
       </table>
     </div>
