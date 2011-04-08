@@ -92,12 +92,12 @@ function clickEventFilter(el)
     _gaq.push(['_trackEvent', 'Action', 'Filter Events', 'Event Type']);   // log event in Google Analytics
 }
 
-function updateEventSchedule()
+function updateEventSchedule(mask)
 {
-    Ext.get('container').mask("Updating");
+    if(mask) Ext.get('container').mask("Updating");
     Ext.Ajax.request( {url: 'dynamic-sections/event-schedule.php?pb&T=' + g_pt + '&Y=' + g_showYear, success: function(response, options) {
         Ext.get('event-schedule-holder').update(response.responseText);
-        Ext.get('container').unmask();
+        if(mask) Ext.get('container').unmask();
     }});
 }
 
