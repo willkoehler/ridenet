@@ -71,7 +71,7 @@ function BuildRideLogComment($comment, $link)
     {
         $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Power File]</a>";
     }
-    elseif(preg_match('/mapmyride|bikely|gmap-pedometer|bikeroutetoaster/i', $link))
+    elseif(preg_match('/mapmyride|bikely|gmap-pedometer|bikeroutetoaster|ridewithgps/i', $link))
     {
         $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Map]</a>";
     }
