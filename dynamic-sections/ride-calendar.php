@@ -4,10 +4,13 @@ if(isset($_REQUEST['pb']))
     require("../script/app-master.php");
     $CalendarWeeks = intval($_REQUEST['w']);
     $oDB = oOpenDBConnection();
-    $teamFilter = $_REQUEST['T'];
+    $teamFilter = $_REQUEST['tf'];
+    $pt = $_REQUEST['T'];
+
     // --- Get calendar filter zip code and range from cookies.
-    $CalendarFilterRange = isset($_COOKIE['CalendarFilterRange']) ? $_COOKIE['CalendarFilterRange'] : 75;
-    $CalendarFilterZip = isset($_COOKIE['CalendarFilterZip']) ? $_COOKIE['CalendarFilterZip'] : 43210;
+    $defaultZipCode = $oDB->DBLookup("ZipCodeID", "teams", "TeamID=$pt", 43214);
+    $CalendarFilterRange = isset($_COOKIE['CalendarFilterRange']) ? $_COOKIE['CalendarFilterRange'] : 100;
+    $CalendarFilterZip = isset($_COOKIE['CalendarFilterZip']) ? $_COOKIE['CalendarFilterZip'] : $defaultZipCode;
     $rs = $oDB->query("SELECT *, CONCAT(City, ', ', State, ' ', ZipCode) AS ZipCodeText
                        FROM ref_zipcodes WHERE ZipCodeID=" . IntVal($CalendarFilterZip));
     $record = $rs->fetch_array();
@@ -69,10 +72,10 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
       if($rs->num_rows==0)
       { ?>
         <!-- No Rides Found -->
-        <tr><td class="table-spacer" style="height:10px" colspan=5>&nbsp;</td></tr>
-        <tr><td class="table-divider" colspan=5>&nbsp;</td></tr>
-        <tr><td class="table-spacer" style="height:5px" colspan=5>&nbsp;</td></tr>
-        <tr><td class=data colspan=5 width=475 style="font:13px arial">
+        <tr><td class="table-spacer" style="height:10px" colspan=2>&nbsp;</td></tr>
+        <tr><td class="table-divider" colspan=2>&nbsp;</td></tr>
+        <tr><td class="table-spacer" style="height:5px" colspan=2>&nbsp;</td></tr>
+        <tr><td class=data width=475 style="font:13px arial">
           No rides found in your area between <?=$StartDate->format("n/j/Y")?> and <?=$EndDate->format("n/j/Y")?>
         </td>
         <td align=right>
@@ -82,8 +85,8 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
             <span class='action-btn' onclick="window.location.href='login.php?Goto=<?=urlencode("../calendar.php" . ($TeamFilter ? "?tf" : ""))?>'">&nbsp;Login To Add a Ride&nbsp;</span>
           <? } ?>
         </td></tr>
-        <tr><td class="table-spacer" style="height:5px" colspan=5>&nbsp;</td></tr>
-        <tr><td class="table-divider" colspan=5>&nbsp;</td></tr>
+        <tr><td class="table-spacer" style="height:5px" colspan=2>&nbsp;</td></tr>
+        <tr><td class="table-divider" colspan=2>&nbsp;</td></tr>
 <?    }
       else
       {

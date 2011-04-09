@@ -12,8 +12,9 @@ $CalendarUpdatesLength = 30;
 $CalendarWallLength = 30;
 
 // --- Get calendar filter zip code from cookies.
-$CalendarFilterRange = isset($_COOKIE['CalendarFilterRange']) ? $_COOKIE['CalendarFilterRange'] : 2500;
-$CalendarFilterZip = isset($_COOKIE['CalendarFilterZip']) ? $_COOKIE['CalendarFilterZip'] : 43210;
+$defaultZipCode = $oDB->DBLookup("ZipCodeID", "teams", "TeamID=$pt", 43214);
+$CalendarFilterRange = isset($_COOKIE['CalendarFilterRange']) ? $_COOKIE['CalendarFilterRange'] : 100;
+$CalendarFilterZip = isset($_COOKIE['CalendarFilterZip']) ? $_COOKIE['CalendarFilterZip'] : $defaultZipCode;
 $rs = $oDB->query("SELECT *, CONCAT(City, ', ', State, ' ', ZipCode) AS ZipCodeText
                    FROM ref_zipcodes WHERE ZipCodeID=" . IntVal($CalendarFilterZip));
 $record = $rs->fetch_array();

@@ -9,8 +9,9 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
 $CalendarWeeks = 8;  // number of weeks to show in calendar
 
 // --- Get calendar filter zip code and range from cookies.
-$CalendarFilterRange = isset($_COOKIE['CalendarFilterRange']) ? $_COOKIE['CalendarFilterRange'] : 2500;
-$CalendarFilterZip = isset($_COOKIE['CalendarFilterZip']) ? $_COOKIE['CalendarFilterZip'] : 43210;
+$defaultZipCode = $oDB->DBLookup("ZipCodeID", "teams", "TeamID=$pt", 43214);
+$CalendarFilterRange = isset($_COOKIE['CalendarFilterRange']) ? $_COOKIE['CalendarFilterRange'] : 100;
+$CalendarFilterZip = isset($_COOKIE['CalendarFilterZip']) ? $_COOKIE['CalendarFilterZip'] : $defaultZipCode;
 $rs = $oDB->query("SELECT *, CONCAT(City, ', ', State, ' ', ZipCode) AS ZipCodeText
                    FROM ref_zipcodes WHERE ZipCodeID=" . IntVal($CalendarFilterZip));
 $record = $rs->fetch_array();
@@ -42,6 +43,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
     g_domainRoot="<?=GetDomainRoot()?>";
     g_calendarWeeks = <?=$CalendarWeeks?>;
     g_teamFilter = "<?=$teamFilter?>";
+    g_pt = <?=$pt?>
   </script>
 <!-- Insert tracker for Google Analytics -->
   <?InsertGoogleAnalyticsTracker()?>
