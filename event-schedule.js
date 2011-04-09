@@ -89,7 +89,7 @@ function clickEventFilter(el)
         document.cookie = "ScheduleFilterTypes=" + eventTypes + "; expires=" + expires + "; domain=" + g_domainRoot;
         updateEventSchedule();
     }
-    _gaq.push(['_trackEvent', 'Action', 'Filter Events', 'Event Type']);   // log event in Google Analytics
+    _gaq.push(['_trackEvent', 'Action', 'Filter Events', 'Types: ' + eventTypes]);   // log event in Google Analytics
 }
 
 function updateEventSchedule(mask)
@@ -214,7 +214,6 @@ function C_FilterDialog()
             }, this);
         }
 
-        _gaq.push(['_trackEvent', 'Action', 'Filter Events', 'State']);   // log event in Google Analytics
         this.window.show(params.animateTarget);     // open window
     }
 
@@ -243,7 +242,9 @@ function C_FilterDialog()
                 list = Ext.getCmp('state-grid').getSelectionList();
             }
             document.cookie = "ScheduleFilterStates=" + list + "; expires=" + expires + "; domain=" + g_domainRoot;
-        // reload page (defer is needed to make sure spinning loading icon displays before reload starts
+            _gaq.push(['_trackEvent', 'Action', 'Filter Events', 'States: ' + list]);   // log event in Google Analytics
+        // Reload page. Defer is needed to make sure spinning loading icon displays before reload starts
+        // and to give brower time to send event to google
             this.setMessage('Updating...', 'black', true);
             (function() { window.location.reload(); }).defer(200);
         }

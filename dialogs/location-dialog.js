@@ -128,7 +128,6 @@ function C_LocationDialog()
             }, this);
         }
 
-        _gaq.push(['_trackEvent', 'Action', 'Set Location']);   // log event in Google Analytics
         this.window.show(params.animateTarget);     // open window
     }
 
@@ -145,11 +144,15 @@ function C_LocationDialog()
         }
         else
         {
+            var zipcode = this.form.getForm().findField("ZipCodeID").getValue();
+            var range = this.form.getForm().findField("Range").getValue();
+            _gaq.push(['_trackEvent', 'Action', 'Set Location', "Zip:" + zipcode + " Miles:" + range]);   // log event in Google Analytics
         // save values in cookies
             var expires = new Date(new Date().getTime()+(1000*60*60*24*365*2)).toGMTString();   // expire in 2 years
-            document.cookie = "CalendarFilterZip=" + this.form.getForm().findField("ZipCodeID").getValue() + "; expires=" + expires + "; domain=" + g_domainRoot;
-            document.cookie = "CalendarFilterRange=" + this.form.getForm().findField("Range").getValue() + "; expires=" + expires + "; domain=" + g_domainRoot;
-        // reload page (defer is needed to make sure spinning loading icon displays before reload starts
+            document.cookie = "CalendarFilterZip=" + zipcode + "; expires=" + expires + "; domain=" + g_domainRoot;
+            document.cookie = "CalendarFilterRange=" + range + "; expires=" + expires + "; domain=" + g_domainRoot;
+        // Reload page. Defer is needed to make sure spinning loading icon displays before reload starts
+        // and to give brower time to send event to google
             this.setMessage('Updating...', 'black', true);
             (function() { window.location.reload(); }).defer(200);
         }
