@@ -33,8 +33,8 @@ if(!isSystemAdmin())
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
     <?SessionToJS()?>
-    siteLevelLookup = <?$oDB->DumpToJSArray("SELECT SiteLevelID, SiteLevel FROM ref_site_level ORDER BY SiteLevelID")?>
-    organizationLookup = <?$oDB->DumpToJSArray("SELECT OrganizationID, Organization FROM ref_organization ORDER BY OrganizationID")?>
+    siteLevelLookup = <?$oDB->DumpToJSArray("SELECT SiteLevelID, SiteLevel FROM ref_site_level ORDER BY SiteLevelID")?>;
+    teamTypeLookup = <?$oDB->DumpToJSArray("SELECT TeamTypeID, TeamType FROM ref_team_type ORDER BY TeamType")?>;
     g_domainRoot="<?=GetDomainRoot()?>";
   </script>
 <!-- Insert tracker for Google Analytics -->

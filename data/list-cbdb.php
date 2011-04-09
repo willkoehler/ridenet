@@ -12,11 +12,11 @@ $searchFor = SmartGet('SearchFor', "");
 $oDB = oOpenDBConnection();
 
 // -- build WHERE clause based on search terms
-$whereFilter = "OrganizationID=2";
+$whereFilter = "TeamTypeID=2";
 $whereFilter .= ($searchFor != "") ? " AND (TeamName like \"%$searchFor%\")" : "";
 
 // --- Count total records in table. "rowcount" tells the grid object the total number of rows available in recordset
-$result['rowcount'] = $oDB->DBCount("teams", "OrganizationID=2");;
+$result['rowcount'] = $oDB->DBCount("teams", $whereFilter);;
 
 // --- Get User records
 $sql = "SELECT TeamID, TeamName, Domain, COUNT(RiderID) AS TotalRiders, SUM(IF(CEDaysMonth>0,1,0)) AS ActiveRiders,

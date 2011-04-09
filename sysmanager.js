@@ -32,7 +32,7 @@ function C_TeamForm(parentElement)
                 {name: 'Archived', type: 'int'},
                 {name: 'bRacing', type: 'int'},
                 {name: 'bCommuting', type: 'int'},
-                {name: 'Organization'},
+                {name: 'TeamType'},
                 {name: 'SiteLevelID', type: 'int'},
                 {name: 'SiteLevel'},
                 {name: 'TeamName'},
@@ -86,7 +86,7 @@ function C_TeamForm(parentElement)
         // column definitions
         var columns = [
                 {header: "Team", width: 140, dataIndex: 'TeamName', id: 'autoexpand', sortable: true},
-                {header: "Organization", width: 110, dataIndex: 'Organization', sortable: false},
+                {header: "Type", width: 110, dataIndex: 'TeamType', sortable: true},
                 {header: "Domain", width: 110, dataIndex: 'Domain', sortable: true},
                 {header: "Site Level", width: 100, dataIndex: 'SiteLevel', sortable: false},
                 {xtype: 'booleancolumn', header: "R", width: 20, dataIndex: 'bRacing', trueText: '<b>&bull;</b>', falseText: '', fixed:true, menuDisabled:true, align:'center'},

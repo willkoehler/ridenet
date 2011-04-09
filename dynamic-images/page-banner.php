@@ -8,7 +8,7 @@ require(dirname(__FILE__) . "/../script/data-helpers.php");
 
 $oDB = oOpenDBConnection();
 $teamID = intval($_REQUEST['T']);
-$organizationID = $oDB->DBLookup("OrganizationID", "teams", "TeamID=$teamID", 1);
+$teamTypeID = $oDB->DBLookup("TeamTypeID", "teams", "TeamID=$teamID", 1);
 $showLogo = $oDB->DBLookup("IF(ShowLogo=1 AND Logo IS NOT NULL, 1, 0)", "teams", "TeamID=$teamID", 0);
 
 $rs = $oDB->query("SELECT Banner FROM teams WHERE TeamID=$teamID", __FILE__, __LINE__);
@@ -22,13 +22,13 @@ if(($record = $rs->fetch_array())!=false && !is_null($record['Banner']))
 }
 else
 {
-    // default banner depends on the organization and team ID (hard-code for now)
+    // default banner depends on the team type and team ID (hard-code for now)
     if($teamID==0)
     {
         // banner for generic RideNet pages
         $bannerFile = "ridenetbanner.png";
     }
-    elseif($organizationID==2)
+    elseif($teamTypeID==2)
     {
         // banner for 2BY2012 pages
         $bannerFile = "2by2012banner.png";

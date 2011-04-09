@@ -9,13 +9,13 @@ require(dirname(__FILE__) . "/../script/defaults.php");
 
 $oDB = oOpenDBConnection();
 $teamID = intval($_REQUEST['T']);
-$organizationID = $oDB->DBLookup("OrganizationID", "teams", "TeamID=$teamID", 1);
+$teamTypeID = $oDB->DBLookup("TeamTypeID", "teams", "TeamID=$teamID", 1);
 
 $rs = $oDB->query("SELECT BodyBGColor, BodyImage FROM teams WHERE TeamID=$teamID", __FILE__, __LINE__);
 if(($record = $rs->fetch_array())==false || (is_null($record['BodyImage']) && (is_null($record['BodyBGColor']) || $record['BodyBGColor']==BODY_BG_COLOR)))
 {
     // default background image depends on team type
-    $bgFile = ($organizationID==2) ? "tdot.gif" : "ridenetbg.jpg";
+    $bgFile = ($teamTypeID==2) ? "tdot.gif" : "ridenetbg.jpg";
     // This team has not customized their background color / background image yet
     $picData=file_get_contents(dirname(__FILE__) . "/../images/$bgFile");
     header("Content-type: image/jpeg");

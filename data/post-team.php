@@ -32,7 +32,8 @@ else
     $values['bRacing'] = SmartGetCheckbox("bRacing");
     $values['bCommuting'] = SmartGetCheckbox("bCommuting");
     $values['SiteLevelID'] = SmartGetInt("SiteLevelID");
-    $values['OrganizationID'] = SmartGetInt("OrganizationID");
+    $values['TeamTypeID'] = SmartGetInt("TeamTypeID");
+    $values['ZipCodeID'] = SmartGetInt("ZipCodeID");
     $result = InsertOrUpdateRecord2($oDB, "teams", "TeamID", $teamID, $values);
 }
 // --- Encode response and send back to form

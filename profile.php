@@ -6,7 +6,6 @@ require("dynamic-sections/ride-log.php");
 $oDB = oOpenDBConnection();
 RecordPageView($oDB);
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
-$organizationID = $oDB->DBLookup("OrganizationID", "teams", "TeamID=$pt", 0);
 $RideLogLength = 8;
 
 // if race year is passed in use it. Otherwise default to current year

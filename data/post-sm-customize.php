@@ -85,6 +85,8 @@ else
             $values['Logo'] = "'" . addslashes($logo->getPNGImageData()) . "'";
         }
         $values['Domain'] = SmartGetString("Domain");
+        $values['TeamTypeID'] = SmartGetInt('TeamTypeID');
+        $values['ZipCodeID'] = SmartGetInt('ZipCodeID');
         $values['ShowLogo'] = SmartGetCheckbox("ShowLogo");
         $values['PrimaryColor'] = str_replace("#", "", SmartGetString("PrimaryColor"));
         $values['SecondaryColor'] = str_replace("#", "", SmartGetString("SecondaryColor"));

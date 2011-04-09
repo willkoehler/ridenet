@@ -17,7 +17,7 @@ elseif(!isDesigner() && !isSystemAdmin() && !isTeamAdmin($oDB, $teamID))
 }
 else
 {
-    $rs = $oDB->query("SELECT TeamID, TeamName, IFNULL(HomePageType,1) AS HomePageType, HomePageText, HomePageHTML, HomePageTitle, OrganizationID
+    $rs = $oDB->query("SELECT TeamID, TeamName, IFNULL(HomePageType,1) AS HomePageType, HomePageText, HomePageHTML, HomePageTitle, TeamTypeID
                        FROM teams WHERE TeamID=$teamID", __FILE__, __LINE__);
     $result['results'] = $rs->fetch_object();
     if(is_null($result['results']->HomePageHTML))
@@ -26,11 +26,11 @@ else
     }
     if(is_null($result['results']->HomePageText))
     {
-        $result['results']->HomePageText = SampleHomePageText($result['results']->OrganizationID);
+        $result['results']->HomePageText = SampleHomePageText($result['results']->TeamTypeID);
     }
     if(is_null($result['results']->HomePageTitle))
     {
-        $result['results']->HomePageTitle = SampleHomePageTitle($result['results']->OrganizationID, $result['results']->TeamName);
+        $result['results']->HomePageTitle = SampleHomePageTitle($result['results']->TeamTypeID, $result['results']->TeamName);
     }
     $result['success'] = true;
 }

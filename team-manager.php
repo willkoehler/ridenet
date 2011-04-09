@@ -46,6 +46,7 @@ if(!isDesigner() && !isSystemAdmin() && !isTeamAdmin($oDB, $pt))
     g_pt=<?=$pt?>;
     g_domainRoot="<?=GetDomainRoot()?>";
     riderTypeLookup = <?$oDB->DumpToJSArray("SELECT RiderTypeID, RiderType FROM ref_rider_type ORDER BY Sort")?>
+    teamTypeLookup = <?$oDB->DumpToJSArray("SELECT TeamTypeID, TeamType FROM ref_team_type ORDER BY TeamType")?>
     teamLookup = <?$oDB->DumpToJSArray("SELECT TeamID, TeamName, Archived FROM teams ORDER BY TeamName")?>
   </script>
 <!-- Insert tracker for Google Analytics -->

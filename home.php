@@ -8,7 +8,7 @@ $oDB = oOpenDBConnection();
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
 // Get team information for this page
 $sql = "SELECT IFNULL(HomePageType,1) AS HomePageType, IFNULL(HomePageMoreWrap, 1) AS HomePageMoreWrap,
-               HomePageTitle, HomePageText, HomePageHTML, TeamName, OrganizationID
+               HomePageTitle, HomePageText, HomePageHTML, TeamName, TeamTypeID
         FROM Teams
         WHERE TeamID=$pt";
 $rs = $oDB->query($sql, __FILE__, __LINE__);
@@ -53,10 +53,10 @@ $TeamWallLength = 30;
   </div>
 
   <div id="sidebarHolderRight">
-    <?if($team['OrganizationID']==1) { ?>
-      <?SignupSidebar($oDB)?>
-    <? } else { ?>
+    <?if($team['TeamTypeID']==2) { ?>
       <?ColumbusFoundationSidebar($oDB)?>
+    <? } else { ?>
+      <?SignupSidebar($oDB)?>
     <? } ?>
     <?if($pt==2) { ?> <!--Team Echelon sponsors are hard-coded for now-->
       <?SponsorSidebar($oDB)?>
@@ -72,7 +72,7 @@ $TeamWallLength = 30;
       <!--=========== Simple Home Page ===========-->
       <h1>
         <?if(is_null($team['HomePageTitle'])) { ?>
-          <?=SampleHomePageTitle($team['OrganizationID'], $team['TeamName'])?>
+          <?=SampleHomePageTitle($team['TeamTypeID'], $team['TeamName'])?>
         <? } else { ?>
           <?=$team['HomePageTitle']?>
         <? } ?>
@@ -82,7 +82,7 @@ $TeamWallLength = 30;
         <img class="photo" src="/dynamic-images/homepage-image.php?T=<?=$pt?>">
         <div class="text">
           <?if(is_null($team['HomePageText'])) { ?>
-            <?=SampleHomePageText($team['OrganizationID'])?>
+            <?=SampleHomePageText($team['TeamTypeID'])?>
           <? } else { ?>
             <?=$team['HomePageText']?>
           <? } ?>

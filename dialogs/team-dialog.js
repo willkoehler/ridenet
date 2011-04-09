@@ -21,18 +21,32 @@ function C_TeamDialog()
         if( ! this.window)
         {
 
+            // Remote lookup for Zip Codes
+            this.dsZipCodeLookup = new Ext.data.JsonStore({
+                root: 'results',                // results array is returned in this property
+                totalProperty: 'rowcount',      // total number of rows is returned in this property
+                idProperty: 'ZipCodeID',        // defines the primary key for the results
+                fields: [
+                    {name: 'id', type: 'int'},
+                    {name: 'text'}
+                ],
+                proxy: new Ext.data.HttpProxy({ url: 'data/lookup-zip-code.php' })
+            });
+
             // Json Reader to read data for dialog
             var reader = new Ext.data.JsonReader( { root: 'results', idProperty: 'TeamID' }, [
                 {name: 'TeamID', type: 'int'},
                 {name: 'Archived', type: 'int'},
                 {name: 'bRacing', type: 'int'},
                 {name: 'bCommuting', type: 'int'},
-                {name: 'OrganizationID', type: 'int'},
+                {name: 'TeamTypeID', type: 'int'},
+                {name: 'ZipCodeID', type: 'int'},
+                {name: 'ZipCodeText'},
                 {name: 'SiteLevelID', type: 'int'},
                 {name: 'SiteLevel'},
                 {name: 'TeamName'},
                 {name: 'Domain'},
-                {name: 'URL', mapping: 'Domain'},
+                {name: 'URL', mapping: 'Domain'}
             ]);
 
             this.form = new Ext.form.FormPanel({
@@ -45,7 +59,7 @@ function C_TeamDialog()
                 baseParams: { },    // additional parameters passed to post request
                 items: [{
                     xtype:'container', layout:'column', items: [{
-                        xtype:'container', layout:'form', width:395, labelWidth:80, items: [{
+                        xtype:'container', layout:'form', width:395, labelWidth:70, items: [{
                         // === Team Name ===
                             xtype: 'textfield',
                             fieldLabel: 'Team Name',
@@ -77,61 +91,19 @@ function C_TeamDialog()
                     }] // end of column container
                 },{
                     xtype:'container', layout:'column', items: [{
-                        xtype:'container', layout:'form', width:200, labelWidth:80, items: [{
-                        // === Site Level ===
-                            xtype: 'localcombobox',
-                            fieldLabel: 'Site Level',
-                            displayField: 'text',
-                            valueField: 'id',
-                            hiddenName: 'SiteLevelID',
-                            forceSelection: true,
-                            value: 0,       // default value
-                            width: 115,
-                            store: new Ext.data.ArrayStore({ fields: ['id', 'text'], data: siteLevelLookup })
-                        }]
-                    },{
-                        xtype:'container', layout:'form', width:200, labelWidth:60, items: [{
+                        xtype:'container', layout:'form', width:215, labelWidth:70, items: [{
                         // === Domain ===
                             xtype: 'textfield',
                             fieldLabel: 'Domain',
                             name: 'Domain',
                             enableKeyEvents: true,
-                            width: 120,
+                            width: 130,
                             listeners: { scope: this, 'keyup' : function(field, v) {
                                 this.form.getForm().findField("URL").setValue(field.getValue());
                             }}
                         }]
                     },{
-                        xtype: 'container', layout: 'form', width: 65, hideLabels: true, items: [{
-                        // === Racing Checkbox ===
-                            xtype: 'checkbox',
-                            boxLabel: 'Racing',
-                            name: 'bRacing',
-                        }]
-                    },{
-                        xtype: 'container', layout: 'form', width: 90, hideLabels: true, items: [{
-                        // === Commuting Checkbox ===
-                            xtype: 'checkbox',
-                            boxLabel: 'Commuting',
-                            name: 'bCommuting',
-                        }]
-                    }] // end of column container
-                },{
-                    xtype:'container', layout:'column', items: [{
-                        xtype:'container', layout:'form', width:200, labelWidth:80, items: [{
-                        // === Organization ===
-                            xtype: 'localcombobox',
-                            fieldLabel: 'Organization',
-                            displayField: 'text',
-                            valueField: 'id',
-                            hiddenName: 'OrganizationID',
-                            forceSelection: true,
-                            value: 2,       // default value
-                            width: 115,
-                            store: new Ext.data.ArrayStore({ fields: ['id', 'text'], data: organizationLookup })
-                        }]
-                    },{
-                        xtype: 'container', layout: 'form', width: 340, labelWidth: 75, items: [{
+                        xtype: 'container', layout: 'form', width: 330, labelWidth: 75, items: [{
                         // === Team URL ===
                             xtype: 'displayfield',
                             fieldLabel: 'Homepage',
@@ -144,7 +116,69 @@ function C_TeamDialog()
                                 this.el.update("<a style='color:blue' href='" + home + "' target='_blank'>" + home + "</a>&nbsp;&nbsp;");
                             }
                         }]
-                    }]
+                    }] // end of column container
+                },{
+                    xtype:'container', layout:'column', items: [{
+                        xtype:'container', layout:'form', width:230, labelWidth:70, items: [{
+                        // === Team Type ===
+                            xtype: 'localcombobox',
+                            fieldLabel: 'Type',
+                            displayField: 'text',
+                            valueField: 'id',
+                            hiddenName: 'TeamTypeID',
+                            forceSelection: true,
+                            value: 2,       // default value
+                            width: 130,
+                            allowBlank: false,
+                            blankText: 'Please choose a team type',
+                            store: new Ext.data.ArrayStore({ fields: ['id', 'text'], data: teamTypeLookup })
+                        }]
+                    },{
+                        xtype: 'container', layout: 'form', width: 135, hideLabels: true, items: [{
+                        // === Racing Checkbox ===
+                            xtype: 'checkbox',
+                            boxLabel: 'Show Racing Page',
+                            name: 'bRacing'
+                        }]
+                    },{
+                        xtype: 'container', layout: 'form', width: 150, hideLabels: true, items: [{
+                        // === Commuting Checkbox ===
+                            xtype: 'checkbox',
+                            boxLabel: 'Show Commuting Page',
+                            name: 'bCommuting'
+                        }]
+                    }] // end of column container
+                },{
+                    xtype:'container', layout:'column', items: [{
+                        xtype:'container', layout:'form', width:215, labelWidth:70, items: [{
+                        // === Site Level ===
+                            xtype: 'localcombobox',
+                            fieldLabel: 'Site Level',
+                            displayField: 'text',
+                            valueField: 'id',
+                            hiddenName: 'SiteLevelID',
+                            forceSelection: true,
+                            value: 0,       // default value
+                            width: 130,
+                            store: new Ext.data.ArrayStore({ fields: ['id', 'text'], data: siteLevelLookup })
+                        }]
+                    },{
+                        xtype: 'container', layout: 'form', labelWidth:65, width: 325, items: [{
+                        // === Zip Code ===
+                            xtype: 'remotecombobox',
+                            fieldLabel: 'Location',
+                            displayField: 'text',
+                            valueField: 'id',
+                            hiddenName: 'ZipCodeID',
+                            forceSelection: true,
+                            id: 'zip-code',
+                            width: 245,
+                            listWidth: 260,
+                            allowBlank: false,
+                            blankText: 'Please enter the zip code for your team',
+                            store: this.dsZipCodeLookup
+                        }]
+                    }] // end of column container
                 },{
             // === Message Field (just above buttons) ===
                     xtype: 'container',
@@ -174,7 +208,16 @@ function C_TeamDialog()
                 listeners: {
                     scope: this,
                     // unmask form when load is completed
-                    actioncomplete: function(form, action) { if(action.type == "load") { this.window.getEl().unmask(); this.onSelectStatus(); } },
+                    actioncomplete: function(form, action) { if(action.type == "load") {
+                        this.window.getEl().unmask(); this.onSelectStatus(); }
+                        // ZipCode combo is a remote combo box so on load we need to manually set the
+                        // display value of the combo box. setRawValue() updates the displayed text
+                        // while leaving the underlying zip code value unchanged
+                        if(form.reader.jsonData.results.ZipCodeText!="")
+                        {
+                            Ext.getCmp('zip-code').setRawValue(form.reader.jsonData.results.ZipCodeText);
+                        }
+                    },
                     // redirect to login page if load returns an error (session expired)
                     actionfailed: function(form, action) { if(action.type == "load") {window.location.href = 'login.php?expired=1' } }
                 }

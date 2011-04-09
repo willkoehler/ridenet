@@ -32,11 +32,11 @@ else
     $rs->free();
 
     // --- Get Team data
-    $rs = $oDB->query("SELECT TeamID, Organization, Archived, bRacing, bCommuting, SiteLevelID, SiteLevel, TeamName,
+    $rs = $oDB->query("SELECT TeamID, TeamType, Archived, bRacing, bCommuting, SiteLevelID, SiteLevel, TeamName,
                        IFNULL(Domain, CONCAT('club', TeamID)) AS Domain
                        FROM teams
                        LEFT JOIN ref_site_level USING (SiteLevelID)
-                       LEFT JOIN ref_organization USING (OrganizationID)
+                       LEFT JOIN ref_team_type USING (TeamTypeID)
                        WHERE 1 $whereFilter ORDER BY $sort $dir LIMIT $start, $limit", __FILE__, __LINE__);
 
     // --- Loop through all the records and add the contents of each record to the output array

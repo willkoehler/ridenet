@@ -15,7 +15,7 @@ require(SHAREDBASE_DIR . "SendMail.php");
 //-----------------------------------------------------------------------------------
 function AccountCreatedEmail($oDB, $newRiderID, $createdByID)
 {
-    $rs=$oDB->query("SELECT FirstName, LastName, RiderEmail, OrganizationID, RacingTeamID, TeamName, Domain
+    $rs=$oDB->query("SELECT FirstName, LastName, RiderEmail, TeamTypeID, RacingTeamID, TeamName, Domain
                      FROM rider JOIN teams ON (RacingTeamID = TeamID)
                      WHERE RiderID=$newRiderID", __FILE__, __LINE__);
     $newRiderInfo = $rs->fetch_array();
@@ -51,29 +51,7 @@ function AccountCreatedEmail($oDB, $newRiderID, $createdByID)
         }
         else
         {
-            switch($newRiderInfo['OrganizationID']) {
-                case 1:
-                // racing and recreational teams
-                    $subject = "Welcome to RideNet - {$newRiderInfo['TeamName']}";
-                    $msg = "Hi {$newRiderInfo['FirstName']},\n\n" .
-                           "Welcome to RideNet. {$createdByInfo['FirstName']} {$createdByInfo['LastName']} has " .
-                           "created a RideNet account for you as part of \"{$newRiderInfo['TeamName']}\". You can login to RideNet " .
-                           "using your email address and temporary password.\n\n" .
-                           "Email Address: {$newRiderInfo['RiderEmail']}\n" .
-                           "Password: live2ride\n\n" .
-                           "Homepage: $teamURL\n\n" .
-                           "Some things you can do on RideNet:\n" .
-                           "- Update your rider bio. Click \"Edit Profile\" at the top of Your Profile page\n" .
-                           "- Post race results. Choose \"Your Results\" from the menu in Your Profile page\n" .
-                           "- Log some rides. Click \"+ Log A Ride\" on Your Profile page\n" .
-                           "- Find other riders/teams. Use the \"Search\" box in the main menu.\n\n" .
-                           "If you have any questions about your account, email your team admin: {$createdByInfo['FirstName']} " .
-                           "{$createdByInfo['LastName']} {$createdByInfo['RiderEmail']}\n\n" .
-                           "Welcome to RideNet: http://www.ridenet.net We're excited to have you on board.\n\n" .
-                           "Sincerely,\n" .
-                           "The RideNet Development Team";
-                    break;
-          
+            switch($newRiderInfo['TeamTypeID']) {
                 case 2:
                 // commuting teams (consider biking 2 by 2012 sites for now)
                     $subject = "Welcome to RideNet - {$newRiderInfo['TeamName']}";
@@ -107,6 +85,28 @@ function AccountCreatedEmail($oDB, $newRiderID, $createdByID)
                            "The Consider Biking 2 BY 2012 team\n\n" .
                            "2 BY 2012 is made possible by the Robert Bartels, William C. and Naoma W. Denison, Charlotte R. Hallel, " .
                            "Robert B. Hurst and Martha G. Staub funds of the The Columbus Foundation.";
+                    break;
+
+                default:
+                // racing and recreational teams
+                    $subject = "Welcome to RideNet - {$newRiderInfo['TeamName']}";
+                    $msg = "Hi {$newRiderInfo['FirstName']},\n\n" .
+                           "Welcome to RideNet. {$createdByInfo['FirstName']} {$createdByInfo['LastName']} has " .
+                           "created a RideNet account for you as part of \"{$newRiderInfo['TeamName']}\". You can login to RideNet " .
+                           "using your email address and temporary password.\n\n" .
+                           "Email Address: {$newRiderInfo['RiderEmail']}\n" .
+                           "Password: live2ride\n\n" .
+                           "Homepage: $teamURL\n\n" .
+                           "Some things you can do on RideNet:\n" .
+                           "- Update your rider bio. Click \"Edit Profile\" at the top of Your Profile page\n" .
+                           "- Post race results. Choose \"Your Results\" from the menu in Your Profile page\n" .
+                           "- Log some rides. Click \"+ Log A Ride\" on Your Profile page\n" .
+                           "- Find other riders/teams. Use the \"Search\" box in the main menu.\n\n" .
+                           "If you have any questions about your account, email your team admin: {$createdByInfo['FirstName']} " .
+                           "{$createdByInfo['LastName']} {$createdByInfo['RiderEmail']}\n\n" .
+                           "Welcome to RideNet: http://www.ridenet.net We're excited to have you on board.\n\n" .
+                           "Sincerely,\n" .
+                           "The RideNet Development Team";
                     break;
             }
         }

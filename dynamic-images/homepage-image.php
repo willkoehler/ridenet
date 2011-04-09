@@ -9,7 +9,7 @@ require(dirname(__FILE__) . "/../script/data-helpers.php");
 
 $oDB = oOpenDBConnection();
 $teamID = intval($_REQUEST['T']);
-$organizationID = $oDB->DBLookup("OrganizationID", "teams", "TeamID=$teamID", 1);
+$teamTypeID = $oDB->DBLookup("TeamTypeID", "teams", "TeamID=$teamID", 1);
 
 $rs = $oDB->query("SELECT HomePageImage FROM teams WHERE TeamID=$teamID AND HomePageImage IS NOT NULL", __FILE__, __LINE__);
 if(($record = $rs->fetch_array())!=false)
@@ -22,8 +22,8 @@ if(($record = $rs->fetch_array())!=false)
 }
 else
 {
-    // default homepage image depends on the organization and team ID (hard-code for now)
-    if($organizationID==2)
+    // default homepage image depends on the team type (hard-code for now)
+    if($teamTypeID==2)
     {
         // image for 2BY2012 pages
         $imageFile = "2by2012-homepage.jpg";

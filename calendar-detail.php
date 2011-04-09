@@ -99,7 +99,7 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
             LEFT JOIN rider r ON (c.AddedBy = r.RiderID)
             LEFT JOIN teams postedTeam ON (c.TeamID = postedTeam.TeamID)
             LEFT JOIN ref_intensity USING (IntensityID)
-            LEFT JOIN ref_zipcodes USING (ZipCodeID) 
+            LEFT JOIN ref_zipcodes ON (ref_zipcodes.ZipCodeID = c.ZipCodeID) 
             WHERE CalendarID=$calendarID";
     $rs = $oDB->query($sql, __FILE__, __LINE__);
     if(($record=$rs->fetch_array())==false)

@@ -8,7 +8,7 @@ require(dirname(__FILE__) . "/script/defaults.php");
 
 $oDB = oOpenDBConnection();
 $pt=SmartGetInt("T");
-$organizationID = $oDB->DBLookup("OrganizationID", "teams", "TeamID=$pt", 1);
+$teamTypeID = $oDB->DBLookup("TeamTypeID", "teams", "TeamID=$pt", 1);
 
 header("Content-Type: text/css");
 
@@ -19,12 +19,12 @@ $rs->free();
 
 if($record==false || is_null($record['PrimaryColor']))
 {
-    // Use default colors - default colors depends on the domain (hard code for now)
-    $PrimaryColor = ($organizationID==2) ? PRIMARY_COLOR_CMT : PRIMARY_COLOR;
-    $SecondaryColor = ($organizationID==2) ? SECONDARY_COLOR_CMT : SECONDARY_COLOR;
-    $PageBGColor = ($organizationID==2) ? PAGE_BG_COLOR_CMT : PAGE_BG_COLOR;
-    $BodyBGColor = ($organizationID==2) ? BODY_BG_COLOR_CMT : BODY_BG_COLOR;
-    $LinkColor = ($organizationID==2) ? LINK_COLOR_CMT : LINK_COLOR;
+    // Use default colors - default colors depends on the team type (hard code for now)
+    $PrimaryColor = ($teamTypeID==2) ? PRIMARY_COLOR_CMT : PRIMARY_COLOR;
+    $SecondaryColor = ($teamTypeID==2) ? SECONDARY_COLOR_CMT : SECONDARY_COLOR;
+    $PageBGColor = ($teamTypeID==2) ? PAGE_BG_COLOR_CMT : PAGE_BG_COLOR;
+    $BodyBGColor = ($teamTypeID==2) ? BODY_BG_COLOR_CMT : BODY_BG_COLOR;
+    $LinkColor = ($teamTypeID==2) ? LINK_COLOR_CMT : LINK_COLOR;
 }
 else
 {    

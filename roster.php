@@ -6,7 +6,7 @@ require(SHAREDBASE_DIR . "ExtJSLoader.php");
 $oDB = oOpenDBConnection();
 RecordPageView($oDB);
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
-$organizationID = $oDB->DBLookup("OrganizationID", "teams", "TeamID=$pt");
+$teamTypeID = $oDB->DBLookup("TeamTypeID", "teams", "TeamID=$pt");
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -27,8 +27,7 @@ $organizationID = $oDB->DBLookup("OrganizationID", "teams", "TeamID=$pt");
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
     g_fullDomainRoot="<?=GetFullDomainRoot()?>";
-    g_bRacing = <?=$oDB->DBLookup("bRacing", "teams", "TeamID=$pt", 0)?>;
-    g_organizationID = <?=$oDB->DBLookup("OrganizationID", "teams", "TeamID=$pt", 0)?>;
+    g_teamTypeID = <?=$oDB->DBLookup("IFNULL(TeamTypeID, 3)", "teams", "TeamID=$pt")?>;
     rosterData = <?$oDB->DumpToJSArray("SELECT RiderID, RacingTeamID, CONCAT(FirstName, ' ', LastName) AS FullName, LastName, YearsCycling,
                                         IFNULL(Height, '-') AS Height, IFNULL(Weight, 0) AS Weight,
                                         IFNULL(RiderTypeID,100) AS RiderTypeID, IFNULL(RiderType, '(unkown)') AS RiderType,
@@ -53,7 +52,7 @@ $organizationID = $oDB->DBLookup("OrganizationID", "teams", "TeamID=$pt");
   </div>
   
   <div id="sidebarHolderRight">
-    <? if($organizationID==2) { ?>
+    <? if($teamTypeID==2) { ?>
       <?ColumbusFoundationSidebar($oDB)?>
     <? } else { ?>
       <?SignupSidebar($oDB)?>

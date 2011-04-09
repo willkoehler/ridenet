@@ -2,6 +2,18 @@ function C_CustomizeTab()
 {
     this.create = function()
     {
+        // Remote lookup for Zip Codes
+        this.dsZipCodeLookup = new Ext.data.JsonStore({
+            root: 'results',                // results array is returned in this property
+            totalProperty: 'rowcount',      // total number of rows is returned in this property
+            idProperty: 'ZipCodeID',        // defines the primary key for the results
+            fields: [
+                {name: 'id', type: 'int'},
+                {name: 'text'}
+            ],
+            proxy: new Ext.data.HttpProxy({ url: 'data/lookup-zip-code.php' })
+        });
+
         // Json Reader to read data for dialog
         var reader = new Ext.data.JsonReader( { root: 'results', idProperty: 'TeamID' }, [
             {name: 'TeamID', type: 'int'},
@@ -9,6 +21,9 @@ function C_CustomizeTab()
             {name: 'Domain'},
             {name: 'bRacing', type: 'int'},
             {name: 'bCommuting', type: 'int'},
+            {name: 'TeamTypeID', type: 'int'},
+            {name: 'ZipCodeID', type: 'int'},
+            {name: 'ZipCodeText'},
             {name: 'ShowLogo', type: 'int'},
             {name: 'URL', mapping: 'Domain'},
             {name: 'BannerImg', mapping: 'TeamID', type: 'int'},
@@ -37,7 +52,7 @@ function C_CustomizeTab()
             items: [{
                 xtype: 'fieldset', title: "Team Information", layout: 'form', labelWidth: 65, items: [{
                     xtype: 'container', layout: 'column', items: [{
-                        xtype: 'container', layout: 'form', width: 300, labelWidth: 65, items: [{
+                        xtype: 'container', layout: 'form', width: 310, labelWidth: 65, items: [{
                         // === Team Name ===
                             xtype: 'textfield',
                             fieldLabel: 'Name',
@@ -47,12 +62,68 @@ function C_CustomizeTab()
                             width: 230
                         }]
                     },{
-                        xtype: 'container', layout: 'form', width: 205, labelWidth: 60, items: [{
+                        xtype: 'container', layout: 'form', width: 285, items: [{
+                        // === Zip Code ===
+                            xtype: 'remotecombobox',
+                            fieldLabel: 'Location',
+                            displayField: 'text',
+                            valueField: 'id',
+                            hiddenName: 'ZipCodeID',
+                            forceSelection: true,
+                            id: 'zip-code',
+                            width: 210,
+                            listWidth: 260,
+                            allowBlank: false,
+                            blankText: 'Please enter the zip code for your team',
+                            store: this.dsZipCodeLookup
+                        }]
+                    },{
+                        xtype: 'container',
+                        style: 'padding-top:4px;color:#888',
+                        html: '(zip code)'
+                    }]
+                },{
+                    xtype: 'container', layout: 'column', items: [{
+                        xtype:'container', layout:'form', width:230, items: [{
+                        // === Team Type ===
+                            xtype: 'localcombobox',
+                            fieldLabel: 'Type',
+                            displayField: 'text',
+                            valueField: 'id',
+                            hiddenName: 'TeamTypeID',
+                            forceSelection: true,
+                            width: 130,
+                            allowBlank: false,
+                            blankText: 'Please choose a team type',
+                            store: new Ext.data.ArrayStore({ fields: ['id', 'text'], data: teamTypeLookup })
+                        }]
+                    },{
+                        xtype: 'container', layout: 'form', hideLabels: true, width: 140, items: [{
+                        // === Racing Checkbox ===
+                            xtype: 'container', layout: 'form', hideLabels: true, style: 'padding-top: 2px', items: [{    // shift down slighly
+                                xtype: 'checkbox',
+                                boxLabel: 'Show Racing Page',
+                                name: 'bRacing'
+                            }]
+                        }]
+                    },{
+                        xtype: 'container', layout: 'form', width: 150, hideLabels: true, items: [{
+                        // === Commuting Checkbox ===
+                            xtype: 'container', layout: 'form', hideLabels: true, style: 'padding-top: 2px', items: [{    // shift down slighly
+                                xtype: 'checkbox',
+                                boxLabel: 'Show Commuting Page',
+                                name: 'bCommuting'
+                            }]
+                        }]
+                    }]
+                },{
+                    xtype:'container', layout:'column', items: [{
+                        xtype: 'container', layout: 'form', width: 225, items: [{
                         // === Team Domain ===
                             xtype: 'textfield',
                             fieldLabel: 'Domain',
                             name: 'Domain',
-                            width: 120,
+                            width: 130,
                             enableKeyEvents: true,
                             allowBlank: false,
                             blankText: 'You must enter a domain name',
@@ -61,22 +132,6 @@ function C_CustomizeTab()
                             }}
                         }]
                     },{
-                        xtype: 'container', layout: 'form', width: 65, hideLabels: true, items: [{
-                        // === Racing Checkbox ===
-                            xtype: 'checkbox',
-                            boxLabel: 'Racing',
-                            name: 'bRacing'
-                        }]
-                    },{
-                        xtype: 'container', layout: 'form', width: 90, hideLabels: true, items: [{
-                        // === Commuting Checkbox ===
-                            xtype: 'checkbox',
-                            boxLabel: 'Commuting',
-                            name: 'bCommuting'
-                        }]
-                    }]
-                },{
-                    xtype:'container', layout:'column', items: [{
                         xtype: 'container', layout: 'form', width: 355, items: [{
                         // === Team URL ===
                             xtype: 'displayfield',
@@ -388,6 +443,13 @@ function C_CustomizeTab()
                 actioncomplete: function(form, action) { if(action.type == "load") {
                     this.form.getEl().unmask();
                     this.originalDomain = form.reader.jsonData.results.Domain;
+                    // ZipCode combo is a remote combo box so on load we need to manually set the
+                    // display value of the combo box. setRawValue() updates the displayed text
+                    // while leaving the underlying zip code value unchanged
+                    if(form.reader.jsonData.results.ZipCodeText!="")
+                    {
+                        Ext.getCmp('zip-code').setRawValue(form.reader.jsonData.results.ZipCodeText);
+                    }
                 }},
                 // redirect to login page if load returns an error (session expired)
                 actionfailed: function(form, action) { if(action.type == "load") {window.location.href = 'login.php?expired=1' } },

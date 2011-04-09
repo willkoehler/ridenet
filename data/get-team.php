@@ -17,9 +17,10 @@ else if(!isSystemAdmin())
 }
 else
 {
-    $rs = $oDB->query("SELECT TeamID, Archived, bRacing, bCommuting, SiteLevelID, OrganizationID, TeamName,
+    $rs = $oDB->query("SELECT TeamID, Archived, bRacing, bCommuting, SiteLevelID, TeamTypeID, TeamName,
+                              ZipCodeID, CONCAT(City, ', ', State, ' ', ZipCode) AS ZipCodeText,
                               IFNULL(Domain, CONCAT('club', TeamID)) AS Domain
-                       FROM teams
+                       FROM teams LEFT JOIN ref_zipcodes USING (ZipCodeID)
                        WHERE TeamID=$teamID", __FILE__, __LINE__);
     $result['results'] = $rs->fetch_object();
     $result['success'] = true;

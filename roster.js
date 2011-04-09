@@ -31,72 +31,72 @@ function C_RosterPanel(parentElement)
             data: rosterData
         });
     
-        if(g_organizationID==2)     // Consider biking teams
-        {
-            // commuting teams
-            var tbar = new Ext.Toolbar({ items: [
-                'Sort By:', this.makeSortButton('Days/Month', 'btn-sort-cedaysmonth', true),
-                ' ', this.makeSortButton('Name', 'btn-sort-name', false),
-                ' ', this.makeSortButton('Miles', 'btn-sort-ytdmiles', false),
-                ' ', this.makeSortButton('Years Cycling', 'btn-sort-yc', false)
-            ]});
-            this.ds.sort([{ field: 'CEDaysMonth', direction: 'DESC'}]);
-            var rosterTpl = '<tpl for=".">\
-                                <div class="rider-wrap">\
-                                  <div class="thumb-wrap">\
-                                    <img id="img-{RiderID}" class=thumb src="' + g_fullDomainRoot + '/dynamic-images/rider-portrait.php?RiderID={RiderID}&T={RacingTeamID}" height=100 width=80>\
-                                  </div>\
-                                  <span class=name>{FullName}</span>\
-                                  <span class=category>\
-                                    <img class="tight" src="images/ridelog/tiny/commute.png" height=10>\
-                                    <img class="tight" src="images/ridelog/tiny/errand.png" height=10>\
-                                    {CEDaysMonth:plural("day")}/month\
-                                  </span>\
-                                  <span class=category>{YTDMiles} miles YTD</span>\
-                                </div>\
-                              </tpl>'
-        }
-        else if(g_bRacing)
-        {
-            // racing teams
-            var tbar = new Ext.Toolbar({ items: [
-                'Sort By:', this.makeSortButton('Category', 'btn-sort-category', true),
-                ' ', this.makeSortButton('Name', 'btn-sort-name', false),
-                ' ', this.makeSortButton('Age', 'btn-sort-age', false),
-                ' ', this.makeSortButton('Years Cycling', 'btn-sort-yc', false)
-            ]});
-            this.ds.sort([{ field: 'RiderTypeID', direction: 'ASC' }, { field: 'LastName', direction: 'ASC'}]);
-            var rosterTpl = '<tpl for=".">\
-                                <div class="rider-wrap">\
-                                  <div class="thumb-wrap">\
-                                    <img id="img-{RiderID}" class=thumb src="' + g_fullDomainRoot + '/dynamic-images/rider-portrait.php?RiderID={RiderID}&T={RacingTeamID}" height=100 width=80>\
-                                  </div>\
-                                  <span class=name>{FullName}</span>\
-                                  <span class=category>{RiderType}</span>\
-                                  <span class=details>{Height} {Weight} lbs Age {Age}</span>\
-                                </div>\
-                              </tpl>'
-        }
-        else
-        {
-            // recreational teams
-            var tbar = new Ext.Toolbar({ items: [
-                'Sort By:', this.makeSortButton('Name', 'btn-sort-name', true),
-                ' ', this.makeSortButton('Miles', 'btn-sort-ytdmiles', false),
-                ' ', this.makeSortButton('# Rides', 'btn-sort-ytdrides', false),
-                ' ', this.makeSortButton('Age', 'btn-sort-age', false),
-                ' ', this.makeSortButton('Years Cycling', 'btn-sort-yc', false)
-            ]});
-            this.ds.sort([{ field: 'LastName', direction: 'ASC'}]);
-            var rosterTpl = '<tpl for=".">\
-                                <div class="rider-wrap">\
-                                  <div class="thumb-wrap">\
-                                    <img id="img-{RiderID}" class=thumb src="' + g_fullDomainRoot + '/dynamic-images/rider-portrait.php?RiderID={RiderID}&T={RacingTeamID}" height=100 width=80>\
-                                  </div>\
-                                  <span class=name>{FullName}</span>\
-                                  <span class=category>YTD: {YTDRides:plural("ride")}, {YTDMiles} miles</span>\
-                                </div>\
-                              </tpl>'
+        switch(g_teamTypeID) {
+            case 1:
+            // ===== Racing Teams ======
+                var tbar = new Ext.Toolbar({ items: [
+                    'Sort By:', this.makeSortButton('Name', 'btn-sort-name', true),
+                    ' ', this.makeSortButton('Category', 'btn-sort-category', false),
+                    ' ', this.makeSortButton('Miles', 'btn-sort-ytdmiles', false),
+                    ' ', this.makeSortButton('Age', 'btn-sort-age', false),
+                    ' ', this.makeSortButton('Years Cycling', 'btn-sort-yc', false)
+                ]});
+                this.ds.sort([{ field: 'LastName', direction: 'ASC' }]);
+                var rosterTpl = '<tpl for=".">\
+                                    <div class="rider-wrap">\
+                                      <div class="thumb-wrap">\
+                                        <img id="img-{RiderID}" class=thumb src="' + g_fullDomainRoot + '/dynamic-images/rider-portrait.php?RiderID={RiderID}&T={RacingTeamID}" height=100 width=80>\
+                                      </div>\
+                                      <span class=name>{FullName}</span>\
+                                      <span class=category>{RiderType}</span>\
+                                      <span class=details>{Height} {Weight} lbs Age {Age}</span>\
+                                    </div>\
+                                  </tpl>'
+                break;
+            case 2:
+            // ===== Commuting teams ======
+                var tbar = new Ext.Toolbar({ items: [
+                    'Sort By:', this.makeSortButton('Days/Month', 'btn-sort-cedaysmonth', true),
+                    ' ', this.makeSortButton('Name', 'btn-sort-name', false),
+                    ' ', this.makeSortButton('Miles', 'btn-sort-ytdmiles', false),
+                    ' ', this.makeSortButton('Years Cycling', 'btn-sort-yc', false)
+                ]});
+                this.ds.sort([{ field: 'CEDaysMonth', direction: 'DESC'}]);
+                var rosterTpl = '<tpl for=".">\
+                                    <div class="rider-wrap">\
+                                      <div class="thumb-wrap">\
+                                        <img id="img-{RiderID}" class=thumb src="' + g_fullDomainRoot + '/dynamic-images/rider-portrait.php?RiderID={RiderID}&T={RacingTeamID}" height=100 width=80>\
+                                      </div>\
+                                      <span class=name>{FullName}</span>\
+                                      <span class=category>\
+                                        <img class="tight" src="images/ridelog/tiny/commute.png" height=10>\
+                                        <img class="tight" src="images/ridelog/tiny/errand.png" height=10>\
+                                        {CEDaysMonth:plural("day")}/month\
+                                      </span>\
+                                      <span class=category>{YTDMiles} miles YTD</span>\
+                                    </div>\
+                                  </tpl>'
+                break;
+            case 3:
+            // ===== Recreational Teams ======
+                var tbar = new Ext.Toolbar({ items: [
+                    'Sort By:', this.makeSortButton('Name', 'btn-sort-name', true),
+                    ' ', this.makeSortButton('Miles', 'btn-sort-ytdmiles', false),
+                    ' ', this.makeSortButton('# Rides', 'btn-sort-ytdrides', false),
+                    ' ', this.makeSortButton('Age', 'btn-sort-age', false),
+                    ' ', this.makeSortButton('Years Cycling', 'btn-sort-yc', false)
+                ]});
+                this.ds.sort([{ field: 'LastName', direction: 'ASC'}]);
+                var rosterTpl = '<tpl for=".">\
+                                    <div class="rider-wrap">\
+                                      <div class="thumb-wrap">\
+                                        <img id="img-{RiderID}" class=thumb src="' + g_fullDomainRoot + '/dynamic-images/rider-portrait.php?RiderID={RiderID}&T={RacingTeamID}" height=100 width=80>\
+                                      </div>\
+                                      <span class=name>{FullName}</span>\
+                                      <span class=category>YTD: {YTDRides:plural("ride")}, {YTDMiles} miles</span>\
+                                    </div>\
+                                  </tpl>'
+                break;
         }
     
         // Add animate button on right side of toolbar

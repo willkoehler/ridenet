@@ -97,17 +97,17 @@ function BuildRideLogComment($comment, $link)
 //  Generates sample text for teams that have not customized their Home Page yet
 //
 //  PARAMETERS:
-//    orgnizationID - Team's Organization ID
+//    teamTypeID - Team Type
 //
 //  RETURN: sample homepage text
 //-----------------------------------------------------------------------------------
-function SampleHomePageText($organizationID)
+function SampleHomePageText($teamTypeID)
 {
-    // home page text depends on Organization (Consider Biking, RideNet, etc)
+    // home page text depends on team type (2 BY 2012, Racing, etc)
     // Hardcode for now
-    if($organizationID==2)
+    if($teamTypeID==2)
     {
-        // 2 BY 20120
+        // 2 BY 2012 team
         $text = "The goal of 2 BY 2012 is for each citizen of central Ohio to bicycle " .
                 "to work or school, or run an errand by bike, two days a month by the " .
                 "Columbus bicentennial in 2012.<br>\n" .
@@ -121,7 +121,7 @@ function SampleHomePageText($organizationID)
     }
     else
     {
-        // RideNet
+        // RideNet default
         $text = "<b>Welcome to RideNet!</b> Get started by going to 'Your Profile' and " .
                 "updating your rider bio. While you're there you can log rides and " .
                 "post race results.<br>\n" .
@@ -143,16 +143,16 @@ function SampleHomePageText($organizationID)
 //  Generates sample page title for teams that have not customized their Home Page yet
 //
 //  PARAMETERS:
-//    orgnizationID - Team's Organization ID
+//    teamTypeID - Team Type
 //    teamName  - Name of the team
 //
 //  RETURN: sample homepage title
 //-----------------------------------------------------------------------------------
-function SampleHomePageTitle($organizationID, $teamName)
+function SampleHomePageTitle($teamTypeID, $teamName)
 {
-    // home page title depends on Organization (Consider Biking, RideNet, etc)
+    // home page text depends on team type (2 BY 2012, Racing, etc)
     // Hardcode for now
-    if($organizationID==2)
+    if($teamTypeID==2)
     {
         // 2 BY 20120
         $title = "$teamName is a partner of 2 BY 2012";
