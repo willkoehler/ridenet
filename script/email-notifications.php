@@ -45,7 +45,7 @@ function AccountCreatedEmail($oDB, $newRiderID, $createdByID)
                    "- Log some rides. Click \"+ Log A Ride\" on Your Profile page\n" .
                    "- Find other riders/teams. Use the \"Search\" box in the main menu.\n\n" .
                    "If you have any questions about your account, email us at info@ridenet.net\n\n" .
-                   "Welcome to RideNet: http://www.ridenet.net We're excited to have you on board.\n\n" .
+                   "Welcome to RideNet: http://ridenet.net We're excited to have you on board.\n\n" .
                    "Sincerely,\n" .
                    "The RideNet Development Team";
         }
@@ -104,7 +104,7 @@ function AccountCreatedEmail($oDB, $newRiderID, $createdByID)
                            "- Find other riders/teams. Use the \"Search\" box in the main menu.\n\n" .
                            "If you have any questions about your account, email your team admin: {$createdByInfo['FirstName']} " .
                            "{$createdByInfo['LastName']} {$createdByInfo['RiderEmail']}\n\n" .
-                           "Welcome to RideNet: http://www.ridenet.net We're excited to have you on board.\n\n" .
+                           "Welcome to RideNet: http://ridenet.net We're excited to have you on board.\n\n" .
                            "Sincerely,\n" .
                            "The RideNet Development Team";
                     break;

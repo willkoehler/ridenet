@@ -53,7 +53,7 @@ require("../script/app-master.php");
                   interval: 7000,
                   domainRoot: '<?=GetDomainRoot()?>',
                   title: '<div style="float:right;text-align:right;font-size:14px;padding-top:16px;color:#9dcf93"> \
-                            www.ridenet.net \
+                            http://ridenet.net \
                           </div> \
                           <div style="float:left;text-align:left;font-size:14px;padding-top:16px;color:#9dcf93"> \
                             Powered by RideNet \

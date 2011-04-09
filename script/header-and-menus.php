@@ -426,10 +426,10 @@ function SignupSidebar()
 ?>
     <div class="sidebarBlock">
       <p style="text-align:center">
-        <a href="http://www.ridenet.net" target="_blank"><img border=0 src="images/ads/ridenetad.png" alt="RideNet" /><br></a>
+        <a href="http://ridenet.net" target="_blank"><img border=0 src="images/ads/ridenetad.png" alt="RideNet" /><br></a>
       </p>
       <p style="text-align:center">
-        Free rider profiles and team pages. <a href="http://www.ridenet.net" target="_blank">Join RideNet Today!</a>
+        Free rider profiles and team pages. <a href="http://ridenet.net" target="_blank">Join RideNet Today!</a>
       </p>
     </div>
 

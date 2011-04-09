@@ -65,8 +65,8 @@ $rs->free()
       </div>
     </div>
     <div class="ridenet-mini-ad" style="float:right;padding-top:12px">
-      <a href="http://www.ridenet.net" target="_blank"><img border=0 src="images/ads/ridenetad-mini.png" alt="RideNet"/><br></a>
-      <a href="http://www.ridenet.net" target="_blank">Your team...online</a>
+      <a href="http://ridenet.net" target="_blank"><img border=0 src="images/ads/ridenetad-mini.png" alt="RideNet"/><br></a>
+      <a href="http://ridenet.net" target="_blank">Your team...online</a>
     </div>
     <div class="clearfloat" style="height:20px"><!--vertical spacer--></div>
     <div align="center">
