@@ -65,11 +65,15 @@ function BuildRideLogComment($comment, $link)
     }
     elseif(preg_match('/garmin/i', $link))
     {
-        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Garmin Data]</a>";
+        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Garmin]</a>";
     }
     elseif(preg_match('/trainingpeaks/i', $link))
     {
-        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Power File]</a>";
+        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[TrainingPeaks]</a>";
+    }
+    elseif(preg_match('/trimbleoutdoors/i', $link))
+    {
+        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[GPS]</a>";
     }
     elseif(preg_match('/mapmyride|bikely|gmap-pedometer|bikeroutetoaster|ridewithgps/i', $link))
     {
@@ -82,6 +86,10 @@ function BuildRideLogComment($comment, $link)
     elseif(preg_match('/youtube/i', $link))
     {
         $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Video]</a>";
+    }
+    elseif(preg_match('/.jpg|.jpeg|.png|.gif/i', $link))
+    {
+        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Photo]</a>";
     }
     else
     {
