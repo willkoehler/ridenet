@@ -61,7 +61,7 @@ $rs->free()
         <h2><?=date_create($eventInfo['RaceDate'])->format("F j, Y")?></h2>
       </div>
       <div style="float:left;margin-left:10px;position:relative;left:0px;top:-1px">
-        <?SocialMediaButtons($eventInfo['EventName'] . " Results on RideNet")?>
+        <?SocialMediaButtons($eventInfo['EventName'] . " Results on #RideNet")?>
       </div>
     </div>
     <div class="ridenet-mini-ad" style="float:right;padding-top:12px">

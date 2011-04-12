@@ -57,7 +57,7 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
       <h1>Current Rider Stats</h1>
     </div>
     <div style="float:left;margin-left:10px;position:relative;left:0px;top:12px">
-      <?SocialMediaButtons("Latest rider stats on RideNet")?>
+      <?SocialMediaButtons("Latest rider stats on #RideNet")?>
     </div>
     <div class='clearfloat'></div>
     <div style="height:10px"></div>

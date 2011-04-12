@@ -125,14 +125,14 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
         <h1>Your Profile</h1>
       </div>
       <div style="float:left;margin-left:10px;position:relative;top:13px">
-        <?SocialMediaButtons("I'm on RideNet. Check out my profile.", GetBaseHref() . "profile.php?RiderID=$RiderID")?>
+        <?SocialMediaButtons("I'm on #RideNet. Check out my profile.", GetBaseHref() . "profile.php?RiderID=$RiderID")?>
       </div>
     <? } else { ?>
       <div style="float:left">
         <h1>Rider Profile</h1>
       </div>
       <div style="float:left;margin-left:10px;position:relative;top:13px">
-        <?SocialMediaButtons("See $riderName on RideNet")?>
+        <?SocialMediaButtons("See $riderName on #RideNet")?>
       </div>
     <? } ?>
     <div class='clearfloat'></div>

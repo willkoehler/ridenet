@@ -69,7 +69,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
       <h1>Community Ride Calendar</h1>
     </div>
     <div style="float:left;margin-left:10px;position:relative;left:0px;top:12px">
-      <? SocialMediaButtons("Find bike rides in your area using the Community Ride Calendar on RideNet") ?>
+      <? SocialMediaButtons("Find bike rides in your area using the Community Ride Calendar on #RideNet") ?>
     </div>
     <div style="float:right;text-align:right;position:relative;left:0px;top:15px">
       <span id='help-btn' onclick="g_helpDialog.show({ ypos:100, animateTarget: 'help-btn' });">

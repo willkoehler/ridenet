@@ -54,7 +54,7 @@ $RideBoardLength = 30;
       <h1>Take a Ride on the Bike Bus</h1>
     </div>
     <div style="float:left;margin-left:10px;position:relative;left:0px;top:12px">
-      <?SocialMediaButtons("Take a ride on the Central Ohio Bike Bus")?>
+      <?SocialMediaButtons("Take a ride on the Central Ohio Bike Bus #RideNet")?>
     </div>
     <div class='clearfloat'></div>
     <div style="height:20px"></div>

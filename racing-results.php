@@ -65,7 +65,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
       <h1><?=$ShowYear?> Results Summary</h1>
     </div>
     <div style="float:left;margin-left:10px;position:relative;left:0px;top:12px">
-      <? SocialMediaButtons(($tf) ? "Summary of $ShowYear $teamName Results on RideNet" : "Summary of $ShowYear racing results on RideNet") ?>
+      <? SocialMediaButtons(($tf) ? "Summary of $ShowYear $teamName Results on #RideNet" : "Summary of $ShowYear racing results on #RideNet") ?>
     </div>
     <div class='clearfloat'></div>
 

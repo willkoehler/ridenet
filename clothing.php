@@ -41,7 +41,7 @@ $RideBoardLength = 30;
       <h1>RideNet Cycling Kits</h1>
     </div>
     <div style="float:left;margin-left:10px;position:relative;left:0px;top:12px">
-      <?SocialMediaButtons("Help the RideNet community grow and support 2BY2012 with Verge's elite cycling jersey:")?>
+      <?SocialMediaButtons("Help the #RideNet community grow and support 2BY2012 with Verge's elite cycling jersey:")?>
     </div>
     <div class='clearfloat' style="height:10px"></div>
     <p class="newp">

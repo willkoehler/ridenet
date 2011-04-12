@@ -65,7 +65,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
       <h1><?=$ShowYear?> Rider Rankings</h1>
     </div>
     <div style="float:left;margin-left:10px;position:relative;left:0px;top:12px">
-      <? SocialMediaButtons(($tf) ? "$ShowYear $teamName Rider Rankings on RideNet" : "$ShowYear Rider Rankings on RideNet") ?>
+      <? SocialMediaButtons(($tf) ? "$ShowYear $teamName Rider Rankings on #RideNet" : "$ShowYear Rider Rankings on #RideNet") ?>
     </div>
     <div class='clearfloat'></div>
     <?if($pt!=0) { ?>

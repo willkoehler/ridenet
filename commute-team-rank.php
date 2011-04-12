@@ -59,7 +59,7 @@ $range = (isset($_REQUEST['R'])) ? $_REQUEST['R'] : "L30";
       <h1>Current Team Rankings</h1>
     </div>
     <div style="float:left;margin-left:10px;position:relative;left:0px;top:12px">
-      <?SocialMediaButtons("Latest 2 BY 2012 stats and team rankings on RideNet")?>
+      <?SocialMediaButtons("Latest 2 BY 2012 stats and team rankings on #RideNet")?>
     </div>
     <div class='clearfloat'></div>
 

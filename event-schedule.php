@@ -62,7 +62,7 @@ $ShowYear = (isset($_REQUEST['Year'])) ? SmartGetInt("Year") : date("Y");
       <h1>Regional Event Schedule</h1>
     </div>
     <div style="float:left;margin-left:10px;position:relative;left:0px;top:12px">
-      <? SocialMediaButtons("Find bike tours, road races, criteriums and other cycling events in your area on RideNet") ?>
+      <? SocialMediaButtons("Find bike tours, road races, criteriums and other cycling events in your area on #RideNet") ?>
     </div>
     <div style="float:right;text-align:right;padding-top:15px">
       <span id='help-btn' onclick="g_helpDialog.show({ ypos:100, animateTarget: 'help-btn' });">

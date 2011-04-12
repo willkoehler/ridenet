@@ -85,7 +85,7 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
       <h1><?=date_create($rideDate)->format("l F j, Y")?></h1>
     </div>
     <div style="float:left;margin-left:10px;position:relative;left:0px;top:12px">
-      <?SocialMediaButtons("Join us: " . $rideName)?>
+      <?SocialMediaButtons("Join us: " . $rideName . " #RideNet")?>
     </div>
     <div class='clearfloat'></div>
 
