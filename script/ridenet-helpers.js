@@ -223,3 +223,8 @@ function buildTeamBaseURL(subdomain)
     }
 }
 
+
+function getFullDomainRoot()
+{
+    return(document.domain.search(/local/i)!==-1) ? "http://ridenet.local" : "http://ridenet.net";
+} 

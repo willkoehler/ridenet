@@ -31,7 +31,6 @@ $sql = "SELECT TeamID, TeamName, Domain, COUNT(RiderID) AS TotalRiders, SUM(IF(C
         WHERE $whereFilter
         GROUP BY TeamID
         ORDER BY $sort $dir LIMIT $start, $limit";
-        //exit($sql);
 $rs = $oDB->query($sql, __FILE__, __LINE__);
 
 // --- Loop through all the records and add the contents of each record to the output array
