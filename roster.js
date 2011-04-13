@@ -9,6 +9,10 @@ Ext.onReady(function()
 function C_RosterPanel(parentElement)
 {
     this.holder = parentElement
+
+    // Sort field can be specified in the hash tag (i.e. profile.php#s=sort-name)
+    // If there's no hash tag, use defaults
+    var hash = Ext.urlDecode((window.location.hash) ? window.location.hash.substr(1) : "");
     
     this.create = function()
     {
@@ -34,14 +38,14 @@ function C_RosterPanel(parentElement)
         switch(g_teamTypeID) {
             case 1:
             // ===== Racing Teams ======
+                this.initial_sort = (hash.s) || "sort-name";    // get sort from hash tag or use default
                 var tbar = new Ext.Toolbar({ items: [
-                    'Sort By:', this.makeSortButton('Name', 'btn-sort-name', true),
-                    ' ', this.makeSortButton('Category', 'btn-sort-category', false),
-                    ' ', this.makeSortButton('Miles', 'btn-sort-ytdmiles', false),
-                    ' ', this.makeSortButton('Age', 'btn-sort-age', false),
-                    ' ', this.makeSortButton('Years Cycling', 'btn-sort-yc', false)
+                    'Sort By:', this.makeSortButton('Name', 'sort-name'),
+                    ' ', this.makeSortButton('Category', 'sort-category'),
+                    ' ', this.makeSortButton('Miles', 'sort-ytdmiles'),
+                    ' ', this.makeSortButton('Age', 'sort-age'),
+                    ' ', this.makeSortButton('Years Cycling', 'sort-yc')
                 ]});
-                this.ds.sort([{ field: 'LastName', direction: 'ASC' }]);
                 var rosterTpl = '<tpl for=".">\
                                     <div class="rider-wrap">\
                                       <div class="thumb-wrap">\
@@ -55,13 +59,13 @@ function C_RosterPanel(parentElement)
                 break;
             case 2:
             // ===== Commuting teams ======
+                this.initial_sort = (hash.s) || "sort-cedaysmonth";    // get sort from hash tag or use default
                 var tbar = new Ext.Toolbar({ items: [
-                    'Sort By:', this.makeSortButton('Days/Month', 'btn-sort-cedaysmonth', true),
-                    ' ', this.makeSortButton('Name', 'btn-sort-name', false),
-                    ' ', this.makeSortButton('Miles', 'btn-sort-ytdmiles', false),
-                    ' ', this.makeSortButton('Years Cycling', 'btn-sort-yc', false)
+                    'Sort By:', this.makeSortButton('Days/Month', 'sort-cedaysmonth'),
+                    ' ', this.makeSortButton('Name', 'sort-name'),
+                    ' ', this.makeSortButton('Miles', 'sort-ytdmiles'),
+                    ' ', this.makeSortButton('Years Cycling', 'sort-yc')
                 ]});
-                this.ds.sort([{ field: 'CEDaysMonth', direction: 'DESC'}]);
                 var rosterTpl = '<tpl for=".">\
                                     <div class="rider-wrap">\
                                       <div class="thumb-wrap">\
@@ -79,14 +83,14 @@ function C_RosterPanel(parentElement)
                 break;
             case 3:
             // ===== Recreational Teams ======
+                this.initial_sort = (hash.s) || "sort-name";    // get sort from hash tag or use default
                 var tbar = new Ext.Toolbar({ items: [
-                    'Sort By:', this.makeSortButton('Name', 'btn-sort-name', true),
-                    ' ', this.makeSortButton('Miles', 'btn-sort-ytdmiles', false),
-                    ' ', this.makeSortButton('# Rides', 'btn-sort-ytdrides', false),
-                    ' ', this.makeSortButton('Age', 'btn-sort-age', false),
-                    ' ', this.makeSortButton('Years Cycling', 'btn-sort-yc', false)
+                    'Sort By:', this.makeSortButton('Name', 'sort-name'),
+                    ' ', this.makeSortButton('Miles', 'sort-ytdmiles'),
+                    ' ', this.makeSortButton('# Rides', 'sort-ytdrides'),
+                    ' ', this.makeSortButton('Age', 'sort-age'),
+                    ' ', this.makeSortButton('Years Cycling', 'sort-yc')
                 ]});
-                this.ds.sort([{ field: 'LastName', direction: 'ASC'}]);
                 var rosterTpl = '<tpl for=".">\
                                     <div class="rider-wrap">\
                                       <div class="thumb-wrap">\
@@ -98,7 +102,9 @@ function C_RosterPanel(parentElement)
                                   </tpl>'
                 break;
         }
-    
+        // set initial sort
+        this.updateSort(this.initial_sort);
+
         // Add animate button on right side of toolbar
         tbar.addItem('->')
         tbar.addItem({
@@ -158,28 +164,34 @@ function C_RosterPanel(parentElement)
         Ext.getCmp('rider').el.up('div.x-panel-bwrap').setStyle("overflow", "visible");
     }
 
-    this.onToggleSort = function(btn, state)
+    this.onToggleSort = function(btn_id)
     {
-        switch(btn.id) {
-            case 'btn-sort-category':
+        this.updateSort(btn_id);
+        this.updateHashTag(btn_id);
+    }
+
+    this.updateSort = function(btn_id)
+    {
+        switch(btn_id) {
+            case 'sort-category':
                 this.ds.sort([{ field: 'RiderTypeID', direction: 'ASC' }, { field: 'LastName', direction: 'ASC' }]);
                 break;
-            case 'btn-sort-name':
+            case 'sort-name':
                 this.ds.sort([{ field: 'LastName', direction: 'ASC' }]);
                 break;
-            case 'btn-sort-age':
+            case 'sort-age':
                 this.ds.sort([{ field: 'Age', direction: 'DESC' }, { field: 'LastName', direction: 'ASC' }]);
                 break;
-            case 'btn-sort-yc':
+            case 'sort-yc':
                 this.ds.sort([{ field: 'YearsCycling', direction: 'DESC' }, { field: 'LastName', direction: 'ASC' }]);
                 break;
-            case 'btn-sort-ytdrides':
+            case 'sort-ytdrides':
                 this.ds.sort([{ field: 'YTDRides', direction: 'DESC' }, { field: 'LastName', direction: 'ASC' }]);
                 break;
-            case 'btn-sort-ytdmiles':
+            case 'sort-ytdmiles':
                 this.ds.sort([{ field: 'YTDMiles', direction: 'DESC' }, { field: 'LastName', direction: 'ASC' }]);
                 break;
-            case 'btn-sort-cedaysmonth':
+            case 'sort-cedaysmonth':
                 this.ds.sort([{ field: 'CEDaysMonth', direction: 'DESC' }, { field: 'LastName', direction: 'ASC' }]);
                 break;
         }
@@ -206,18 +218,31 @@ function C_RosterPanel(parentElement)
         })
     }
     
-    this.makeSortButton = function(text, id, pressed)
+    this.makeSortButton = function(text, id)
     {
         return new Ext.Button({
             cls: 'x-btn-text',
             text: text,
             toggleGroup: 'sort',
-            pressed: pressed,
-            toggleHandler: this.onToggleSort,
+            pressed: (id==this.initial_sort),
+            toggleHandler: function(btn, state) { if(state) {this.onToggleSort(btn.id)} },
             id: id,
             allowDepress: false,
             scope: this
         });
     }
 
+    this.updateHashTag = function(btn_id)
+    {
+    // --- Put sort info in hash tag so sorting selection is preserved if user comes
+    // --- back to roster page from profile page
+        if(Ext.isWebKit)
+        {
+            window.location.hash = "s=" + btn_id;       // Safari bug: replace() doesn't save page in history
+        }
+        else
+        {
+            window.location.replace("#s=" + btn_id);    // all other browsers replace current item in history
+        }
+    }
 }
