@@ -15,6 +15,7 @@ function C_ReportForm(parentElement)
 {
     this.holder = parentElement;    // div in center of form that holds form content
     this.form = null;
+    this.firstLoad = true;
 
     // Sort column and range filter can be specified in the hash tag (i.e. rider-stats.php#s=CEDays&r=This%20Year&q=searchfor)
     // If there's no hash tag, use defaults
@@ -47,7 +48,14 @@ function C_ReportForm(parentElement)
             sortInfo: { field: sort, direction: 'desc' },
             listeners: { scope: this, load: function() {
                 Ext.getCmp('rider-list').innerBody.select("dl:odd").addClass("x-grid3-row-alt");    // stripe rows
-                this.updateHashTag();
+                if(this.firstLoad)
+                {
+                    this.firstLoad = false;
+                }
+                else
+                {
+                    this.updateHashTag();
+                }
             }}
 
         });
@@ -171,9 +179,10 @@ function C_ReportForm(parentElement)
     this.updateHashTag = function()
     {
     // --- put date range and sort info in hash tag so params are saved with the link
-        window.location.hash = "s=" + this.ds.getSortState().field + 
-                               "&r=" + Ext.getCmp('DateRange').getValue() +
-                               "&q=" + Ext.getCmp('SearchFor').getValue();
+        hash = "s=" + this.ds.getSortState().field + 
+               "&r=" + Ext.getCmp('DateRange').getValue() +
+               "&q=" + Ext.getCmp('SearchFor').getValue();
+        window.location.replace("#" + hash);
     }
     
     this.rangeLookup = [["All Time"], ["This Year"], ["Last Year"], ["This Month"], ["Last Month"]]
