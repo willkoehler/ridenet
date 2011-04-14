@@ -10,7 +10,6 @@ Ext.onReady(function()
 });
 
 
-
 function C_ReportForm(parentElement)
 {
     this.holder = parentElement;    // div in center of form that holds form content
@@ -42,7 +41,8 @@ function C_ReportForm(parentElement)
                 {name: 'Domain'},
                 {name: 'Distance', type: 'int', sortDir: 'DESC'},
                 {name: 'Days', type: 'int', sortDir: 'DESC'},
-                {name: 'CEDays', type: 'int', sortDir: 'DESC'}
+                {name: 'CEDays', type: 'int', sortDir: 'DESC'},
+                {name: 'CEDaysMonth', type: 'int', sortDir: 'DESC'}
             ],
             proxy: new Ext.data.HttpProxy({ url: 'data/list-rider-stats.php' }),
             sortInfo: { field: sort, direction: 'desc' },
@@ -87,6 +87,16 @@ function C_ReportForm(parentElement)
             } ,  {xtype: 'tbspacer', width: 25}, '<span style="color:#AAA">(click column header to sort)</span>'
          ]});
 
+        var ceDaysHeader =  '<span style="line-height:13px;position:relative;top:-1px">\
+                               <img class="tight" src="images/ridelog/commute.png" height=14>\
+                               <img class="tight" src="images/ridelog/errand.png" height=14>\
+                               <span style="padding-left:2px">Days</span>\
+                             </span>'
+        var ceDaysMonthHeader =  '<span style="line-height:13px;position:relative;top:-1px">\
+                                    <img class="tight" src="images/ridelog/commute.png" height=14>\
+                                    <img class="tight" src="images/ridelog/errand.png" height=14>\
+                                    <span style="padding-left:2px">D/M</span>\
+                                  </span>'
         var riderT = new Ext.XTemplate('<table cellpadding=0 cellspacing=0><tr>\
                                           <td><div style="width:40px;overflow:hidden;text-align:center;margin:1px">\
                                             <img class="tight" src="{[getFullDomainRoot()]}/dynamic-images/rider-portrait.php?RiderID={RiderID}&T={TeamID}" width=30 border=0>\
@@ -100,25 +110,20 @@ function C_ReportForm(parentElement)
         var distanceT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{Distance}</div>').compile();
         var daysT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{Days}</div>').compile();
         var ceDaysT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{CEDays}</div>').compile();
-        var daysMonthHeader =  '<span style="line-height:13px;position:relative;top:-1px">\
-                                  <img class="tight" src="images/ridelog/commute.png" height=14>\
-                                  <img class="tight" src="images/ridelog/errand.png" height=14>\
-                                  <span style="padding-left:2px">Days</span>\
-                                </span>'
+        var ceDaysMonthT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{CEDaysMonth}</div>').compile();
 
         var columns = [
-                {header: 'Rider/Team', width: .57, dataIndex: 'RiderName', tpl: riderT },
-                {header: 'Miles', width: .13, dataIndex: 'Distance', align: 'center', tpl: distanceT },
-                {header: 'Total Days', width: .14, dataIndex: 'Days', align: 'center', tpl: daysT },
-                {header: daysMonthHeader, width: .16, dataIndex: 'CEDays', align: 'center', tpl: ceDaysT }
+                {header: 'Rider/Team', width: .46, dataIndex: 'RiderName', tpl: riderT },
+                {header: 'All Miles', width: .12, dataIndex: 'Distance', align: 'center', tpl: distanceT },
+                {header: 'All Days', width: .12, dataIndex: 'Days', align: 'center', tpl: daysT },
+                {header: ceDaysHeader, width: .15, dataIndex: 'CEDays', align: 'center', tpl: ceDaysT },
+                {header: ceDaysMonthHeader, width: .14, dataIndex: 'CEDaysMonth', align: 'center', tpl: ceDaysMonthT }
             ]
         
-
-
         // create the grid
         this.report = new Ext.Panel({
             xframe: true,
-            width: 480,
+            width: 500,
             cls: 'centered',
             tbar: toolbar,
             items: [{
@@ -186,5 +191,4 @@ function C_ReportForm(parentElement)
     }
     
     this.rangeLookup = [["All Time"], ["This Year"], ["Last Year"], ["This Month"], ["Last Month"]]
-
 }

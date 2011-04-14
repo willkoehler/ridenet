@@ -29,7 +29,7 @@ if($searchFor != "")
 
 // --- Get rider stats
 $sql = "SELECT RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RiderType, TeamID, TeamName, Domain,
-               SUM(Distance) AS Distance, COUNT(DISTINCT Date) AS Days,
+               SUM(Distance) AS Distance, COUNT(DISTINCT Date) AS Days, CEDaysMonth,
                COUNT(DISTINCT IF(RideLogTypeID=1 OR RideLogTypeID=3, Date, NULL)) AS CEDays
         FROM ride_log
         LEFT JOIN rider USING (RiderID)
