@@ -62,7 +62,7 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
     <div class='clearfloat'></div>
     <h2>Every STAR rider gets us one step closer to our goal.</h2>
     <p class='text50' style="line-height:1.2em;font-size:.7em;margin-bottom:0px">
-      * STAR riders commute or do errands by bike two or more times a month
+      * STAR riders commute / run errands by bike 2 or more days a month
     </p>
     <div style="height:10px"></div>
     <div id='report-form'></div>
