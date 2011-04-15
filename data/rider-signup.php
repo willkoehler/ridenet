@@ -9,12 +9,14 @@ $riderName = $_REQUEST['RiderName'];
 $riderEmail = $_REQUEST['RiderEmail'];
 $riderDescription = $_REQUEST['RiderDescription'];
 $teamName = $_REQUEST['TeamName'];
+$source = $_REQUEST['Source'];
 
 $msg = "Signup Request:\n\n" .
        "NAME: $riderName\n" .
        "EMAIL: $riderEmail\n" .
+       "SOURCE: $source\n" .
        "DESCRIPTION: $riderDescription\n\n" .
-       "TEAM: $teamName";
+       "TEAM: $teamName\n\n";
 
 if(SendMail("signup@ridenet.net", "RideNet Signup Request", $msg, "info@ridenet.net"))
 {

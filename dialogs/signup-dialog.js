@@ -132,6 +132,7 @@ function C_SignupDialog()
     // --- submit form data
         this.form.getForm().submit({
             reset: false,
+            params: { Source: g_source },
             success: this.onPostSuccess,
             failure: this.onPostFailure,
             scope: this

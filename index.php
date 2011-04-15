@@ -29,7 +29,7 @@ RecordPageView($oDB);
   <!-- Build javascript arrays for local/static combobox lookups -->
     <script type="text/javascript">
       <?SessionToJS()?>
-      stateLookup = <?$oDB->DumpToJSArray("SELECT StateID, StateName, StateAbbr FROM ref_states ORDER BY StateName")?>
+      g_source = '<?=isset($_REQUEST['s']) ? $_REQUEST['s'] : 'direct'?>';
     </script>
   <!-- Insert tracker for Google Analytics -->
     <?InsertGoogleAnalyticsTracker()?>
