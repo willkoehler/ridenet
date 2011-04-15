@@ -9,6 +9,7 @@ require(dirname(__FILE__) . "/../script/data-helpers.php");
 $oDB = oOpenDBConnection();
 $teamID = intval($_REQUEST['T']);
 
+ob_start();   // buffer the output so it's sent as a single chunk
 $rs = $oDB->query("SELECT Logo FROM teams WHERE TeamID=$teamID AND Logo IS NOT NULL", __FILE__, __LINE__);
 if(($record = $rs->fetch_array())!=false)
 {
@@ -23,4 +24,6 @@ else
     header("Content-type: image/png");
     echo $picData;
 }
+header("Content-Length: " . ob_get_length());   // tell the browser the size of the image
+ob_end_flush();                                 // flush and close buffer
 ?>

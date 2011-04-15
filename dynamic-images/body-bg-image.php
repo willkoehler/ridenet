@@ -11,6 +11,7 @@ $oDB = oOpenDBConnection();
 $teamID = intval($_REQUEST['T']);
 $teamTypeID = $oDB->DBLookup("TeamTypeID", "teams", "TeamID=$teamID", 1);
 
+ob_start();   // buffer the output so it's sent as a single chunk
 $rs = $oDB->query("SELECT BodyBGColor, BodyImage FROM teams WHERE TeamID=$teamID", __FILE__, __LINE__);
 if(($record = $rs->fetch_array())==false || (is_null($record['BodyImage']) && (is_null($record['BodyBGColor']) || $record['BodyBGColor']==BODY_BG_COLOR)))
 {
@@ -34,4 +35,6 @@ else
     header("Content-type: image/gif");
     echo $picData;
 }
+header("Content-Length: " . ob_get_length());   // tell the browser the size of the image
+ob_end_flush();                                 // flush and close buffer
 ?>

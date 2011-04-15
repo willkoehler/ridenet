@@ -11,14 +11,13 @@ $oDB = oOpenDBConnection();
 $teamID = intval($_REQUEST['T']);
 $teamTypeID = $oDB->DBLookup("TeamTypeID", "teams", "TeamID=$teamID", 1);
 
+ob_start();   // buffer the output so it's sent as a single chunk
 $rs = $oDB->query("SELECT HomePageImage FROM teams WHERE TeamID=$teamID AND HomePageImage IS NOT NULL", __FILE__, __LINE__);
 if(($record = $rs->fetch_array())!=false)
 {
     // display homepage image from database
     header("Content-type: image/jpeg");
-    ob_start();
     echo $record['HomePageImage'];
-    ob_end_flush();
 }
 else
 {
@@ -36,8 +35,8 @@ else
     // This team does not have a homepage image. Display default banner
     $picData=file_get_contents(dirname(__FILE__) . "/../images/$imageFile");
     header("Content-type: image/jpeg");
-    ob_start();
     echo $picData;
-    ob_end_flush();
 }
+header("Content-Length: " . ob_get_length());   // tell the browser the size of the image
+ob_end_flush();                                 // flush and close buffer
 ?>

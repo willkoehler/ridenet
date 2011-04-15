@@ -11,14 +11,13 @@ $teamID = intval($_REQUEST['T']);
 $teamTypeID = $oDB->DBLookup("TeamTypeID", "teams", "TeamID=$teamID", 1);
 $showLogo = $oDB->DBLookup("IF(ShowLogo=1 AND Logo IS NOT NULL, 1, 0)", "teams", "TeamID=$teamID", 0);
 
+ob_start();   // buffer the output so it's sent as a single chunk
 $rs = $oDB->query("SELECT Banner FROM teams WHERE TeamID=$teamID", __FILE__, __LINE__);
 if(($record = $rs->fetch_array())!=false && !is_null($record['Banner']))
 {
     // display page banner from database
     header("Content-type: image/jpeg");
-    ob_start();
     echo $record['Banner'];
-    ob_end_flush();
 }
 else
 {
@@ -41,8 +40,8 @@ else
     // This team does not have a page banner. Display default banner
     $picData=file_get_contents(dirname(__FILE__) . "/../images/$bannerFile");
     header("Content-type: image/png");
-    ob_start();
     echo $picData;
-    ob_end_flush();
 }
+header("Content-Length: " . ob_get_length());   // tell the browser the size of the image
+ob_end_flush();                                 // flush and close buffer
 ?>

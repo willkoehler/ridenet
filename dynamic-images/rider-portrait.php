@@ -14,6 +14,7 @@ $oDB = oOpenDBConnection();
 $riderID = intval($_REQUEST['RiderID']);
 $teamID = intval($_REQUEST['T']);
 
+ob_start();   // buffer the output so it's sent as a single chunk
 $rs = $oDB->query("SELECT Picture FROM rider_photos WHERE RiderID=$riderID AND TeamID=$teamID", __FILE__, __LINE__);
 if(($record = $rs->fetch_array())!=false && ($record['Picture']!=""))
 {
@@ -28,4 +29,6 @@ else
     header("Content-type: image/jpeg");
     echo $picData;
 }
+header("Content-Length: " . ob_get_length());   // tell the browser the size of the image
+ob_end_flush();                                 // flush and close buffer
 ?>
