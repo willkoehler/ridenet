@@ -1,0 +1,37 @@
+RewriteEngine on
+# Map old domains to ridenet.net with 301 status (moved permanently)
+# map *.ridenet.cc to *.ridenet.net
+RewriteCond %{HTTP_HOST} ^(.*)ridenet.cc$
+RewriteRule ^(.*)$ http://%1ridenet.net/$1 [R=301,L]
+# map *.ridenet.org to *.ridenet.net
+RewriteCond %{HTTP_HOST} ^(.*)ridenet.org$
+RewriteRule ^(.*)$ http://%1ridenet.net/$1 [R=301,L]
+# map *.velobug.com to *.ridenet.net
+RewriteCond %{HTTP_HOST} ^(.*)velobug.com$
+RewriteRule ^(.*)$ http://%1ridenet.net/$1 [R=301,L]
+
+# Remove www from ridenet.net domains
+RewriteCond %{HTTP_HOST} ^www.ridenet.(local|net)$
+RewriteRule ^(.*)$ http://ridenet.%1/$1 [R=301,L]
+
+# Special Consider Biking Landing page
+RewriteRule ^cb/?$ index.php?s=cb [L]
+
+# API mappings
+RewriteRule ^api/rider-info/([^/]+)$ api/get-rider-info.php?email=$1 [L]
+RewriteRule ^api/verify-credentials$ api/verify-credentials.php [L,QSA]
+RewriteRule ^api/rides/([^/\.]+)$ api/get-rides.php?rider-id=$1 [L,QSA]
+RewriteCond %{REQUEST_METHOD} POST
+RewriteRule ^api/ride/([^/\.]+)$ api/post-ride.php?ride-log-id=$1 [L,QSA]
+RewriteCond %{REQUEST_METHOD} DELETE
+RewriteRule ^api/ride/([^/\.]+)$ api/delete-ride.php?ride-log-id=$1 [L,QSA]
+
+# Make friendly URLs
+#RewriteRule ^rider/([^/\.]+)$ profile.php?RiderID=$1 [L,QSA]
+#RewriteRule ^profile$ profile.php [L,QSA]
+# If there is a team sub-domain or team domain, route "/" requests to home.php
+RewriteCond %{HTTP_HOST} !^(www\.)?ridenet.(local|net)$
+RewriteRule ^/?$ home.php [L,QSA]
+# for ridenet.net, route "/" requests to index.php
+RewriteCond %{HTTP_HOST} ^(www\.)?ridenet.(local|net)$
+RewriteRule ^/?$ index.php [L,QSA]
