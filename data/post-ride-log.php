@@ -19,11 +19,16 @@ else
     $values['Duration'] = (SmartGet('Duration')=="opt.") ? "NULL" : SmartGetDuration('Duration');
     $values['Comment'] = (SmartGet('Comment')=="140 characters max") ? "NULL" : SmartGetString('Comment');
     $values['Link'] = (SmartGet('Link')=="Link to something: Route map, Garmin Connect, TrainingPeaks, power file, etc.") ? "NULL" : SmartGetString('Link');
-    $values['DateCreated'] =  "'" . date("Y-m-d") . "'";
     // convert distance from kilometers to miles if distance value contains "k"
     $values['Distance'] = (SmartGet('Distance')=="opt.") ? "NULL" : (strpos(SmartGet('Distance'), "k") ? SmartGetInt('Distance') * .62 : SmartGetInt('Distance'));
     // convert 0 distance to NULL
     $values['Distance'] = ($values['Distance']==0) ? "NULL" : $values['Distance'];
+    // set source and date created for new ride log entries
+    if($rideLogID==-1)
+    {
+        $values['Source'] = 1;  // 1 = ridenet.net website
+        $values['DateCreated'] =  "'" . date("Y-m-d") . "'";
+    }
     // save the ride log
     $result = InsertOrUpdateRecord2($oDB, "ride_log", "RideLogID", $rideLogID, $values);
 // --- Update stats for this rider and store new stats in the response
