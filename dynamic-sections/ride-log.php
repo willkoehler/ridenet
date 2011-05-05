@@ -42,7 +42,7 @@ function RenderRideLog($oDB, $riderID, $length, $editable)
               LEFT JOIN ref_weather USING (WeatherID)
               LEFT JOIN ref_ride_log_type USING (RideLogTypeID)
               WHERE RiderID=$riderID
-              ORDER BY Date DESC
+              ORDER BY Date DESC, RideLogID DESC
               LIMIT $length";
       $rs = $oDB->query($sql, __FILE__, __LINE__);
       if($rs->num_rows==0) { ?>
