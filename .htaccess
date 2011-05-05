@@ -25,6 +25,7 @@ RewriteCond %{REQUEST_METHOD} POST
 RewriteRule ^api/ride/([^/\.]+)$ api/post-ride.php?ride-log-id=$1 [L,QSA]
 RewriteCond %{REQUEST_METHOD} DELETE
 RewriteRule ^api/ride/([^/\.]+)$ api/delete-ride.php?ride-log-id=$1 [L,QSA]
+RewriteRule ^api/about$ api/about.php [L]
 
 # Make friendly URLs
 #RewriteRule ^rider/([^/\.]+)$ profile.php?RiderID=$1 [L,QSA]
