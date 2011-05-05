@@ -20,6 +20,9 @@ $duration = SmartGetInt('Duration');
 $comment = SmartGetString('Comment');
 $link = SmartGetString('Link');
 
+$duration = round($duration / 60.0);
+$distance = round($distance / 1609.344);
+
 if(!isset($_REQUEST['ride-log-id']) || !isset($_REQUEST['id']) || !isset($_REQUEST['pw']) ||
           !isset($_REQUEST['Source']) || !isset($_REQUEST['Date']) || !isset($_REQUEST['RideLogTypeID']))
 {
