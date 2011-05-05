@@ -14,7 +14,7 @@ $RiderID = SmartGetInt("RiderID");
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title><?BuildPageTitle($oDB, $pt, "Edit Race Report")?></title>
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Insert tracker for Google Analytics -->
   <?InsertGoogleAnalyticsTracker()?>
 </head>

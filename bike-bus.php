@@ -18,10 +18,10 @@ $RideBoardLength = 30;
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("dialogs/calendar-event-dialog.js")?>
-  <?MinifyAndInclude("script/ridenet-helpers.js")?>
+  <?MinifyAndInclude("/dialogs/calendar-event-dialog.js")?>
+  <?MinifyAndInclude("/script/ridenet-helpers.js")?>
 <!-- Build javascript arrays for local/static combobox lookups -->
 <!-- Insert tracker for Google Analytics -->
   <?InsertGoogleAnalyticsTracker()?>
@@ -59,7 +59,7 @@ $RideBoardLength = 30;
     <div class='clearfloat'></div>
     <div style="height:20px"></div>
     <div style="width:480px;margin: 0 auto">
-      <img src="images/bikebus1.jpg" style="border:1px solid #DDD" width=480>
+      <img src="/images/bikebus1.jpg" style="border:1px solid #DDD" width=480>
     </div>
     <div style="margin:30px 30px 0px 30px">
       <p class="newp">
@@ -74,7 +74,7 @@ $RideBoardLength = 30;
         in the lane, etc.
       </p>
       <div style="float:right;padding: 0 20px">
-        <img src="dynamic-images/rider-portrait.php?RiderID=149&T=13" style="border:1px solid #DDD">
+        <img src="<?=GetFullDomainRoot()?>/dynamic-images/rider-portrait.php?RiderID=149&T=13" style="border:1px solid #DDD">
         <p class=photo-caption>Doug Morgan</p>
       </div>
       <p class="newp">

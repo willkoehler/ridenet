@@ -33,7 +33,7 @@ function C_ReportForm(parentElement)
                 {name: 'FirstName'},
                 {name: 'CDays', type: 'int'}
             ],
-            proxy: new Ext.data.HttpProxy({ url: 'data/list-commute-report.php?T=' + g_teamID }),
+            proxy: new Ext.data.HttpProxy({ url: '/data/list-commute-report.php?T=' + g_teamID }),
             sortInfo: { field: 'CDays', direction: 'desc' }
         });
         

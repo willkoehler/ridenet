@@ -195,7 +195,7 @@ function SampleHomePageHTML($teamName)
           "</p>\n" .
           "<h2>Riding for the Future</h2>\n" .
           "  <div style=\"float:left;margin: 3px 10px 0px 0px\">\n" .
-          "    <img src=\"images/hosted/SharingTheRoad.jpg\"><br>\n" .
+          "    <img src=\"/images/hosted/SharingTheRoad.jpg\"><br>\n" .
           "    <p class=photo-caption>Enough Room for Everyone</p>\n" .
           "  </div>\n" .
           "<p>\n" .

@@ -22,7 +22,7 @@ function C_SearchBox()
                 {name: 'InfoText'},
                 {name: 'InfoText2'}
             ],
-            proxy: new Ext.data.HttpProxy({ url: 'data/lookup-search.php' })
+            proxy: new Ext.data.HttpProxy({ url: '/data/lookup-search.php' })
         });
 
         this.form = new Ext.Container({
@@ -54,7 +54,7 @@ function C_SearchBox()
                     tpl:'<tpl for="."><div class="x-combo-list-item"><table cellpadding=0 cellspacing=0><tr>\
                            <tpl if="Type==\'rider\'">\
                              <td><div style="width:40px;overflow:hidden;text-align:center;margin:1px">\
-                               <img src="dynamic-images/rider-portrait.php?RiderID={RiderID}&T={TeamID}" height=50 width=40>\
+                               <img src="' + getFullDomainRoot() + '/dynamic-images/rider-portrait.php?RiderID={RiderID}&T={TeamID}" height=50 width=40>\
                              </div></td>\
                              <td><div class="ellipses" style="padding-left:10px;width:215px">\
                                <div class="find-name">{DisplayText}</div>\
@@ -64,7 +64,7 @@ function C_SearchBox()
                            </tpl>\
                            <tpl if="Type==\'team\'">\
                              <td><div style="width:40px;overflow:hidden;text-align:center;margin:1px">\
-                               <img src="dynamic-images/team-logo-sm.php?T={TeamID}" height=40>\
+                               <img src="' + getFullDomainRoot() + '/dynamic-images/team-logo-sm.php?T={TeamID}" height=40>\
                              </div></td>\
                              <td><div class="ellipses" style="padding-left:10px;width:215px">\
                                <div class="find-name">{DisplayText}</div>\
@@ -115,7 +115,7 @@ function riderInfoCallout(riderID, idTag, type)
         html: '<div class="loading-indicator">Loading...</div>',   // helps ExtJS set initial tooltip size correctly
         padding: 5,
         autoLoad: {
-            url: "dynamic-sections/get-callout-info.php",  // load tooltip content dynamically
+            url: "/dynamic-sections/get-callout-info.php",  // load tooltip content dynamically
             params: {
                 RiderID: riderID,
                 rt: (type || 0)

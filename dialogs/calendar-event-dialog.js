@@ -32,7 +32,7 @@ function C_RideDialog()
                     {name: 'id', type: 'int'},
                     {name: 'text'}
                 ],
-                proxy: new Ext.data.HttpProxy({ url: 'data/lookup-zip-code.php' })
+                proxy: new Ext.data.HttpProxy({ url: '/data/lookup-zip-code.php' })
             });
 
             // Json Reader to read data for dialog
@@ -56,7 +56,7 @@ function C_RideDialog()
 
             this.form = new Ext.form.FormPanel({
                 baseCls: 'x-plain',     // (gives panel a gray background - by default panels have white backgrounds)
-                url:'data/post-calendar-event.php',
+                url:'/data/post-calendar-event.php',
                 labelAlign: 'right',
                 bodyStyle:'padding:5px 5px 0',
                 buttonAlign:'right',
@@ -215,7 +215,7 @@ function C_RideDialog()
                 },{
                     text: '&nbsp;Delete',
                     id: 'delete-btn',
-                    icon: 'images/delete-icon-small.png',
+                    icon: '/images/delete-icon-small.png',
                     handler: this.deleteButtonClick,
                     scope: this
                 }],
@@ -272,7 +272,7 @@ function C_RideDialog()
                 // --- This is an existing event, load event data
                     this.form.getForm().baseParams.CalendarID = this.calendarID;
                     this.window.getEl().mask("Loading..."); // mask form while loading form data from server
-                    this.form.getForm().load({url:"data/get-calendar-event.php"});
+                    this.form.getForm().load({url:"/data/get-calendar-event.php"});
                     if(this.makeCopy)
                     {
                         this.window.setTitle("Copy Ride");
@@ -367,7 +367,7 @@ function C_RideDialog()
                 this.window.getEl().mask("");
                 this.setMessage("Deleting Ride...", "black", true);
                 Ext.Ajax.request({
-                    url: 'data/archive-calendar-event.php',
+                    url: '/data/archive-calendar-event.php',
                     params: {ID: this.calendarID},
                     success: this.handleDeleteSuccess,
                     failure: this.handleDeleteFailure,

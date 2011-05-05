@@ -10,7 +10,7 @@ RecordPageView($oDB);
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>Contact RideNet</title>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=0" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=0" rel="stylesheet" type="text/css" />
 <!-- Insert tracker for Google Analytics -->
   <?InsertGoogleAnalyticsTracker()?>
 </head>

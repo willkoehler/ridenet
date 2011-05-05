@@ -70,7 +70,7 @@ function updateRideLog()
     Ext.get('ride-log-masker').mask("Updating");
     var editable = g_editable ? "&edit" : "";
     Ext.Ajax.request({
-        url: 'dynamic-sections/ride-log.php?pb&RiderID=' + g_riderID + '&l=' + g_rideLogLength + editable,
+        url: '/dynamic-sections/ride-log.php?pb&RiderID=' + g_riderID + '&l=' + g_rideLogLength + editable,
         success: function(response, options)
         {
             Ext.get('ride-log-holder').update(response.responseText);

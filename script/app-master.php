@@ -26,12 +26,12 @@ define("EXTBASE_URL", GetFullDomainRoot() . "/Ext3.2.2/");
 
 // Redirect visitors from www.ridenet.net/ to ridenet.net/. Search engines honor this
 // redirect and will treat www.ridenet.net and ridenet.net as the same site
-$fullURL = GetFullURL();
+/*$fullURL = GetFullURL();
 if(strpos($fullURL, "www.ridenet"))
 {
     $newloc = str_ireplace("www.ridenet", "ridenet", $fullURL);
     header("HTTP/1.1 301 Moved Permanently");
     header("Location: $newloc");
     exit();
-}
+}*/
 ?>

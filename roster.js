@@ -73,8 +73,8 @@ function C_RosterPanel(parentElement)
                                       </div>\
                                       <span class=name>{FullName}</span>\
                                       <span class=category>\
-                                        <img class="tight" src="images/ridelog/tiny/commute.png" height=10>\
-                                        <img class="tight" src="images/ridelog/tiny/errand.png" height=10>\
+                                        <img class="tight" src="/images/ridelog/tiny/commute.png" height=10>\
+                                        <img class="tight" src="/images/ridelog/tiny/errand.png" height=10>\
                                         {CEDaysMonth:plural("day")}/month\
                                       </span>\
                                       <span class=category>{YTDMiles} miles YTD</span>\
@@ -109,7 +109,7 @@ function C_RosterPanel(parentElement)
         tbar.addItem('->')
         tbar.addItem({
             cls: 'x-btn-icon',
-            icon: 'images/animate-icon.png',
+            icon: '/images/animate-icon.png',
             handler: this.onClickAnimate,
             scope: this
         });

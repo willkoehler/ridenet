@@ -135,7 +135,7 @@ function CheckLoginAndRedirect()
     // --- Redirect user to password change page if they are required to change their password
     if(isset($_SESSION['MustChangePW']) && $_SESSION['MustChangePW'] == 1)
     {
-        header("Location: change-pw.php?Goto=" . urlencode($_SERVER['REQUEST_URI']));
+        header("Location: /change-pw.php?Goto=" . urlencode($_SERVER['REQUEST_URI']));
         exit();
     }
 }

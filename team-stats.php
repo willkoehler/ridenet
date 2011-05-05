@@ -16,11 +16,11 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("dialogs/calendar-event-dialog.js")?>
-  <?MinifyAndInclude("team-stats.js")?>
-  <?MinifyAndInclude("script/ridenet-helpers.js")?>
+  <?MinifyAndInclude("/dialogs/calendar-event-dialog.js")?>
+  <?MinifyAndInclude("/team-stats.js")?>
+  <?MinifyAndInclude("/script/ridenet-helpers.js")?>
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
   </script>

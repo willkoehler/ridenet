@@ -103,14 +103,14 @@ function RenderRideLog($oDB, $riderID, $length, $editable)
             <!--Ride-->
             <tr>
               <td class="data" width="60"><?=date_create($record['Date'])->format("D n/j")?></td>
-              <td class="data" width="60" style="text-align:center"><img src="images/ridelog/<?=$record['RideLogTypeImage']?>" title="<?=$record['RideLogType']?>"></td>
+              <td class="data" width="60" style="text-align:center"><img src="<?=GetFullDomainRoot()?>/images/ridelog/<?=$record['RideLogTypeImage']?>" title="<?=$record['RideLogType']?>"></td>
               <td class="data" width="60">
                 <?=$record['Distance'] ? Plural($record['Distance'], "mile") : "&nbsp;"?>
               </td>
               <td class="data" width="30" style="text-align:center">
                 <?=$record['Duration'] ? ($record['Duration'] <= 90) ? $record['Duration'] . "&nbsp;min" : number_format($record['Duration']/60, 1) . "&nbsp;hr" : "&nbsp;"?>
               </td>
-              <td class="data" width="55" style="text-align:center"><img src="images/weather/<?=$record['WeatherImage']?>" title="<?=$record['Weather']?>"></td>
+              <td class="data" width="55" style="text-align:center"><img src="<?=GetFullDomainRoot()?>/images/weather/<?=$record['WeatherImage']?>" title="<?=$record['Weather']?>"></td>
               <td class="comment" width="355"><?=BuildRideLogComment($record['Comment'], $record['Link'])?>&nbsp;</td>
               <?if($editable) { ?>
                 <td class="data" width="50" align=left style="padding-left:10px">

@@ -23,11 +23,11 @@ $ShowYear = (isset($_REQUEST['Year'])) ? SmartGetInt("Year") : date("Y");
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("event-schedule.js")?>
-  <?MinifyAndInclude("dialogs/schedule-event-dialog.js")?>
-  <?MinifyAndInclude("script/ridenet-helpers.js")?>
+  <?MinifyAndInclude("/event-schedule.js")?>
+  <?MinifyAndInclude("/dialogs/schedule-event-dialog.js")?>
+  <?MinifyAndInclude("/script/ridenet-helpers.js")?>
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
     g_pt=<?=$pt?>;
@@ -78,7 +78,7 @@ $ShowYear = (isset($_REQUEST['Year'])) ? SmartGetInt("Year") : date("Y");
     $rs = $oDB->query("SELECT * FROM ref_event_type $whereClause", __FILE__, __LINE__);
     while(($record=$rs->fetch_array())!=false)
     {
-        $events .= "<img src='images/event-types/{$record['Picture']}' title='{$record['RideType']}' class='tight' height=15 style='padding-left:3px'>";
+        $events .= "<img src='/images/event-types/{$record['Picture']}' title='{$record['RideType']}' class='tight' height=15 style='padding-left:3px'>";
     }
     if($ScheduleFilterStates=="All")
     {
@@ -108,7 +108,7 @@ $ShowYear = (isset($_REQUEST['Year'])) ? SmartGetInt("Year") : date("Y");
           </td>
           <td style="font-size:14px;line-height:14px;padding-top:2px">
           <span onclick="document.getElementById('filter<?=$record['RideTypeID']?>').click()">
-            <img src="images/event-types/<?=$record['Picture']?>" title="<?=$record['RideType']?>" class="tight" height=15>
+            <img src="/images/event-types/<?=$record['Picture']?>" title="<?=$record['RideType']?>" class="tight" height=15>
           </span>
           </td>
         <? } ?>

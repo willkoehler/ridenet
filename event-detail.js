@@ -46,7 +46,7 @@ function clickDeleteMessage(messageID)
         // --- Mask this page and post delete request
             Ext.get('event-updates').mask("Deleting");
             Ext.Ajax.request({
-                url: 'data/delete-message.php',
+                url: '/data/delete-message.php',
                 params: {ID: messageID},
                 success: handleDeleteSuccess,
                 failure: handleDeleteFailure,
@@ -105,7 +105,7 @@ function updateEventUpdates()
 {
     Ext.get('event-updates').mask("Updating");
     Ext.Ajax.request({
-        url: 'dynamic-sections/event-updates.php?pb&RaceID=' + g_raceID + '&l=' + g_eventUpdatesLength,
+        url: '/dynamic-sections/event-updates.php?pb&RaceID=' + g_raceID + '&l=' + g_eventUpdatesLength,
         success: function(response, options)
         {
             Ext.get('event-updates').update(response.responseText);
@@ -136,7 +136,7 @@ function C_Attendance()
         this.form = new Ext.FormPanel({
             baseCls: 'x-plain',     // (gives panel a transparent background)
             cls: 'centered',        // center this panel on the page
-            url: 'data/post-event-attendance.php',          // URL used to submit results of form
+            url: '/data/post-event-attendance.php',          // URL used to submit results of form
             bodyStyle:'padding-top:5px',
             hideLabels: 'true',
             width: 330,
@@ -203,7 +203,7 @@ function C_Attendance()
         this.form.getForm().baseParams.AttendanceID = action.result.AttendanceID;
         // Update list of attending riders. Hide list if there are no riders attending
         Ext.Ajax.request({
-            url: 'dynamic-sections/event-attendance.php?pb&RaceID=' + this.raceID,
+            url: '/dynamic-sections/event-attendance.php?pb&RaceID=' + this.raceID,
             scope: this,
             success: function(response, options)
             {

@@ -44,7 +44,7 @@ function C_ReportForm(parentElement)
                 {name: 'CEDistance', type: 'int', sortDir: 'DESC'},
                 {name: 'Distance', type: 'int', sortDir: 'DESC'}
             ],
-            proxy: new Ext.data.HttpProxy({ url: 'data/list-team-stats.php' }),
+            proxy: new Ext.data.HttpProxy({ url: '/data/list-team-stats.php' }),
             sortInfo: { field: sort, direction: 'desc' },
             listeners: { scope: this, load: function() {
                 Ext.getCmp('rider-list').innerBody.select("dl:odd").addClass("x-grid3-row-alt");    // stripe rows
@@ -81,20 +81,20 @@ function C_ReportForm(parentElement)
                 listeners: { scope: this, specialkey: function(ctrl, e) { if(e.getKey() == e.ENTER) { this.filterList() } } }
             } , ' ', {
                 cls: 'x-btn-icon',
-                icon: 'images/search-icon.png',
+                icon: '/images/search-icon.png',
                 handler: this.filterList,
                 scope: this
             } ,  {xtype: 'tbspacer', width: 75}, '<span style="color:#AAA">(click column header to sort)</span>'
          ]});
 
         var ceDaysHeader =  '<span style="line-height:13px;position:relative;top:-1px">\
-                               <img class="tight" src="images/ridelog/commute.png" height=14>\
-                               <img class="tight" src="images/ridelog/errand.png" height=14>\
+                               <img class="tight" src="/images/ridelog/commute.png" height=14>\
+                               <img class="tight" src="/images/ridelog/errand.png" height=14>\
                                <span style="padding-left:2px">Days</span>\
                              </span>'
         var ceDistanceHeader =  '<span style="line-height:13px;position:relative;top:-1px">\
-                                   <img class="tight" src="images/ridelog/commute.png" height=14>\
-                                   <img class="tight" src="images/ridelog/errand.png" height=14>\
+                                   <img class="tight" src="/images/ridelog/commute.png" height=14>\
+                                   <img class="tight" src="/images/ridelog/errand.png" height=14>\
                                    <span style="padding-left:2px">Miles</span>\
                                  </span>'
         var teamT = new Ext.XTemplate('<table cellpadding=0 cellspacing=0><tr>\

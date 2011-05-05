@@ -14,7 +14,7 @@ function C_SignupDialog()
             
             this.form = new Ext.form.FormPanel({
                 baseCls: 'x-plain',     // (gives panel a gray background - by default panels have white backgrounds)
-                url:'data/rider-signup.php',
+                url:'/data/rider-signup.php',
                 labelAlign: 'right',
                 bodyStyle:'padding: 7px 15px 0px 15px',
                 buttonAlign:'center',
@@ -24,10 +24,8 @@ function C_SignupDialog()
             // === Welcome Text ===
                     xtype: 'displayfield',
                     hideLabel: true,
-                    style: 'margin:0 0 10px 0; font: 13px "Helvetica Neue", Arial; color:#444',
-                    html: 'We are growing RideNet slowly so we can focus on creating a great experience for our users. \
-                           Enter your name and email below and we\'ll invite you as soon as we can. <b>OR</b> find a team \
-                           that is already on RideNet and ask them to create an account for you.'
+                    style: 'margin:0 0 2px 0; font: 13px "Helvetica Neue", Arial; color:#444',
+                    html: 'We just need a few pieces of information to create your profile.'
                 },{
                     xtype:'container', layout:'column', items: [{
                         xtype:'container', layout:'form', width:170, hideLabels: true, items: [{
@@ -62,7 +60,7 @@ function C_SignupDialog()
                     xtype: 'displayfield',
                     hideLabel: true,
                     style: 'margin:15px 0 0 0; font: 13px "Helvetica Neue", Arial; color:#444',
-                    html: 'If you ride with a local team/club, enter the name.'
+                    html: 'Do you belong to a local cycling club or workplace commuting team?'
                 },{
                 // === Team Name ===
                     xtype: 'textfield',

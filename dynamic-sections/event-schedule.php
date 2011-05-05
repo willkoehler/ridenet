@@ -143,10 +143,10 @@ function RenderEventSchedule($oDB, $pt, $ScheduleFilterStates, $ScheduleFilterTy
               <td width="320" <?if($thisWeek) {?>id="highlight"<? } ?> align=left><div class=ellipses style="width:310px">
                 <a href="event-detail.php?RaceID=<?=$record['RaceID']?>" title="<?=$record['EventName']?>"><?=$record['EventName']?></a>
                 <?if($record['AddedAge'] < 14) { ?>
-                  <img border=0 src="images/redstar2.png" title="Added <?=$record['DateAdded'] ?>">
+                  <img border=0 src="/images/redstar2.png" title="Added <?=$record['DateAdded'] ?>">
                 <? } ?>
               </div></td>
-              <td width="45" <?if($thisWeek) {?>id="highlight"<? } ?> align="left"><img border=0 style="padding:0px 0px" src='images/event-types/<?=$record['Picture']?>' title='<?=$record['RideType']?>'></td>
+              <td width="45" <?if($thisWeek) {?>id="highlight"<? } ?> align="left"><img border=0 style="padding:0px 0px" src='/images/event-types/<?=$record['Picture']?>' title='<?=$record['RideType']?>'></td>
               <td width="120" <?if($thisWeek) {?>id="highlight"<? } ?> align=left><div class=ellipses style="width:110px">
                 <?=$record['City']?>
               </div></td>

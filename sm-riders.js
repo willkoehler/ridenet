@@ -21,7 +21,7 @@ function C_RiderTab()
                 {name: 'sTeamAdmin', type: 'bool'}
             ],
             sortInfo: { field: 'LastName', direction: 'asc' },
-            proxy: new Ext.data.HttpProxy({ url: 'data/list-riders-sm.php' })
+            proxy: new Ext.data.HttpProxy({ url: '/data/list-riders-sm.php' })
         });
         
         // rider search toolbar
@@ -33,14 +33,14 @@ function C_RiderTab()
                 listeners: { scope: this, specialkey: function(ctrl, e) { if(e.getKey() == e.ENTER) { this.filterList() } } }
             } , ' ', {
                 cls: 'x-btn-icon',
-                icon: 'images/search-icon.png',
+                icon: '/images/search-icon.png',
                 handler: this.filterList,
                 scope: this
             }, '->', {
                 cls: 'x-btn-text-icon',
                 id: 'btn-add-rider',
                 text: '<span style="color:green">&nbsp;Add Rider</span>',
-                icon: 'images/plus-icon.png',
+                icon: '/images/plus-icon.png',
                 handler: this.onClickAddRider,
                 scope: this
             }
@@ -150,7 +150,7 @@ function C_RiderTab()
             // --- Mask this page and post remove rider request
                 this.grid.getGridEl().mask("Removing...");
                 Ext.Ajax.request({
-                    url: 'data/remove-rider-sm.php',
+                    url: '/data/remove-rider-sm.php',
                     params: {RiderID: riderID, TeamID: g_pt},
                     success: this.handleRemoveSuccess,
                     failure: this.handleRemoveFailure,

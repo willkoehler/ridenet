@@ -23,10 +23,10 @@ if(!isSystemAdmin() && !isTeamAdmin($oDB, $pt))
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("commute-report.js")?>
-  <?MinifyAndInclude("script/ridenet-helpers.js")?>
+  <?MinifyAndInclude("/commute-report.js")?>
+  <?MinifyAndInclude("/script/ridenet-helpers.js")?>
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
     g_teamID = <?=$pt?>;

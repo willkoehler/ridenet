@@ -28,10 +28,10 @@ $rs->free()
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("results-detail.js")?>
-  <?MinifyAndInclude("script/ridenet-helpers.js")?>
+  <?MinifyAndInclude("/results-detail.js")?>
+  <?MinifyAndInclude("/script/ridenet-helpers.js")?>
 <!-- lightbox -->
   <?echo "<script type='text/javascript' src='" . SHAREDBASE_URL . "lightbox/lightbox.js'></script>\n";?>
   <?echo "<link rel='stylesheet' type='text/css' href='" . SHAREDBASE_URL . "lightbox/lightbox.css'>\n";?>
@@ -65,7 +65,7 @@ $rs->free()
       </div>
     </div>
     <div class="ridenet-mini-ad" style="float:right;padding-top:12px">
-      <a href="http://ridenet.net" target="_blank"><img border=0 src="images/ads/ridenetad-mini.png" alt="RideNet"/><br></a>
+      <a href="http://ridenet.net" target="_blank"><img border=0 src="/images/ads/ridenetad-mini.png" alt="RideNet"/><br></a>
       <a href="http://ridenet.net" target="_blank">Your team...online</a>
     </div>
     <div class="clearfloat" style="height:20px"><!--vertical spacer--></div>
@@ -97,7 +97,7 @@ $rs->free()
             <td class="data" width=20 style="text-align:center">
               <? if($record['HasReport']) { ?>
                 <a onclick="scrollToRaceReport(<?=$record['RiderID']?>)" style="cursor:pointer">
-                  <img src="images/race-report.png" title="Click to jump to race report" style="position:relative;top:1px">
+                  <img src="/images/race-report.png" title="Click to jump to race report" style="position:relative;top:1px">
                 </a>
               <? } else { ?>
                 -

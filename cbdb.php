@@ -16,10 +16,10 @@ CheckLoginAndRedirect();
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("cbdb.js")?>
-  <?MinifyAndInclude("script/ridenet-helpers.js")?>
+  <?MinifyAndInclude("/cbdb.js")?>
+  <?MinifyAndInclude("/script/ridenet-helpers.js")?>
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
   </script>

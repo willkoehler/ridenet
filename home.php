@@ -26,12 +26,12 @@ $TeamWallLength = 30;
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("home.js")?>
-  <?MinifyAndInclude("dialogs/calendar-event-dialog.js")?>
-  <?MinifyAndInclude("dialogs/post-message-dialog.js")?>
-  <?MinifyAndInclude("script/ridenet-helpers.js")?>
+  <?MinifyAndInclude("/home.js")?>
+  <?MinifyAndInclude("/dialogs/calendar-event-dialog.js")?>
+  <?MinifyAndInclude("/dialogs/post-message-dialog.js")?>
+  <?MinifyAndInclude("/script/ridenet-helpers.js")?>
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
     <?SessionToJS()?>

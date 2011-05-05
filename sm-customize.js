@@ -11,7 +11,7 @@ function C_CustomizeTab()
                 {name: 'id', type: 'int'},
                 {name: 'text'}
             ],
-            proxy: new Ext.data.HttpProxy({ url: 'data/lookup-zip-code.php' })
+            proxy: new Ext.data.HttpProxy({ url: '/data/lookup-zip-code.php' })
         });
 
         // Json Reader to read data for dialog
@@ -43,7 +43,7 @@ function C_CustomizeTab()
             frame: true,
             autoHeight: true,
             title: 'Customize',
-            url:'data/post-sm-customize.php',
+            url:'/data/post-sm-customize.php',
             labelAlign: 'right',
             buttonAlign:'center',
             reader: reader,
@@ -171,7 +171,7 @@ function C_CustomizeTab()
                                         {
                                             this.el.update('<table cellpadding=0 cellspacing=0 height=100% width=100%>\
                                                               <tr><td align=center>\
-                                                                <img src="dynamic-images/team-logo-sm.php?T=' + g_pt + '&x=' + Math.random() + '">\
+                                                                <img src="/dynamic-images/team-logo-sm.php?T=' + g_pt + '&x=' + Math.random() + '">\
                                                               </td></tr>\
                                                             </table>');
                                         }
@@ -189,7 +189,7 @@ function C_CustomizeTab()
                                 emptyText: 'Choose logo file...',
                                 width: 165,
                                 buttonText: '',
-                                buttonCfg: { icon: 'images/choose-picture-icon.png' },
+                                buttonCfg: { icon: '/images/choose-picture-icon.png' },
                                 listeners: { scope: this, 'fileselected' : function(fb, v) {
                                     this.form.getForm().findField("LogoImg").setValue(v);
                                 }}
@@ -322,11 +322,11 @@ function C_CustomizeTab()
                                         hideLabel: true,
                                         width: 190,
                                         buttonText: '',
-                                        buttonCfg: { icon: 'images/choose-picture-icon.png' }
+                                        buttonCfg: { icon: '/images/choose-picture-icon.png' }
                                     },{
                                         xtype: 'button',
                                         style: 'margin-left: 5px',
-                                        icon: 'images/delete-icon-small.png',
+                                        icon: '/images/delete-icon-small.png',
                                         tooltip: 'Clear background image',
                                         handler: this.onClickClearBodyImage,
                                         scope: this
@@ -375,7 +375,7 @@ function C_CustomizeTab()
                                 }
                                 else
                                 {
-                                    this.el.update('<img class="tight tm-banner-bg" src="dynamic-images/page-banner.php?T=' + g_pt + '&x=' + Math.random() + '" Width=660>');
+                                    this.el.update('<img class="tight tm-banner-bg" src="/dynamic-images/page-banner.php?T=' + g_pt + '&x=' + Math.random() + '" Width=660>');
                                 }
                             }
                         }
@@ -392,7 +392,7 @@ function C_CustomizeTab()
                             emptyText: 'Choose banner file...',
                             width: 225,
                             buttonText: '',
-                            buttonCfg: { icon: 'images/choose-picture-icon.png' },
+                            buttonCfg: { icon: '/images/choose-picture-icon.png' },
                             listeners: { scope: this, 'fileselected' : function(fb, v) {
                                 this.form.getForm().findField("BannerImg").setValue(v);
                             }}
@@ -468,7 +468,7 @@ function C_CustomizeTab()
                         this.form.getEl().mask("Loading...");
                         // load data
                         this.form.baseParams.TeamID = g_pt;
-                        this.form.load({url:"data/get-sm-customize.php"});
+                        this.form.load({url:"/data/get-sm-customize.php"});
                         this.loaded=true;
                     }
                 }
@@ -484,7 +484,7 @@ function C_CustomizeTab()
         // Safari often hangs when uploading a file. To prevent this we first need to make
         // an ajax request to a page that closes the connection to the server. Then we can
         // proceed with the file upload post.
-        Ext.Ajax.request( {url: 'data/close-connection.php', scope: this, success: function() {
+        Ext.Ajax.request( {url: '/data/close-connection.php', scope: this, success: function() {
         // --- show sending message in message area
             setFormMessage("Saving Site Customizations...", "black", true, 'sc-status-msg');
         // --- disable dialog
@@ -556,7 +556,7 @@ function C_CustomizeTab()
             fn: function(btn) { if(btn=='yes') {
                 this.form.getEl().mask("Clearing...");
                 Ext.Ajax.request({
-                    url: 'data/clear-body-image.php',
+                    url: '/data/clear-body-image.php',
                     params: {
                         TeamID: g_pt
                     },
@@ -583,8 +583,8 @@ function C_CustomizeTab()
         {
             setFormMessage("Body Image Cleared", "green", false, 'sc-status-msg');
             // force browser to recognize new (blank) body image
-            forceReload.defer(350, this, ["dynamic-images/cache-buster.php", "body-bg-image.php?T=" + g_pt]);
-            Ext.get(document.body).setStyle("background-image", "url('dynamic-images/body-bg-image.php?T=" + g_pt + "&x=" + Math.random() + "')");
+            forceReload.defer(350, this, ["/dynamic-images/cache-buster.php", "body-bg-image.php?T=" + g_pt]);
+            Ext.get(document.body).setStyle("background-image", "url('/dynamic-images/body-bg-image.php?T=" + g_pt + "&x=" + Math.random() + "')");
         }
     }
 

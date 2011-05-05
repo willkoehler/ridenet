@@ -11,7 +11,7 @@ CheckLoginAndRedirect();
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title><?BuildPageTitle($oDB, $pt, "Edit Your Results")?></title>
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
   <script type="text/javascript">
   function checkFields() 
   {

@@ -138,7 +138,7 @@ body  {
     color: #000000;
     font-family: Verdana, Arial, Helvetica, sans-serif;
     font-size: 100%;
-    background: #<?=$BodyBGColor?> url('dynamic-images/body-bg-image.php?T=<?=$pt?>') repeat;
+    background: #<?=$BodyBGColor?> url('/dynamic-images/body-bg-image.php?T=<?=$pt?>') repeat;
     background-attachment:fixed;
     color: #<?=$TextColor?>;
 }
@@ -450,7 +450,7 @@ h3   {
 }
 
 .tm-banner-bg {     /* will show through transparent areas in banner sample in team manager page */
-    background: url('images/transparent.png') repeat;
+    background: url('/images/transparent.png') repeat;
 }
 /* list used in team-manager forms */
 ul.tm-list { list-style: disc; }
@@ -466,7 +466,7 @@ li.tm-list { margin-left: 20px; margin-top: 10px; padding-left: 0px; }
     width:50px;
     height: 9px;
     margin:5px auto 0px auto;
-    background: url('images/more-arrow.gif') no-repeat 0px 5px;
+    background: url('/images/more-arrow.gif') no-repeat 0px 5px;
     white-space: nowrap;
 }
 .more-btn:hover
@@ -1031,7 +1031,7 @@ table#results-breakdown .data-xsm
 
 ul.help
 {   /* Use image for bullet to work around IE8 bug - bullet's are hidden with <ul> in ExtJS Window until mouse hovers over window  */
-    list-style-image:url("images/help-bullet.gif");
+    list-style-image:url("/images/help-bullet.gif");
 }
 li.help
 {
@@ -1052,7 +1052,7 @@ li.help
     font:12px 'Helvetica Neue', Arial, sans-serif;
     cursor:pointer;
     color:#5074AF;
-    background: url('images/help-icon.png') no-repeat;
+    background: url('/images/help-icon.png') no-repeat;
     padding: 2px 0px 0px 20px;
 }
 

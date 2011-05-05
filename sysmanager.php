@@ -23,13 +23,13 @@ if(!isSystemAdmin())
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Buffer View -->
   <?echo "<script type='text/javascript' src='" . EXTBASE_URL . "examples/ux/BufferView.js'></script>\n"?>
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("script/ridenet-helpers.js")?>
-  <?MinifyAndInclude("sysmanager.js")?>
-  <?MinifyAndInclude("dialogs/team-dialog.js")?>
+  <?MinifyAndInclude("/script/ridenet-helpers.js")?>
+  <?MinifyAndInclude("/sysmanager.js")?>
+  <?MinifyAndInclude("/dialogs/team-dialog.js")?>
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
     <?SessionToJS()?>

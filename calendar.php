@@ -32,12 +32,12 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("calendar.js")?>
-  <?MinifyAndInclude("dialogs/calendar-event-dialog.js")?>
-  <?MinifyAndInclude("dialogs/location-dialog.js")?>
-  <?MinifyAndInclude("script/ridenet-helpers.js")?>
+  <?MinifyAndInclude("/calendar.js")?>
+  <?MinifyAndInclude("/dialogs/calendar-event-dialog.js")?>
+  <?MinifyAndInclude("/dialogs/location-dialog.js")?>
+  <?MinifyAndInclude("/script/ridenet-helpers.js")?>
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
     g_domainRoot="<?=GetDomainRoot()?>";
@@ -92,7 +92,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
           <h2 style="margin:0px">Showing rides posted by</h2>
         </td>
         <td valign=center style="padding: 2px 0 0 5px">
-          <SELECT name="Year" onChange="window.location.href='calendar.php' + options[selectedIndex].value">
+          <SELECT onChange="window.location.href='/calendar.php' + options[selectedIndex].value">
             <OPTION value='' <?if($teamFilter==0) {?>selected<? } ?>>All RideNet Teams
             <OPTION value='?tf' <?if($teamFilter > 0) {?>selected<? } ?>><?=$teamName?>
           </SELECT>

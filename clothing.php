@@ -16,7 +16,7 @@ $RideBoardLength = 30;
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title><?BuildPageTitle($oDB, 0, "Clothing")?></title>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Insert tracker for Google Analytics -->
   <?InsertGoogleAnalyticsTracker()?>
 <!-- facebook meta tags to provide information for the like button -->
@@ -56,7 +56,7 @@ $RideBoardLength = 30;
         Click to Order Now!<br>
       </a>
       <a href="https://www.bikereg.com/events/register.asp?eventid=13099" target="_blank">
-        <img src="images/clothing/order-btn3.png" border=0 width=155>
+        <img src="/images/clothing/order-btn3.png" border=0 width=155>
       </a>
     </div>
     <h2><ul style="list-style: square;line-height:25px;font-size:16px">
@@ -69,19 +69,19 @@ $RideBoardLength = 30;
     
     <div style="float:left">
       <a href="https://www.bikereg.com/events/register.asp?eventid=13099" target="_blank">
-        <img src="images/clothing/ridenet-jersey1.png" border=0>
+        <img src="/images/clothing/ridenet-jersey1.png" border=0>
       </a>
       <p class=photo-caption style="text-align:center">Jersey Front</p>
     </div>
     <div style="float:left">
       <a href="https://www.bikereg.com/events/register.asp?eventid=13099" target="_blank">
-        <img src="images/clothing/ridenet-jersey2.png" border=0>
+        <img src="/images/clothing/ridenet-jersey2.png" border=0>
       </a>
       <p class=photo-caption style="text-align:center">Jersey Back</p>
     </div>
     <div style="float:left">
       <a href="https://www.bikereg.com/events/register.asp?eventid=13099" target="_blank">
-        <img src="images/clothing/ridenet-shorts.png" border=0>
+        <img src="/images/clothing/ridenet-shorts.png" border=0>
       </a>
       <p class=photo-caption style="text-align:center">Shorts</p>
     </div>

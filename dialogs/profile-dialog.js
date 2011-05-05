@@ -49,7 +49,7 @@ function C_ProfileDialog()
             ]);
 
             this.form = new Ext.form.FormPanel({
-                url:'data/post-rider.php',
+                url:'/data/post-rider.php',
                 frame:true,
                 bodyStyle:'padding:5px 5px 0',
                 labelAlign: 'right',
@@ -85,7 +85,7 @@ function C_ProfileDialog()
                             // === Change PW button ===
                                 xtype: 'button',
                                 text: '&nbsp;Password...&nbsp;',
-                                handler: function() { this.window.getEl().mask(); window.location.href="change-pw.php" },
+                                handler: function() { this.window.getEl().mask(); window.location.href="/change-pw.php" },
                                 scope: this,
                                 width: 100
                             }]
@@ -293,7 +293,7 @@ function C_ProfileDialog()
                                             else
                                             {
                                                 params = (val!="") ? val.split(",") : [[0],[0]];    // value will be "RiderID, TeamID"
-                                                this.el.update('<img src="dynamic-images/rider-portrait.php?RiderID=' + params[0] + '&T=' + params[1] + '&x=' + Math.random() + '" Height=200 Width=160>');
+                                                this.el.update('<img src="' + getFullDomainRoot() + '/dynamic-images/rider-portrait.php?RiderID=' + params[0] + '&T=' + params[1] + '&x=' + Math.random() + '" Height=200 Width=160>');
                                             }
                                         }
                                     }
@@ -310,7 +310,7 @@ function C_ProfileDialog()
                                     name: 'PictureFile',
                                     id: 'portrait-file',
                                     buttonOnly: true,
-                                    buttonCfg: { icon: 'images/choose-picture-icon.png', text: '&nbsp;Upload New'},
+                                    buttonCfg: { icon: '/images/choose-picture-icon.png', text: '&nbsp;Upload New'},
                                     listeners: { scope: this, 'fileselected' : function(fb, v) {
                                         this.form.getForm().findField("RiderPictureID").setValue(v);
                                     }}
@@ -338,7 +338,7 @@ function C_ProfileDialog()
                                             else
                                             {
                                                 params = (val!="") ? val.split(",") : [[0],[0]];    // value will be "RiderID, TeamID"
-                                                this.el.update('<img src="dynamic-images/rider-action-shot-sm.php?RiderID=' + params[0] + '&T=' + params[1] + '&x=' + Math.random() + '">');
+                                                this.el.update('<img src="' + getFullDomainRoot() + '/dynamic-images/rider-action-shot-sm.php?RiderID=' + params[0] + '&T=' + params[1] + '&x=' + Math.random() + '">');
                                             }
                                         }
                                     }
@@ -355,7 +355,7 @@ function C_ProfileDialog()
                                     name: 'ActionPictureFile',
                                     id: 'action-shot-file',
                                     buttonOnly: true,
-                                    buttonCfg: { icon: 'images/choose-picture-icon.png', text: '&nbsp;Upload New'},
+                                    buttonCfg: { icon: '/images/choose-picture-icon.png', text: '&nbsp;Upload New'},
                                     listeners: { scope: this, 'fileselected' : function(fb, v) {
                                         this.form.getForm().findField("RiderActionPictureID").setValue(v);
                                     }}
@@ -429,7 +429,7 @@ function C_ProfileDialog()
                 this.form.getEl().mask("Loading...");
             // --- load rider record
                 this.form.baseParams.RiderID = g_Session.riderID;
-                this.form.load({url:"data/get-rider.php"});
+                this.form.load({url:"/data/get-rider.php"});
                 this.setMessage('', 'black');             // clear message area
                 this.form.getForm().findField('RiderEmail').focus(true, 300);  // set initial focus
             }, this);
@@ -455,7 +455,7 @@ function C_ProfileDialog()
             // Safari often hangs when uploading a file. To prevent this we first need to make
             // an ajax request to a page that closes the connection to the server. Then we can
             // proceed with the file upload post.
-            Ext.Ajax.request( {url: 'data/close-connection.php', scope: this, success: function() {
+            Ext.Ajax.request( {url: '/data/close-connection.php', scope: this, success: function() {
             // --- show sending message in message area
                 this.setMessage("Saving Rider Profile...", "black", true);
             // --- disable dialog

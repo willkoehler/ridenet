@@ -35,7 +35,7 @@ function C_ReportForm(parentElement)
                 {name: 'AvgDaysMonth', type: 'float'},
                 {name: 'LastActivity', type: 'int'}
             ],
-            proxy: new Ext.data.HttpProxy({ url: 'data/list-cbdb.php' }),
+            proxy: new Ext.data.HttpProxy({ url: '/data/list-cbdb.php' }),
             sortInfo: { field: 'TeamName', direction: 'asc' }
         });
         
@@ -48,7 +48,7 @@ function C_ReportForm(parentElement)
                 listeners: { scope: this, specialkey: function(ctrl, e) { if(e.getKey() == e.ENTER) { this.filterList() } } }
             } , ' ', {
                 cls: 'x-btn-icon',
-                icon: 'images/search-icon.png',
+                icon: '/images/search-icon.png',
                 handler: this.filterList,
                 scope: this
             }

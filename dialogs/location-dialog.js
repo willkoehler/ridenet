@@ -33,7 +33,7 @@ function C_LocationDialog()
                     {name: 'id', type: 'int'},
                     {name: 'text'}
                 ],
-                proxy: new Ext.data.HttpProxy({ url: 'data/lookup-zip-code.php' })
+                proxy: new Ext.data.HttpProxy({ url: '/data/lookup-zip-code.php' })
             });
 
             this.form = new Ext.form.FormPanel({

@@ -33,7 +33,7 @@ function C_RiderDialog()
 
             this.form = new Ext.form.FormPanel({
                 baseCls: 'x-plain',     // (gives panel a gray background - by default panels have white backgrounds)
-                url:'data/post-rider-sm.php',
+                url:'/data/post-rider-sm.php',
                 labelAlign: 'right',
                 bodyStyle:'padding:0px',
                 buttonAlign:'center',
@@ -163,7 +163,7 @@ function C_RiderDialog()
                     this.form.getForm().baseParams.RiderID = this.riderID;
                     this.form.getForm().baseParams.TeamID = g_pt;
                     this.window.getEl().mask("Loading..."); // mask form while loading form data from server
-                    this.form.getForm().load({url:"data/get-rider-sm.php"});
+                    this.form.getForm().load({url:"/data/get-rider-sm.php"});
                     Ext.fly('nr-note').setVisibilityMode(Ext.Element.DISPLAY);
                     Ext.fly('nr-note').hide();
                     this.window.setTitle("Edit Rider");

@@ -47,13 +47,13 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("calendar-detail.js")?>
-  <?MinifyAndInclude("dialogs/calendar-event-dialog.js")?>
-  <?MinifyAndInclude("dialogs/post-update-dialog.js")?>
-  <?MinifyAndInclude("dialogs/location-dialog.js")?>
-  <?MinifyAndInclude("script/ridenet-helpers.js")?>
+  <?MinifyAndInclude("/calendar-detail.js")?>
+  <?MinifyAndInclude("/dialogs/calendar-event-dialog.js")?>
+  <?MinifyAndInclude("/dialogs/post-update-dialog.js")?>
+  <?MinifyAndInclude("/dialogs/location-dialog.js")?>
+  <?MinifyAndInclude("/script/ridenet-helpers.js")?>
   <script type="text/javascript">
     g_calendarWallLength = <?=$CalendarWallLength?>;
     g_calendarUpdatesLength = <?=$CalendarUpdatesLength?>;

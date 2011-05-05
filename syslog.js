@@ -35,7 +35,7 @@ function C_ReportForm(parentElement)
                 {name: 'ReferenceID', type: 'int'},
                 {name: 'IPAddress'}
             ],
-            proxy: new Ext.data.HttpProxy({ url: 'data/list-syslog.php' }),
+            proxy: new Ext.data.HttpProxy({ url: '/data/list-syslog.php' }),
             sortInfo: { field: 'Date', direction: 'desc' }
         });
         

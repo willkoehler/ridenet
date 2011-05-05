@@ -48,7 +48,7 @@ function clickDeleteMessage(messageID)
         // --- Mask this page and post delete request
             Ext.get('calendar-updates').mask("Deleting");
             Ext.Ajax.request({
-                url: 'data/delete-message.php',
+                url: '/data/delete-message.php',
                 params: {ID: messageID},
                 success: handleDeleteSuccess,
                 failure: handleDeleteFailure,
@@ -107,7 +107,7 @@ function updateCalendarUpdates()
 {
     Ext.get('calendar-updates').mask("Updating");
     Ext.Ajax.request({
-        url: 'dynamic-sections/calendar-updates.php?pb&CalendarID=' + g_calendarID + '&l=' + g_calendarUpdatesLength,
+        url: '/dynamic-sections/calendar-updates.php?pb&CalendarID=' + g_calendarID + '&l=' + g_calendarUpdatesLength,
         success: function(response, options)
         {
             Ext.get('calendar-updates').update(response.responseText);
@@ -129,7 +129,7 @@ function updateCalendarWall()
     {
         Ext.fly('calendar-wall').mask("Updating");
         Ext.Ajax.request({
-            url: 'dynamic-sections/calendar-wall.php?pb&CalendarID=' + g_calendarID + '&l=' + g_calendarWallLength,
+            url: '/dynamic-sections/calendar-wall.php?pb&CalendarID=' + g_calendarID + '&l=' + g_calendarWallLength,
             success: function(response, options)
             {
                 Ext.fly('calendar-wall').update(response.responseText);
@@ -161,7 +161,7 @@ function C_Attendance()
         this.form = new Ext.FormPanel({
             baseCls: 'x-plain',     // (gives panel a transparent background)
             cls: 'centered',        // center this panel on the page
-            url: 'data/post-calendar-attendance.php',          // URL used to submit results of form
+            url: '/data/post-calendar-attendance.php',          // URL used to submit results of form
             bodyStyle:'padding-top:5px',
             hideLabels: 'true',
             width: 330,
@@ -228,7 +228,7 @@ function C_Attendance()
         this.form.getForm().baseParams.AttendanceID = action.result.AttendanceID;
         // Update list of attending riders. Hide list if there are no riders attending
         Ext.Ajax.request({
-            url: 'dynamic-sections/calendar-attendance.php?pb&CalendarID=' + this.calendarID,
+            url: '/dynamic-sections/calendar-attendance.php?pb&CalendarID=' + this.calendarID,
             scope: this,
             success: function(response, options)
             {

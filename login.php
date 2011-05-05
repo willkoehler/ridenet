@@ -33,12 +33,12 @@ $riderEmail = isset($_COOKIE['RiderEmail']) ? $_COOKIE['RiderEmail'] : "";
   <!-- Include common code and stylesheets -->
     <? IncludeExtJSFiles() ?>
   <!-- Include site stylesheets -->
-    <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+    <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
   <!-- Code-behind modules for this page (minify before including)-->
-    <?MinifyAndInclude("login.js")?>
-    <?MinifyAndInclude("dialogs/signup-dialog.js")?>
-    <?MinifyAndInclude("dialogs/reset-pw-dialog.js")?>
-    <?MinifyAndInclude("script/ridenet-helpers.js")?>
+    <?MinifyAndInclude("/login.js")?>
+    <?MinifyAndInclude("/dialogs/signup-dialog.js")?>
+    <?MinifyAndInclude("/dialogs/reset-pw-dialog.js")?>
+    <?MinifyAndInclude("/script/ridenet-helpers.js")?>
   <!-- Build javascript arrays for local/static combobox lookups -->
     <script type="text/javascript">
     </script>

@@ -63,8 +63,8 @@ else
         <!--============ for commuters show days/month ============-->
         <table cellpadding=0 cellspacing=0><tr>
           <td class="primary" style="padding-right:5px"><?=$stats['CEDaysMonth']?></td>
-          <td><img class="tight" src="images/ridelog/tiny/commute.png"></td>
-          <td><img class="tight" src="images/ridelog/tiny/errand.png"></td>
+          <td><img class="tight" src="/images/ridelog/tiny/commute.png"></td>
+          <td><img class="tight" src="/images/ridelog/tiny/errand.png"></td>
         </tr></table>
         <span class="secondary">
           Days/Month
@@ -147,7 +147,7 @@ else
       <td class="stats" style="padding:1px 8px" align=right>
         <?if($stats['CMilesDay']>0) { ?>
           <table cellspacing=0 cellpadding=0 class=centered><tr>
-            <td style="padding-right:5px"><img class="tight" src="images/ridelog/tiny/commute.png"></td>
+            <td style="padding-right:5px"><img class="tight" src="/images/ridelog/tiny/commute.png"></td>
             <td><?="I commute " . Plural($stats['CMilesDay'], "mile") . "/day"?></td>
           </tr></table>
         <? } else { ?>

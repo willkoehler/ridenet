@@ -38,10 +38,10 @@ else
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("dialogs/calendar-event-dialog.js")?>
-  <?MinifyAndInclude("script/ridenet-helpers.js")?>
+  <?MinifyAndInclude("/dialogs/calendar-event-dialog.js")?>
+  <?MinifyAndInclude("/script/ridenet-helpers.js")?>
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
   </script>
@@ -73,27 +73,27 @@ else
       case 5:
         $minDays = 20;
         $maxDays = 200;
-        $description = "<img src='images/stars/star5.png'> Riders that commute / do errands 20+ days/month";
+        $description = "<img src='/images/stars/star5.png'> Riders that commute / do errands 20+ days/month";
         break;
       case 4:
         $minDays = 15;
         $maxDays = 19;
-        $description = "<img src='images/stars/star4.png'> Riders that commute / do errands 15 to 19 days/month";
+        $description = "<img src='/images/stars/star4.png'> Riders that commute / do errands 15 to 19 days/month";
         break;
       case 3:
         $minDays = 10;
         $maxDays = 14;
-        $description = "<img src='images/stars/star3.png'> Riders that commute / do errands 10 to 14 days/month";
+        $description = "<img src='/images/stars/star3.png'> Riders that commute / do errands 10 to 14 days/month";
         break;
       case 2:
         $minDays = 5;
         $maxDays = 9;
-        $description = "<img src='images/stars/star2.png'> Riders that commute / do errands 5 to 9 days/month";
+        $description = "<img src='/images/stars/star2.png'> Riders that commute / do errands 5 to 9 days/month";
         break;
       case 1:
         $minDays = 1;
         $maxDays = 4;
-        $description = "<img src='images/stars/star1.png'> Riders that commute / do errands 1 to 4 days/month";
+        $description = "<img src='/images/stars/star1.png'> Riders that commute / do errands 1 to 4 days/month";
         break;
       default:
         $minDays = 0;

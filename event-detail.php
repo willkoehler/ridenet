@@ -29,12 +29,12 @@ $notify = $oDB->DBLookup("Notify", "event_attendance", "AttendanceID=$attendance
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("event-detail.js")?>
-  <?MinifyAndInclude("dialogs/schedule-event-dialog.js")?>
-  <?MinifyAndInclude("dialogs/post-update-dialog.js")?>
-  <?MinifyAndInclude("script/ridenet-helpers.js")?>
+  <?MinifyAndInclude("/event-detail.js")?>
+  <?MinifyAndInclude("/dialogs/schedule-event-dialog.js")?>
+  <?MinifyAndInclude("/dialogs/post-update-dialog.js")?>
+  <?MinifyAndInclude("/script/ridenet-helpers.js")?>
   <script type="text/javascript">
     g_eventUpdatesLength = <?=$EventUpdatesLength?>;
     g_raceID = <?=$raceID?>;

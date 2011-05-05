@@ -147,7 +147,7 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
             <td width="60" <?if($thisWeek) {?>id="highlight"<? } ?>><?=$eventDate->format("g:i a")?></td>
             <td width="50" <?if($thisWeek) {?>id="highlight"<? } ?> style="font-weight:bold;font-family:courier new;"><?=BuildRideClass($record)?></td>
             <td width="255" <?if($thisWeek) {?>id="highlight"<? } ?>><div class=ellipses style="width:245px">
-              <a href=calendar-detail.php?CID=<?=$record['CalendarID']?>>
+              <a href="/calendar-detail.php?CID=<?=$record['CalendarID']?>">
                 <?=$record['EventName']?>
               </a>
             </div></td>

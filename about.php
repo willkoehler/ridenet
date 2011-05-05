@@ -11,7 +11,7 @@ RecordPageView($oDB);
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title><?BuildPageTitle($oDB, 0, "About")?></title>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=0" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=0" rel="stylesheet" type="text/css" />
 <!-- Insert tracker for Google Analytics -->
   <?InsertGoogleAnalyticsTracker()?>
 </head>
@@ -30,7 +30,7 @@ RecordPageView($oDB);
       <h1>Create a rider bio, track your race results, keep a ride log, build a team page, find cycling events and rides in your area, connect with other riders.</h1>
       <div style="height:30px"></div>
 
-      <img style="float:right;width:300px;margin:0px 0px 0px 40px" src="images/about/profile.jpg">
+      <img style="float:right;width:300px;margin:0px 0px 0px 40px" src="/images/about/profile.jpg">
       <div style="margin:10px 0px;">
         <h2>Rider Profiles:</h2>
         <p>
@@ -42,7 +42,7 @@ RecordPageView($oDB);
 
       <div class="spacer"></div>
 
-      <img style="float:left;width:280px;margin:0px 40px 0px 0px" src="images/about/team.jpg">
+      <img style="float:left;width:280px;margin:0px 40px 0px 0px" src="/images/about/team.jpg">
       <div style="margin:20px 0px;">
         <h2>Cycling Clubs &amp; Teams</h2>
         <p>
@@ -55,7 +55,7 @@ RecordPageView($oDB);
 
       <div class="spacer"></div>
       
-      <img style="float:right;width:250px;margin:0px 0px 0px 40px" src="images/about/results.jpg">
+      <img style="float:right;width:250px;margin:0px 0px 0px 40px" src="/images/about/results.jpg">
       <div style="margin:10px 0px;">
         <h2>Race Results</h2>
         <p>
@@ -70,7 +70,7 @@ RecordPageView($oDB);
 
       <div class="spacer"></div>
 
-      <img style="float:left;width:325px;margin:0px 40px 0px 0px" src="images/about/ridelog.jpg">
+      <img style="float:left;width:325px;margin:0px 40px 0px 0px" src="/images/about/ridelog.jpg">
       <div style="margin:10px 0px;">
         <h2>Ride Log</h2>
         <p>
@@ -84,7 +84,7 @@ RecordPageView($oDB);
 
       <div class="spacer"></div>
 
-      <img style="float:right;width:275px;margin:0px 0px 0px 40px" src="images/about/schedule.jpg">
+      <img style="float:right;width:275px;margin:0px 0px 0px 40px" src="/images/about/schedule.jpg">
       <div style="margin:20px 0px;">
         <h2>Regional Event Schedule</h2>
         <p>
@@ -97,7 +97,7 @@ RecordPageView($oDB);
 
       <div class="spacer"></div>
 
-      <img style="float:left;width:250px;margin:0px 40px 0px 0px" src="images/about/calendar.jpg">
+      <img style="float:left;width:250px;margin:0px 40px 0px 0px" src="/images/about/calendar.jpg">
       <div style="margin:30px 0px;">
         <h2>Community Ride Calendar</h2>
         <p>
@@ -110,7 +110,7 @@ RecordPageView($oDB);
 
       <div class="spacer"></div>
 
-      <img style="float:right;width:325px;margin:0px 0px 0px 40px" src="images/about/commuting.jpg">
+      <img style="float:right;width:325px;margin:0px 0px 0px 40px" src="/images/about/commuting.jpg">
       <div style="margin:0px 0px">
         <h2>Advocacy</h2>
         <p>

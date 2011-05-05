@@ -30,7 +30,7 @@ function C_TeamDialog()
                     {name: 'id', type: 'int'},
                     {name: 'text'}
                 ],
-                proxy: new Ext.data.HttpProxy({ url: 'data/lookup-zip-code.php' })
+                proxy: new Ext.data.HttpProxy({ url: '/data/lookup-zip-code.php' })
             });
 
             // Json Reader to read data for dialog
@@ -51,7 +51,7 @@ function C_TeamDialog()
 
             this.form = new Ext.form.FormPanel({
                 baseCls: 'x-plain',     // (gives panel a gray background - by default panels have white backgrounds)
-                url:'data/post-team.php',
+                url:'/data/post-team.php',
                 labelAlign: 'right',
                 bodyStyle:'padding:5px 5px 0',
                 buttonAlign:'center',
@@ -242,7 +242,7 @@ function C_TeamDialog()
                     this.form.getForm().baseParams.TeamID = this.teamID;
                     this.window.getEl().mask("Loading..."); // mask form while loading form data from server
                     this.window.setTitle("Edit Team");
-                    this.form.getForm().load({url:"data/get-team.php"});
+                    this.form.getForm().load({url:"/data/get-team.php"});
                 }
                 else
                 {
@@ -334,6 +334,6 @@ function C_TeamDialog()
         this.window.syncSize();
     }
 
-    this.statusLookup = [[0, "Active", "Team is active and visible online", "images/active-icon.png", "green"],
-                         [1, "Archived", "Team is not visible online. All team data will be archived", "images/archived-icon.png", "red"]];
+    this.statusLookup = [[0, "Active", "Team is active and visible online", "/images/active-icon.png", "green"],
+                         [1, "Archived", "Team is not visible online. All team data will be archived", "/images/archived-icon.png", "red"]];
 }

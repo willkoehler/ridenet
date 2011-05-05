@@ -18,7 +18,7 @@ function updateRideBoard()
 {
     Ext.get('commuting-wall').mask("Updating");
     Ext.Ajax.request({
-        url: 'dynamic-sections/commuting.php?pb&l=' + g_rideBoardLength,
+        url: '/dynamic-sections/commuting.php?pb&l=' + g_rideBoardLength,
         success: function(response, options)
         {
             Ext.get('commuting-wall').update(response.responseText);

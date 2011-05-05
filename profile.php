@@ -17,7 +17,7 @@ if(!isset($_REQUEST['RiderID']))
   CheckLoginAndRedirect();
   $RiderID = GetUserID();   // ignore RiderID and show profile of logged in rider
   $editable = true;
-  // Redirect rider to their team page if they're not already on it.  //!!!! Ask rider which team they want?
+  // Redirect rider to their team page if they're not already on it.
   $teamInfo = GetRiderTeamInfo($oDB, $RiderID);
   if($teamInfo['CommutingTeamID']!=$pt && $teamInfo['RacingTeamID']!=$pt)
   {
@@ -69,13 +69,13 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("profile.js")?>
-  <?MinifyAndInclude("dialogs/profile-dialog.js")?>
-  <?MinifyAndInclude("dialogs/ride-log-dialog.js")?>
-  <?MinifyAndInclude("dialogs/change-teams-dialog.js")?>
-  <?MinifyAndInclude("script/ridenet-helpers.js")?>
+  <?MinifyAndInclude("/profile.js")?>
+  <?MinifyAndInclude("/dialogs/profile-dialog.js")?>
+  <?MinifyAndInclude("/dialogs/ride-log-dialog.js")?>
+  <?MinifyAndInclude("/dialogs/change-teams-dialog.js")?>
+  <?MinifyAndInclude("/script/ridenet-helpers.js")?>
 <!-- file upload field -->
   <?echo "<script type='text/javascript' src='" . EXTBASE_URL . "examples/ux/fileuploadfield/FileUploadField.js'></script>\n";?>
   <?echo "<link rel='stylesheet' type='text/css' href='" . EXTBASE_URL . "examples/ux/fileuploadfield/css/fileuploadfield.css'>\n";?>
@@ -197,8 +197,8 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
                     <table cellspacing=0 cellpadding=0>
                       <tr>
                         <td class=label width=110>
-                          <img class="tight" src="images/ridelog/commute.png" style="position:relative;top:-1px" height=12>
-                          <img class="tight" src="images/ridelog/errand.png" style="position:relative;top:-1px" height=12>
+                          <img class="tight" src="<?=GetFullDomainRoot()?>/images/ridelog/commute.png" style="position:relative;top:-1px" height=12>
+                          <img class="tight" src="<?=GetFullDomainRoot()?>/images/ridelog/errand.png" style="position:relative;top:-1px" height=12>
                           Days/Month:
                         </td>
                         <td class=text id='cedays-month' width=30><?=$riderInfo['CEDaysMonth']?></td>
@@ -287,7 +287,7 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
                            ORDER BY RaceDate", __FILE__, __LINE__);
         while(($record=$rs->fetch_array())!=false) { ?>
           <?if($record['Year']!=$ShowYear) { ?>
-            <a href="profile.php?<?if(!$editable) {?>RiderID=<?=$RiderID?>&<?}?>Year=<?=$record['Year']?> ">[<?=$record['Year']?>]</a>&nbsp;
+            <a href="/profile.php?<?if(!$editable) {?>RiderID=<?=$RiderID?>&<?}?>Year=<?=$record['Year']?> ">[<?=$record['Year']?>]</a>&nbsp;
           <? } else { ?>
             [<?=$record['Year']?>]&nbsp;
           <? } ?>
@@ -393,16 +393,16 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
                 </td>
                 <td class="data<?if($record['Attending']==0) { ?> faded<? } ?>" width="35" style="padding-left:4px;">
                   <?if($record['Type']==0) { ?>
-                    <img src="images/ridelog/recreational.png" class="tight" style="margin-left:7px" height=15>
+                    <img src="<?=GetFullDomainRoot()?>/images/ridelog/recreational.png" class="tight" style="margin-left:7px" height=15>
                   <? } else { ?>
-                    <img src="images/event-types/<?=$record['Image']?>" class="tight" height=15>
+                    <img src="<?=GetFullDomainRoot()?>/images/event-types/<?=$record['Image']?>" class="tight" height=15>
                   <? } ?>
                 </td>
                 <td class="data<?if($record['Attending']==0) { ?> faded<? } ?>" width="335"><div class=ellipses style="width:325px">
                   <?if($record['Type']==0) { ?>
-                    <a href=calendar-detail.php?CID=<?=$record['ID']?>>
+                    <a href="/calendar-detail.php?CID=<?=$record['ID']?>">
                   <? } else { ?>
-                    <a href=event-detail.php?RaceID=<?=$record['ID']?>>
+                    <a href="/event-detail.php?RaceID=<?=$record['ID']?>">
                   <? } ?>
                     <?=$record['Name']?>
                   </a>
@@ -474,7 +474,7 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
       <h3 style="margin:0px">Action Shot</h3>
       <div style="height:10px"><!--vertical spacer--></div>
       <div style="text-align:center">
-        <img class="action-photo" src="dynamic-images/rider-action-shot.php?RiderID=<?=$RiderID?>&T=<?=$ridersRacingTeamID?>" />
+        <img class="action-photo" src="/dynamic-images/rider-action-shot.php?RiderID=<?=$RiderID?>&T=<?=$ridersRacingTeamID?>" />
       </div>
     <? } ?>
 

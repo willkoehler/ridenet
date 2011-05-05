@@ -20,7 +20,7 @@ function C_PasswordForm(parentElement)
 
         this.form = new Ext.FormPanel({
             labelWidth: 140,
-            url: 'data/change-pw-act.php',          // URL used to submit results of form
+            url: '/data/change-pw-act.php',          // URL used to submit results of form
             frame:true,
             title: 'Change Password',
             bodyStyle:'padding:10px 10px 0px 10px',

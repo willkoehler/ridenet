@@ -18,11 +18,11 @@ $RideBoardLength = 30;
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("dialogs/calendar-event-dialog.js")?>
-  <?MinifyAndInclude("script/ridenet-helpers.js")?>
-  <?MinifyAndInclude("commuting.js")?>
+  <?MinifyAndInclude("/dialogs/calendar-event-dialog.js")?>
+  <?MinifyAndInclude("/script/ridenet-helpers.js")?>
+  <?MinifyAndInclude("/commuting.js")?>
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
     g_rideBoardLength = <?=$RideBoardLength?>;
@@ -57,7 +57,7 @@ $RideBoardLength = 30;
 
   <div id="mainContent">
     <div style="float:left">
-      <h1><a href="bike-bus.php">Take a Ride on the Bike Bus</a></h1>
+      <h1><a href="/bike-bus.php">Take a Ride on the Bike Bus</a></h1>
     </div>
     <div style="float:left;margin-left:10px;position:relative;left:0px;top:12px">
       <?SocialMediaButtons("Stay up to date with the Central Ohio commuting scene on #RideNet")?>
@@ -66,15 +66,15 @@ $RideBoardLength = 30;
     <p>
       To help new commuters coming on the scene, Consider Biking is coordinating "bike bus service"
       from the 4 quadrants of the city into downtown. We're looking for veteran commuters to "drive" the buses
-      and show the newbies the ropes. <a href="bike-bus.php">Read more...</a>
+      and show the newbies the ropes. <a href="/bike-bus.php">Read more...</a>
     </p>
-    <a href="clothing.php">
-      <img style="float:right;margin:15px 20px 0 20px;" src="images/clothing/ridenet-jersey1.png" Height=60 border=0>
+    <a href="/clothing.php">
+      <img style="float:right;margin:15px 20px 0 20px;" src="/images/clothing/ridenet-jersey1.png" Height=60 border=0>
     </a>
-    <h1><a href="clothing.php">RideNet Clothing</a></h1>
+    <h1><a href="/clothing.php">RideNet Clothing</a></h1>
     <p>
       We're selling cycling clothing to promote RideNet. A portion of each order will be
-      donated to Consider Biking to support 2BY2012. <a href="clothing.php" style="color:red">Details...</a>
+      donated to Consider Biking to support 2BY2012. <a href="/clothing.php" style="color:red">Details...</a>
     </p>
 <?  // Get top 22 commuters sorted by Commute/Errand days in the last 30 days
     $sql = "SELECT CONCAT(FirstName, ' ', LastName) AS RiderName, RiderID, RacingTeamID, CEDaysMonth, Domain,

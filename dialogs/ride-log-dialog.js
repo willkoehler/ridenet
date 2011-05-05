@@ -39,7 +39,7 @@ function C_RideLogDialog()
 
             this.form = new Ext.form.FormPanel({
                 baseCls: 'x-plain',     // (gives panel a gray background - by default panels have white backgrounds)
-                url:'data/post-ride-log.php',
+                url:'/data/post-ride-log.php',
                 labelAlign: 'right',
                 bodyStyle:'padding:5px 5px 0',
                 buttonAlign:'right',
@@ -75,7 +75,7 @@ function C_RideLogDialog()
                             blankText: 'You must select a ride type',
                             store: new Ext.data.ArrayStore({ fields: ['id', 'text', 'img', 'desc'], data: rideLogTypeLookup }),
                             tpl:'<tpl for="."><div class="x-combo-list-item"><table><tr>\
-                                   <td><img src="images/ridelog/{img}"></td>\
+                                   <td><img src="/images/ridelog/{img}"></td>\
                                    <td class="item-status-label" style="width:60px">{text}</td>\
                                    <td class="item-status-desc" style="width:160px">{desc}</td>\
                                  </tr></table>\
@@ -95,7 +95,7 @@ function C_RideLogDialog()
                             listWidth: 120,
                             store: new Ext.data.ArrayStore({ fields: ['id', 'text', 'img'], data: weatherLookup }),
                             tpl:'<tpl for="."><div class="x-combo-list-item"><table cellpadding=0 cellspacing=0><tr>\
-                                   <td><img style="padding-right:5px" src="images/weather/{img}" height=25 width=25></td>\
+                                   <td><img style="padding-right:5px" src="/images/weather/{img}" height=25 width=25></td>\
                                    <td class="item-status-label" style="width:60px">{text}</td>\
                                  </tr></table>\
                                  </div></tpl>'
@@ -174,7 +174,7 @@ function C_RideLogDialog()
                 },{
                     text: '&nbsp;Delete',
                     id: 'delete-btn',
-                    icon: 'images/delete-icon-small.png',
+                    icon: '/images/delete-icon-small.png',
                     handler: this.deleteButtonClick,
                     scope: this
                 }],
@@ -224,7 +224,7 @@ function C_RideLogDialog()
                 // --- This is an existing ride log entry, load data
                     this.form.getForm().baseParams.RideLogID = this.rideLogID;
                     this.window.getEl().mask("Loading..."); // mask form while loading form data from server
-                    this.form.getForm().load({url:"data/get-ride-log.php"});
+                    this.form.getForm().load({url:"/data/get-ride-log.php"});
                     if(this.makeCopy)
                     {
                         this.window.setTitle("Copy This Ride");
@@ -325,7 +325,7 @@ function C_RideLogDialog()
                 this.window.getEl().mask("");
                 this.setMessage("Deleting Ride...", "black", true);
                 Ext.Ajax.request({
-                    url: 'data/delete-ride-log.php',
+                    url: '/data/delete-ride-log.php',
                     params: {ID: this.rideLogID},
                     success: this.handleDeleteSuccess,
                     failure: this.handleDeleteFailure,

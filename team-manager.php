@@ -23,16 +23,16 @@ if(!isDesigner() && !isSystemAdmin() && !isTeamAdmin($oDB, $pt))
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" id="color-css" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" id="color-css" type="text/css" />
 <!-- Buffer View -->
   <? echo "<script type='text/javascript' src='" . EXTBASE_URL . "examples/ux/BufferView.js'></script>\n" ?>
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("team-manager.js")?>
-  <?MinifyAndInclude("sm-riders.js")?>
-  <?MinifyAndInclude("sm-customize.js")?>
-  <?MinifyAndInclude("sm-homepage.js")?>
-  <?MinifyAndInclude("dialogs/rider-dialog.js")?>
-  <?MinifyAndInclude("script/ridenet-helpers.js")?>
+  <?MinifyAndInclude("/team-manager.js")?>
+  <?MinifyAndInclude("/sm-riders.js")?>
+  <?MinifyAndInclude("/sm-customize.js")?>
+  <?MinifyAndInclude("/sm-homepage.js")?>
+  <?MinifyAndInclude("/dialogs/rider-dialog.js")?>
+  <?MinifyAndInclude("/script/ridenet-helpers.js")?>
 <!-- file upload field -->
   <?echo "<script type='text/javascript' src='" . EXTBASE_URL . "examples/ux/fileuploadfield/FileUploadField.js'></script>\n";?>
   <?echo "<link rel='stylesheet' type='text/css' href='" . EXTBASE_URL . "examples/ux/fileuploadfield/css/fileuploadfield.css'>\n";?>

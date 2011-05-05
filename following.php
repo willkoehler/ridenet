@@ -17,10 +17,11 @@ CheckLoginAndRedirect();
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("following.js")?>
-  <?MinifyAndInclude("dialogs/calendar-event-dialog.js")?>
+  <?MinifyAndInclude("/following.js")?>
+  <?MinifyAndInclude("/dialogs/calendar-event-dialog.js")?>
+  <?MinifyAndInclude("/script/ridenet-helpers.js")?>
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
   </script>
@@ -96,12 +97,12 @@ CheckLoginAndRedirect();
             <tr>
               <td class="data" width="35" style="text-align:center">
                 <a href="<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>">
-                  <img src="dynamic-images/rider-portrait.php?RiderID=<?=$record['RiderID']?>&T=<?=$record['RacingTeamID']?>" class="tight" style="height:35px" title="<?=$record['RiderName']?>">
+                  <img src="<?=GetFullDomainRoot()?>/dynamic-images/rider-portrait.php?RiderID=<?=$record['RiderID']?>&T=<?=$record['RacingTeamID']?>" class="tight" style="height:35px" title="<?=$record['RiderName']?>">
                 </a>
               </td>
-              <td class="data" width="35" style="text-align:center"><img src="images/ridelog/<?=$record['RideLogTypeImage']?>" title="<?=$record['RideLogType']?>"></td>
+              <td class="data" width="35" style="text-align:center"><img src="/images/ridelog/<?=$record['RideLogTypeImage']?>" title="<?=$record['RideLogType']?>"></td>
               <td class="data" width="55"><?=Plural($record['Distance'], "mile")?></td>
-              <td class="data" width="35" style="text-align:center"><img src="images/weather/<?=$record['WeatherImage']?>" title="<?=$record['Weather']?>"></td>
+              <td class="data" width="35" style="text-align:center"><img src="/images/weather/<?=$record['WeatherImage']?>" title="<?=$record['Weather']?>"></td>
               <td class="data" width="355"><?=$record['Comment']?>&nbsp;</td>
             </tr>
 <?        $rideCount++;

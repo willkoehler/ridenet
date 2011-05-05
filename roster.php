@@ -17,13 +17,13 @@ $teamTypeID = $oDB->DBLookup("TeamTypeID", "teams", "TeamID=$pt");
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Data View -->
   <?echo "<script type='text/javascript' src='" . EXTBASE_URL . "examples/ux/DataViewTransition.js'></script>\n"?>
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("roster.js")?>
-  <?MinifyAndInclude("dialogs/calendar-event-dialog.js")?>
-  <?MinifyAndInclude("script/ridenet-helpers.js")?>
+  <?MinifyAndInclude("/roster.js")?>
+  <?MinifyAndInclude("/dialogs/calendar-event-dialog.js")?>
+  <?MinifyAndInclude("/script/ridenet-helpers.js")?>
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
     g_fullDomainRoot="<?=GetFullDomainRoot()?>";

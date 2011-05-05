@@ -34,7 +34,7 @@ function C_EventDialog()
 
             this.form = new Ext.form.FormPanel({
                 baseCls: 'x-plain',     // (gives panel a gray background - by default panels have white backgrounds)
-                url:'data/post-schedule-event.php',
+                url:'/data/post-schedule-event.php',
                 labelAlign: 'right',
                 bodyStyle:'padding:5px 5px 0',
                 buttonAlign:'right',
@@ -73,7 +73,7 @@ function C_EventDialog()
                             store: new Ext.data.ArrayStore({ fields: ['id', 'text', 'img'], data: eventTypeLookup }),
                             tpl:'<tpl for="."><div class="x-combo-list-item"><table cellpadding=0 cellspacing=0><tr>\
                                    <td xclass="item-status-label" style="width:90px;padding-left:5px">{text}</td>\
-                                   <td><img xstyle="padding-right:10px" src="images/event-types/{img}"></td>\
+                                   <td><img xstyle="padding-right:10px" src="/images/event-types/{img}"></td>\
                                  </tr></table>\
                                  </div></tpl>'
                         }]
@@ -153,7 +153,7 @@ function C_EventDialog()
                 },{
                     text: '&nbsp;Delete',
                     id: 'delete-btn',
-                    icon: 'images/delete-icon-small.png',
+                    icon: '/images/delete-icon-small.png',
                     handler: this.deleteButtonClick,
                     scope: this
                 }],
@@ -194,7 +194,7 @@ function C_EventDialog()
                 // --- This is an existing event, load event data
                     this.form.getForm().baseParams.RaceID = this.raceID;
                     this.window.getEl().mask("Loading..."); // mask form while loading form data from server
-                    this.form.getForm().load({url:"data/get-schedule-event.php"});
+                    this.form.getForm().load({url:"/data/get-schedule-event.php"});
                     this.window.setTitle("Edit Event");
                     Ext.get('delete-btn').show();
                 }
@@ -277,7 +277,7 @@ function C_EventDialog()
                 this.window.getEl().mask("");
                 this.setMessage("Deleting Event...", "black", true);
                 Ext.Ajax.request({
-                    url: 'data/archive-schedule-event.php',
+                    url: '/data/archive-schedule-event.php',
                     params: {ID: this.raceID},
                     success: this.handleDeleteSuccess,
                     failure: this.handleDeleteFailure,

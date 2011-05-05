@@ -33,7 +33,7 @@ function clickDeleteMessage(messageID)
         // --- Mask this page and post delete request
             Ext.get('team-wall').mask("Deleting");
             Ext.Ajax.request({
-                url: 'data/delete-message.php',
+                url: '/data/delete-message.php',
                 params: {ID: messageID},
                 success: handleDeleteSuccess,
                 failure: handleDeleteFailure,
@@ -92,7 +92,7 @@ function updateTeamWall()
 {
     Ext.get('team-wall').mask("Updating");
     Ext.Ajax.request({
-        url: 'dynamic-sections/team-wall.php?pb&TeamID=' + g_pt + '&l=' + g_teamWallLength,
+        url: '/dynamic-sections/team-wall.php?pb&TeamID=' + g_pt + '&l=' + g_teamWallLength,
         success: function(response, options)
         {
             Ext.get('team-wall').update(response.responseText);

@@ -95,7 +95,7 @@ function CalendarSidebarContent($oDB, $pt, $CalendarDate)
             if(date_create($record['CalendarDate'])->format("n/j/Y")==$ThisDay->format("n/j/Y"))
             {
               $DayClass = "cell has-events";
-              $DayURL = "<a href=calendar-detail.php?CID=" . $record['CalendarID'] . " title='" . $record['EventName'] . "'>" .
+              $DayURL = "<a href=/calendar-detail.php?CID=" . $record['CalendarID'] . " title='" . $record['EventName'] . "'>" .
                         "<div>$DayURL</div></a>";
             }
           }?>
@@ -138,7 +138,7 @@ function CalendarSidebarContent($oDB, $pt, $CalendarDate)
             <?=date("n/j", strtotime($record['CalendarDate'])) . ":"?>
           </td>
           <td style="padding:0px"><div class=ellipses style="width:125px">
-            <a href="calendar-detail.php?CID=<?=$record['CalendarID']?>" title="<?=$record['EventName']?>">
+            <a href="/calendar-detail.php?CID=<?=$record['CalendarID']?>" title="<?=$record['EventName']?>">
               <?=$record['EventName']?>
             </a>
           </div></td>
@@ -178,7 +178,7 @@ function CalendarSidebar($oDB, $pt)
         <? } ?>
           <div style="height:5px"><!--vertical spacer--></div>
         <p class="text75">
-          For a complete list of rides in the area, see the <a href="calendar.php">Community Ride Calendar</a>
+          For a complete list of rides in the area, see the <a href="/calendar.php">Community Ride Calendar</a>
         </p>
       </div>
     <?// } ?>
@@ -201,7 +201,7 @@ function CalendarSidebar($oDB, $pt)
           // --- create "Add Ride" button
               var btn = new Ext.Button({
                   text: '<span style="color:#94302E">&nbsp;Add A Ride</span>',
-                  icon: 'images/plus-icon.png',
+                  icon: '/images/plus-icon.png',
                   width: 90,
                   id: 'btn-add-calendar',
                   renderTo: 'add-calendar-btn',
@@ -237,7 +237,7 @@ function CalendarSidebar($oDB, $pt)
       function updateCalendarSidebar()
       {
           Ext.get('calendar-sidebar').up("div").mask("Updating");   // step up one div to get the entire sidebar
-          Ext.Ajax.request( {url: 'dynamic-sections/calendar-sidebar.php?pb&T=<?=$pt?>&cd=' + g_calendarDate.format("n/j/Y"), success: function(response, options) {
+          Ext.Ajax.request( {url: '/dynamic-sections/calendar-sidebar.php?pb&T=<?=$pt?>&cd=' + g_calendarDate.format("n/j/Y"), success: function(response, options) {
               Ext.get('calendar-sidebar').up("div").unmask();
               Ext.get('calendar-sidebar').update(response.responseText);
           }});

@@ -25,7 +25,7 @@ function C_PostMessageDialog()
             
             this.form = new Ext.form.FormPanel({
                 baseCls: 'x-plain',     // (gives panel a gray background - by default panels have white backgrounds)
-                url:'data/post-message.php',
+                url:'/data/post-message.php',
                 labelAlign: 'right',
                 bodyStyle:'padding:5px 5px 0',
                 buttonAlign:'center',

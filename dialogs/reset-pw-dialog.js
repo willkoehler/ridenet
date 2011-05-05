@@ -14,7 +14,7 @@ function C_ResetPWDialog()
             
             this.form = new Ext.form.FormPanel({
                 baseCls: 'x-plain',     // (gives panel a gray background - by default panels have white backgrounds)
-                url:'data/reset-password.php',
+                url:'/data/reset-password.php',
                 labelAlign: 'right',
                 bodyStyle:'padding: 7px 15px 0px 15px',
                 buttonAlign:'center',

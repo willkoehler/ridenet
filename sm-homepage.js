@@ -17,7 +17,7 @@ function C_HomePageTab()
             frame: true,
             autoHeight: true,
             title: 'Home Page',
-            url:'data/post-sm-homepage.php',
+            url:'/data/post-sm-homepage.php',
             labelAlign: 'right',
             buttonAlign:'center',
             reader: reader,
@@ -90,7 +90,7 @@ function C_HomePageTab()
                                     {
                                         this.el.update('<table cellpadding=0 cellspacing=0 height=100% width=100%>\
                                                           <tr><td align=center>\
-                                                            <img src="dynamic-images/homepage-image.php?T=' + g_pt + '&x=' + Math.random() + '">\
+                                                            <img src="/dynamic-images/homepage-image.php?T=' + g_pt + '&x=' + Math.random() + '">\
                                                           </td></tr>\
                                                         </table>');
                                     }
@@ -105,7 +105,7 @@ function C_HomePageTab()
                                 emptyText: 'Choose new image file...',
                                 width: 250,
                                 buttonText: '',
-                                buttonCfg: { icon: 'images/choose-picture-icon.png' },
+                                buttonCfg: { icon: '/images/choose-picture-icon.png' },
                                 listeners: { scope: this, 'fileselected' : function(fb, v) {
                                     this.form.getForm().findField("TeamImage").setValue(v);
                                 }}
@@ -208,7 +208,7 @@ function C_HomePageTab()
                         this.form.getEl().mask("Loading...");
                         // load data
                         this.form.baseParams.TeamID = g_pt;
-                        this.form.load({url:"data/get-sm-homepage.php"});
+                        this.form.load({url:"/data/get-sm-homepage.php"});
                         this.loaded=true;
                     }
                 }
@@ -238,7 +238,7 @@ function C_HomePageTab()
         // Safari often hangs when uploading a file. To prevent this we first need to make
         // an ajax request to a page that closes the connection to the server. Then we can
         // proceed with the file upload post.
-        Ext.Ajax.request( {url: 'data/close-connection.php', scope: this, success: function() {
+        Ext.Ajax.request( {url: '/data/close-connection.php', scope: this, success: function() {
         // --- show sending message in message area
             setFormMessage("Saving Home Page...", "black", true, 'hp-status-msg');
         // --- disable dialog
@@ -260,7 +260,7 @@ function C_HomePageTab()
         this.form.getForm().findField("TeamImage").setValue(g_pt);   // refresh team image
         this.form.getEl().unmask();
         // force browser to update cached image
-        forceReload.defer(700, this, ["dynamic-images/cache-buster.php", "homepage-image.php?T=" + g_pt]);
+        forceReload.defer(700, this, ["/dynamic-images/cache-buster.php", "homepage-image.php?T=" + g_pt]);
         // force browser to update the dynamic images in its cache by reloading page.
 //        window.location.hash="#2";  // stay on the homepage tab
 //        window.location.reload();

@@ -42,12 +42,12 @@ function C_ChangeTeamsDialog()
                     {name: 'TeamType'},
                     {name: 'Domain'}
                 ],
-                proxy: new Ext.data.HttpProxy({ url: 'data/lookup-team.php' })
+                proxy: new Ext.data.HttpProxy({ url: '/data/lookup-team.php' })
             });
 
             this.form = new Ext.form.FormPanel({
                 baseCls: 'x-plain',     // (gives panel a gray background - by default panels have white backgrounds)
-                url:'data/change-teams.php',
+                url:'/data/change-teams.php',
                 labelAlign: 'right',
                 labelWidth: 110,
                 bodyStyle:'padding:0px',
@@ -85,7 +85,7 @@ function C_ChangeTeamsDialog()
                              <div class="find-name">{TeamName}</div>\
                              <div class="find-info">{TeamType}</div>\
                            </div></td>\
-                           <td style="height:32px;width:120px;text-align:center"><img src="dynamic-images/team-logo-fit.php?T={TeamID}"></td>\
+                           <td style="height:32px;width:120px;text-align:center"><img src="' + getFullDomainRoot() + '/dynamic-images/team-logo-fit.php?T={TeamID}"></td>\
                          </tr></table>\
                          </div></tpl>'
                 },{
@@ -111,7 +111,7 @@ function C_ChangeTeamsDialog()
                                  <div class="find-name">{TeamName}</div>\
                                  <div class="find-info">{TeamType}</div>\
                                </div></td>\
-                               <td style="height:32px;width:120px;text-align:center"><img src="dynamic-images/team-logo-fit.php?T={TeamID}"></td>\
+                               <td style="height:32px;width:120px;text-align:center"><img src="' + getFullDomainRoot() + '/dynamic-images/team-logo-fit.php?T={TeamID}"></td>\
                              </tr></table>\
                              </div></tpl>'
                     }]

@@ -29,7 +29,7 @@ function C_PostUpdateDialog()
             
             this.form = new Ext.form.FormPanel({
                 baseCls: 'x-plain',     // (gives panel a gray background - by default panels have white backgrounds)
-                url:'data/post-update.php',
+                url:'/data/post-update.php',
                 labelAlign: 'right',
                 bodyStyle:'padding:5px 5px 0',
                 buttonAlign:'center',

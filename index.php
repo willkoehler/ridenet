@@ -22,10 +22,10 @@ RecordPageView($oDB);
   <!-- Include common code and stylesheets -->
     <? IncludeExtJSFiles() ?>
   <!-- Include site stylesheets -->
-    <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+    <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
   <!-- Code-behind modules for this page (minify before including)-->
-    <?MinifyAndInclude("dialogs/signup-dialog.js")?>
-    <?MinifyAndInclude("script/ridenet-helpers.js")?>
+    <?MinifyAndInclude("/dialogs/signup-dialog.js")?>
+    <?MinifyAndInclude("/script/ridenet-helpers.js")?>
   <!-- Build javascript arrays for local/static combobox lookups -->
     <script type="text/javascript">
       <?SessionToJS()?>
@@ -50,7 +50,7 @@ RecordPageView($oDB);
     <div style="float:left;width:515px">
       <div style="margin-bottom:30px;-webkit-font-smoothing:antialiased;font:22px 'Helvetica Neue', Helvetica, Arial, sans-serif" class="primary-color">
         <span style="line-height:28px;">Create a rider bio, track your race results, keep a ride log, build a team page, find cycling events in your area, connect with other riders.</span>
-        <a href="about.php" style="font-size:14px;color:#058A12">Learn More...</a>
+        <a href="/about.php" style="font-size:14px;color:#058A12">Learn More...</a>
       </div>
       <div style="margin-left:20px">
         <script type='text/javascript' src='../ride-widget.js'></script> 
@@ -92,8 +92,8 @@ RecordPageView($oDB);
 
       <div style="width:200px;margin-top:10px;-moz-border-radius: 8px;border-radius: 8px;border: 1px solid #CCC;background-color:#EEE;padding:15px 0 10px 0;text-align:center">
         <div style="margin-top:0px;font:16px helvetica;color:#333">Buy RideNet Clothing.</div>
-        <a href="clothing.php">
-          <img style="margin:5px 0 0 0;" src="images/clothing/ridenet-jersey1.png" Height=110 border=0>
+        <a href="/clothing.php">
+          <img style="margin:5px 0 0 0;" src="/images/clothing/ridenet-jersey1.png" Height=110 border=0>
         </a>
         <p style="margin:5px 0 0 0;font-size:12px;color:#888">
           Order by April 15th
@@ -128,16 +128,16 @@ RecordPageView($oDB);
       </div>
       <div style="margin:0px 0px 0px 0px;text-align:center;font:12px 'Helvetica Neue', Helvetica, Arial, sans-serif" class="text75">
         <a href="<?=BuildTeamBaseURL('echeloncycling')?>/home.php">
-          <img style="border:1px solid #555;margin-top:5px" src="images/featured-echelon.jpg">
+          <img style="border:1px solid #555;margin-top:5px" src="/images/featured-echelon.jpg">
         </a>
         <a href="<?=BuildTeamBaseURL('teamawesome')?>/home.php">
-          <img style="border:1px solid #555;margin-top:10px" src="images/featured-teamawesome.jpg">
+          <img style="border:1px solid #555;margin-top:10px" src="/images/featured-teamawesome.jpg">
         </a>
         <a href="<?=BuildTeamBaseURL('pattycake')?>/home.php">
-          <img style="border:1px solid #555;margin-top:10px" src="images/featured-pattycake.jpg">
+          <img style="border:1px solid #555;margin-top:10px" src="/images/featured-pattycake.jpg">
         </a>
         <a href="<?=BuildTeamBaseURL('trekstorecolumbus')?>/home.php">
-          <img style="border:1px solid #555;margin-top:10px" src="images/featured-trekstore.jpg">
+          <img style="border:1px solid #555;margin-top:10px" src="/images/featured-trekstore.jpg">
         </a>
         
       </div>

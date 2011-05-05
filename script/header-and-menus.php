@@ -58,10 +58,10 @@ function InsertPageBanner($oDB, $pt=0)
 {
     $showLogo = $oDB->DBLookup("IF(ShowLogo=1 AND Logo IS NOT NULL, 1, 0)", "teams", "TeamID=$pt", 0);?>
     <div style="position:relative">
-      <img id="page-banner" src="dynamic-images/page-banner.php?T=<?=$pt?>" class="tight" />
+      <img id="page-banner" src="/dynamic-images/page-banner.php?T=<?=$pt?>" class="tight" />
       <? if($showLogo) { ?>
         <table cellpadding=0 cellspacing=0 style="height:70px;width:300px;text-align:center;position:absolute;top:10px;left:220px"><tr><td>
-          <img style="vertical-align:middle;" src="dynamic-images/team-logo.php?T=<?=$pt?>" />
+          <img style="vertical-align:middle;" src="/dynamic-images/team-logo.php?T=<?=$pt?>" />
         </td></tr></table>
       <? } ?>
     </div>
@@ -174,22 +174,22 @@ function InsertMainMenu($oDB, $pt, $highlight="")
       <ul id="nav">
         <?if($pt==0) { ?>
         <!-- Default RideNet Menu -->
-          <li><a href="index.php" <?if($highlight=="Home") {?>id="active"<?}?>>HOME</a></li>
-          <li><a href="event-schedule.php" <?if($highlight=="Schedule") {?>id="active"<?}?>>EVENTS</a></li>
-          <li><a href="calendar.php" <?if($highlight=="Calendar") {?>id="active"<?}?>>RIDES</a></li>
-          <li><a href="racing-results.php" <?if($highlight=="Results") {?>id="active"<?}?>>RACING</a></li>
-          <li><a href="commuting.php" <?if($highlight=="Ranking") {?>id="active"<?}?>>COMMUTING</a></li>
+          <li><a href="/index.php" <?if($highlight=="Home") {?>id="active"<?}?>>HOME</a></li>
+          <li><a href="/event-schedule.php" <?if($highlight=="Schedule") {?>id="active"<?}?>>EVENTS</a></li>
+          <li><a href="/calendar.php" <?if($highlight=="Calendar") {?>id="active"<?}?>>RIDES</a></li>
+          <li><a href="/racing-results.php" <?if($highlight=="Results") {?>id="active"<?}?>>RACING</a></li>
+          <li><a href="/commuting.php" <?if($highlight=="Ranking") {?>id="active"<?}?>>COMMUTING</a></li>
         <? } else { ?>
         <!-- Team Site Menu -->
-          <li><a href="home.php" <?if($highlight=="Home") {?>id="active"<?}?>>HOME</a></li>
-          <li><a href="roster.php" <?if($highlight=="Roster") {?>id="active"<?}?>>ROSTER</a></li>
-          <li><a href="event-schedule.php" <?if($highlight=="Schedule") {?>id="active"<?}?>>EVENTS</a></li>
-          <li><a href="calendar.php" <?if($highlight=="Calendar") {?>id="active"<?}?>>RIDES</a></li>
+          <li><a href="/home.php" <?if($highlight=="Home") {?>id="active"<?}?>>HOME</a></li>
+          <li><a href="/roster.php" <?if($highlight=="Roster") {?>id="active"<?}?>>ROSTER</a></li>
+          <li><a href="/event-schedule.php" <?if($highlight=="Schedule") {?>id="active"<?}?>>EVENTS</a></li>
+          <li><a href="/calendar.php" <?if($highlight=="Calendar") {?>id="active"<?}?>>RIDES</a></li>
           <? if($bRacing) { ?>
-            <li><a href="racing-results.php" <?if($highlight=="Results") {?>id="active"<?}?>>RACING</a></li>
+            <li><a href="/racing-results.php" <?if($highlight=="Results") {?>id="active"<?}?>>RACING</a></li>
           <? } ?>
           <? if($bCommuting) { ?>
-            <li><a href="commuting.php" <?if($highlight=="Ranking") {?>id="active"<?}?>>COMMUTING</a></li>
+            <li><a href="/commuting.php" <?if($highlight=="Ranking") {?>id="active"<?}?>>COMMUTING</a></li>
           <? } ?>
         <? } ?>
         <li><a href="profile.php" <?if($highlight=="YourProfile") {?>id="active"<?}?>>YOUR PROFILE</a></li>
@@ -278,11 +278,11 @@ function InsertCommutingMenu($highlight="")
         <li><a href="commuting.php" <?if($highlight=="Commuting") {?>id="active"<?}?>>HOME</a></li>
         <li><a href="rider-stats.php" <?if($highlight=="Riders") {?>id="active"<?}?>>RIDERS</a></li>
         <li><a href="team-stats.php" <?if($highlight=="Teams") {?>id="active"<?}?>>TEAMS</a></li>
-        <li><a href="rider-groups.php?g=1" <?if($highlight=="1") {?>id="active"<?}?>>&nbsp;<img src='images/stars/star1.png' width=10>&nbsp;1 to 4</a></li>
-        <li><a href="rider-groups.php?g=2" <?if($highlight=="2") {?>id="active"<?}?>>&nbsp;<img src='images/stars/star2.png' width=10>&nbsp;5 to 9</a></li>
-        <li><a href="rider-groups.php?g=3" <?if($highlight=="3") {?>id="active"<?}?>>&nbsp;<img src='images/stars/star3.png' width=10>&nbsp;10 to 14</a></li>
-        <li><a href="rider-groups.php?g=4" <?if($highlight=="4") {?>id="active"<?}?>>&nbsp;<img src='images/stars/star4.png' width=10>&nbsp;15 to 19</a></li>
-        <li><a href="rider-groups.php?g=5" <?if($highlight=="5") {?>id="active"<?}?>>&nbsp;<img src='images/stars/star5.png' width=10>&nbsp;20+</a></li>
+        <li><a href="rider-groups.php?g=1" <?if($highlight=="1") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star1.png' width=10>&nbsp;1 to 4</a></li>
+        <li><a href="rider-groups.php?g=2" <?if($highlight=="2") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star2.png' width=10>&nbsp;5 to 9</a></li>
+        <li><a href="rider-groups.php?g=3" <?if($highlight=="3") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star3.png' width=10>&nbsp;10 to 14</a></li>
+        <li><a href="rider-groups.php?g=4" <?if($highlight=="4") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star4.png' width=10>&nbsp;15 to 19</a></li>
+        <li><a href="rider-groups.php?g=5" <?if($highlight=="5") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star5.png' width=10>&nbsp;20+</a></li>
       </ul>
     </div>
 <?  
@@ -427,7 +427,7 @@ function SignupSidebar()
 ?>
     <div class="sidebarBlock">
       <p style="text-align:center">
-        <a href="http://ridenet.net" target="_blank"><img border=0 src="images/ads/ridenetad.png" alt="RideNet" /><br></a>
+        <a href="http://ridenet.net" target="_blank"><img border=0 src="/images/ads/ridenetad.png" alt="RideNet" /><br></a>
       </p>
       <p style="text-align:center">
         Free rider profiles and team pages. <a href="http://ridenet.net" target="_blank">Join RideNet Today!</a>
@@ -453,8 +453,8 @@ function AdSidebar()
     <div class="sidebarBlock">
       <h3 style="text-align:center">RideNet Clothing</h3>
       <div style="text-align:center">
-        <a href = "clothing.php">
-          <img src="images/clothing/ridenet-jersey1.png" id="ad-clothing" border=0 height=100>
+        <a href = "/clothing.php">
+          <img src="/images/clothing/ridenet-jersey1.png" id="ad-clothing" border=0 height=100>
         </a>
         <div style="height:4px"></div>
         <p style="margin:0">
@@ -495,7 +495,7 @@ function ColumbusFoundationSidebar()
       <h3 style="text-align:center">Special Thanks To</h3>
       <div style="height:5px"></div>
       <p align="center" id='cfad'>
-        <a href="http://www.columbusfoundation.org"><img border=0 src="images/ads/ColumbusFoundation.png" alt="The Columbus Foundation" /></a>
+        <a href="http://www.columbusfoundation.org"><img border=0 src="/images/ads/ColumbusFoundation.png" alt="The Columbus Foundation" /></a>
       </p>
       <script type="text/javascript">
           new Ext.ToolTip({
@@ -531,10 +531,10 @@ function SponsorSidebar()
       <h3 align="center">Team Sponsors</h3>
       <div style="height:5px"></div>
       <a href="http://trekstorecolumbus.com/">
-        <p align="center"><img border=0 src="images/ads/TrekStoreColumbus.png" alt="Trek Store" /></p>
+        <p align="center"><img border=0 src="/images/ads/TrekStoreColumbus.png" alt="Trek Store" /></p>
       </a>
       <a href="http://www.trekbikes.com/us/en/">
-        <p align="center"><img border=0 src="images/ads/TrekLogo2.png" alt="Trek Bikes" /></p>
+        <p align="center"><img border=0 src="/images/ads/TrekLogo2.png" alt="Trek Bikes" /></p>
       </a>
     </div>
 <?

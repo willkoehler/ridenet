@@ -19,10 +19,10 @@ $range = (isset($_REQUEST['R'])) ? $_REQUEST['R'] : "L30";
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
-  <link href="styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("dialogs/calendar-event-dialog.js")?>
-  <?MinifyAndInclude("script/ridenet-helpers.js")?>
+  <?MinifyAndInclude("/dialogs/calendar-event-dialog.js")?>
+  <?MinifyAndInclude("/script/ridenet-helpers.js")?>
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
   </script>
@@ -127,7 +127,7 @@ function TeamTable($oDB, $rs, $rankField, $decimals, $tag)
             <td class="data">
               <a href="<?=BuildTeamBaseURL($record['Domain'])?>/home.php">
                 <table cellspacing=0 cellpadding=0 style="height:30px;width:90px;margin:2px 9px"><tr><td align=center>
-                  <img id="T<?=$record['TeamID'] . $tag?>" class="tight" src="dynamic-images/team-logo-fit.php?T=<?=$record['TeamID']?>">
+                  <img id="T<?=$record['TeamID'] . $tag?>" class="tight" src="<?=GetFullDomainRoot()?>/dynamic-images/team-logo-fit.php?T=<?=$record['TeamID']?>">
                 </td></tr></table>
               </a>
               <!-- Team name callout -->
@@ -152,8 +152,8 @@ function TeamTable($oDB, $rs, $rankField, $decimals, $tag)
             <td align=center width=80 class="data">
               <table cellpadding=0 cellspacing=0><tr>
                 <td class="days-month"><?=number_format($record[$rankField],$decimals)?></td>
-                <td><img class="tight" src="images/ridelog/tiny/commute.png"></td>
-                <td><img class="tight" src="images/ridelog/tiny/errand.png"></td>
+                <td><img class="tight" src="/images/ridelog/tiny/commute.png"></td>
+                <td><img class="tight" src="/images/ridelog/tiny/errand.png"></td>
               </tr></table>
               <span class="days-month-label">
                 Days/Month

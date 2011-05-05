@@ -38,7 +38,7 @@ function C_TeamForm(parentElement)
                 {name: 'TeamName'},
                 {name: 'Domain'}
             ],
-            proxy: new Ext.data.HttpProxy({ url: 'data/list-teams.php' }),
+            proxy: new Ext.data.HttpProxy({ url: '/data/list-teams.php' }),
             sortInfo: { field: 'TeamName', direction: 'asc' }
         });
         
@@ -51,7 +51,7 @@ function C_TeamForm(parentElement)
                 listeners: { scope: this, specialkey: function(ctrl, e) { if(e.getKey() == e.ENTER) { this.filterList() } } }
             } , ' ', {
                 cls: 'x-btn-icon',
-                icon: 'images/search-icon.png',
+                icon: '/images/search-icon.png',
                 handler: this.filterList,
                 scope: this
             }, 'Show:', {
@@ -68,7 +68,7 @@ function C_TeamForm(parentElement)
                 cls: 'x-btn-text-icon',
                 id: 'btn-add-team',
                 text: '<span style="color:green">&nbsp;Add Team</span>',
-                icon: 'images/plus-icon.png',
+                icon: '/images/plus-icon.png',
                 handler: this.onClickAddTeam,
                 scope: this
             }
@@ -185,7 +185,7 @@ function C_TeamForm(parentElement)
             // --- Mask this page and post delete request
                 this.grid.getGridEl().mask("Archiving...");
                 Ext.Ajax.request({
-                    url: 'data/archive-team.php',
+                    url: '/data/archive-team.php',
                     params: {ID: r.data.TeamID},
                     success: this.handleDeleteSuccess,
                     failure: this.handleDeleteFailure,
