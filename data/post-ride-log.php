@@ -26,6 +26,7 @@ else
     // set source and date created for new ride log entries
     if($rideLogID==-1)
     {
+        $values['HasMap'] = 0;
         $values['Source'] = 1;  // 1 = ridenet.net website
         $values['DateCreated'] =  "'" . date("Y-m-d") . "'";
     }

@@ -10,7 +10,7 @@
           <td align=right>Source:&nbsp;</td><td><input style="width:200px" name="Source" value="2"></td>
         </tr>
         <tr>
-          <td align=right>Date:&nbsp;</td><td><input style="width:200px" name="Date" value="5/4/2011"></td>
+          <td align=right>Date:&nbsp;</td><td><input style="width:200px" name="Date" value="5/5/2011"></td>
         </tr>
         <tr>
           <td align=right>Type:&nbsp;</td><td><input style="width:200px" name="RideLogTypeID" value="1"></td>

@@ -19,6 +19,7 @@ $distance = SmartGetInt('Distance');
 $duration = SmartGetInt('Duration');
 $comment = SmartGetString('Comment');
 $link = SmartGetString('Link');
+$hasmap = (isset($_REQUEST['Map']) && $_REQUEST['Map']!="") ? 1 : 0;
 
 $duration = round($duration / 60.0);
 $distance = round($distance / 1609.344);
@@ -71,6 +72,7 @@ else
     // set source and date created for new ride log entries
     if($rideLogID==-1)
     {
+        $values['HasMap'] = $hasmap;
         $values['Source'] = $source;
         $values['DateCreated'] =  "'" . date("Y-m-d") . "'";
     }
@@ -80,7 +82,7 @@ else
     {
         UpdateRiderStats($oDB, $uid);   // Update stats for this rider
         $result['RideLogID'] = $post['RideLogID'];
-        if(isset($_REQUEST['Map']) && $_REQUEST['Map']!="" && $rideLogID==-1)
+        if($hasmap && $rideLogID==-1)
         {
           // When adding a new ride, parse and store the map data if it's present
             $decoded_map = json_decode($_REQUEST['Map'], true);
