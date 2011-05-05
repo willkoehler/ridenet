@@ -77,6 +77,29 @@ else
     {
         UpdateRiderStats($oDB, $uid);   // Update stats for this rider
         $result['RideLogID'] = $post['RideLogID'];
+        if(isset($_REQUEST['Map']) && $_REQUEST['Map']!="" && $rideLogID==-1)
+        {
+          // When adding a new ride, parse and store the map data if it's present
+            $decoded_map = json_decode($_REQUEST['Map'], true);
+            foreach ($decoded_map as $key => $point)
+            {
+                // sanitize the record and add to the database
+                $spd = intval($point['spd']*10);
+                $alt = intval($point['alt']);
+                $lon = intval($point['lon']*1e6);
+                $lat = intval($point['lat']*1e6);
+                $time = addslashes($key);
+                $sql = "INSERT INTO ride_log_map (RideLogID, DateTime, Latitude, Longitude, Altitude, Speed)
+                        VALUES({$result['RideLogID']}, '$time', $lat, $lon, $alt, $spd)";
+                $oDB->query($sql, __FILE__, __LINE__);
+                if($oDB->errno!=0)
+                {
+                    header("HTTP/1.1 500 Internal System Error");
+                    $result['error'] = "[" . $oDB->errno . "] SQL Error while saving map data";
+                    break;
+                }
+            }
+        }
     }
     else
     {

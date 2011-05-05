@@ -20,6 +20,7 @@ elseif($riderID!=GetUserID())
 else
 {
     $oDB->query("DELETE FROM ride_log WHERE RideLogID=$itemID", __FILE__, __LINE__);
+    $oDB->query("DELETE FROM ride_log_map WHERE RideLogID=$itemID", __FILE__, __LINE__);
     $oDB->RecordActivityIfOK("Delete [ride_log] ID=$itemID", $riderID);
     $result['stats'] = UpdateRiderStats($oDB, $riderID);
     $result['success'] = true;

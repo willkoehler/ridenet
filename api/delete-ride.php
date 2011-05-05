@@ -30,6 +30,7 @@ else
 {
     // delete the ride log entry
     $oDB->query("DELETE FROM ride_log WHERE RideLogID=$rideLogID", __FILE__, __LINE__);
+    $oDB->query("DELETE FROM ride_log_map WHERE RideLogID=$rideLogID", __FILE__, __LINE__);
     $oDB->RecordActivityIfOK("Delete [ride_log] ID=$rideLogID", $uid);
     UpdateRiderStats($oDB, $uid);   // update rider stats
     // Update stats for this rider
