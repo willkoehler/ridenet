@@ -84,13 +84,12 @@ else
             foreach ($decoded_map as $key => $point)
             {
                 // sanitize the record and add to the database
-                $spd = intval($point['spd']*10);
                 $alt = intval($point['alt']);
-                $lon = intval($point['lon']*1e6);
-                $lat = intval($point['lat']*1e6);
+                $lon = intval($point['lon']);
+                $lat = intval($point['lat']);
                 $time = addslashes($key);
-                $sql = "INSERT INTO ride_log_map (RideLogID, DateTime, Latitude, Longitude, Altitude, Speed)
-                        VALUES({$result['RideLogID']}, '$time', $lat, $lon, $alt, $spd)";
+                $sql = "INSERT INTO ride_log_map (RideLogID, DateTime, Latitude, Longitude, Altitude)
+                        VALUES({$result['RideLogID']}, '$time', $lat, $lon, $alt)";
                 $oDB->query($sql, __FILE__, __LINE__);
                 if($oDB->errno!=0)
                 {
