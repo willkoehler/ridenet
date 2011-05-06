@@ -34,7 +34,7 @@ if(isset($_REQUEST['pb']))
 //-----------------------------------------------------------------------------------
 function RenderRideLog($oDB, $riderID, $length, $editable)
 {?>
-<?    $sql = "SELECT RideLogID, Date, RideLogType, RideLogTypeImage, Distance, Duration, Comment, Link,
+<?    $sql = "SELECT RideLogID, Date, RideLogType, RideLogTypeImage, Distance, Duration, Comment, Link, Source, HasMap,
                    DATE_SUB(Date, INTERVAL WEEKDAY(Date) DAY) AS FirstDayOfWeek,
                    IFNULL(Weather, 'N/A') AS Weather, IFNULL(WeatherImage, 'none.png') AS WeatherImage,
                    DATEDIFF(NOW(), DateCreated) AS Age
@@ -111,7 +111,14 @@ function RenderRideLog($oDB, $riderID, $length, $editable)
                 <?=$record['Duration'] ? ($record['Duration'] <= 90) ? $record['Duration'] . "&nbsp;min" : number_format($record['Duration']/60, 1) . "&nbsp;hr" : "&nbsp;"?>
               </td>
               <td class="data" width="55" style="text-align:center"><img src="<?=GetFullDomainRoot()?>/images/weather/<?=$record['WeatherImage']?>" title="<?=$record['Weather']?>"></td>
-              <td class="comment" width="355"><?=BuildRideLogComment($record['Comment'], $record['Link'])?>&nbsp;</td>
+              <td class="comment" width="355">
+                <?if($record['Source']==2) { ?>
+                  <div style="float:right;padding:4px 0 0 5px">
+                    <img src="/images/mobile.gif" title="via RideNet Mobile">
+                  </div>
+                <? } ?>
+                <?=BuildRideLogComment(htmlentities($record['Comment']), $record['Link'], $record['HasMap'] ? $record['RideLogID'] : 0)?>&nbsp;
+              </td>
               <?if($editable) { ?>
                 <td class="data" width="50" align=left style="padding-left:10px">
                   <span class='action-btn-sm' style="color:#009A00" id='copy-btn<?=$record['RideLogID']?>' onclick="clickCopyRide(<?=$record['RideLogID']?>);" title="Log a new ride based on this one">&nbsp;C&nbsp;</span>

@@ -106,11 +106,16 @@ function RenderWall($rs, $pt, $showTime=false, $showHeaders=true, $emptyMessage=
         <? switch($record['Type']) { case 'Ride Log':?>
         <!--====== Ride Log Detail ======-->
           <div class="body">
+            <?if($record['Source']==2) { ?>
+              <div style="float:right;padding:6px 0 0 5px">
+                <img src="/images/mobile.gif" title="via RideNet Mobile">
+              </div>
+            <? } ?>
             <img style="position:relative;top:3px" src="/images/ridelog/<?=$record['RideLogTypeImage']?>" height='14' title="<?=$record['RideLogType']?>">
             <?if($record['Weather']!="N/A") { ?>
               <img style="position:relative;top:3px" src="/images/weather/<?=$record['WeatherImage']?>" height='14' title="<?=$record['Weather']?>">
             <? } ?>
-            <?=BuildRideLogComment(htmlentities($record['PostText']), $record['Link'])?><span class="tag">&nbsp;<span class="bullet">&bull;</span> <?=$distanceText?></span>
+            <?=BuildRideLogComment(htmlentities($record['PostText']), $record['Link'], $record['HasMap'] ? $record['RideLogID'] : 0)?><span class="tag">&nbsp;<span class="bullet">&bull;</span> <?=$distanceText?></span>
           </div>
           <? break; ?>
         <? case 'Race Result': ?>

@@ -31,7 +31,7 @@ function RenderCalendarWall($oDB, $calendarID, $length)
                  ride_log.RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RacingTeamID, CommutingTeamID, TeamName, Domain,
                  DATEDIFF(NOW(), Date) AS Age, Comment AS PostText, Link,
                  Distance, Duration, RideLogType, RideLogTypeImage, IFNULL(Weather, 'N/A') AS Weather, IFNULL(WeatherImage, 'none.png') AS WeatherImage,
-                 0 AS RaceID, '' AS EventName
+                 RideLogID, Source, HasMap, 0 AS RaceID, '' AS EventName
           FROM ride_log
           LEFT JOIN rider USING (RiderID)
           LEFT JOIN teams ON (TeamID=RacingTeamID)

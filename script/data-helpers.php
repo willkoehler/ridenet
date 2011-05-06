@@ -34,7 +34,7 @@ function oOpenDBConnection()
 //
 //  RETURN: none
 //-----------------------------------------------------------------------------------
-function CheckAndReportSQLError($oDB, $filename, $line)     //!!!! test this function
+function CheckAndReportSQLError($oDB, $filename, $line)
 {
     if($oDB->errno)
     {
@@ -54,46 +54,48 @@ function CheckAndReportSQLError($oDB, $filename, $line)     //!!!! test this fun
 //  PARAMETERS:
 //    comment   - ride log comment
 //    link      - link URL associated with the ride log
+//    mapid     - id of map to display (zero indicates there isn't a map)
 //
 //  RETURN: ride log comment with link appended
 //-----------------------------------------------------------------------------------
-function BuildRideLogComment($comment, $link)
+function BuildRideLogComment($comment, $link, $mapid)
 {
-    if(is_null($link))
+    $result = $comment;
+    if(preg_match('/garmin/i', $link))
     {
-        $result = $comment;
-    }
-    elseif(preg_match('/garmin/i', $link))
-    {
-        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Garmin]</a>";
+        $result .= " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Garmin]</a>";
     }
     elseif(preg_match('/trainingpeaks/i', $link))
     {
-        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[TrainingPeaks]</a>";
+        $result .= " <a href=\"$link\" target=\"_blank\" title=\"$link\">[TrainingPeaks]</a>";
     }
     elseif(preg_match('/trimbleoutdoors/i', $link))
     {
-        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[GPS]</a>";
+        $result .= " <a href=\"$link\" target=\"_blank\" title=\"$link\">[GPS]</a>";
     }
     elseif(preg_match('/mapmyride|bikely|gmap-pedometer|bikeroutetoaster|ridewithgps/i', $link))
     {
-        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Map]</a>";
+        $result .= " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Map]</a>";
     }
     elseif(preg_match('/runkeeper/i', $link))
     {
-        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[RunKeeper]</a>";
+        $result .= " <a href=\"$link\" target=\"_blank\" title=\"$link\">[RunKeeper]</a>";
     }
     elseif(preg_match('/youtube/i', $link))
     {
-        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Video]</a>";
+        $result .= " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Video]</a>";
     }
     elseif(preg_match('/.jpg|.jpeg|.png|.gif/i', $link))
     {
-        $result = $comment . " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Photo]</a>";
+        $result .= " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Photo]</a>";
     }
-    else
+    elseif($link!="")
     {
-        $result = $comment . " <a href=\"$link\" target=\"_blank\">[More]</a>";
+        $result .= " <a href=\"$link\" target=\"_blank\">[More]</a>";
+    }
+    if($mapid)
+    {
+        $result .= " <a onClick=\"window.open('/map/$mapid', 'report_window', 'resizable')\">[Map]</a>";
     }
     return($result);
 }

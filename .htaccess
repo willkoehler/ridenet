@@ -30,6 +30,7 @@ RewriteRule ^api/about$ api/about.php [L]
 # Make friendly URLs
 #RewriteRule ^rider/([^/\.]+)$ profile.php?RiderID=$1 [L,QSA]
 #RewriteRule ^profile$ profile.php [L,QSA]
+RewriteRule ^map/([^/\.]+)$ map.php?RideLogID=$1 [L,QSA]
 # If there is a team sub-domain or team domain, route "/" requests to home.php
 RewriteCond %{HTTP_HOST} !^(www\.)?ridenet.(local|net)$
 RewriteRule ^/?$ home.php [L,QSA]

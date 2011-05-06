@@ -18,13 +18,10 @@ function C_Map(holder)
         };
         this.map = new google.maps.Map(this.holder.dom, myOptions);
         
-        // --- Parse contents of query string
-        var query = Ext.urlDecode(window.location.search.substring(1));
-    
         // load route data
         Ext.Ajax.request({
            url: '/data/get-map-data.php',
-           params: { RideLogID: query['RideLogID'] },
+           params: { RideLogID: g_rideLogID },
            callback: this.display_route,
            scope: this
         });

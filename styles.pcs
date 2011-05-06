@@ -1080,11 +1080,13 @@ div.ellipses   /* show ellipses when text overruns specified width */
 a
 {
     color: #<?=$LinkColor?>;
+    cursor: pointer;
     text-decoration: none;
 }
 a:hover
 {
     color: #<?=$LinkColor?>;
+    cursor: pointer;
     text-decoration: underline;
 }
 

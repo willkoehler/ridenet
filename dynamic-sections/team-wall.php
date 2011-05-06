@@ -33,7 +33,7 @@ function RenderTeamWall($oDB, $teamID, $length)
                        RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RacingTeamID, CommutingTeamID, TeamName, Domain,
                        DATEDIFF(NOW(), Date) AS Age, Comment AS PostText, Link,
                        Distance, Duration, RideLogType, RideLogTypeImage, IFNULL(Weather, 'N/A') AS Weather, IFNULL(WeatherImage, 'none.png') AS WeatherImage,
-                       0 AS RaceID, '' AS EventName
+                       RideLogID, Source, HasMap, 0 AS RaceID, '' AS EventName
                 FROM ride_log
                 LEFT JOIN rider USING (RiderID)
                 LEFT JOIN teams ON (TeamID=$teamID)
@@ -51,7 +51,7 @@ function RenderTeamWall($oDB, $teamID, $length)
                        RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RacingTeamID, CommutingTeamID, TeamName, Domain,
                        DATEDIFF(NOW(), results.DateAdded) AS Age, IF(LENGTH(Report)>140, CONCAT(SUBSTRING(Report, 1, 140),'...'), Report) AS PostText, NULL AS Link,
                        0 AS Distance, 0 AS Duration, '' AS RideLogType, '' AS RideLogTypeImage, '' AS Weather, '' AS WeatherImage,
-                       RaceID, EventName
+                       0 AS RideLogID, 0 AS Source, 0 AS HasMap, RaceID, EventName
                 FROM results
                 LEFT JOIN event USING (RaceID)
                 LEFT JOIN rider USING (RiderID)
@@ -71,7 +71,7 @@ function RenderTeamWall($oDB, $teamID, $length)
                        RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, posts.TeamID AS RacingTeamID, posts.TeamID AS CommutingTeamID, TeamName, Domain,
                        DATEDIFF(NOW(), Date) AS Age, Text AS PostText, NULL AS Link,
                        0 AS Distance, 0 AS Duration, '' AS RideLogType, '' AS RideLogTypeImage, '' AS Weather, '' AS WeatherImage,
-                       0 AS RaceID, '' AS EventName
+                       0 AS RideLogID, 0 AS Source, 0 AS HasMap, 0 AS RaceID, '' AS EventName
                 FROM posts
                 LEFT JOIN rider USING (RiderID)
                 LEFT JOIN teams USING (TeamID)

@@ -1,5 +1,5 @@
 <?
-require("../script/app-master.php");
+require("script/app-master.php");
 require(SHAREDBASE_DIR . "ExtJSLoader.php");
 ?>
 
@@ -12,9 +12,14 @@ require(SHAREDBASE_DIR . "ExtJSLoader.php");
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("/playpen/map.js")?>
+  <?MinifyAndInclude("/map.js")?>
 <!-- google maps API -->
   <script type="text/javascript"src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<!-- pass ride log ID to javascript -->
+  <script type="text/javascript">
+    g_rideLogID = <?=SmartGetInt('RideLogID')?>;
+  </script>
+  
 
   <style type="text/css">
     html { height: 100% }
