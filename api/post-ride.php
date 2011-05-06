@@ -93,17 +93,14 @@ else
                 $lon = intval($point['lon']);
                 $lat = intval($point['lat']);
                 $time = addslashes($key);
-                if($alt > 0)  // points with altitude of zero have suspect accuracy
+                $sql = "INSERT INTO ride_log_map (RideLogID, DateTime, Latitude, Longitude, Altitude)
+                        VALUES({$result['RideLogID']}, '$time', $lat, $lon, $alt)";
+                $oDB->query($sql, __FILE__, __LINE__);
+                if($oDB->errno!=0)
                 {
-                    $sql = "INSERT INTO ride_log_map (RideLogID, DateTime, Latitude, Longitude, Altitude)
-                            VALUES({$result['RideLogID']}, '$time', $lat, $lon, $alt)";
-                    $oDB->query($sql, __FILE__, __LINE__);
-                    if($oDB->errno!=0)
-                    {
-                        header("HTTP/1.1 500 Internal System Error");
-                        $result['error'] = "[" . $oDB->errno . "] SQL Error while saving map data";
-                        break;
-                    }
+                    header("HTTP/1.1 500 Internal System Error");
+                    $result['error'] = "[" . $oDB->errno . "] SQL Error while saving map data";
+                    break;
                 }
             }
         }

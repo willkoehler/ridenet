@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>CLFM Radar System</title>
+    <title>Post Ride Test</title>
   </head>
   <body style="font: 14px arial">
     <form action="/api/ride/-1?id=15&pw=3c8f35e2b2a5cec6a8ab544bdd3e99be5ac249594d746ce1f33055.74629575" method="post">
@@ -10,7 +10,7 @@
           <td align=right>Source:&nbsp;</td><td><input style="width:200px" name="Source" value="2"></td>
         </tr>
         <tr>
-          <td align=right>Date:&nbsp;</td><td><input style="width:200px" name="Date" value="5/5/2011"></td>
+          <td align=right>Date:&nbsp;</td><td><input style="width:200px" name="Date" value="5/6/2011"></td>
         </tr>
         <tr>
           <td align=right>Type:&nbsp;</td><td><input style="width:200px" name="RideLogTypeID" value="1"></td>
