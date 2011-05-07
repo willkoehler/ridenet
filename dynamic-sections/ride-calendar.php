@@ -41,7 +41,7 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
     <!-- If user is logged in shift table to the right so main body of table is still centered -->
     <div <?if(CheckLogin()) {?>style="margin-left:65px"<?}?>>
     <table id='event-list' cellpadding=0 cellspacing=0>
-<?    $StartDate = AddDays(FirstOfWeek(new DateTime), -6);
+<?    $StartDate = AddDays(MondayOfWeek(new DateTime), -7);
       $EndDate = AddDays($StartDate, $CalendarWeeks*7 - 1);
       $whereClause = "c.Archived=0";
       $whereClause .= " AND CalendarDate Between '" . $StartDate->format("Y-m-d") . "' and '" . $EndDate->format("Y-m-d") . " 23:59'";
@@ -56,7 +56,6 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
         $whereClause .= " AND CalculateDistance(Longitude, Latitude, $CalendarLongitude, $CalendarLatitude) <= $CalendarFilterRange";
       }
       $sql = "SELECT CalendarID, CalendarDate, EventName, Location, ClassX, ClassA, ClassB, ClassC, ClassD, AddedBy,
-                     DATE_SUB(CalendarDate, INTERVAL WEEKDAY(CalendarDate) DAY) AS FirstDayOfWeek,
                      CONCAT(City, ', ', State, ' ', ZipCode) AS GeneralArea,
                      CalculateDistance(Longitude, Latitude, $CalendarLongitude, $CalendarLatitude) AS Distance,
                      DATEDIFF(NOW(), CalendarDate) AS EventAge
@@ -93,23 +92,30 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
         while(($record = $rs->fetch_array())!=false)
         {
           $eventDate = new DateTime($record['CalendarDate']);
-          $firstDayOfWeek = new DateTime($record['FirstDayOfWeek']);
-          if($eventDate->format("W")!=$PrevWeek && $FirstWeek == false)
-          { ?>
-          <!-- End of week. Table divider and spacing below -->
-            <tr><td class="table-spacer" <?if($thisWeek) {?>id="highlight"<? } ?> style="height:5px" colspan=5>&nbsp;</td></tr>
-            <tr><td class="table-divider" colspan=5>&nbsp;</td></tr>
-            <tr><td class="table-spacer" style="height:20px" colspan=5>&nbsp;</td></tr>
-<?        }
-          $thisWeek = ($eventDate->format("W")==date_format(new DateTime(), "W")) ? true : false;
+          $mondayOfWeek = MondayOfWeek(new DateTime($record['CalendarDate']));
           if($eventDate->format("W")!=$PrevWeek)
-          { ?>
-          <!-- Beginning of week. Week header and table header -->
+          { 
+            if($FirstWeek == false) { ?>
+            <!-- End of week boundary - table divider and spacing below -->
+              <tr><td class="table-spacer" <?if($thisWeek) {?>id="highlight"<? } ?> style="height:5px" colspan=5>&nbsp;</td></tr>
+              <tr><td class="table-divider" colspan=5>&nbsp;</td></tr>
+              <tr><td class="table-spacer" style="height:20px" colspan=5>&nbsp;</td></tr>
+            <? } ?>
+            <?$thisWeek = ($eventDate->format("W")==date("W")) ? true : false;?>
+          <!-- Beginning of week header and table header -->
             <tr><td colspan=5 class="section-header">
               <table cellpadding=0 cellspacing=0 border=0 width=100%><tr>
                 <td width=150>&nbsp;</td>
                 <td align=center>
-                  Week of <?=$firstDayOfWeek->format("F j, Y")?>
+                  <?if($thisWeek) { ?>
+                    This Week
+                  <? } elseif(AddDays($mondayOfWeek, 7) == MondayOfWeek(new DateTime)) {?>
+                    Last Week
+                  <? } elseif(AddDays($mondayOfWeek, -7) == MondayOfWeek(new DateTime)) {?>
+                    Next Week
+                  <? } else {?>
+                    Week of <?=$mondayOfWeek->format("F j, Y")?>
+                  <? } ?>
                 </td>
                 <td width=150 align=right>
                   <?if(CheckLogin()) { ?>
