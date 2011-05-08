@@ -89,6 +89,10 @@ function BuildRideLogComment($comment, $link, $mapid)
     {
         $result .= " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Photo]</a>";
     }
+    elseif(preg_match('/strava/i', $link))
+    {
+        $result .= " <a href=\"$link\" target=\"_blank\" title=\"$link\">[Strava]</a>";
+    }
     elseif($link!="")
     {
         $result .= " <a href=\"$link\" target=\"_blank\">[More]</a>";
