@@ -14,8 +14,10 @@ RewriteRule ^(.*)$ http://%1ridenet.net/$1 [R=301,L]
 RewriteCond %{HTTP_HOST} ^www.ridenet.(local|net)$
 RewriteRule ^(.*)$ http://ridenet.%1/$1 [R=301,L]
 
-# Special Consider Biking Landing page
+# Consider Biking Landing page
 RewriteRule ^cb/?$ index.php?s=cb [L]
+# SBB Landing page
+RewriteRule ^sbb/?$ index.php?s=sbb [L]
 
 # API mappings
 RewriteRule ^api/rider-info/([^/]+)$ api/get-rider-info.php?email=$1 [L]
