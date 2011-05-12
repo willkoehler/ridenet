@@ -15,34 +15,44 @@ require(SHAREDBASE_DIR . "SendMail.php");
 //-----------------------------------------------------------------------------------
 function AccountCreatedEmail($oDB, $newRiderID, $createdByID)
 {
-    $rs=$oDB->query("SELECT FirstName, LastName, RiderEmail, TeamTypeID, RacingTeamID, TeamName, Domain
+    $rs=$oDB->query("SELECT CONCAT(FirstName, ' ', LastName) AS Name, RiderEmail, TeamTypeID, RacingTeamID, TeamName, Domain
                      FROM rider JOIN teams ON (RacingTeamID = TeamID)
                      WHERE RiderID=$newRiderID", __FILE__, __LINE__);
     $newRiderInfo = $rs->fetch_array();
     $rs->free();
-    $rs=$oDB->query("SELECT FirstName, LastName, RiderEmail FROM rider WHERE RiderID=$createdByID");
-    $createdByInfo = $rs->fetch_array();
-    $rs->free();
     $teamURL =  "http://" . $newRiderInfo['Domain'] . "." . GetDomainRoot();
+    if($createdByID==15 || $createdByID==0)     // created by the system?
+    {
+        $createdBy = "We have created a profile for you on the \"{$newRiderInfo['TeamName']}\" RideNet team";
+        $questions = "If you have any questions about your account, email us at info@ridenet.net";
+    }
+    else
+    {
+        $rs=$oDB->query("SELECT CONCAT(FirstName, ' ', LastName) AS Name, RiderEmail FROM rider WHERE RiderID=$createdByID");
+        $createdByInfo = $rs->fetch_array();
+        $rs->free();
+        $createdBy = "{$createdByInfo['Name']} has created a profile for you on the \"{$newRiderInfo['TeamName']}\" RideNet team";
+        $questions = "If you have any questions about your account, email your team admin: {$createdByInfo['Name']} {$createdByInfo['RiderEmail']}";
+    }
     
-    if($newRiderInfo && $createdByInfo)
+    if($newRiderInfo)
     {
         if($newRiderInfo['RacingTeamID']==3)
         {
         // sandbox team has special welcome email
             $subject = "Welcome To RideNet";
-            $msg = "Hi {$newRiderInfo['FirstName']},\n\n" .
+            $msg = "Hi {$newRiderInfo['Name']},\n\n" .
                    "Welcome to RideNet. You are currently a member of the RideNet Sandbox. The Sandbox is a " .
-                   "holding place for riders that are not yet a member of a RideNet team. See the RideNet Sandbox " .
-                   "home page for more information on joining a team. You can login to RideNet using your email " .
-                   "address and temporary password.\n\n" .
+                   "holding place for riders that are not yet a member of a RideNet team. You can login to " .
+                   "RideNet using your email address and temporary password.\n\n" .
+                   "Homepage: $teamURL\n" .
                    "Email Address: {$newRiderInfo['RiderEmail']}\n" .
                    "Password: live2ride\n\n" .
-                   "Homepage: $teamURL\n\n" .
                    "Some things you can do on RideNet:\n" .
                    "- Update your rider bio. Click \"Edit Profile\" at the top of Your Profile page\n" .
                    "- Post race results. Choose \"Your Results\" from the menu in Your Profile page\n" .
-                   "- Log some rides. Click \"+ Log A Ride\" on Your Profile page\n" .
+                   "- Log your rides. Click \"+ Log A Ride\" on Your Profile page\n" .
+                   "- Join a team! See the Sandbox home page for more information on joining or creating a team\n" .
                    "- Find other riders/teams. Use the \"Search\" box in the main menu.\n\n" .
                    "If you have any questions about your account, email us at info@ridenet.net\n\n" .
                    "Welcome to RideNet: http://ridenet.net We're excited to have you on board.\n\n" .
@@ -55,34 +65,23 @@ function AccountCreatedEmail($oDB, $newRiderID, $createdByID)
                 case 2:
                 // commuting teams (consider biking 2 by 2012 sites for now)
                     $subject = "Welcome to RideNet - {$newRiderInfo['TeamName']}";
-                    $msg = "Hi {$newRiderInfo['FirstName']},\n\n" .
+                    $msg = "Hi {$newRiderInfo['Name']},\n\n" .
                            "Welcome to the active transportation revolution!\n\n" .
-                           "{$createdByInfo['FirstName']} {$createdByInfo['LastName']} has created a RideNet account " .
-                           "for you as part of \"{$newRiderInfo['TeamName']}\" RideNet team. RideNet was setup in conjunction with " .
-                           "Consider Biking's 2 BY 2012 program to promote bicycling as a viable form of transportation " .
-                           "in Central Ohio and to track how many miles people are riding. Each 2 BY 2012 " .
-                           "participating organization has their own RideNet team where riders log their bicycling miles. " .
-                           "You can login to your account using your email address and temporary password.\n\n" .
+                           "RideNet has partnered with Consider Biking's 2 BY 2012 program to promote bicycling as " .
+                           "a viable form of transportation in Central Ohio and to track how many miles people are " .
+                           "riding. Each 2 BY 2012 participating organization has a RideNet team where riders log " .
+                           "their bicycling miles.\n\n $createdBy. You can login to your account using your email address " .
+                           "and temporary password.\n\n" .
+                           "Homepage: $teamURL\n" .
                            "Email Address: {$newRiderInfo['RiderEmail']}\n" .
                            "Password: live2ride\n\n" .
-                           "Homepage: $teamURL\n\n" .
                            "Some things you can do on RideNet:\n" .
                            "- Update your rider bio. Click \"Edit Profile\" at the top of Your Profile page\n" .
-                           "- Log some rides. Click \"+ Log A Ride\" on Your Profile page\n" .
+                           "- Log your rides. Click \"+ Log A Ride\" on Your Profile page\n" .
                            "- Find other riders/teams. Use the \"Search\" box in the main menu.\n\n" .
-                           "If you have any questions about your membership, email your team admin: {$createdByInfo['FirstName']} " .
-                           "{$createdByInfo['LastName']} {$createdByInfo['RiderEmail']}\n\n" .
-                           "The goal of 2 BY 2012 is for each citizen of central Ohio to bicycle to work or school at " .
-                           "least two days per month by the Columbus Bicentennial in 2012. Consider Biking, the local " .
-                           "bicycle advocacy non-profit organization, offers the 2 BY 2012 program to help companies design " .
-                           "bike to work programs. The 2 BY 2012 program provides a host of proven tools, customized consulting, " .
-                           "and ongoing support that get more people on bicycles - and help the business bottom-line. Your team " .
-                           "website is one of these proven tools.\n\n" .
-                           "For more information please go to http://www.2by2012.com or email Bryan Saums, Consider Biking's " .
-                           "2 BY 2012 Program Manager at bryan@considerbiking.com\n\n" .
-                           "Remember: Ride and record those miles!\n\n" .
-                           "Sincerely,\n\n" .
-                           "The Consider Biking 2 BY 2012 team\n\n" .
+                           "$questions. Remember: Ride and record those miles!\n\n" .
+                           "Sincerely,\n" .
+                           "The RideNet Development Team\n\n" .
                            "2 BY 2012 is made possible by the Robert Bartels, William C. and Naoma W. Denison, Charlotte R. Hallel, " .
                            "Robert B. Hurst and Martha G. Staub funds of the The Columbus Foundation.";
                     break;
@@ -90,27 +89,25 @@ function AccountCreatedEmail($oDB, $newRiderID, $createdByID)
                 default:
                 // racing and recreational teams
                     $subject = "Welcome to RideNet - {$newRiderInfo['TeamName']}";
-                    $msg = "Hi {$newRiderInfo['FirstName']},\n\n" .
-                           "Welcome to RideNet. {$createdByInfo['FirstName']} {$createdByInfo['LastName']} has " .
-                           "created a RideNet account for you as part of \"{$newRiderInfo['TeamName']}\". You can login to RideNet " .
-                           "using your email address and temporary password.\n\n" .
+                    $msg = "Hi {$newRiderInfo['Name']},\n\n" .
+                           "Welcome to RideNet. $createdBy. You can login to RideNet using your email address and " .
+                           "temporary password.\n\n" .
+                           "Homepage: $teamURL\n" .
                            "Email Address: {$newRiderInfo['RiderEmail']}\n" .
                            "Password: live2ride\n\n" .
-                           "Homepage: $teamURL\n\n" .
                            "Some things you can do on RideNet:\n" .
                            "- Update your rider bio. Click \"Edit Profile\" at the top of Your Profile page\n" .
                            "- Post race results. Choose \"Your Results\" from the menu in Your Profile page\n" .
-                           "- Log some rides. Click \"+ Log A Ride\" on Your Profile page\n" .
+                           "- Log your rides. Click \"+ Log A Ride\" on Your Profile page\n" .
                            "- Find other riders/teams. Use the \"Search\" box in the main menu.\n\n" .
-                           "If you have any questions about your account, email your team admin: {$createdByInfo['FirstName']} " .
-                           "{$createdByInfo['LastName']} {$createdByInfo['RiderEmail']}\n\n" .
+                           "$questions\n\n" .
                            "Welcome to RideNet: http://ridenet.net We're excited to have you on board.\n\n" .
                            "Sincerely,\n" .
                            "The RideNet Development Team";
                     break;
             }
         }
-        $to = $newRiderInfo['FirstName'] . " " . $newRiderInfo['LastName'] . " <" . $newRiderInfo['RiderEmail'] . ">";
+        $to = $newRiderInfo['Name'] . " <" . $newRiderInfo['RiderEmail'] . ">";
         if(SendMail($to, $subject, $msg, "info@ridenet.net"))
         {
             $oDB->RecordActivity("Email OK: " . addslashes($to), $newRiderID);
