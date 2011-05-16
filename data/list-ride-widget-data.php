@@ -1,7 +1,5 @@
 <?
-define("SHAREDBASE_DIR", $_SERVER["DOCUMENT_ROOT"] . "/Shared/");
-require(SHAREDBASE_DIR . "DBConnection.php");
-require("../script/data-helpers.php");
+require("../script/app-master-min.php");
 
 $teamFilter = $_REQUEST['team'];
 $riderFilter = $_REQUEST['rider'];

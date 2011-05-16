@@ -1,8 +1,6 @@
 <?
 // Include only the essentials. Don't start a session here - it causes a big hit on Windows/IIS servers
-define("SHAREDBASE_DIR", $_SERVER["DOCUMENT_ROOT"] . "/Shared/");
-require(SHAREDBASE_DIR . "DBConnection.php");
-require("../script/data-helpers.php");
+require("../script/app-master-min.php");
 
 // store query/post values in local variables
 $query = $_REQUEST['query'];           // partial string typed into combo box

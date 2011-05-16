@@ -1,9 +1,6 @@
 <?
 // Include only the essentials. Don't start a session here - it causes a big hit on Windows/IIS servers
-define("SHAREDBASE_DIR", $_SERVER["DOCUMENT_ROOT"] . "/Shared/");
-require(SHAREDBASE_DIR . "DBConnection.php");
-require(SHAREDBASE_DIR . "RequestHelpers.php");
-require("../script/data-helpers.php");
+require("../script/app-master-min.php");
 
 $rideLogID = SmartGetInt('RideLogID');
 

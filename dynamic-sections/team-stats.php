@@ -1,10 +1,7 @@
 <?
 if(isset($_REQUEST['pb']))
 {
-    define("SHAREDBASE_DIR", $_SERVER["DOCUMENT_ROOT"] . "/Shared/");
-    require(SHAREDBASE_DIR . "DBConnection.php");
-    require(SHAREDBASE_DIR . "RequestHelpers.php");
-    require(dirname(__FILE__) . "/../script/data-helpers.php");
+    require("../script/app-master-min.php");
     $startDate = SmartGetDate('StartDate');
     $endDate = SmartGetDate('EndDate');
     $oDB = oOpenDBConnection();

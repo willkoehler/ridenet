@@ -1,10 +1,8 @@
 <?
 // Include only the essentials. Don't start a session here - it causes a big hit on Windows/IIS servers
-define("SHAREDBASE_DIR", $_SERVER["DOCUMENT_ROOT"] . "/Shared/");
-require(SHAREDBASE_DIR . "DBConnection.php");
+require("../script/app-master-min.php");
 require(SHAREDBASE_DIR . "SendMail.php");
-require("../script/data-helpers.php");
-$oDB = oOpenDBConnection();
+
 $riderName = $_REQUEST['RiderName'];
 $riderEmail = $_REQUEST['RiderEmail'];
 $riderDescription = $_REQUEST['RiderDescription'];
