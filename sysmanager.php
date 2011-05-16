@@ -5,7 +5,6 @@ require(SHAREDBASE_DIR . "ExtJSLoader.php");
 $oDB = oOpenDBConnection();
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
 CheckLoginAndRedirect();
-RecordPageView($oDB);
 
 if(!isSystemAdmin())
 {

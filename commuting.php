@@ -5,7 +5,6 @@ require("dynamic-sections/calendar-sidebar.php");
 require(SHAREDBASE_DIR . "ExtJSLoader.php");
 
 $oDB = oOpenDBConnection();
-RecordPageView($oDB);
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
 $RideBoardLength = 30;
 ?>

@@ -4,7 +4,6 @@ require(SHAREDBASE_DIR . "ExtJSLoader.php");
 require("dynamic-sections/event-schedule.php");
 
 $oDB = oOpenDBConnection();
-RecordPageView($oDB);
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
 
 // --- Get list of states and event types to filter schedule

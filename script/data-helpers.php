@@ -411,34 +411,6 @@ function InsertRideClassKey()
 
 
 //----------------------------------------------------------------------------------
-//  RecordPageView()
-//
-//  This function is called at the beginning of each page. It records information about
-//  the page view into the database
-//
-//  PARAMETERS:
-//    oDB   - the database connection object
-//
-//  RETURN: none
-//-----------------------------------------------------------------------------------
-function RecordPageView($oDB)
-{
-    if(!DetectBot())   // exclude visits from web bots
-    {
-        $browser = GetBrowserString($_SERVER['HTTP_USER_AGENT']);
-        $oDB->query("INSERT INTO views (IPAddress, Browser, Host, Page, QueryString, HTTP_USER_AGENT, Date) VALUES (" . 
-                    "'" . addslashes($_SERVER['REMOTE_ADDR']) . "', " .
-                    "'$browser', " .
-                    "'" . addslashes($_SERVER['HTTP_HOST']) . "', " .
-                    "'" . addslashes($_SERVER['SCRIPT_NAME']) . "', " .
-                    "'" . addslashes($_SERVER['QUERY_STRING']) . "', " .
-                    "'" . addslashes(substr($_SERVER['HTTP_USER_AGENT'], 0, 200))  . "', " .
-                    "NOW())", __FILE__, __LINE__);
-    }
-}
-
-
-//----------------------------------------------------------------------------------
 //  InsertOrUpdateRecord()
 //
 //  This function either inserts a record into a table or updates an existing

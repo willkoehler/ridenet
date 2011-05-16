@@ -4,7 +4,6 @@ require(SHAREDBASE_DIR . "ExtJSLoader.php");
 require("dynamic-sections/ride-calendar.php");
 
 $oDB = oOpenDBConnection();
-RecordPageView($oDB);
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
 $CalendarWeeks = 8;  // number of weeks to show in calendar
 

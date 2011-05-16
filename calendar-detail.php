@@ -6,7 +6,6 @@ require("dynamic-sections/calendar-attendance.php");
 require(SHAREDBASE_DIR . "ExtJSLoader.php");
 
 $oDB = oOpenDBConnection();
-RecordPageView($oDB);
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
 $CalendarUpdatesLength = 30;
 $CalendarWallLength = 30;

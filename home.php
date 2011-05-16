@@ -14,7 +14,6 @@ $sql = "SELECT IFNULL(HomePageType,1) AS HomePageType, IFNULL(HomePageMoreWrap, 
 $rs = $oDB->query($sql, __FILE__, __LINE__);
 $team = $rs->fetch_array();
 $rs->free();
-RecordPageView($oDB);
 $TeamWallLength = 30;
 ?>
 

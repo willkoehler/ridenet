@@ -3,7 +3,6 @@ require("script/app-master.php");
 $oDB = oOpenDBConnection();
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
 CheckLoginAndRedirect();
-RecordPageView($oDB);
 
 $RaceID = SmartGetInt("RaceID");
 $RiderID = SmartGetInt("RiderID");

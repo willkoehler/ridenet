@@ -4,7 +4,6 @@ require(SHAREDBASE_DIR . "ExtJSLoader.php");
 require("dynamic-sections/ride-log.php");
 
 $oDB = oOpenDBConnection();
-RecordPageView($oDB);
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
 $RideLogLength = 8;
 
