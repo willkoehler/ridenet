@@ -338,7 +338,7 @@ function C_ProfileDialog()
                                             else
                                             {
                                                 params = (val!="") ? val.split(",") : [[0],[0]];    // value will be "RiderID, TeamID"
-                                                this.el.update('<img src="' + getFullDomainRoot() + '/dynamic-images/rider-action-shot-sm.php?RiderID=' + params[0] + '&T=' + params[1] + '&x=' + Math.random() + '">');
+                                                this.el.update('<img src="' + getFullDomainRoot() + '/imgstore/rider-action-shot/sm/' + params[1] + '/' + params[0] + '.jpg?x=' + Math.random() + '">');
                                             }
                                         }
                                     }

@@ -473,7 +473,7 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
       <h3 style="margin:0px">Action Shot</h3>
       <div style="height:10px"><!--vertical spacer--></div>
       <div style="text-align:center">
-        <img class="action-photo" src="/dynamic-images/rider-action-shot.php?RiderID=<?=$RiderID?>&T=<?=$ridersRacingTeamID?>" />
+        <img class="action-photo" src="/imgstore/rider-action-shot/<?=$ridersRacingTeamID?>/<?=$RiderID?>.jpg" />
       </div>
     <? } ?>
 
