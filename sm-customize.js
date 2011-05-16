@@ -171,7 +171,7 @@ function C_CustomizeTab()
                                         {
                                             this.el.update('<table cellpadding=0 cellspacing=0 height=100% width=100%>\
                                                               <tr><td align=center>\
-                                                                <img src="/dynamic-images/team-logo-sm.php?T=' + g_pt + '&x=' + Math.random() + '">\
+                                                                <img src="/imgstore/team-logo/sm/' + g_pt + '.png?x=' + Math.random() + '">\
                                                               </td></tr>\
                                                             </table>');
                                         }

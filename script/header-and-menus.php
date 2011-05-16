@@ -61,7 +61,7 @@ function InsertPageBanner($oDB, $pt=0)
       <img id="page-banner" src="/imgstore/banner/<?=$pt?>.jpg" class="tight" />
       <? if($showLogo) { ?>
         <table cellpadding=0 cellspacing=0 style="height:70px;width:300px;text-align:center;position:absolute;top:10px;left:220px"><tr><td>
-          <img style="vertical-align:middle;" src="/dynamic-images/team-logo.php?T=<?=$pt?>" />
+          <img style="vertical-align:middle;" src="/imgstore/team-logo/<?=$pt?>.png" />
         </td></tr></table>
       <? } ?>
     </div>

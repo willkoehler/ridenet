@@ -85,7 +85,7 @@ function C_ChangeTeamsDialog()
                              <div class="find-name">{TeamName}</div>\
                              <div class="find-info">{TeamType}</div>\
                            </div></td>\
-                           <td style="height:32px;width:120px;text-align:center"><img src="' + getFullDomainRoot() + '/dynamic-images/team-logo-fit.php?T={TeamID}"></td>\
+                           <td style="height:32px;width:120px;text-align:center"><img src="' + getFullDomainRoot() + '/imgstore/team-logo/fit/{TeamID}.png"></td>\
                          </tr></table>\
                          </div></tpl>'
                 },{
@@ -111,7 +111,7 @@ function C_ChangeTeamsDialog()
                                  <div class="find-name">{TeamName}</div>\
                                  <div class="find-info">{TeamType}</div>\
                                </div></td>\
-                               <td style="height:32px;width:120px;text-align:center"><img src="' + getFullDomainRoot() + '/dynamic-images/team-logo-fit.php?T={TeamID}"></td>\
+                               <td style="height:32px;width:120px;text-align:center"><img src="' + getFullDomainRoot() + '/imgstore/team-logo/fit/{TeamID}.png"></td>\
                              </tr></table>\
                              </div></tpl>'
                     }]

@@ -64,7 +64,7 @@ function C_SearchBox()
                            </tpl>\
                            <tpl if="Type==\'team\'">\
                              <td><div style="width:40px;overflow:hidden;text-align:center;margin:1px">\
-                               <img src="' + getFullDomainRoot() + '/dynamic-images/team-logo-sm.php?T={TeamID}" height=40>\
+                               <img src="' + getFullDomainRoot() + '/imgstore/team-logo/sm/{TeamID}.png" height=40>\
                              </div></td>\
                              <td><div class="ellipses" style="padding-left:10px;width:215px">\
                                <div class="find-name">{DisplayText}</div>\

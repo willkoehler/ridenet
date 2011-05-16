@@ -126,7 +126,7 @@ function TeamTable($oDB, $rs, $rankField, $decimals, $tag)
             <td class="data">
               <a href="<?=BuildTeamBaseURL($record['Domain'])?>/home.php">
                 <table cellspacing=0 cellpadding=0 style="height:30px;width:90px;margin:2px 9px"><tr><td align=center>
-                  <img id="T<?=$record['TeamID'] . $tag?>" class="tight" src="<?=GetFullDomainRoot()?>/dynamic-images/team-logo-fit.php?T=<?=$record['TeamID']?>">
+                  <img id="T<?=$record['TeamID'] . $tag?>" class="tight" src="<?=GetFullDomainRoot()?>/imgstore/team-logo/fit/<?=$record['TeamID']?>.png">
                 </td></tr></table>
               </a>
               <!-- Team name callout -->
