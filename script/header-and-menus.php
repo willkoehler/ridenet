@@ -58,7 +58,7 @@ function InsertPageBanner($oDB, $pt=0)
 {
     $showLogo = $oDB->DBLookup("IF(ShowLogo=1 AND Logo IS NOT NULL, 1, 0)", "teams", "TeamID=$pt", 0);?>
     <div style="position:relative">
-      <img id="page-banner" src="/dynamic-images/page-banner.php?T=<?=$pt?>" class="tight" />
+      <img id="page-banner" src="/imgstore/banner/<?=$pt?>.jpg" class="tight" />
       <? if($showLogo) { ?>
         <table cellpadding=0 cellspacing=0 style="height:70px;width:300px;text-align:center;position:absolute;top:10px;left:220px"><tr><td>
           <img style="vertical-align:middle;" src="/dynamic-images/team-logo.php?T=<?=$pt?>" />

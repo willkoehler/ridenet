@@ -375,7 +375,7 @@ function C_CustomizeTab()
                                 }
                                 else
                                 {
-                                    this.el.update('<img class="tight tm-banner-bg" src="/dynamic-images/page-banner.php?T=' + g_pt + '&x=' + Math.random() + '" Width=660>');
+                                    this.el.update('<img class="tight tm-banner-bg" src="/imgstore/banner/' + g_pt + '.jpg?x=' + Math.random() + '" Width=660>');
                                 }
                             }
                         }
