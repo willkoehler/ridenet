@@ -90,7 +90,7 @@ function C_ReportForm(parentElement)
                                   </span>'
         var riderT = new Ext.XTemplate('<table cellpadding=0 cellspacing=0><tr>\
                                           <td><div style="width:40px;overflow:hidden;text-align:center;margin:1px">\
-                                            <img class="tight" src="{[getFullDomainRoot()]}/dynamic-images/rider-portrait.php?RiderID={RiderID}&T={TeamID}" width=30 border=0>\
+                                            <img class="tight" src="{[getFullDomainRoot()]}/imgstore/rider-portrait/{TeamID}/{RiderID}.jpg" width=30 border=0>\
                                           </div></td>\
                                           <td><div class="ellipses" style="padding-left:5px;width:215px">\
                                             <div class="find-name">{RiderName}</div>\

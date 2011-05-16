@@ -73,7 +73,7 @@ $RideBoardLength = 30;
         in the lane, etc.
       </p>
       <div style="float:right;padding: 0 20px">
-        <img src="<?=GetFullDomainRoot()?>/dynamic-images/rider-portrait.php?RiderID=149&T=13" style="border:1px solid #DDD">
+        <img src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/13/149.jpg" style="border:1px solid #DDD">
         <p class=photo-caption>Doug Morgan</p>
       </div>
       <p class="newp">

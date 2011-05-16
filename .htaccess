@@ -34,6 +34,10 @@ RewriteCond %{REQUEST_METHOD} DELETE
 RewriteRule ^api/ride/([^/\.]+)$ api/delete-ride.php?ride-log-id=$1 [L,QSA]
 RewriteRule ^api/about$ api/about.php [L]
 
+# Dynamic Image mappings
+RewriteRule ^imgstore/rider-portrait/([^/]+)/([^/]+).jpg$ dynamic-images/rider-portrait.php?T=$1&RiderID=$2 [L]
+
+
 # Make friendly URLs
 #RewriteRule ^rider/([^/\.]+)$ profile.php?RiderID=$1 [L,QSA]
 #RewriteRule ^profile$ profile.php [L,QSA]

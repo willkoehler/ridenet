@@ -86,7 +86,7 @@ function RenderWall($rs, $pt, $showTime=false, $showHeaders=true, $emptyMessage=
       <!--====== Photo and Title ======-->
         <div class="picture">
           <a href="<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>">
-            <img class="tight" width=35 height=44 src="/dynamic-images/rider-portrait.php?RiderID=<?=$record['RiderID']?>&T=<?=$record['RacingTeamID']?>">
+            <img class="tight" width=35 height=44 src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['RacingTeamID']?>/<?=$record['RiderID']?>.jpg">
           </a>
         </div>
         <div class="title">

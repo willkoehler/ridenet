@@ -141,7 +141,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
       <? while(($rider=$rs->fetch_array())!=false) { ?>
         <div id="R<?=$rider['RiderID']?>B" class="photobox">
           <a href="<?=BuildTeamBaseURL($rider['Domain'])?>/profile.php?RiderID=<?=$rider['RiderID']?>&Year=<?=$ShowYear?>">
-            <img class="tight" src="<?=GetFullDomainRoot()?>/dynamic-images/rider-portrait.php?RiderID=<?=$rider['RiderID']?>&T=<?=$rider['RacingTeamID']?>" height=40 width=32 border="0">
+            <img class="tight" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$rider['RacingTeamID']?>/<?=$rider['RiderID']?>.jpg" height=40 width=32 border="0">
           </a>
         </div><script type="text/javascript">riderInfoCallout(<?=$rider['RiderID']?>, 'B', 1)</script>
       <? } ?>

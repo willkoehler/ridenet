@@ -182,7 +182,7 @@ function TopTenRiders($oDB, $teamID, $tag)
       <? while(($record=$rs->fetch_array())!=false) { ?>
         <div id="R<?=$record['RiderID'] . $tag?>" class="photobox">
           <a href="<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>">
-            <img class="tight" src="<?=GetFullDomainRoot()?>/dynamic-images/rider-portrait.php?RiderID=<?=$record['RiderID']?>&T=<?=$record['RacingTeamID']?>" height=27 width=22 border="0">
+            <img class="tight" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['RacingTeamID']?>/<?=$record['RiderID']?>.jpg" height=27 width=22 border="0">
           </a>
         </div><script type="text/javascript">riderInfoCallout(<?=$record['RiderID']?>, '<?=$tag?>')</script>
       <? } ?>

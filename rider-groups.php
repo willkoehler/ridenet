@@ -133,7 +133,7 @@ else
           $first = false; ?>
           <div id="R<?=$record['RiderID']?>" class="photobox">
             <a href="<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>">
-              <img class="tight" src="<?=GetFullDomainRoot()?>/dynamic-images/rider-portrait.php?RiderID=<?=$record['RiderID']?>&T=<?=$record['RacingTeamID']?>" height=<?=$picHeight?> width=<?=$picWidth?> border="0">
+              <img class="tight" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['RacingTeamID']?>/<?=$record['RiderID']?>.jpg" height=<?=$picHeight?> width=<?=$picWidth?> border="0">
             </a>
             <div class="countbox">
               <?=$record['CEDaysMonth']?>

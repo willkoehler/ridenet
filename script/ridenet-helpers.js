@@ -54,7 +54,7 @@ function C_SearchBox()
                     tpl:'<tpl for="."><div class="x-combo-list-item"><table cellpadding=0 cellspacing=0><tr>\
                            <tpl if="Type==\'rider\'">\
                              <td><div style="width:40px;overflow:hidden;text-align:center;margin:1px">\
-                               <img src="' + getFullDomainRoot() + '/dynamic-images/rider-portrait.php?RiderID={RiderID}&T={TeamID}" height=50 width=40>\
+                               <img src="' + getFullDomainRoot() + '/imgstore/rider-portrait/{TeamID}/{RiderID}.jpg" height=50 width=40>\
                              </div></td>\
                              <td><div class="ellipses" style="padding-left:10px;width:215px">\
                                <div class="find-name">{DisplayText}</div>\

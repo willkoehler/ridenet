@@ -36,7 +36,7 @@ Ext.onReady(function()
                 emptyText: 'Start typing rider name or team name...',
                 store: this.dsRiderLookup,
                 tpl:'<tpl for="."><div class="x-combo-list-item"><table cellpadding=0 cellspacing=0><tr>\
-                       <td><img src="' + getFullDomainRoot() + '/dynamic-images/rider-portrait.php?RiderID={RiderID}&T={RacingTeamID}" height=40 width=32></td>\
+                       <td><img src="' + getFullDomainRoot() + '/imgstore/rider-portrait/{RacingTeamID}/{RiderID}.jpg" height=40 width=32></td>\
                        <td><div class="ellipses" style="padding-left:15px;width:300px">{RiderName} - <span style="color:#888">{TeamName}</span></div></td>\
                      </tr></table>\
                      </div></tpl>'

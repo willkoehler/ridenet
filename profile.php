@@ -95,7 +95,7 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
   <?InsertGoogleAnalyticsTracker()?>
 <!-- facebook meta tags to provide information for the like button -->
   <meta property="og:title" content="<?=htmlentities($riderName)?>'s Rider Bio | <?=htmlentities($riderInfo['RacingTeamName'])?>" />
-  <meta property="og:image" content="<?=GetFullDomainRoot()?>/dynamic-images/rider-portrait.php?RiderID=<?=$RiderID?>&T=<?=$ridersRacingTeamID?>" />
+  <meta property="og:image" content="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$ridersRacingTeamID?>/<?=$RiderID?>.jpg" />
   <meta property="og:site_name" content="RideNet" />
   <meta property="og:description" content="Visit RideNet to see <?=htmlentities($riderName)?>'s rider bio including race results and ride log" />
   <meta property="fb:app_id" content="147642135282357" />
@@ -144,7 +144,7 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
         <table cellpadding="0" cellspacing="0" width=100%>
           <tr>
             <td style="padding:0px 5px" valign="top" width=165>
-              <img src="<?=GetFullDomainRoot()?>/dynamic-images/rider-portrait.php?RiderID=<?=$RiderID?>&T=<?=$ridersRacingTeamID?>" height=200 width=160/>
+              <img src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$ridersRacingTeamID?>/<?=$RiderID?>.jpg" height=200 width=160/>
             </td>
             <td valign=top>
               <div id='more-content1'>
@@ -433,7 +433,7 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
         <? while(($rider=$rs->fetch_array())!=false) { ?>
           <div id="R<?=$rider['RiderID']?>" class="photobox">
             <a href="<?=BuildTeamBaseURL($rider['Domain'])?>/profile.php?RiderID=<?=$rider['RiderID']?>">
-              <img class="tight" src="<?=GetFullDomainRoot()?>/dynamic-images/rider-portrait.php?RiderID=<?=$rider['RiderID']?>&T=<?=$rider['RacingTeamID']?>" height=35 width=28 border="0">
+              <img class="tight" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$rider['RacingTeamID']?>/<?=$rider['RiderID']?>.jpg" height=35 width=28 border="0">
             </a>
           </div><script type="text/javascript">riderInfoCallout(<?=$rider['RiderID']?>, '')</script>
         <? } ?>

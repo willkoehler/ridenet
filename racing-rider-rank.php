@@ -115,7 +115,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
         <div class="link-box" style="width:535px" onclick="window.location.href='<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>&Year=<?=$ShowYear?>'">
           <table id="results-breakdown" cellpadding=0; cellspacing=0 width=100%><tr>
             <td width=50 style="padding-right:5px" valign=bottom>
-              <img class="tight" src="<?=GetFullDomainRoot()?>/dynamic-images/rider-portrait.php?RiderID=<?=$record['RiderID']?>&T=<?=$record['ResultsTeamID']?>" height=56 width=45 border="0">
+              <img class="tight" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['ResultsTeamID']?>/<?=$record['RiderID']?>.jpg" height=56 width=45 border="0">
             </td>
             <td valign=middle>
               <table cellpadding=0 cellspacing=0 width=100%>

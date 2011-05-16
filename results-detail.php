@@ -147,7 +147,7 @@ $rs->free()
             <table>
               <tr><td align=center>
                 <a href="<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>&Year=<?=$RaceYear?>">
-                <img class="tight" src="<?=GetFullDomainRoot()?>/dynamic-images/rider-portrait.php?RiderID=<?=$record['RiderID']?>&T=<?=$record['PhotoTeamID']?>" height=100 width=80 border="0"></a>
+                <img class="tight" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['PhotoTeamID']?>/<?=$record['RiderID']?>.jpg" height=100 width=80 border="0"></a>
               </td></tr>
               <tr><td class="profile-photo-caption">
                 <?=$record['RiderName']?>
@@ -217,7 +217,7 @@ $rs->free()
               <table>
                 <tr><td align=center>
                   <a href="<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>&Year=<?=$RaceYear?>">
-                  <img class="tight" src="<?=GetFullDomainRoot()?>/dynamic-images/rider-portrait.php?RiderID=<?=$record['RiderID']?>&T=<?=$record['ResultsTeamID']?>" height=100 width=80 border="0"></a>
+                  <img class="tight" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['ResultsTeamID']?>/<?=$record['RiderID']?>.jpg" height=100 width=80 border="0"></a>
                 </td></tr>
                 <tr><td class="profile-photo-caption">
                   <?=$record['RiderName']?>

@@ -403,7 +403,7 @@ function MostViewedRiderSidebar($oDB, $pt=0)
       <div style="height:5px"></div>
       <div align="center">
         <a href="<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>">
-          <img src="<?=GetFullDomainRoot()?>/dynamic-images/rider-portrait.php?RiderID=<?=$record['RiderID']?>&T=<?=$record['RacingTeamID']?>" height=100 width=80 border="0">
+          <img src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['RacingTeamID']?>/<?=$record['RiderID']?>.jpg" height=100 width=80 border="0">
         </a>
         <div class=profile-photo-caption><?=$record['RiderName'] . " (" . $record['ViewCount'] . ")"?></div>
         <div style="height:8px"></div>

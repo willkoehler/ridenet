@@ -35,7 +35,7 @@ function C_PostMessageDialog()
                         xtype:'container', width:55, items: [{
                         // === Rider photo ===
                             xtype: 'container',
-                            html: '<img src="' + g_fullDomainRoot + '/dynamic-images/rider-portrait.php?RiderID=' + params.riderID + '&T=' + params.racingTeamID + '" width=47 height=59>'
+                            html: '<img src="' + g_fullDomainRoot + '/imgstore/rider-portrait/' + params.racingTeamID + '/' + params.riderID + '.jpg" width=47 height=59>'
                         }]
                     },{
                         xtype:'container', layout:'form', hideLabels: true, items: [{

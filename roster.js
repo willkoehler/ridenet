@@ -49,7 +49,7 @@ function C_RosterPanel(parentElement)
                 var rosterTpl = '<tpl for=".">\
                                     <div class="rider-wrap">\
                                       <div class="thumb-wrap">\
-                                        <img id="img-{RiderID}" class=thumb src="' + g_fullDomainRoot + '/dynamic-images/rider-portrait.php?RiderID={RiderID}&T={RacingTeamID}" height=100 width=80>\
+                                        <img id="img-{RiderID}" class=thumb src="' + g_fullDomainRoot + '/imgstore/rider-portrait/{RacingTeamID}/{RiderID}.jpg" height=100 width=80>\
                                       </div>\
                                       <span class=name>{FullName}</span>\
                                       <span class=category>{RiderType}</span>\
@@ -69,7 +69,7 @@ function C_RosterPanel(parentElement)
                 var rosterTpl = '<tpl for=".">\
                                     <div class="rider-wrap">\
                                       <div class="thumb-wrap">\
-                                        <img id="img-{RiderID}" class=thumb src="' + g_fullDomainRoot + '/dynamic-images/rider-portrait.php?RiderID={RiderID}&T={RacingTeamID}" height=100 width=80>\
+                                        <img id="img-{RiderID}" class=thumb src="' + g_fullDomainRoot + '/imgstore/rider-portrait/{RacingTeamID}/{RiderID}.jpg" height=100 width=80>\
                                       </div>\
                                       <span class=name>{FullName}</span>\
                                       <span class=category>\
@@ -94,7 +94,7 @@ function C_RosterPanel(parentElement)
                 var rosterTpl = '<tpl for=".">\
                                     <div class="rider-wrap">\
                                       <div class="thumb-wrap">\
-                                        <img id="img-{RiderID}" class=thumb src="' + g_fullDomainRoot + '/dynamic-images/rider-portrait.php?RiderID={RiderID}&T={RacingTeamID}" height=100 width=80>\
+                                        <img id="img-{RiderID}" class=thumb src="' + g_fullDomainRoot + '/imgstore/rider-portrait/{RacingTeamID}/{RiderID}.jpg" height=100 width=80>\
                                       </div>\
                                       <span class=name>{FullName}</span>\
                                       <span class=category>YTD: {YTDRides:plural("ride")}, {YTDMiles} miles</span>\

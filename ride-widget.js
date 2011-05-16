@@ -181,7 +181,7 @@ function C_RideWidget(params)
                    </div> \
                    <div style="float:left"> \
                     <a href="http://'+r.Domain+'.ridenet.net/profile.php?RiderID=' + r.RiderID + '" target="_blank"> \
-                      <img style="vertical-align:bottom;border:0;width:'+this.size.picWidth+'px;height:'+this.size.picHeight+'px" src="http://'+this.domainRoot+'/dynamic-images/rider-portrait.php?RiderID=' + r.RiderID + '&T=' + r.RacingTeamID + '"> \
+                      <img style="vertical-align:bottom;border:0;width:'+this.size.picWidth+'px;height:'+this.size.picHeight+'px" src="http://'+this.domainRoot+'/imgstore/rider-portrait/' + r.RacingTeamID + '/' + r.RiderID + '.jpg"> \
                     </a> \
                   </div>'
         }
