@@ -134,7 +134,7 @@ body  {
     color: #000000;
     font-family: Verdana, Arial, Helvetica, sans-serif;
     font-size: 100%;
-    background: #<?=$BodyBGColor?> url('/dynamic-images/body-bg-image.php?T=<?=$pt?>') repeat;
+    background: #<?=$BodyBGColor?> url('/imgstore/body-bg/<?=$pt?>.jpg') repeat;
     background-attachment:fixed;
     color: #<?=$TextColor?>;
 }

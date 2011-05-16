@@ -36,6 +36,7 @@ RewriteRule ^api/about$ api/about.php [L]
 
 # Dynamic Image mappings
 RewriteRule ^imgstore/rider-portrait/([^/]+)/([^/]+).jpg$ dynamic-images/rider-portrait.php?T=$1&RiderID=$2 [L]
+RewriteRule ^imgstore/body-bg/([^/]+).jpg$ dynamic-images/body-bg-image.php?T=$1 [L]
 
 
 # Make friendly URLs

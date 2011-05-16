@@ -583,8 +583,8 @@ function C_CustomizeTab()
         {
             setFormMessage("Body Image Cleared", "green", false, 'sc-status-msg');
             // force browser to recognize new (blank) body image
-            forceReload.defer(350, this, ["/dynamic-images/cache-buster.php", "body-bg-image.php?T=" + g_pt]);
-            Ext.get(document.body).setStyle("background-image", "url('/dynamic-images/body-bg-image.php?T=" + g_pt + "&x=" + Math.random() + "')");
+            forceReload.defer(350, this, ["/dynamic-images/cache-buster.php", "/imgstore/body-bg/" + g_pt + ".jpg"]);
+            Ext.get(document.body).setStyle("background-image", "url('/imgstore/body-bg/" + g_pt + ".jpg?x=" + Math.random() + "')");
         }
     }
 
