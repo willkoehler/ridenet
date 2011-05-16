@@ -1,6 +1,7 @@
 <?
 require("script/app-master.php");
 require("dynamic-sections/calendar-sidebar.php");
+require("dynamic-sections/team-stats.php");
 require(SHAREDBASE_DIR . "ExtJSLoader.php");
 
 $oDB = oOpenDBConnection();
@@ -59,12 +60,22 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
     <div style="float:left;margin-left:10px;position:relative;left:0px;top:12px">
       <?SocialMediaButtons("Latest team stats on #RideNet")?>
     </div>
+    <div style="float:left;margin-left:10px;position:relative;left:0px;top:11px">
+      <select id="date-range">
+        <option value='A'>All Time</option>
+        <option value='Y0'><?=date("Y")?> YTD</option>
+        <option value='Y-1'>Last Year</option>
+        <option value='M0'>This Month</option>
+        <option value='M-1'><?=AddMonths(new DateTime,-1)->format("F Y")?></option>
+        <option value='M-2'><?=AddMonths(new DateTime,-2)->format("F Y")?></option>
+      </select>
+    </div>
     <div class='clearfloat'></div>
     <h2>Every STAR rider gets us one step closer to our goal.</h2>
     <p class='text50' style="line-height:1.2em;font-size:.7em;margin-bottom:0px">
       * STAR riders commute / run errands by bike 2 or more days a month
     </p>
-    <div style="height:10px"></div>
+    <div id='stats-rollup'></div>
     <div id='report-form'></div>
     <div style="height:20px"></div>
   </div><!-- end #mainContent -->

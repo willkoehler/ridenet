@@ -20,8 +20,11 @@ function C_ReportForm(parentElement)
     // If there's no hash tag, use defaults
     var hash = Ext.urlDecode((window.location.hash) ? window.location.hash.substr(1) : "");
     var sort = (hash.s) || "CEDays";
-    var range = (hash.r) || "This Year";
+    var range = (hash.r) || "A";
     var search = (hash.q) || ""; 
+
+    Ext.fly('date-range').on('change', function() { this.filterList() }, this);
+    Ext.fly('date-range').dom.value = range;
 
     this.create = function()
     {
@@ -63,16 +66,6 @@ function C_ReportForm(parentElement)
         // Search bar
         var toolbar = new Ext.Toolbar({ style: 'padding: 4px 1px 4px 1px;', items: [
             {xtype: 'tbspacer', width: 5}, {
-                xtype: 'localcombobox',
-                id: 'DateRange',
-                displayField: 'text',
-                valueField: 'text',
-                value: range,
-                width: 85,
-                editable:false,
-                listeners: {scope: this, select: this.filterList},
-                store: new Ext.data.ArrayStore({ fields: ['text'], data: this.rangeLookup })
-            } , {xtype: 'tbspacer', width: 10}, {
                 xtype: 'textfield',
                 id: 'SearchFor',
                 value: search,
@@ -84,17 +77,15 @@ function C_ReportForm(parentElement)
                 icon: '/images/search-icon.png',
                 handler: this.filterList,
                 scope: this
-            } ,  {xtype: 'tbspacer', width: 25}, '<span style="color:#AAA">(click column header to sort)</span>'
+            } ,  {xtype: 'tbspacer', width: 100}, '<span style="color:#AAA">(click column header to sort)</span>'
          ]});
 
         var ceDaysHeader =  '<span style="line-height:13px;position:relative;top:-1px">\
-                               <img class="tight" src="/images/ridelog/commute.png" height=14>\
-                               <img class="tight" src="/images/ridelog/errand.png" height=14>\
+                               <img class="tight" src="/images/ridelog/commute.png" height=14><img class="tight" src="/images/ridelog/errand.png" height=14>\
                                <span style="padding-left:2px">Days</span>\
                              </span>'
         var ceDaysMonthHeader =  '<span style="line-height:13px;position:relative;top:-1px">\
-                                    <img class="tight" src="/images/ridelog/commute.png" height=14>\
-                                    <img class="tight" src="/images/ridelog/errand.png" height=14>\
+                                    <img class="tight" src="/images/ridelog/commute.png" height=14><img class="tight" src="/images/ridelog/errand.png" height=14>\
                                     <span style="padding-left:2px">D/M</span>\
                                   </span>'
         var riderT = new Ext.XTemplate('<table cellpadding=0 cellspacing=0><tr>\
@@ -113,11 +104,11 @@ function C_ReportForm(parentElement)
         var ceDaysMonthT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{CEDaysMonth}</div>').compile();
 
         var columns = [
-                {header: 'Rider/Team', width: .46, dataIndex: 'RiderName', tpl: riderT },
-                {header: 'All Miles', width: .12, dataIndex: 'Distance', align: 'center', tpl: distanceT },
-                {header: 'All Days', width: .12, dataIndex: 'Days', align: 'center', tpl: daysT },
-                {header: ceDaysHeader, width: .15, dataIndex: 'CEDays', align: 'center', tpl: ceDaysT },
-                {header: ceDaysMonthHeader, width: .14, dataIndex: 'CEDaysMonth', align: 'center', tpl: ceDaysMonthT }
+                {header: 'Rider/Team', width: .47, dataIndex: 'RiderName', tpl: riderT },
+                {header: 'Total Miles', width: .13, dataIndex: 'Distance', align: 'center', tpl: distanceT },
+                {header: 'Total Days', width: .13, dataIndex: 'Days', align: 'center', tpl: daysT },
+                {header: ceDaysHeader, width: .14, dataIndex: 'CEDays', align: 'center', tpl: ceDaysT },
+                {header: ceDaysMonthHeader, width: .12, dataIndex: 'CEDaysMonth', align: 'center', tpl: ceDaysMonthT }
             ]
         
         // create the grid
@@ -148,35 +139,32 @@ function C_ReportForm(parentElement)
     this.filterList = function()
     {
         var endDate = new Date();
-        switch(Ext.getCmp('DateRange').getValue()) {
-            case "All Time":
-                startDate = new Date(2000, 0, 1)
+        var range = Ext.fly('date-range').dom.value;
+        var type = range.substring(0,1);             // A, Y, M
+        var offset = parseInt(range.substring(1));   // 0, -1, -2, etc
+        switch(type) {
+            case "A":
+                startDate = new Date(2000, 0, 1);
                 break;
-            case "This Year":
-                startDate = new Date(endDate.getFullYear(), 0, 1);
-                break;
-            case "Last Year":
-                year = endDate.getFullYear() - 1;
+            case "Y":
+                var year = endDate.getFullYear() + offset;
                 startDate = new Date(year, 0, 1);
-                endDate = new Date(year, 12, 31);
+                endDate = new Date(year, 11, 31);
                 break;
-            case "This Month":
-                startDate = new Date(endDate.getFullYear(), endDate.getMonth(), 1);
-                break;
-            case "Last Month":
+            case "M":
                 month = endDate.getMonth();
                 year = endDate.getFullYear();
-                startDate = new Date(year, month-1, 1);     // works even when month = 0
-                endDate = new Date(year, month, 0);         // 0 ==> last day of the previous month
+                startDate = new Date(year, month+offset, 1);        // works even when month = 0
+                endDate = new Date(year, month+offset+1, 0);        // 0 ==> last day of the previous month
                 break;
             default:
-                startDate = new Date(2000, 0, 1)
+                startDate = new Date(2000, 0, 1);
                 break;
         }
     // --- reload list filtering by search term
         this.ds.baseParams.SearchFor = Ext.getCmp('SearchFor').getValue();
-        this.ds.baseParams.StartDate = startDate;
-        this.ds.baseParams.EndDate = endDate;
+        this.ds.baseParams.StartDate = startDate.format('n/j/Y');
+        this.ds.baseParams.EndDate = endDate.format('n/j/Y');
         this.mask = new Ext.LoadMask(this.report.getEl(), { store: this.ds, msg:"Please Wait..." });
         this.ds.load({params: {start:0, limit:100} });
     }
@@ -185,10 +173,8 @@ function C_ReportForm(parentElement)
     {
     // --- put date range and sort info in hash tag so params are saved with the link
         hash = "s=" + this.ds.getSortState().field + 
-               "&r=" + Ext.getCmp('DateRange').getValue() +
+               "&r=" + Ext.fly('date-range').dom.value +
                "&q=" + Ext.getCmp('SearchFor').getValue();
         window.location.replace("#" + hash);
     }
-    
-    this.rangeLookup = [["All Time"], ["This Year"], ["Last Year"], ["This Month"], ["Last Month"]]
 }
