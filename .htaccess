@@ -1,4 +1,9 @@
 RewriteEngine on
+
+# Reject requests that don't have an HTTP_HOST header
+RewriteCond %{HTTP_HOST} ^$
+RewriteRule ^.* - [L,F]
+
 # Map old domains to ridenet.net with 301 status (moved permanently)
 # map *.ridenet.cc to *.ridenet.net
 RewriteCond %{HTTP_HOST} ^(.*)ridenet.cc$
