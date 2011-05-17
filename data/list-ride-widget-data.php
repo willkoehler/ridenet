@@ -1,8 +1,15 @@
 <?
 require("../script/app-master-min.php");
 
-$teamFilter = $_REQUEST['team'];
-$riderFilter = $_REQUEST['rider'];
+// Verify required parameters are present (to handle bots scanning this page)
+if(!isset($_REQUEST['team']) || !isset($_REQUEST['rider']) || !isset($_REQUEST['maxage']) || !isset($_REQUEST['callback']))
+{
+    header("HTTP/1.1 400 Bad Request");
+    exit();
+}
+
+$teamFilter = addslashes($_REQUEST['team']);
+$riderFilter = addslashes($_REQUEST['rider']);
 $maxAge = intval($_REQUEST['maxage']);
 
 $whereFilter = "Comment IS NOT NULL AND (DATEDIFF(NOW(), Date) BETWEEN 0 AND $maxAge)";
