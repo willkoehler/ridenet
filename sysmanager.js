@@ -120,10 +120,10 @@ function C_TeamForm(parentElement)
                         this.onClickEdit(grid.getStore().getAt(row).data.TeamID);
                     }
                     if (e.getTarget().id.search(/home-btn/)==0) {   // did user click on home button?
-                        window.open(buildTeamBaseURL(grid.getStore().getAt(row).data.Domain) + "/index.php", "manager");
+                        window.open(buildTeamBaseURL(grid.getStore().getAt(row).data.Domain) + "/", "manager");
                     }
                     if (e.getTarget().id.search(/manage-btn/)==0) {   // did user click on manage button?
-                        window.open(buildTeamBaseURL(grid.getStore().getAt(row).data.Domain) + "/team-manager.php", "manager");
+                        window.open(buildTeamBaseURL(grid.getStore().getAt(row).data.Domain) + "/manage", "manager");
                     }
                     if (e.getTarget().id.search(/delete-btn/)==0) {   // did user click on delete button?
                         this.onClickDelete(grid.getStore().getAt(row));

@@ -73,7 +73,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
           <h2 style="margin:0px">Showing Rankings For</h2>
         </td>
         <td valign=center style="padding: 0px 5px">
-          <SELECT name="Year" onChange="window.location.href='racing-rider-rank.php?Year=<?=$ShowYear?>' + options[selectedIndex].value">
+          <SELECT name="Year" onChange="window.location.href='/racing-rider-rank?Year=<?=$ShowYear?>' + options[selectedIndex].value">
             <OPTION value='' <?if(!$tf) {?>selected<? } ?>>All RideNet Teams
             <OPTION value='&tf' <?if($tf) {?>selected<? } ?>><?=$teamName?>
           </SELECT>
@@ -112,7 +112,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
     else
     {
       while(($record=$rs->fetch_array())!=false) { ?>
-        <div class="link-box" style="width:535px" onclick="window.location.href='<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>&Year=<?=$ShowYear?>'">
+        <div class="link-box" style="width:535px" onclick="window.location.href='<?=BuildTeamBaseURL($record['Domain'])?>/rider/<?=$record['RiderID']?>?Year=<?=$ShowYear?>'">
           <table id="results-breakdown" cellpadding=0; cellspacing=0 width=100%><tr>
             <td width=50 style="padding-right:5px" valign=bottom>
               <img class="tight" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['ResultsTeamID']?>/<?=$record['RiderID']?>.jpg" height=56 width=45 border="0">
@@ -186,7 +186,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
       $rs = $oDB->query("SELECT DISTINCT(YEAR(RaceDate)) AS Year FROM event WHERE RaceDate IS NOT NULL AND Archived=0 ORDER BY RaceDate", __FILE__, __LINE__);
       while(($record=$rs->fetch_array())!=false) { ?>
         <?if($record['Year']!=$ShowYear) { ?>
-          <a href="racing-rider-rank.php?Year=<?=$record['Year']?> ">[<?=$record['Year']?>]</a>&nbsp;
+          <a href="/racing-rider-rank?Year=<?=$record['Year']?> ">[<?=$record['Year']?>]</a>&nbsp;
         <? } else { ?>
           [<?=$record['Year']?>]&nbsp;
         <? } ?>

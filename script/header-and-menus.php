@@ -144,9 +144,9 @@ function InsertPageFooter()
       |
       <a href="http://ridenet.net">Home</a>
       |
-      <a href="http://ridenet.net/about.php">About</a>
+      <a href="http://ridenet.net/about">About</a>
       |
-      <a href="http://ridenet.net/contact.php">Contact</a>
+      <a href="http://ridenet.net/contact">Contact</a>
     </p>
     <div style="height:10px"></div> <!-- Have to create space with divs - padding doesn't work in IE7 -->
 <?
@@ -174,29 +174,29 @@ function InsertMainMenu($oDB, $pt, $highlight="")
       <ul id="nav">
         <?if($pt==0) { ?>
         <!-- Default RideNet Menu -->
-          <li><a href="/index.php" <?if($highlight=="Home") {?>id="active"<?}?>>HOME</a></li>
-          <li><a href="/event-schedule.php" <?if($highlight=="Schedule") {?>id="active"<?}?>>EVENTS</a></li>
-          <li><a href="/calendar.php" <?if($highlight=="Calendar") {?>id="active"<?}?>>RIDES</a></li>
-          <li><a href="/racing-results.php" <?if($highlight=="Results") {?>id="active"<?}?>>RACING</a></li>
-          <li><a href="/commuting.php" <?if($highlight=="Ranking") {?>id="active"<?}?>>COMMUTING</a></li>
+          <li><a href="/" <?if($highlight=="Home") {?>id="active"<?}?>>HOME</a></li>
+          <li><a href="/events" <?if($highlight=="Schedule") {?>id="active"<?}?>>EVENTS</a></li>
+          <li><a href="/rides" <?if($highlight=="Calendar") {?>id="active"<?}?>>RIDES</a></li>
+          <li><a href="/racing" <?if($highlight=="Results") {?>id="active"<?}?>>RACING</a></li>
+          <li><a href="/commuting" <?if($highlight=="Ranking") {?>id="active"<?}?>>COMMUTING</a></li>
         <? } else { ?>
         <!-- Team Site Menu -->
-          <li><a href="/home.php" <?if($highlight=="Home") {?>id="active"<?}?>>HOME</a></li>
-          <li><a href="/roster.php" <?if($highlight=="Roster") {?>id="active"<?}?>>ROSTER</a></li>
-          <li><a href="/event-schedule.php" <?if($highlight=="Schedule") {?>id="active"<?}?>>EVENTS</a></li>
-          <li><a href="/calendar.php" <?if($highlight=="Calendar") {?>id="active"<?}?>>RIDES</a></li>
+          <li><a href="/" <?if($highlight=="Home") {?>id="active"<?}?>>HOME</a></li>
+          <li><a href="/roster" <?if($highlight=="Roster") {?>id="active"<?}?>>ROSTER</a></li>
+          <li><a href="/events" <?if($highlight=="Schedule") {?>id="active"<?}?>>EVENTS</a></li>
+          <li><a href="/rides" <?if($highlight=="Calendar") {?>id="active"<?}?>>RIDES</a></li>
           <? if($bRacing) { ?>
-            <li><a href="/racing-results.php" <?if($highlight=="Results") {?>id="active"<?}?>>RACING</a></li>
+            <li><a href="/racing" <?if($highlight=="Results") {?>id="active"<?}?>>RACING</a></li>
           <? } ?>
           <? if($bCommuting) { ?>
-            <li><a href="/commuting.php" <?if($highlight=="Ranking") {?>id="active"<?}?>>COMMUTING</a></li>
+            <li><a href="/commuting" <?if($highlight=="Ranking") {?>id="active"<?}?>>COMMUTING</a></li>
           <? } ?>
         <? } ?>
-        <li><a href="profile.php" <?if($highlight=="YourProfile") {?>id="active"<?}?>>YOUR PROFILE</a></li>
+        <li><a href="/profile" <?if($highlight=="YourProfile") {?>id="active"<?}?>>YOUR PROFILE</a></li>
         <? if(CheckLogin()) { ?>
-          <li style="float:right"><a href="login.php?logoff" id="logoff">Logout</a></li>
+          <li style="float:right"><a href="/login?logoff" id="logoff">Logout</a></li>
         <? } else { ?>
-          <li style="float:right"><a href="login.php" id="login">Login</a></li>
+          <li style="float:right"><a href="/login" id="login">Login</a></li>
         <? } ?>
         <li id="search-box"></li>
       </ul>
@@ -222,15 +222,15 @@ function InsertMemberMenu($oDB, $pt, $highlight="")
 ?>
     <div id="submenu">
       <ul id="subnav">
-        <li><a href="profile.php" <?if($highlight=="YourProfile") {?>id="active"<?}?>>YOUR PROFILE</a></li>
-        <li><a href="update-results.php" <?if($highlight=="UpdateResults") {?>id="active"<?}?>>YOUR RESULTS</a></li>
+        <li><a href="/profile" <?if($highlight=="YourProfile") {?>id="active"<?}?>>YOUR PROFILE</a></li>
+        <li><a href="/update-results" <?if($highlight=="UpdateResults") {?>id="active"<?}?>>YOUR RESULTS</a></li>
         <? if(isDesigner() || isSystemAdmin() || isTeamAdmin($oDB, $pt)) { ?>
-          <li><a href="team-manager.php" <?if($highlight=="SiteManager") {?>id="active"<?}?>>MANAGE TEAM</a></li>
-          <li><a href="commute-report.php" <?if($highlight=="CommuteReport") {?>id="active"<?}?>>COMMUTING REPORT</a></li>
+          <li><a href="/manage" <?if($highlight=="SiteManager") {?>id="active"<?}?>>MANAGE TEAM</a></li>
+          <li><a href="/commute-report.php" <?if($highlight=="CommuteReport") {?>id="active"<?}?>>COMMUTING REPORT</a></li>
         <? } ?>
         <? if(isSystemAdmin()) { ?>
-          <li><a href="syslog.php" <?if($highlight=="SystemLog") {?>id="active"<?}?>>SYSTEM LOG</a></li>
-          <li><a href="sysmanager.php" <?if($highlight=="TeamManager") {?>id="active"<?}?>>SYSTEM ADMIN</a></li>
+          <li><a href="/syslog" <?if($highlight=="SystemLog") {?>id="active"<?}?>>SYSTEM LOG</a></li>
+          <li><a href="/admin" <?if($highlight=="TeamManager") {?>id="active"<?}?>>SYSTEM ADMIN</a></li>
         <? } ?>
       </ul>
     </div>
@@ -253,8 +253,8 @@ function InsertResultsMenu($year, $highlight="")
 { ?>
     <div id="submenu">
       <ul id="subnav">
-        <li><a href="racing-results.php?Year=<?=$year?>" <?if($highlight=="Results") {?>id="active"<?}?>>RESULTS SUMMARY</a></li>
-        <li><a href="racing-rider-rank.php?Year=<?=$year?>" <?if($highlight=="Ranking") {?>id="active"<?}?>>RIDER RANKINGS</a></li>
+        <li><a href="/racing?Year=<?=$year?>" <?if($highlight=="Results") {?>id="active"<?}?>>RESULTS SUMMARY</a></li>
+        <li><a href="/racing-rider-rank?Year=<?=$year?>" <?if($highlight=="Ranking") {?>id="active"<?}?>>RIDER RANKINGS</a></li>
       </ul>
     </div>
 <?  
@@ -275,14 +275,14 @@ function InsertCommutingMenu($highlight="")
 { ?>
     <div id="submenu">
       <ul id="subnav">
-        <li><a href="commuting.php" <?if($highlight=="Commuting") {?>id="active"<?}?>>HOME</a></li>
-        <li><a href="rider-stats.php" <?if($highlight=="Riders") {?>id="active"<?}?>>RIDERS</a></li>
-        <li><a href="team-stats.php" <?if($highlight=="Teams") {?>id="active"<?}?>>TEAMS</a></li>
-        <li><a href="rider-groups.php?g=1" <?if($highlight=="1") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star1.png' width=10>&nbsp;1 to 4</a></li>
-        <li><a href="rider-groups.php?g=2" <?if($highlight=="2") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star2.png' width=10>&nbsp;5 to 9</a></li>
-        <li><a href="rider-groups.php?g=3" <?if($highlight=="3") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star3.png' width=10>&nbsp;10 to 14</a></li>
-        <li><a href="rider-groups.php?g=4" <?if($highlight=="4") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star4.png' width=10>&nbsp;15 to 19</a></li>
-        <li><a href="rider-groups.php?g=5" <?if($highlight=="5") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star5.png' width=10>&nbsp;20+</a></li>
+        <li><a href="commuting" <?if($highlight=="Commuting") {?>id="active"<?}?>>HOME</a></li>
+        <li><a href="/rider-stats" <?if($highlight=="Riders") {?>id="active"<?}?>>RIDERS</a></li>
+        <li><a href="/team-stats" <?if($highlight=="Teams") {?>id="active"<?}?>>TEAMS</a></li>
+        <li><a href="/rider-groups/1" <?if($highlight=="1") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star1.png' width=10>&nbsp;1 to 4</a></li>
+        <li><a href="/rider-groups/2" <?if($highlight=="2") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star2.png' width=10>&nbsp;5 to 9</a></li>
+        <li><a href="/rider-groups/3" <?if($highlight=="3") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star3.png' width=10>&nbsp;10 to 14</a></li>
+        <li><a href="/rider-groups/4" <?if($highlight=="4") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star4.png' width=10>&nbsp;15 to 19</a></li>
+        <li><a href="/rider-groups/5" <?if($highlight=="5") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star5.png' width=10>&nbsp;20+</a></li>
       </ul>
     </div>
 <?  
@@ -402,7 +402,7 @@ function MostViewedRiderSidebar($oDB, $pt=0)
       <h3 align="center">Most-Viewed Rider</h3>
       <div style="height:5px"></div>
       <div align="center">
-        <a href="<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>">
+        <a href="<?=BuildTeamBaseURL($record['Domain'])?>/rider/<?=$record['RiderID']?>">
           <img src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['RacingTeamID']?>/<?=$record['RiderID']?>.jpg" height=100 width=80 border="0">
         </a>
         <div class=profile-photo-caption><?=$record['RiderName'] . " (" . $record['ViewCount'] . ")"?></div>
@@ -453,7 +453,7 @@ function AdSidebar()
     <div class="sidebarBlock">
       <h3 style="text-align:center">RideNet Clothing</h3>
       <div style="text-align:center">
-        <a href = "/clothing.php">
+        <a href = "/clothing">
           <img src="/images/clothing/ridenet-jersey1.png" id="ad-clothing" border=0 height=100>
         </a>
         <div style="height:4px"></div>

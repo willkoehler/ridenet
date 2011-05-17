@@ -9,7 +9,7 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
 $ShowYear = (isset($_REQUEST['Year'])) ? SmartGetInt("Year") : CURRENT_YEAR;
 // filter results by team based on presence of 'tf' query parameter
 $teamFilter = isset($_REQUEST['tf']) ? " AND results.TeamID=$pt" : "";
-$tf = isset($_REQUEST['tf']) ? "&tf" : "";
+$tf = isset($_REQUEST['tf']) ? true : false;
 $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
 ?>
 
@@ -74,7 +74,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
           <h2 style="margin:0px">Showing Results For</h2>
         </td>
         <td valign=center style="padding: 0px 5px">
-          <SELECT name="Year" onChange="window.location.href='racing-results.php?Year=<?=$ShowYear?>' + options[selectedIndex].value">
+          <SELECT name="Year" onChange="window.location.href='/racing?Year=<?=$ShowYear?>' + options[selectedIndex].value">
             <OPTION value='' <?if(!$tf) {?>selected<? } ?>>All RideNet Teams
             <OPTION value='&tf' <?if($tf) {?>selected<? } ?>><?=$teamName?>
           </SELECT>
@@ -140,7 +140,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
     <div class="commute-ride-group" style="margin-left:5px;width:550px">
       <? while(($rider=$rs->fetch_array())!=false) { ?>
         <div id="R<?=$rider['RiderID']?>B" class="photobox">
-          <a href="<?=BuildTeamBaseURL($rider['Domain'])?>/profile.php?RiderID=<?=$rider['RiderID']?>&Year=<?=$ShowYear?>">
+          <a href="<?=BuildTeamBaseURL($rider['Domain'])?>/rider/<?=$rider['RiderID']?>?Year=<?=$ShowYear?>">
             <img class="tight" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$rider['RacingTeamID']?>/<?=$rider['RiderID']?>.jpg" height=40 width=32 border="0">
           </a>
         </div><script type="text/javascript">riderInfoCallout(<?=$rider['RiderID']?>, 'B', 1)</script>
@@ -177,7 +177,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
             if($record['RaceID']!=$lastEventID) {?>
             <!-- Race Results Header -->
               <div style="height:5px"><!--vertical spacer--></div>
-              <div class="link-box" style="width:535px" onclick="javascript:document.location='results-detail.php?RaceID=<?=$record['RaceID']?><?=$tf?>'">
+              <div class="link-box" style="width:535px" onclick="javascript:document.location='/results/<?=$record['RaceID']?><?=($tf) ? "?tf" : ""?>'">
               <table id="results" cellpadding=0 cellspacing=0 width=100%>
               <tr align=left>
                 <td colspan=3 class="header-sm"><div class=ellipses style="width:440px">
@@ -215,7 +215,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
       $rs = $oDB->query("SELECT DISTINCT(YEAR(RaceDate)) AS Year FROM event WHERE RaceDate IS NOT NULL AND Archived=0 ORDER BY RaceDate", __FILE__, __LINE__);
       while(($record=$rs->fetch_array())!=false) { ?>
         <?if($record['Year']!=$ShowYear) { ?>
-          <a href="racing-results.php?Year=<?=$record['Year']?><?=$tf?>">[<?=$record['Year']?>]</a>&nbsp;
+          <a href="/racing?Year=<?=$record['Year']?><?=($tf) ? "&tf" : ""?>">[<?=$record['Year']?>]</a>&nbsp;
         <? } else { ?>
           [<?=$record['Year']?>]&nbsp;
         <? } ?>

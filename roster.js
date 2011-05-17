@@ -10,7 +10,7 @@ function C_RosterPanel(parentElement)
 {
     this.holder = parentElement
 
-    // Sort field can be specified in the hash tag (i.e. profile.php#s=sort-name)
+    // Sort field can be specified in the hash tag (i.e. roster#s=sort-name)
     // If there's no hash tag, use defaults
     var hash = Ext.urlDecode((window.location.hash) ? window.location.hash.substr(1) : "");
     
@@ -146,7 +146,7 @@ function C_RosterPanel(parentElement)
                             remove: false,
                             useDisplay: false,
                             callback: function() {
-                                window.location.href = "profile.php?RiderID=" + id;
+                                window.location.href = "/rider/" + id;
                             }
                         });
                     }

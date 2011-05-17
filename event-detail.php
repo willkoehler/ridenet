@@ -8,7 +8,7 @@ $oDB = oOpenDBConnection();
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
 $EventUpdatesLength = 30;
 
-$raceID = SmartGetInt("RaceID");
+$raceID = SmartGetInt("EID");
 
 // Get name of the event
 $eventName = $oDB->DBLookup("EventName", "event", "RaceID=$raceID");
@@ -122,7 +122,7 @@ $notify = $oDB->DBLookup("Notify", "event_attendance", "AttendanceID=$attendance
                 <? if(!CheckLogin()) { ?>
                   <div style="text-align:center;padding: 10px 0 5px 0">
                     <span class="label">Are you going?</span>
-                    <span class="text"><a href="login.php?T=<?=$pt?>&Goto=<?=urlencode($_SERVER['REQUEST_URI'])?>">[ Login Required ]</a></span>
+                    <span class="text"><a href="/login?T=<?=$pt?>&Goto=<?=urlencode($_SERVER['REQUEST_URI'])?>">[ Login Required ]</a></span>
                   </div>
                 <? } else { ?>
                   <div id='form-holder'></div>
@@ -158,7 +158,7 @@ $notify = $oDB->DBLookup("Notify", "event_attendance", "AttendanceID=$attendance
           + Post Update
         </div>
       <? } else { ?>
-        <div style="float:right;position:relative;top:6px;" class='action-btn' onclick="window.location.href='login.php?Goto=<?=urlencode($_SERVER['REQUEST_URI'])?>'">&nbsp;Login To Post Update&nbsp;</div>
+        <div style="float:right;position:relative;top:6px;" class='action-btn' onclick="window.location.href='/login?Goto=<?=urlencode($_SERVER['REQUEST_URI'])?>'">&nbsp;Login To Post Update&nbsp;</div>
       <? } ?>
       <div style="padding:5px;border-bottom:1px dotted #CCC;border-top:1px dotted #CCC">
         <h2 style="margin:0px">Event Updates</h2>

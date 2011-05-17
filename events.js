@@ -95,7 +95,7 @@ function clickEventFilter(el)
 function updateEventSchedule(mask)
 {
     if(mask) Ext.get('container').mask("Updating");
-    Ext.Ajax.request( {url: '/dynamic-sections/event-schedule.php?pb&T=' + g_pt + '&Y=' + g_showYear, success: function(response, options) {
+    Ext.Ajax.request( {url: '/dynamic-sections/events.php?pb&T=' + g_pt + '&Y=' + g_showYear, success: function(response, options) {
         Ext.get('event-schedule-holder').update(response.responseText);
         if(mask) Ext.get('container').unmask();
     }});

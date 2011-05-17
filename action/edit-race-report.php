@@ -35,6 +35,6 @@ else
     exit("You are not allowed to modify this report");
 }
 
-header("Location: ../update-results.php");
+header("Location: ../update-results");
 exit();
 ?>

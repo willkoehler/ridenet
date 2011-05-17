@@ -44,14 +44,39 @@ RewriteRule ^imgstore/team-logo/([^/]+).png$ dynamic-images/team-logo.php?T=$1 [
 RewriteRule ^imgstore/team-logo/sm/([^/]+).png$ dynamic-images/team-logo-sm.php?T=$1 [L]
 RewriteRule ^imgstore/team-logo/fit/([^/]+).png$ dynamic-images/team-logo-fit.php?T=$1 [L]
 
-
 # Make friendly URLs
-#RewriteRule ^rider/([^/\.]+)$ profile.php?RiderID=$1 [L,QSA]
-#RewriteRule ^profile$ profile.php [L,QSA]
+RewriteRule ^login$ login.php [L,QSA]
+RewriteRule ^rider/([^/\.]+)$ profile.php?RiderID=$1 [L,QSA]
+RewriteRule ^profile$ profile.php [L,QSA]
+RewriteRule ^edit-race-report$ edit-race-report.php [L,QSA]
+RewriteRule ^update-results$ update-results.php [L,QSA]
+RewriteRule ^roster$ roster.php [L,QSA]
+RewriteRule ^events$ events.php [L,QSA]
+RewriteRule ^event/([^/\.]+)$ event-detail.php?EID=$1 [L,QSA]
+RewriteRule ^rides$ rides.php [L,QSA]
+RewriteRule ^ride/([^/\.]+)$ ride-detail.php?CID=$1 [L,QSA]
+RewriteRule ^racing$ racing.php [L,QSA]
+RewriteRule ^racing-rider-rank$ racing-rider-rank.php [L,QSA]
+RewriteRule ^results/([^/\.]+)$ results.php?RaceID=$1 [L,QSA]
+RewriteRule ^commuting$ commuting.php [L,QSA]
+RewriteRule ^manage$ team-manager.php [L,QSA]
+RewriteRule ^syslog$ syslog.php [L,QSA]
+RewriteRule ^admin$ sysmanager.php [L,QSA]
+RewriteRule ^rider-stats$ rider-stats.php [L,QSA]
+RewriteRule ^team-stats$ team-stats.php [L,QSA]
+RewriteRule ^rider-groups/([^/\.]+)$ rider-groups.php?g=$1 [L,QSA]
 RewriteRule ^map/([^/\.]+)$ map.php?RideLogID=$1 [L,QSA]
+RewriteRule ^bike-bus$ bike-bus.php [L,QSA]
+RewriteRule ^clothing$ clothing.php [L,QSA]
+RewriteRule ^cbdb$ cbdb.php [L,QSA]
+RewriteRule ^change-pw$ change-pw.php [L,QSA]
+RewriteRule ^contact$ contact.php [L,QSA]
+RewriteRule ^about$ about.php [L,QSA]
+
 # If there is a team sub-domain or team domain, route "/" requests to home.php
 RewriteCond %{HTTP_HOST} !^(www\.)?ridenet.(local|net)$
 RewriteRule ^/?$ home.php [L,QSA]
+
 # for ridenet.net, route "/" requests to index.php
 RewriteCond %{HTTP_HOST} ^(www\.)?ridenet.(local|net)$
 RewriteRule ^/?$ index.php [L,QSA]

@@ -21,7 +21,7 @@ if(!isset($_REQUEST['RiderID']))
   if($teamInfo['CommutingTeamID']!=$pt && $teamInfo['RacingTeamID']!=$pt)
   {
     $Domain = $oDB->DBLookup("Domain", "teams", "TeamID=" . $teamInfo['RacingTeamID']);
-    header("Location: " . BuildTeamBaseURL($Domain) . "/profile.php");
+    header("Location: " . BuildTeamBaseURL($Domain) . "/profile");
     exit();
   }
 }
@@ -124,7 +124,7 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
         <h1>Your Profile</h1>
       </div>
       <div style="float:left;margin-left:10px;position:relative;top:13px">
-        <?SocialMediaButtons("I'm on #RideNet. Check out my profile.", GetBaseHref() . "profile.php?RiderID=$RiderID")?>
+        <?SocialMediaButtons("I'm on #RideNet. Check out my profile.", GetBaseHref() . "rider/$RiderID")?>
       </div>
     <? } else { ?>
       <div style="float:left">
@@ -155,16 +155,16 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
                   <?if($riderInfo['RacingTeamID']==$riderInfo['CommutingTeamID']) { ?>
                     <tr>
                       <td class=label valign=top width=110>Team:</td>
-                      <td class=text><a href="<?=BuildTeamBaseURL($riderInfo['RacingDomain'])?>/home.php"><?=$riderInfo['RacingTeamName']?></a></td> <!--!!!!Need to list both teams-->
+                      <td class=text><a href="<?=BuildTeamBaseURL($riderInfo['RacingDomain'])?>/"><?=$riderInfo['RacingTeamName']?></a></td> <!--!!!!Need to list both teams-->
                     </tr>
                   <? } else { ?>
                     <tr>
                       <td class=label valign=top width=110>Racing Team:</td>
-                      <td class=text><a href="<?=BuildTeamBaseURL($riderInfo['RacingDomain'])?>/home.php"><?=$riderInfo['RacingTeamName']?></a></td> <!--!!!!Need to list both teams-->
+                      <td class=text><a href="<?=BuildTeamBaseURL($riderInfo['RacingDomain'])?>/"><?=$riderInfo['RacingTeamName']?></a></td> <!--!!!!Need to list both teams-->
                     </tr>
                     <tr>
                       <td class=label valign=top width=110>Commuting Team:</td>
-                      <td class=text><a href="<?=BuildTeamBaseURL($riderInfo['CommutingDomain'])?>/home.php"><?=$riderInfo['CommutingTeamName']?></a></td> <!--!!!!Need to list both teams-->
+                      <td class=text><a href="<?=BuildTeamBaseURL($riderInfo['CommutingDomain'])?>/"><?=$riderInfo['CommutingTeamName']?></a></td> <!--!!!!Need to list both teams-->
                     </tr>
                   <? } ?>
                   <tr><td class="table-spacer" colspan=2 style="height:5px">&nbsp;</td></tr>
@@ -286,7 +286,11 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
                            ORDER BY RaceDate", __FILE__, __LINE__);
         while(($record=$rs->fetch_array())!=false) { ?>
           <?if($record['Year']!=$ShowYear) { ?>
-            <a href="/profile.php?<?if(!$editable) {?>RiderID=<?=$RiderID?>&<?}?>Year=<?=$record['Year']?> ">[<?=$record['Year']?>]</a>&nbsp;
+            <?if($editable) { ?>
+              <a href="/profile?Year=<?=$record['Year']?> ">[<?=$record['Year']?>]</a>&nbsp;
+            <? } else { ?>
+              <a href="/rider/<?=$RiderID?>?Year=<?=$record['Year']?> ">[<?=$record['Year']?>]</a>&nbsp;
+            <? } ?>
           <? } else { ?>
             [<?=$record['Year']?>]&nbsp;
           <? } ?>
@@ -322,7 +326,7 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
                 <tr>
                   <td class="data"><?=date_create($result['RaceDate'])->format("D n/j")?></td>
                   <td class="data"><div class=ellipses style="width:345px">
-                    <a href="results-detail.php?RaceID=<?=$result['RaceID']?>&RiderID=<?=$result['RiderID']?>">
+                    <a href="/results/<?=$result['RaceID']?>?RiderID=<?=$result['RiderID']?>">
                       <?=$result['EventName']?>
                     </a>
                   </div></td>
@@ -399,9 +403,9 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
                 </td>
                 <td class="data<?if($record['Attending']==0) { ?> faded<? } ?>" width="335"><div class=ellipses style="width:325px">
                   <?if($record['Type']==0) { ?>
-                    <a href="/calendar-detail.php?CID=<?=$record['ID']?>">
+                    <a href="/ride/<?=$record['ID']?>">
                   <? } else { ?>
-                    <a href="/event-detail.php?RaceID=<?=$record['ID']?>">
+                    <a href="/event/<?=$record['ID']?>">
                   <? } ?>
                     <?=$record['Name']?>
                   </a>
@@ -432,7 +436,7 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
       <div class="commute-ride-group" style="margin-left:35px;width:160px">
         <? while(($rider=$rs->fetch_array())!=false) { ?>
           <div id="R<?=$rider['RiderID']?>" class="photobox">
-            <a href="<?=BuildTeamBaseURL($rider['Domain'])?>/profile.php?RiderID=<?=$rider['RiderID']?>">
+            <a href="<?=BuildTeamBaseURL($rider['Domain'])?>/rider/<?=$rider['RiderID']?>">
               <img class="tight" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$rider['RacingTeamID']?>/<?=$rider['RiderID']?>.jpg" height=35 width=28 border="0">
             </a>
           </div><script type="text/javascript">riderInfoCallout(<?=$rider['RiderID']?>, '')</script>

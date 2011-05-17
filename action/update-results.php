@@ -17,7 +17,7 @@ $values['TeamID'] = $oDB->DBLookup("RacingTeamID", "rider", "RiderID=" . GetUser
 if($values['RaceID']==0 || $values['CategoryID']==0 || $values['PlaceID']==0)
 {
     // data missing, do not post the result
-    header("Location: ../update-results.php");
+    header("Location: ../update-results");
     exit();
 }
 
@@ -51,6 +51,6 @@ if($values2['Report']!="NULL" && $oDB->DBCount("race_report", "RaceID={$values2[
     $oDB->RecordActivityIfOK("Add [race_report]", $values['RaceID']);
 }
 
-header("Location: ../update-results.php");
+header("Location: ../update-results");
 exit();
 ?>

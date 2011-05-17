@@ -45,7 +45,7 @@ function C_SearchBox()
                         // defer slightly to allow browser to send event to google
                         (function(r) {
                             if(r.data.Type=='rider') {
-                                window.location.href = buildTeamBaseURL(r.data.Domain) + "/profile.php?RiderID=" + r.data.RiderID;
+                                window.location.href = buildTeamBaseURL(r.data.Domain) + "/rider/" + r.data.RiderID;
                             } else {
                                 window.location.href = buildTeamBaseURL(r.data.Domain);
                             }

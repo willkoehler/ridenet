@@ -49,7 +49,7 @@ function C_ReportForm(parentElement)
         })
 
         var dateT = new Ext.XTemplate('{Date:date("Y-m-d")} &bull; {Date:date("g:ia")}').compile();
-        var riderT = new Ext.XTemplate('<a href="{[buildTeamBaseURL(values.Domain)]}/profile.php?RiderID={RiderID}" target="_blank" style="color:#5260C1">{RiderName}</a>').compile();;
+        var riderT = new Ext.XTemplate('<a href="{[buildTeamBaseURL(values.Domain)]}/rider/{RiderID}" target="_blank" style="color:#5260C1">{RiderName}</a>').compile();;
         var teamT = new Ext.XTemplate('<a href="{[buildTeamBaseURL(values.Domain)]}" target="_blank" style="color:#5260C1">{TeamName}</a>').compile();;
         var DescriptionT = new Ext.XTemplate('{Description:htmlEncode}').compile();
 

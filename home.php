@@ -90,7 +90,7 @@ $TeamWallLength = 30;
       <?if(is_null($team['HomePageText'])) { ?>
         <div class="help-info" style="margin-top:20px">
           This is a sample home page and stock photo. You can customize your homepage
-          and upload a new photo using the <a href='team-manager.php#2'>Team Manager</a>
+          and upload a new photo using the <a href='/manage#2'>Team Manager</a>
         </div>
       <? } ?>
     <? } else { ?>
@@ -114,12 +114,12 @@ $TeamWallLength = 30;
         + Post Message
       </div>
     <? } else { ?>
-      <div style="float:right;position:relative;top:6px;" class='action-btn' onclick="window.location.href='login.php?Goto=<?=urlencode($_SERVER['REQUEST_URI'])?>'">&nbsp;Login To Post Message&nbsp;</div>
+      <div style="float:right;position:relative;top:6px;" class='action-btn' onclick="window.location.href='/login?Goto=<?=urlencode($_SERVER['REQUEST_URI'])?>'">&nbsp;Login To Post Message&nbsp;</div>
     <? } ?>
     <div style="padding:5px;border-bottom:1px dotted #CCC;border-top:1px dotted #CCC">
       <h2>What's happening @ <?=$team['TeamName']?></h2>
       <div class="team-board-instructions">
-        To Log a Ride or Post a Race Result, go to <a href="profile.php">Your Profile</a>.
+        To Log a Ride or Post a Race Result, go to <a href="/profile">Your Profile</a>.
         To leave a message for this team click "<b>Post Message</b>".
       </div>
     </div>

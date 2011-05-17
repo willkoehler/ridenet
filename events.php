@@ -1,7 +1,7 @@
 <?
 require("script/app-master.php");
 require(SHAREDBASE_DIR . "ExtJSLoader.php");
-require("dynamic-sections/event-schedule.php");
+require("dynamic-sections/events.php");
 
 $oDB = oOpenDBConnection();
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
@@ -24,7 +24,7 @@ $ShowYear = (isset($_REQUEST['Year'])) ? SmartGetInt("Year") : date("Y");
 <!-- Include site stylesheets -->
   <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("/event-schedule.js")?>
+  <?MinifyAndInclude("/events.js")?>
   <?MinifyAndInclude("/dialogs/schedule-event-dialog.js")?>
   <?MinifyAndInclude("/script/ridenet-helpers.js")?>
 <!-- Build javascript arrays for local/static combobox lookups -->
@@ -133,7 +133,7 @@ $ShowYear = (isset($_REQUEST['Year'])) ? SmartGetInt("Year") : date("Y");
       $rs = $oDB->query("SELECT DISTINCT(YEAR(RaceDate)) AS Year FROM event WHERE RaceDate IS NOT NULL AND Archived=0 ORDER BY RaceDate", __FILE__, __LINE__);
       while(($record=$rs->fetch_array())!=false) { ?>
         <?if($record['Year']!=$ShowYear) { ?>
-          <a href="event-schedule.php?Year=<?=$record['Year']?> ">[<?=$record['Year']?>]</a>&nbsp;
+          <a href="/events?Year=<?=$record['Year']?> ">[<?=$record['Year']?>]</a>&nbsp;
         <? } else { ?>
           [<?=$record['Year']?>]&nbsp;
         <? } ?>

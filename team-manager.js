@@ -13,7 +13,7 @@ Ext.onReady(function()
 
 function C_SiteManager(parentElement)
 {
-    // active tab can be specified in the hash tag (i.e. team-manager.php#2)
+    // active tab can be specified in the hash tag (i.e. /manage#2)
     var activeTab = (window.location.hash) ? parseInt(window.location.hash.substr(1,1)) : 0
     this.create = function()
     {

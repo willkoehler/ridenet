@@ -31,7 +31,7 @@ function RenderAttendingRiders($oDB, $calendarID)
     $rs = $oDB->query($sql, __FILE__, __LINE__);
     while(($record = $rs->fetch_array())!=false) { ?>
       <div id="R<?=$record['RiderID']?>" class="photobox">
-        <a href="<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>">
+        <a href="<?=BuildTeamBaseURL($record['Domain'])?>/rider/<?=$record['RiderID']?>">
           <img class="tight <?if($record['Attending']==0) { ?>dimmed<? } ?>" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['RacingTeamID']?>/<?=$record['RiderID']?>.jpg" height=40 width=32>
         </a>
         <?if($record['Attending']) { ?>

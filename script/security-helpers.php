@@ -129,13 +129,13 @@ function CheckLoginAndRedirect()
 {
     if(!CheckLogin())
     {
-        header("Location: login.php?Goto=" . urlencode($_SERVER['REQUEST_URI']));
+        header("Location: /login?Goto=" . urlencode($_SERVER['REQUEST_URI']));
         exit();
     }
     // --- Redirect user to password change page if they are required to change their password
     if(isset($_SESSION['MustChangePW']) && $_SESSION['MustChangePW'] == 1)
     {
-        header("Location: /change-pw.php?Goto=" . urlencode($_SERVER['REQUEST_URI']));
+        header("Location: /change-pw?Goto=" . urlencode($_SERVER['REQUEST_URI']));
         exit();
     }
 }

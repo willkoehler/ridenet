@@ -1,7 +1,7 @@
 <?
 require("script/app-master.php");
 require(SHAREDBASE_DIR . "ExtJSLoader.php");
-require("dynamic-sections/ride-calendar.php");
+require("dynamic-sections/rides.php");
 
 $oDB = oOpenDBConnection();
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
@@ -33,7 +33,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
 <!-- Include site stylesheets -->
   <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("/calendar.js")?>
+  <?MinifyAndInclude("/rides.js")?>
   <?MinifyAndInclude("/dialogs/calendar-event-dialog.js")?>
   <?MinifyAndInclude("/dialogs/location-dialog.js")?>
   <?MinifyAndInclude("/script/ridenet-helpers.js")?>
@@ -91,7 +91,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
           <h2 style="margin:0px">Showing rides posted by</h2>
         </td>
         <td valign=center style="padding: 2px 0 0 5px">
-          <SELECT onChange="window.location.href='/calendar.php' + options[selectedIndex].value">
+          <SELECT onChange="window.location.href='/rides' + options[selectedIndex].value">
             <OPTION value='' <?if($teamFilter==0) {?>selected<? } ?>>All RideNet Teams
             <OPTION value='?tf' <?if($teamFilter > 0) {?>selected<? } ?>><?=$teamName?>
           </SELECT>

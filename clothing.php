@@ -1,7 +1,5 @@
 <?
 require("script/app-master.php");
-require("dynamic-sections/commuting.php");
-require("dynamic-sections/calendar-sidebar.php");
 require(SHAREDBASE_DIR . "ExtJSLoader.php");
 
 $oDB = oOpenDBConnection();

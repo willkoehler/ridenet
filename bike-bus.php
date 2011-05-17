@@ -1,6 +1,5 @@
 <?
 require("script/app-master.php");
-require("dynamic-sections/commuting.php");
 require("dynamic-sections/calendar-sidebar.php");
 require(SHAREDBASE_DIR . "ExtJSLoader.php");
 
@@ -77,7 +76,7 @@ $RideBoardLength = 30;
         <p class=photo-caption>Doug Morgan</p>
       </div>
       <p class="newp">
-        To get things started <a href="http://hahnlaw.ridenet.net/profile.php?RiderID=149">Doug Morgan</a> will be
+        To get things started <a href="http://hahnlaw.ridenet.net/rider/149">Doug Morgan</a> will be
         leading the "bike bus" down High Street from Morse and High to downtown, making stops at
         designated locations (e.g. coffee shops) along the way to pick up additional riders.
       </p>

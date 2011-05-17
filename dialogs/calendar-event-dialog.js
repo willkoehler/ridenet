@@ -249,7 +249,7 @@ function C_RideDialog()
                         this.window.getEl().unmask();
                     } },
                     // redirect to login page if load returns an error (session expired)
-                    actionfailed: function(form, action) { if(action.type == "load") {window.location.href = 'login.php?expired=1' } }
+                    actionfailed: function(form, action) { if(action.type == "load") {window.location.href = '/login?expired=1' } }
                 }
             });
 

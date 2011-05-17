@@ -124,7 +124,7 @@ function TeamTable($oDB, $rs, $rankField, $decimals, $tag)
           <tr>
             <td class="rank" width=20><?=$rank++?>.</td>
             <td class="data">
-              <a href="<?=BuildTeamBaseURL($record['Domain'])?>/home.php">
+              <a href="<?=BuildTeamBaseURL($record['Domain'])?>/">
                 <table cellspacing=0 cellpadding=0 style="height:30px;width:90px;margin:2px 9px"><tr><td align=center>
                   <img id="T<?=$record['TeamID'] . $tag?>" class="tight" src="<?=GetFullDomainRoot()?>/imgstore/team-logo/fit/<?=$record['TeamID']?>.png">
                 </td></tr></table>
@@ -181,7 +181,7 @@ function TopTenRiders($oDB, $teamID, $tag)
     <div class="commute-ride-group">
       <? while(($record=$rs->fetch_array())!=false) { ?>
         <div id="R<?=$record['RiderID'] . $tag?>" class="photobox">
-          <a href="<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>">
+          <a href="<?=BuildTeamBaseURL($record['Domain'])?>/rider/<?=$record['RiderID']?>">
             <img class="tight" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['RacingTeamID']?>/<?=$record['RiderID']?>.jpg" height=27 width=22 border="0">
           </a>
         </div><script type="text/javascript">riderInfoCallout(<?=$record['RiderID']?>, '<?=$tag?>')</script>

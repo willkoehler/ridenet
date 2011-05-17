@@ -85,7 +85,7 @@ function C_ProfileDialog()
                             // === Change PW button ===
                                 xtype: 'button',
                                 text: '&nbsp;Password...&nbsp;',
-                                handler: function() { this.window.getEl().mask(); window.location.href="/change-pw.php" },
+                                handler: function() { this.window.getEl().mask(); window.location.href="/change-pw" },
                                 scope: this,
                                 width: 100
                             }]
@@ -406,7 +406,7 @@ function C_ProfileDialog()
                         this.form.getEl().unmask();
                     }},
                     // redirect to login page if load returns an error (session expired)
-                    actionfailed: function(form, action) { if(action.type == "load") {window.location.href = 'login.php?expired=1' } }
+                    actionfailed: function(form, action) { if(action.type == "load") {window.location.href = '/login?expired=1' } }
                 }
             });
 

@@ -9,7 +9,7 @@ CheckLoginAndRedirect();
 if(!isSystemAdmin() && !isTeamAdmin($oDB, $pt))
 {
   $_SESSION['logonmsg'] = "This page requires team admin rights. Please login.";
-  header("Location: login.php?Goto=" . urlencode($_SERVER['REQUEST_URI']));
+  header("Location: /login?Goto=" . urlencode($_SERVER['REQUEST_URI']));
   exit();
 }
 ?>

@@ -116,7 +116,7 @@ CheckLoginAndRedirect();
           <td style="padding-left:8px">
 <?          // if race year is passed in use it. Otherwise default to current year
             $ShowYear = (isset($_REQUEST['Year'])) ? SmartGetInt("Year") : date("Y");?>
-            <SELECT style='font-size=8pt' name='Year' onChange="window.location.href=('update-results.php?Year=' + options[selectedIndex].value)">
+            <SELECT style='font-size=8pt' name='Year' onChange="window.location.href=('update-results?Year=' + options[selectedIndex].value)">
             <?for($year=START_YEAR; $year <= date("Y"); $year++) {?>
               <OPTION value='<?=$year?>' <?if($year==$ShowYear) {?>selected<? } ?>><?=$year?>
             <? } ?>
@@ -151,7 +151,7 @@ CheckLoginAndRedirect();
               <td class=data>
               <!-- show edit race report option if there is a race report and result was posted less than 14 days ago -->
               <?if($record['ResultsAge'] <= 14 && !is_null($record['Report'])) { ?>
-                <span class="edit-report-btn">[<a title="Edit Race Report" href="edit-race-report.php?RaceID=<?=$record['RaceID']?>&RiderID=<?=$record['RiderID']?>" class="edit-report-btn">R</a></span><span class="edit-report-btn">]</span>
+                <span class="edit-report-btn">[<a title="Edit Race Report" href="/edit-race-report?RaceID=<?=$record['RaceID']?>&RiderID=<?=$record['RiderID']?>" class="edit-report-btn">R</a></span><span class="edit-report-btn">]</span>
               <? } ?>
               <!-- show delete option if results was posted less than 14 days ago -->
               <?if($record['ResultsAge'] <= 14) { ?>
@@ -162,7 +162,7 @@ CheckLoginAndRedirect();
               </td>
               <td class=data><?=date_create($record['RaceDate'])->format("n/j/Y")?></td>
               <td class=data><div class=ellipses style="width:310px">
-                <a href="results-detail.php?RaceID=<?=$record['RaceID']?>&RiderID=<?=$record['RiderID']?>">
+                <a href="/results/<?=$record['RaceID']?>?RiderID=<?=$record['RiderID']?>">
                   <?=$record['EventName']?>
                 </a>
               </div></td>

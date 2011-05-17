@@ -8,7 +8,7 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
 if(isset($_REQUEST['logoff']))
 {
     EndSession();
-    header("Location: index.php");
+    header("Location: /");
     exit();
 }
 

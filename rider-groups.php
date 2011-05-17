@@ -132,7 +132,7 @@ else
           $picWidth = ($first) ? 96 : 46;
           $first = false; ?>
           <div id="R<?=$record['RiderID']?>" class="photobox">
-            <a href="<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>">
+            <a href="<?=BuildTeamBaseURL($record['Domain'])?>/rider/<?=$record['RiderID']?>">
               <img class="tight" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['RacingTeamID']?>/<?=$record['RiderID']?>.jpg" height=<?=$picHeight?> width=<?=$picWidth?> border="0">
             </a>
             <div class="countbox">

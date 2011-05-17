@@ -177,10 +177,10 @@ function C_RideWidget(params)
         if(this.photos)
         {
             html+='<div style="margin-bottom:.1em;white-space:nowrap;color:#888"> \
-                     <a style="text-decoration:none;color:'+this.color.links+'" href="http://'+r.Domain+'.ridenet.net/profile.php?RiderID=' + r.RiderID + '" target="_blank">' + r.RiderName + '</a> &bull; ' + r.TeamName + ' \
+                     <a style="text-decoration:none;color:'+this.color.links+'" href="http://'+r.Domain+'.ridenet.net/rider/' + r.RiderID + '" target="_blank">' + r.RiderName + '</a> &bull; ' + r.TeamName + ' \
                    </div> \
                    <div style="float:left"> \
-                    <a href="http://'+r.Domain+'.ridenet.net/profile.php?RiderID=' + r.RiderID + '" target="_blank"> \
+                    <a href="http://'+r.Domain+'.ridenet.net/rider/' + r.RiderID + '" target="_blank"> \
                       <img style="vertical-align:bottom;border:0;width:'+this.size.picWidth+'px;height:'+this.size.picHeight+'px" src="http://'+this.domainRoot+'/imgstore/rider-portrait/' + r.RacingTeamID + '/' + r.RiderID + '.jpg"> \
                     </a> \
                   </div>'

@@ -16,7 +16,7 @@ function C_ReportForm(parentElement)
     this.form = null;
     this.firstLoad = true;
 
-    // Sort column and range filter can be specified in the hash tag (i.e. rider-stats.php#s=CEDays&r=This%20Year&q=searchfor)
+    // Sort column and range filter can be specified in the hash tag (i.e. /rider-stats#s=CEDays&r=This%20Year&q=searchfor)
     // If there's no hash tag, use defaults
     var hash = Ext.urlDecode((window.location.hash) ? window.location.hash.substr(1) : "");
     var sort = (hash.s) || "CEDays";
@@ -126,7 +126,7 @@ function C_ReportForm(parentElement)
                 columns: columns,
                 listeners: {scope: this, click: function(dv, index, node, e) {
                     record = this.ds.getAt(index).data;
-                    window.open(buildTeamBaseURL(record.Domain) + '/profile.php?RiderID=' + record.RiderID);
+                    window.open(buildTeamBaseURL(record.Domain) + '/rider/' + record.RiderID);
                 }}
             }]
         });

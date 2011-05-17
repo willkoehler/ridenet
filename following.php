@@ -95,7 +95,7 @@ CheckLoginAndRedirect();
             <!--Ride-->
             <tr>
               <td class="data" width="35" style="text-align:center">
-                <a href="<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>">
+                <a href="<?=BuildTeamBaseURL($record['Domain'])?>/rider/<?=$record['RiderID']?>">
                   <img src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['RacingTeamID']?>/<?=$record['RiderID']?>.jpg" class="tight" style="height:35px" title="<?=$record['RiderName']?>">
                 </a>
               </td>

@@ -81,7 +81,7 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
           <?if(CheckLogin()) { ?>
             <span class='action-btn' id='add-btn0' onclick="clickAddRide(this.id);">&nbsp;<b>+</b> Add Ride&nbsp;</span>
           <? } else { ?>
-            <span class='action-btn' onclick="window.location.href='login.php?Goto=<?=urlencode("../calendar.php" . ($TeamFilter ? "?tf" : ""))?>'">&nbsp;Login To Add a Ride&nbsp;</span>
+            <span class='action-btn' onclick="window.location.href='/login?Goto=<?=urlencode("../rides" . ($TeamFilter ? "?tf" : ""))?>'">&nbsp;Login To Add a Ride&nbsp;</span>
           <? } ?>
         </td></tr>
         <tr><td class="table-spacer" style="height:5px" colspan=2>&nbsp;</td></tr>
@@ -121,7 +121,7 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
                   <?if(CheckLogin()) { ?>
                     <span class='action-btn' id='add-btn<?=$eventDate->format("n-j")?>' onclick="clickAddRide(this.id);"><b>+</b> Add Ride</span>
                   <? } else { ?>
-                    <span class='action-btn' onclick="window.location.href='login.php?Goto=<?=urlencode("../calendar.php" . ($TeamFilter ? "?tf" : ""))?>'">&nbsp;Login To Edit&nbsp;</span>
+                    <span class='action-btn' onclick="window.location.href='/login?Goto=<?=urlencode("../rides" . ($TeamFilter ? "?tf" : ""))?>'">&nbsp;Login To Edit&nbsp;</span>
                   <? } ?>
                 </td>
               </tr></table>
@@ -153,7 +153,7 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
             <td width="60" <?if($thisWeek) {?>id="highlight"<? } ?>><?=$eventDate->format("g:i a")?></td>
             <td width="50" <?if($thisWeek) {?>id="highlight"<? } ?> style="font-weight:bold;font-family:courier new;"><?=BuildRideClass($record)?></td>
             <td width="255" <?if($thisWeek) {?>id="highlight"<? } ?>><div class=ellipses style="width:245px">
-              <a href="/calendar-detail.php?CID=<?=$record['CalendarID']?>">
+              <a href="/ride/<?=$record['CalendarID']?>">
                 <?=$record['EventName']?>
               </a>
             </div></td>

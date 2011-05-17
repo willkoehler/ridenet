@@ -452,7 +452,7 @@ function C_CustomizeTab()
                     }
                 }},
                 // redirect to login page if load returns an error (session expired)
-                actionfailed: function(form, action) { if(action.type == "load") {window.location.href = 'login.php?expired=1' } },
+                actionfailed: function(form, action) { if(action.type == "load") {window.location.href = '/login?expired=1' } },
                 render: function() {
                 // --- Add listener to all fields to mark this form as dirty when any item changes
                 // --- Both the 'change' and 'selected' events are needed to trap all changes. The 'check' event traps changes in check boxes

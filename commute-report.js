@@ -92,7 +92,7 @@ function C_ReportForm(parentElement)
             listeners: { scope: this,
                 cellclick: function(grid, row, col, e) {
                     if (e.getTarget().id.search(/profile-btn/)==0) {   // did user click on profile button?
-                        window.open("profile.php?RiderID=" + grid.getStore().getAt(row).data.RiderID, "profile");
+                        window.open("/rider/" + grid.getStore().getAt(row).data.RiderID, "profile");
                     }
                 }
             }

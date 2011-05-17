@@ -23,7 +23,7 @@ if($email == "NULL")
 {
     $_SESSION['logonmsg'] = "INVALID USER ID OR PASSWORD, PLEASE RE-ENTER";
     $_SESSION['lcheck'] = 0;
-    header("Location: ../login.php?$gotoParam");
+    header("Location: ../login?$gotoParam");
     exit();
 }
 else
@@ -38,7 +38,7 @@ else
         // No matches, login failed
         $_SESSION['logonmsg'] = "INVALID USER ID OR PASSWORD, PLEASE RE-ENTER";
         $_SESSION['lcheck'] = 0;
-        header("Location: ../login.php?$gotoParam");
+        header("Location: ../login?$gotoParam");
         exit();
     }
     elseif(CheckPassword($password, $record['Password'])==false)
@@ -46,7 +46,7 @@ else
         // Password doesn't match, login failed
         $_SESSION['logonmsg'] = "INVALID USER ID OR PASSWORD, PLEASE RE-ENTER";
         $_SESSION['lcheck'] = 0;
-        header("Location: ../login.php?$gotoParam");
+        header("Location: ../login?$gotoParam");
         exit();
     }
     else
@@ -81,7 +81,7 @@ else
         else
         {
           // goto riders' profile page
-          header("Location: ../profile.php");
+          header("Location: ../profile");
           exit();
         }
     }

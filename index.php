@@ -4,12 +4,6 @@ require(SHAREDBASE_DIR . "ExtJSLoader.php");
 
 $oDB = oOpenDBConnection();
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
-if($pt!=0)
-{
-  // redirect to team home page
-  header("Location: home.php");
-  exit();
-}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -49,7 +43,7 @@ if($pt!=0)
     <div style="float:left;width:515px">
       <div style="margin-bottom:30px;-webkit-font-smoothing:antialiased;font:22px 'Helvetica Neue', Helvetica, Arial, sans-serif" class="primary-color">
         <span style="line-height:28px;">Create a rider bio, track your race results, keep a ride log, build a team page, find cycling events in your area, connect with other riders.</span>
-        <a href="/about.php" style="font-size:14px;color:#058A12">Learn More...</a>
+        <a href="/about" style="font-size:14px;color:#058A12">Learn More...</a>
       </div>
       <div style="margin-left:20px">
         <script type='text/javascript' src='../ride-widget.js'></script> 
@@ -91,7 +85,7 @@ if($pt!=0)
 
       <div style="width:200px;margin-top:10px;-moz-border-radius: 8px;border-radius: 8px;border: 1px solid #CCC;background-color:#EEE;padding:15px 0 10px 0;text-align:center">
         <div style="margin-top:0px;font:16px helvetica;color:#333">Buy RideNet Clothing.</div>
-        <a href="/clothing.php">
+        <a href="/clothing">
           <img style="margin:5px 0 0 0;" src="/images/clothing/ridenet-jersey1.png" Height=110 border=0>
         </a>
         <p style="margin:5px 0 0 0;font-size:12px;color:#888">
@@ -114,7 +108,7 @@ if($pt!=0)
       <div class="commute-ride-group" style="margin-left:5px;width:195px">
         <? while(($rider=$rs->fetch_array())!=false) { ?>
           <div id="R<?=$rider['RiderID']?>" class="photobox">
-            <a href="<?=BuildTeamBaseURL($rider['Domain'])?>/profile.php?RiderID=<?=$rider['RiderID']?>">
+            <a href="<?=BuildTeamBaseURL($rider['Domain'])?>/rider/<?=$rider['RiderID']?>">
               <img class="tight" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$rider['RacingTeamID']?>/<?=$rider['RiderID']?>.jpg" height=35 width=28 border="0">
             </a>
           </div><script type="text/javascript">riderInfoCallout(<?=$rider['RiderID']?>, '')</script>
@@ -126,16 +120,16 @@ if($pt!=0)
         Featured Teams...
       </div>
       <div style="margin:0px 0px 0px 0px;text-align:center;font:12px 'Helvetica Neue', Helvetica, Arial, sans-serif" class="text75">
-        <a href="<?=BuildTeamBaseURL('echeloncycling')?>/home.php">
+        <a href="<?=BuildTeamBaseURL('echeloncycling')?>/">
           <img style="border:1px solid #555;margin-top:5px" src="/images/featured-echelon.jpg">
         </a>
-        <a href="<?=BuildTeamBaseURL('teamawesome')?>/home.php">
+        <a href="<?=BuildTeamBaseURL('teamawesome')?>/">
           <img style="border:1px solid #555;margin-top:10px" src="/images/featured-teamawesome.jpg">
         </a>
-        <a href="<?=BuildTeamBaseURL('pattycake')?>/home.php">
+        <a href="<?=BuildTeamBaseURL('pattycake')?>/">
           <img style="border:1px solid #555;margin-top:10px" src="/images/featured-pattycake.jpg">
         </a>
-        <a href="<?=BuildTeamBaseURL('trekstorecolumbus')?>/home.php">
+        <a href="<?=BuildTeamBaseURL('trekstorecolumbus')?>/">
           <img style="border:1px solid #555;margin-top:10px" src="/images/featured-trekstore.jpg">
         </a>
         

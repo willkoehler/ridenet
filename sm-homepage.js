@@ -46,7 +46,7 @@ function C_HomePageTab()
                     // === Preview Link ===
                     xtype: 'container',
                     style: 'font-size:13px;padding: 2px 0 0 15px',
-                    html: '<a style="color:blue" target="_blank" href="index.php">Preview your homepage</a>'
+                    html: '<a style="color:blue" target="_blank" href="/">Preview your homepage</a>'
                 }]
             },{
                 xtype: 'container', cls: 'form-spacer', height:20
@@ -192,7 +192,7 @@ function C_HomePageTab()
                 // unmask form when load is completed
                 actioncomplete: function(form, action) { if(action.type == "load") { this.form.getEl().unmask(); } },
                 // redirect to login page if load returns an error (session expired)
-                actionfailed: function(form, action) { if(action.type == "load") {window.location.href = 'login.php?expired=1' } },
+                actionfailed: function(form, action) { if(action.type == "load") {window.location.href = '/login?expired=1' } },
                 render: function() {
                 // --- Add listener to all fields to mark this form as dirty when any item changes
                 // --- Both the 'change' and 'selected' events are needed to trap all changes. The 'check' event traps changes in check boxes

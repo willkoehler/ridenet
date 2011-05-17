@@ -20,7 +20,7 @@ else
     $oDB->query("UPDATE rider SET Password='$newPWHash', MustChangePW=1 WHERE RiderID=$riderID", __FILE__, __LINE__);
     $msg = "We received a request to reset your RideNet password. Below is your login information and temporary " .
            "password. Once you are logged in, you will be asked to choose a new password\n\n" .
-           "Login Page: " . GetFullDomainRoot() . "/login.php\n" .
+           "Login Page: " . GetFullDomainRoot() . "/login\n" .
            "Your Email: $emailraw\n" .
            "Temporary Password: $newPW\n";
     SendMail($emailraw, "RideNet Password Reset", $msg, "noreply@ridenet.net");

@@ -22,6 +22,6 @@ else
     exit("You are not allowed to delete this result");
 }
 
-header("Location: ../update-results.php");
+header("Location: ../update-results");
 exit();
 ?>

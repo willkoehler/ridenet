@@ -153,7 +153,7 @@ function CalendarUpdateEmail($oDB, $postID)
                "\"{$post['Text']}\"\n\n" .
                "You received this email because you checked \"Email me ride updates\" on the ride information page. " .
                "For details go to the ride information page: " .
-               BuildTeamBaseURL($recipient['Domain']) . "/calendar-detail.php?CID={$post['CalendarID']}";
+               BuildTeamBaseURL($recipient['Domain']) . "/ride/{$post['CalendarID']}";
         if(SendMail($to, $subject, $msg, "noreply@ridenet.net"))
         {
             $oDB->RecordActivity("Email OK: " . addslashes($to), $post['CalendarID']);
@@ -199,7 +199,7 @@ function EventUpdateEmail($oDB, $postID)
                "\"{$post['Text']}\"\n\n" .
                "You received this email because you checked \"Email me event updates\" on the event information page. " .
                "For details go to the event information page: " .
-               BuildTeamBaseURL($recipient['Domain']) . "/event-detail.php?RaceID={$post['RaceID']}";
+               BuildTeamBaseURL($recipient['Domain']) . "/event/{$post['RaceID']}";
         if(SendMail($to, $subject, $msg, "noreply@ridenet.net"))
         {
             $oDB->RecordActivity("Email OK: " . addslashes($to), $post['RaceID']);

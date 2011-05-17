@@ -48,7 +48,7 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
 <!-- Include site stylesheets -->
   <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("/calendar-detail.js")?>
+  <?MinifyAndInclude("/ride-detail.js")?>
   <?MinifyAndInclude("/dialogs/calendar-event-dialog.js")?>
   <?MinifyAndInclude("/dialogs/post-update-dialog.js")?>
   <?MinifyAndInclude("/dialogs/location-dialog.js")?>
@@ -156,10 +156,10 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
           <tr>
             <td class="label">Posted&nbsp;By:</td>
             <td class="text">
-              <a href="<?=BuildTeamBaseURL($record['PostedDomain'])?>/profile.php?RiderID=<?=$record['RiderID']?>">
+              <a href="<?=BuildTeamBaseURL($record['PostedDomain'])?>/rider/<?=$record['RiderID']?>">
                 <?=$record['FirstName'] . " " . $record['LastName']?>
               </a>&nbsp;-&nbsp;
-              <a href="<?=BuildTeamBaseURL($record['PostedDomain'])?>/home.php">
+              <a href="<?=BuildTeamBaseURL($record['PostedDomain'])?>/">
                 <b><?=$record['PostedTeamName']?></b>
               </a>
             </td>
@@ -183,7 +183,7 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
                 <? if(!CheckLogin()) { ?>
                   <div style="text-align:center;padding: 10px 0 5px 0">
                     <span class="label">Are you going?</span>
-                    <span class="text"><a href="login.php?T=<?=$pt?>&Goto=<?=urlencode($_SERVER['REQUEST_URI'])?>">[ Login Required ]</a></span>
+                    <span class="text"><a href="/login?T=<?=$pt?>&Goto=<?=urlencode($_SERVER['REQUEST_URI'])?>">[ Login Required ]</a></span>
                   </div>
                 <? } else { ?>
                   <div id='form-holder'></div>
@@ -221,7 +221,7 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
             + Post Update
           </div>
         <? } else { ?>
-          <div style="float:right;position:relative;top:6px;" class='action-btn' onclick="window.location.href='login.php?Goto=<?=urlencode($_SERVER['REQUEST_URI'])?>'">&nbsp;Login To Post Update&nbsp;</div>
+          <div style="float:right;position:relative;top:6px;" class='action-btn' onclick="window.location.href='/login?Goto=<?=urlencode($_SERVER['REQUEST_URI'])?>'">&nbsp;Login To Post Update&nbsp;</div>
         <? } ?>
         <div style="padding:5px;border-bottom:1px dotted #CCC;border-top:1px dotted #CCC">
           <h2 style="margin:0px">Ride Updates</h2>
@@ -242,7 +242,7 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
           <? if($attendanceOpen) { ?>
             <div class="team-board-instructions">
               To share a ride comment here&nbsp;&nbsp;1. Check "I'll be there" (above)
-              &nbsp;&nbsp;2. Go to <a href="profile.php">Your Profile</a> and log a ride on <?=date_create($rideDate)->format("n/j/Y")?>
+              &nbsp;&nbsp;2. Go to <a href="/profile">Your Profile</a> and log a ride on <?=date_create($rideDate)->format("n/j/Y")?>
             </div>
           <? } ?>
         </div>

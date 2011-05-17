@@ -85,17 +85,17 @@ function RenderWall($rs, $pt, $showTime=false, $showHeaders=true, $emptyMessage=
         <? } ?>
       <!--====== Photo and Title ======-->
         <div class="picture">
-          <a href="<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>">
+          <a href="<?=BuildTeamBaseURL($record['Domain'])?>/rider/<?=$record['RiderID']?>">
             <img class="tight" width=35 height=44 src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['RacingTeamID']?>/<?=$record['RiderID']?>.jpg">
           </a>
         </div>
         <div class="title">
-          <a href="<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>">
+          <a href="<?=BuildTeamBaseURL($record['Domain'])?>/rider/<?=$record['RiderID']?>">
             <b><?=$record['RiderName']?></b>
           </a>
           <? if($record['RacingTeamID']!=$pt && $record['CommutingTeamID']!=$pt) { ?>
             <span class="bullet">&bull;</span>
-            <a style="color:#888" href="<?=BuildTeamBaseURL($record['Domain'])?>/home.php">
+            <a style="color:#888" href="<?=BuildTeamBaseURL($record['Domain'])?>/">
               <?=$record['TeamName']?>
             </a>
           <? } ?>
@@ -121,7 +121,7 @@ function RenderWall($rs, $pt, $showTime=false, $showHeaders=true, $emptyMessage=
         <? case 'Race Result': ?>
         <!--====== Race results detail ======-->
           <div class="body">
-            <a href="results-detail.php?RaceID=<?=$record['RaceID']?>&RiderID=<?=$record['RiderID']?>"><?=$record['EventName']?></a>
+            <a href="/results/<?=$record['RaceID']?>?RiderID=<?=$record['RiderID']?>"><?=$record['EventName']?></a>
             <?if(!is_null($record['PostText'])) { ?>
               <span class="bullet">&bull;</span> <?=htmlentities($record['PostText'])?>
             <? } ?>

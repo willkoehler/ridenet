@@ -29,7 +29,7 @@ $rs->free()
 <!-- Include site stylesheets -->
   <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
 <!-- Code-behind modules for this page (minify before including)-->
-  <?MinifyAndInclude("/results-detail.js")?>
+  <?MinifyAndInclude("/results.js")?>
   <?MinifyAndInclude("/script/ridenet-helpers.js")?>
 <!-- lightbox -->
   <?echo "<script type='text/javascript' src='" . SHAREDBASE_URL . "lightbox/lightbox.js'></script>\n";?>
@@ -103,7 +103,7 @@ $rs->free()
               <? } ?>
             </td>
             <td class="data"><div class=ellipses style="width:170px">
-              <a href="<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>&Year=<?=$RaceYear?>"><?=$record['RiderName']?></a>
+              <a href="<?=BuildTeamBaseURL($record['Domain'])?>/rider/<?=$record['RiderID']?>?Year=<?=$RaceYear?>"><?=$record['RiderName']?></a>
             </div></td>
             <td class="data"><div class=ellipses style="width:230px">
               <?=$record['ResultsTeamName']?>&nbsp;
@@ -146,7 +146,7 @@ $rs->free()
           <!-- show rider photo with caption in first column -->
             <table>
               <tr><td align=center>
-                <a href="<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>&Year=<?=$RaceYear?>">
+                <a href="<?=BuildTeamBaseURL($record['Domain'])?>/rider/<?=$record['RiderID']?>?Year=<?=$RaceYear?>">
                 <img class="tight" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['PhotoTeamID']?>/<?=$record['RiderID']?>.jpg" height=100 width=80 border="0"></a>
               </td></tr>
               <tr><td class="profile-photo-caption">
@@ -216,7 +216,7 @@ $rs->free()
             <!-- show rider photo with caption in first column -->
               <table>
                 <tr><td align=center>
-                  <a href="<?=BuildTeamBaseURL($record['Domain'])?>/profile.php?RiderID=<?=$record['RiderID']?>&Year=<?=$RaceYear?>">
+                  <a href="<?=BuildTeamBaseURL($record['Domain'])?>/rider/<?=$record['RiderID']?>?Year=<?=$RaceYear?>">
                   <img class="tight" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['ResultsTeamID']?>/<?=$record['RiderID']?>.jpg" height=100 width=80 border="0"></a>
                 </td></tr>
                 <tr><td class="profile-photo-caption">

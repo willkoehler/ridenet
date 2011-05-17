@@ -86,7 +86,7 @@ function getMore(weeks)
 function updateRideCalendar()
 {
     Ext.get('container').mask("Updating");
-    Ext.Ajax.request( {url: '/dynamic-sections/ride-calendar.php?pb&T=' + g_pt + '&w=' + g_calendarWeeks + '&tf=' + g_teamFilter, success: function(response, options) {
+    Ext.Ajax.request( {url: '/dynamic-sections/rides.php?pb&T=' + g_pt + '&w=' + g_calendarWeeks + '&tf=' + g_teamFilter, success: function(response, options) {
         Ext.get('ride-calendar-holder').update(response.responseText);
         addHoverListeners();    // add listeners to hide/show copy buttons
         Ext.get('container').unmask();
