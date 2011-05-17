@@ -3,20 +3,21 @@
 require("../script/app-master-min.php");
 
 // store query/post values in local variables
-$query = $_REQUEST['query'];           // partial string typed into combo box
+$query = addslashes($_REQUEST['query']);           // partial string typed into combo box
 
 // --- open connection to database
 $oDB = oOpenDBConnection();
 
-// --- split query string into $lastName, $firstName. It is much faster to search on names separately
-// --- then to search on a combined "Name" field because the separate seaches can take advantage
-// --- of the LastName, FirstName indexes
+// --- split query string into Last Name (with possible middle name) and First Name. It is much faster
+// --- to search on names separately then to search on a combined "Name" field because the separate
+// --- seaches can take advantage of the LastName, FirstName indexes
 $names = explode(" ", $query);
-$firstName = $names[0];
-$lastName = isset($names[1]) ? trim($names[1]) : "";
+$name2 = trim((count($names) > 1) ? end($names) : "");
+$name1 = trim(($name2=="") ? $query : substr($query, 0, -strlen($name2)));
 
 // -- build WHERE clause based on search terms
-$whereFilter1 = "((FirstName LIKE \"$firstName%\" OR LastName LIKE \"$firstName%\") AND LastName LIKE \"$lastName%\") AND IFNULL(rider.Archived,0)=0";
+$whereFilter1 = "(((FirstName LIKE \"$name1%\" OR LastName LIKE \"$name1%\") AND LastName LIKE \"$name2%\") OR
+                  FirstName LIKE \"$name1 $name2%\") AND IFNULL(rider.Archived,0)=0";
 $whereFilter2 = "TeamName LIKE \"%$query%\" AND IFNULL(Archived,0)=0";
 
 // --- Get User records
