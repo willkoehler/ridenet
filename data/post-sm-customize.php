@@ -35,9 +35,9 @@ else if($domainCheck!="")
 else
 {
     // ==== Store Uploaded Pictures ====
-    $bannerUploaded = ($_FILES['BannerFile']['tmp_name']!="") ? true : false;
-    $logoUploaded = ($_FILES['LogoFile']['tmp_name']!="") ? true : false;
-    $backgroundUploaded = ($_FILES['PageBGFile']['tmp_name']!="") ? true : false;
+    $bannerUploaded = (isset($_FILES['BannerFile']['tmp_name']) && $_FILES['BannerFile']['tmp_name']!="") ? true : false;
+    $logoUploaded = (isset($_FILES['LogoFile']['tmp_name']) && $_FILES['LogoFile']['tmp_name']!="") ? true : false;
+    $backgroundUploaded = (isset($_FILES['PageBGFile']['tmp_name']) && $_FILES['PageBGFile']['tmp_name']!="") ? true : false;
 
     $banner = new SimpleImage;
     $logo = new SimpleImage;

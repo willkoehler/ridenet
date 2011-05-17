@@ -57,7 +57,7 @@ else
 
     // ==== Store Uploaded Pictures ====
     $teamID = $oDB->DBLookup("RacingTeamID", "rider", "RiderID=$riderID");    // always use racing team ID for picture
-    $pictureUploaded = ($result['success'] && $_FILES['PictureFile']['tmp_name']!="") ? true : false;
+    $pictureUploaded = ($result['success'] && isset($_FILES['PictureFile']['tmp_name']) && $_FILES['PictureFile']['tmp_name']!="") ? true : false;
     $actionPictureUploaded = ($result['success'] && isset($_FILES['ActionPictureFile']['tmp_name']) && $_FILES['ActionPictureFile']['tmp_name']!="") ? true : false;
     if($result['success'] && $pictureUploaded || $actionPictureUploaded)
     {
