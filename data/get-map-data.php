@@ -10,7 +10,7 @@ $oDB = oOpenDBConnection();
 // --- get map data
 $sql = "SELECT Longitude, Latitude
         FROM ride_log_map
-        WHERE RideLogID=$rideLogID
+        WHERE RideLogID=$rideLogID AND Altitude>0
         ORDER BY DateTime ASC";
 $rs = $oDB->query($sql, __FILE__, __LINE__);
 
