@@ -21,7 +21,7 @@ if(($record = $rs->fetch_array())!=false && ($record['ActionPicture']!=""))
     $picture = new SimpleImage;
     $picture->set($record['ActionPicture']);
     $picture->resizeToFit(160,120);
-    echo $picture->output(IMAGETYPE_JPEG);
+    $picture->output(IMAGETYPE_JPEG);
 }
 else
 {

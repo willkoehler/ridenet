@@ -21,7 +21,8 @@ if(($record = $rs->fetch_array())!=false)
 }
 else
 {
-    // default homepage image depends on the team type (hard-code for now)
+    // This team does not have a homepage image. Display default image.
+    // Default homepage image depends on the team type (hard-code for now)
     if($teamTypeID==2)
     {
         // image for 2BY2012 pages
@@ -29,10 +30,9 @@ else
     }
     else
     {
-        // banner for ridenet teams depends on weather team is showing logo in the center of the banner
+        // image for racing and recreational teams
         $imageFile = "ridenet-homepage.jpg";
     }
-    // This team does not have a homepage image. Display default banner
     $picData=file_get_contents(dirname(__FILE__) . "/../images/$imageFile");
     header("Content-type: image/jpeg");
     echo $picData;

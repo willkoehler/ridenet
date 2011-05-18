@@ -22,23 +22,23 @@ if(($record = $rs->fetch_array())!=false && !is_null($record['Banner']))
 }
 else
 {
-    // default banner depends on the team type and team ID (hard-code for now)
+    // This team does not have a page banner. Display default banner
+    // Default banner depends on the team type and team ID (hard-code for now)
     if($teamID==0)
     {
-        // banner for generic RideNet pages
+        // banner for RideNet pages
         $bannerFile = "ridenetbanner.png";
     }
     elseif($teamTypeID==2)
     {
-        // banner for 2BY2012 pages
+        // banner for 2BY2012 teams
         $bannerFile = "2by2012banner.png";
     }
     else
     {
-        // default banner for ridenet teams depends on weather team is showing logo in the center of the banner
+        // banner for racing/recreational teams depends on weather team is showing logo in the center of the banner
         $bannerFile = ($showLogo) ? "ridenetbanner2.png" : "ridenetbanner.png";
     }
-    // This team does not have a page banner. Display default banner
     $picData=file_get_contents(dirname(__FILE__) . "/../images/$bannerFile");
     header("Content-type: image/png");
     echo $picData;

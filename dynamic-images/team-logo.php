@@ -20,7 +20,7 @@ if(($record = $rs->fetch_array())!=false)
 }
 else
 {
-    // This team has not uploaded a logo. Display blank picture
+    // This team has not uploaded a logo. Display default logo
     $picData=file_get_contents(dirname(__FILE__) . "/../images/logo-unavailable.png");
     header("Content-type: image/png");
     echo $picData;

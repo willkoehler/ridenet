@@ -21,7 +21,7 @@ if(($record = $rs->fetch_array())!=false && ($record['ActionPicture']!=""))
 }
 else
 {
-    // This rider has not uploaded a picture for this team. Display "unavailable" picture
+    // This rider has not uploaded a picture for this team. Display nothing
     $picData=file_get_contents(dirname(__FILE__) . "/../images/tdot.gif");
     header("Content-type: image/gif");
     echo $picData;

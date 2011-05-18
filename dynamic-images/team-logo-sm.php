@@ -16,15 +16,15 @@ $rs = $oDB->query("SELECT Logo FROM team_images WHERE TeamID=$teamID AND Logo IS
 if(($record = $rs->fetch_array())!=false)
 {
     // resize and display team logo from database
-    header("Content-type: image/jpeg");
+    header("Content-type: image/png");
     $picture = new SimpleImage;
     $picture->set($record['Logo']);
     $picture->resizeToFit(165,70);
-    echo $picture->output(IMAGETYPE_PNG);
+    $picture->output(IMAGETYPE_PNG);
 }
 else
 {
-    // This team has not uploaded a logo. Display blank picture
+    // This team has not uploaded a logo. Display default logo
     $picData=file_get_contents(dirname(__FILE__) . "/../images/logo-unavailable.png");
     header("Content-type: image/png");
     echo $picData;
