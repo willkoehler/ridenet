@@ -78,7 +78,7 @@ $TeamWallLength = 30;
       </h1>
       <div style="height:10px"></div>
       <div id='more-content'>
-        <img class="photo" src="/dynamic-images/homepage-image.php?T=<?=$pt?>">
+        <img class="photo" src="/imgstore/homepage/<?=$pt?>.jpg">
         <div class="text">
           <?if(is_null($team['HomePageText'])) { ?>
             <?=SampleHomePageText($team['TeamTypeID'])?>

@@ -38,11 +38,12 @@ RewriteRule ^api/about$ api/about.php [L]
 RewriteRule ^imgstore/rider-portrait/([^/]+)/([^/]+).jpg$ dynamic-images/rider-portrait.php?T=$1&RiderID=$2 [L]
 RewriteRule ^imgstore/rider-action-shot/([^/]+)/([^/]+).jpg$ dynamic-images/rider-action-shot.php?T=$1&RiderID=$2 [L]
 RewriteRule ^imgstore/rider-action-shot/sm/([^/]+)/([^/]+).jpg$ dynamic-images/rider-action-shot-sm.php?T=$1&RiderID=$2 [L]
-RewriteRule ^imgstore/body-bg/([^/]+).jpg$ dynamic-images/body-bg-image.php?T=$1 [L]
+RewriteRule ^imgstore/body-bg/([^/]+).jpg$ dynamic-images/body-bg.php?T=$1 [L]
 RewriteRule ^imgstore/banner/([^/]+).jpg$ dynamic-images/page-banner.php?T=$1 [L]
 RewriteRule ^imgstore/team-logo/([^/]+).png$ dynamic-images/team-logo.php?T=$1 [L]
 RewriteRule ^imgstore/team-logo/sm/([^/]+).png$ dynamic-images/team-logo-sm.php?T=$1 [L]
 RewriteRule ^imgstore/team-logo/fit/([^/]+).png$ dynamic-images/team-logo-fit.php?T=$1 [L]
+RewriteRule ^imgstore/homepage/([^/]+).jpg$ dynamic-images/homepage.php?T=$1 [L]
 
 # Make friendly URLs
 RewriteRule ^login$ login.php [L,QSA]

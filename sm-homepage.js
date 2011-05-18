@@ -90,7 +90,7 @@ function C_HomePageTab()
                                     {
                                         this.el.update('<table cellpadding=0 cellspacing=0 height=100% width=100%>\
                                                           <tr><td align=center>\
-                                                            <img src="/dynamic-images/homepage-image.php?T=' + g_pt + '&x=' + Math.random() + '">\
+                                                            <img src="/imgstore/homepage/' + g_pt + '.jpg?x=' + Math.random() + '">\
                                                           </td></tr>\
                                                         </table>');
                                     }
@@ -260,7 +260,7 @@ function C_HomePageTab()
         this.form.getForm().findField("TeamImage").setValue(g_pt);   // refresh team image
         this.form.getEl().unmask();
         // force browser to update cached image
-        forceReload.defer(700, this, ["/dynamic-images/cache-buster.php", "homepage-image.php?T=" + g_pt]);
+        forceReload.defer(700, this, ["/dynamic-images/cache-buster.php", "/imgstore/homepage/" + g_pt + ".jpg"]);
         // force browser to update the dynamic images in its cache by reloading page.
 //        window.location.hash="#2";  // stay on the homepage tab
 //        window.location.reload();
