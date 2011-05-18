@@ -4,9 +4,9 @@ require_once(dirname(__FILE__) . "/render-wall.php");
 if(isset($_REQUEST['pb']))
 {
     require("../script/app-master.php");
+    CheckRequiredParameters(Array('TeamID', 'l'));
     $length = $_REQUEST['l'];
     $teamID = SmartGetInt("TeamID");
-
     $oDB = oOpenDBConnection();
     RenderTeamWall($oDB, $teamID, $length);
 }

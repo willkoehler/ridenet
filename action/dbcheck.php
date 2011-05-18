@@ -3,12 +3,8 @@ require("../script/app-master.php");
 $oDB = oOpenDBConnection();
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
 
-// Verify required parameters are present (to handle bots scanning this page)
-if(!isset($_REQUEST['id']) || !isset($_REQUEST['pw']))
-{
-    header("HTTP/1.1 400 Bad Request");
-    exit();
-}
+// Reject requests that are missing required parameters (to handle bots scanning this page)
+CheckRequiredParameters(Array('id', 'pw'));
 
 $email = SmartGetString("id");
 $password = SmartGet("pw");

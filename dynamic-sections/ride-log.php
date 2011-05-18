@@ -2,6 +2,7 @@
 if(isset($_REQUEST['pb']))
 {
     require("../script/app-master.php");
+    CheckRequiredParameters(Array('RiderID', 'l'));
     $length = $_REQUEST['l'];
     if(isset($_REQUEST['edit']) && CheckLogin())
     {

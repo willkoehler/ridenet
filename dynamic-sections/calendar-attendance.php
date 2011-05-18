@@ -2,9 +2,9 @@
 if(isset($_REQUEST['pb']))
 {
     require_once("../script/app-master.php");
+    CheckRequiredParameters(Array('CalendarID'));
     $calendarID = SmartGetInt("CalendarID");
     $oDB = oOpenDBConnection();
-
     RenderAttendingRiders($oDB, $calendarID);
 }
 

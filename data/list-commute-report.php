@@ -1,9 +1,10 @@
 <?
 require("../script/app-master.php");
 
+// Reject requests that are missing required parameters (to handle bots scanning this page)
+CheckRequiredParameters(Array('dir', 'sort', 'StartDate', 'EndDate', 'Tolerance', 'T'));
+
 // store query/post values in local variables
-$limit = SmartGetInt('limit');     // Number of records to retrieve (used for grid object paging)
-$start = SmartGetInt('start');     // Starting record (used for grid object paging)
 $dir = SmartGet('dir');            // Sort direction desc, asc (used for remoteSort)
 $sort = SmartGet('sort');          // name of sort row (used for remoteSort)
 $startDate = SmartGetDate('StartDate');

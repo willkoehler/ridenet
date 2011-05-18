@@ -4,8 +4,8 @@ require_once(dirname(__FILE__) . "/render-wall.php");
 if(isset($_REQUEST['pb']))
 {
     require("../script/app-master.php");
+    CheckRequiredParameters(Array('l'));
     $length = $_REQUEST['l'];
-
     $oDB = oOpenDBConnection();
     RenderCommutingWall($oDB, $length);
 }

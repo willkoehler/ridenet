@@ -3,6 +3,9 @@
 require("../script/app-master-min.php");
 require(SHAREDBASE_DIR . "SendMail.php");
 
+// Reject requests that are missing required parameters (to handle bots scanning this page)
+CheckRequiredParameters(Array('RiderName', 'RiderEmail', 'RiderDescription', 'TeamName'));
+
 $riderName = $_REQUEST['RiderName'];
 $riderEmail = $_REQUEST['RiderEmail'];
 $riderDescription = $_REQUEST['RiderDescription'];

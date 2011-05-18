@@ -2,12 +2,12 @@
 // Include only the essentials. Don't start a session here - it causes a big hit on Windows/IIS servers
 require("../script/app-master-min.php");
 
+// Reject requests that are missing required parameters (to handle bots scanning this page)
+CheckRequiredParameters(Array('RideLogID'));
+
 $rideLogID = SmartGetInt('RideLogID');
 
-// --- open data connection
 $oDB = oOpenDBConnection();
-
-// --- get map data
 $sql = "SELECT Longitude, Latitude
         FROM ride_log_map
         WHERE RideLogID=$rideLogID AND Altitude>0

@@ -2,6 +2,7 @@
 if(isset($_REQUEST['pb']))
 {
     require("../script/app-master.php");
+    CheckRequiredParameters(Array('w', 'tf', 'T'));
     $CalendarWeeks = intval($_REQUEST['w']);
     $oDB = oOpenDBConnection();
     $teamFilter = $_REQUEST['tf'];

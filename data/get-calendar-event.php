@@ -1,6 +1,9 @@
 <?
 require("../script/app-master.php");
 
+// Reject requests that are missing required parameters (to handle bots scanning this page)
+CheckRequiredParameters(Array('CalendarID'));
+
 // store query/post values in local variables
 $calendarID = SmartGetInt('CalendarID');
 

@@ -2,6 +2,7 @@
 if(isset($_REQUEST['pb']))
 {
     require("../script/app-master.php");
+    CheckRequiredParameters(Array('T', 'cd'));
     $pt = $_REQUEST['T'];
     $Date = date_create($_REQUEST['cd']);
     $oDB = oOpenDBConnection();

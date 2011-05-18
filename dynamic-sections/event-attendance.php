@@ -2,9 +2,9 @@
 if(isset($_REQUEST['pb']))
 {
     require_once("../script/app-master.php");
+    CheckRequiredParameters(Array('RaceID'));
     $raceID = SmartGetInt("RaceID");
     $oDB = oOpenDBConnection();
-
     RenderAttendingRiders($oDB, $raceID);
 }
 

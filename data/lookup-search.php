@@ -2,6 +2,9 @@
 // Include only the essentials. Don't start a session here - it causes a big hit on Windows/IIS servers
 require("../script/app-master-min.php");
 
+// Reject requests that are missing required parameters (to handle bots scanning this page)
+CheckRequiredParameters(Array('query'));
+
 // store query/post values in local variables
 $query = addslashes($_REQUEST['query']);           // partial string typed into combo box
 

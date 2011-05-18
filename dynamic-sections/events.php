@@ -2,14 +2,12 @@
 if(isset($_REQUEST['pb']))
 {
     require("../script/app-master.php");
-    $pt = $_REQUEST['T'];
+    CheckRequiredParameters(Array('Y'));
     $showYear = $_REQUEST['Y'];
     $oDB = oOpenDBConnection();
-
     $ScheduleFilterStates = isset($_COOKIE['ScheduleFilterStates']) ? $_COOKIE['ScheduleFilterStates'] : 'All';
     $ScheduleFilterTypes = isset($_COOKIE['ScheduleFilterTypes']) ? $_COOKIE['ScheduleFilterTypes'] : 'All';
-
-    RenderEventSchedule($oDB, $pt, $ScheduleFilterStates, $ScheduleFilterTypes, $showYear);
+    RenderEventSchedule($oDB, $ScheduleFilterStates, $ScheduleFilterTypes, $showYear);
 }
 
 //----------------------------------------------------------------------------------
@@ -19,14 +17,13 @@ if(isset($_REQUEST['pb']))
 //
 //  PARAMETERS:
 //    oDB   - database connection (mysqli object)
-//    pt    - ID of team currently being presented to the user
 //    ScheduleFilterStates  - comma-separated list of state IDs to include in list
 //    ScheduleFilterTypes   - comma-separated list of event types to include in list
 //    ShowYear              - Calendar year to show schedule for
 //
 //  RETURN: none
 //-----------------------------------------------------------------------------------
-function RenderEventSchedule($oDB, $pt, $ScheduleFilterStates, $ScheduleFilterTypes, $ShowYear)
+function RenderEventSchedule($oDB, $ScheduleFilterStates, $ScheduleFilterTypes, $ShowYear)
 {
     // Build where clause to filter schedule based on user preferences
     $strWhere = "WHERE YEAR(RaceDate)=$ShowYear AND Archived=0";

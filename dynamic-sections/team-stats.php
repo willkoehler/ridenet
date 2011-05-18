@@ -2,10 +2,10 @@
 if(isset($_REQUEST['pb']))
 {
     require("../script/app-master-min.php");
+    CheckRequiredParameters(Array('StartDate', 'EndDate'));
     $startDate = SmartGetDate('StartDate');
     $endDate = SmartGetDate('EndDate');
     $oDB = oOpenDBConnection();
-
     RenderTeamStats($oDB, $startDate, $endDate);
 }
 

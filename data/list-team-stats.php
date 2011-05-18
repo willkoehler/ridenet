@@ -1,6 +1,9 @@
 <?
 require("../script/app-master.php");
 
+// Reject requests that are missing required parameters (to handle bots scanning this page)
+CheckRequiredParameters(Array('limit', 'start', 'dir', 'sort', 'StartDate', 'EndDate'));
+
 // store query/post values in local variables
 $limit = SmartGetInt('limit');     // Number of records to retrieve (used for grid object paging)
 $start = SmartGetInt('start');     // Starting record (used for grid object paging)

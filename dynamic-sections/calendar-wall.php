@@ -4,9 +4,9 @@ require_once(dirname(__FILE__) . "/render-wall.php");
 if(isset($_REQUEST['pb']))
 {
     require("../script/app-master.php");
+    CheckRequiredParameters(Array('CalendarID', 'l'));
     $length = $_REQUEST['l'];
     $calendarID = SmartGetInt("CalendarID");
-
     $oDB = oOpenDBConnection();
     RenderCalendarWall($oDB, $calendarID, $length);
 }

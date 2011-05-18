@@ -1,5 +1,6 @@
 <?
 require("../script/app-master-min.php");
+CheckRequiredParameters(Array('RiderID', 'rt'));
 
 $oDB = oOpenDBConnection();
 $riderID = SmartGetInt("RiderID");

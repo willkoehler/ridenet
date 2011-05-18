@@ -124,7 +124,7 @@ $ShowYear = (isset($_REQUEST['Year'])) ? SmartGetInt("Year") : date("Y");
 
   <div id="extraWideContent">
     <div id='event-schedule-holder' align=center>
-      <?RenderEventSchedule($oDB, $pt, $ScheduleFilterStates, $ScheduleFilterTypes, $ShowYear)?>
+      <?RenderEventSchedule($oDB, $ScheduleFilterStates, $ScheduleFilterTypes, $ShowYear)?>
     </div>
     <div style="height:20px"><!--vertical spacer--></div>
     <p align=center>

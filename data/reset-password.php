@@ -3,6 +3,9 @@ require("../script/app-master.php");
 require(SHAREDBASE_DIR . "SendMail.php");
 $oDB = oOpenDBConnection();
 
+// Reject requests that are missing required parameters (to handle bots scanning this page)
+CheckRequiredParameters(Array('Email'));
+
 $email = SmartGetString('Email');
 $emailraw = SmartGet('Email');
 
