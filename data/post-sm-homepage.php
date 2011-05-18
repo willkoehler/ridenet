@@ -39,16 +39,25 @@ else
     }
     else
     {
-      $values['HomePageHTML'] = SmartGetString("HomePageHTML");
-      $values['HomePageTitle'] = (SmartGet('HomePageTitle')=="Type a title for your page") ? "NULL" : SmartGetString('HomePageTitle');
-      $values['HomePageText'] = (SmartGet('HomePageText')=="Type Something About Your Team") ? "NULL" : SmartGetString('HomePageText');
-      $values['HomePageType'] = SmartGetInt("HomePageType");
-      if($imageUploaded)
-      {
-          $image->resizeAndCropToFit(450,270);  // resize image to desired dimensions
-          $values['HomePageImage'] = "'" . addslashes($image->getJPEGImageData()) . "'";
-      }
-      $result = InsertOrUpdateRecord2($oDB, "teams", "TeamID", $teamID, $values);
+        $values['HomePageHTML'] = SmartGetString("HomePageHTML");
+        $values['HomePageTitle'] = (SmartGet('HomePageTitle')=="Type a title for your page") ? "NULL" : SmartGetString('HomePageTitle');
+        $values['HomePageText'] = (SmartGet('HomePageText')=="Type Something About Your Team") ? "NULL" : SmartGetString('HomePageText');
+        $values['HomePageType'] = SmartGetInt("HomePageType");
+        $result = InsertOrUpdateRecord2($oDB, "teams", "TeamID", $teamID, $values);
+        if($result['success'] && $imageUploaded)
+        {
+            $picvalues['TeamID'] = $result['TeamID'];
+            $picvalues['LastModified'] = "'" . date("Y-m-d H:i:s") . "'";
+            if($imageUploaded)
+            {
+                $image->resizeAndCropToFit(450,270);  // resize image to desired dimensions
+                $picvalues['HomePageImage'] = "'" . addslashes($image->getJPEGImageData()) . "'";
+            }
+            // search for existing pictures
+            $photoID = $oDB->DBLookup("PhotoID", "team_images", "TeamID={$result['TeamID']}", -1);
+            // insert/update photos
+            $result = InsertOrUpdateRecord2($oDB, "team_images", "PhotoID", $photoID, $picvalues);
+        }
     }
 }
 // --- Encode response and send back to form

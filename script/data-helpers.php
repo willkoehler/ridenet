@@ -341,8 +341,8 @@ function ChangeRiderTeam($oDB, $riderID, $newRacingTeamID, $newCommutingTeamID)
         $existingPhoto = $oDB->DBCount("rider_photos", "RiderID=$riderID AND TeamID=$newRacingTeamID");
         if($newRacingTeamID!=$oldTeamInfo['RacingTeamID'] && $existingPhoto==0)
         {
-            $oDB->query("INSERT rider_photos (RiderID, TeamID, Picture, ActionPicture)
-                         SELECT $riderID, $newRacingTeamID, Picture, ActionPicture
+            $oDB->query("INSERT rider_photos (RiderID, TeamID, Picture, ActionPicture, LastModified)
+                         SELECT $riderID, $newRacingTeamID, Picture, ActionPicture, LastModified
                          FROM rider_photos
                          WHERE RiderID=$riderID AND TeamID={$oldTeamInfo['RacingTeamID']}", __FILE__, __LINE__);
         }

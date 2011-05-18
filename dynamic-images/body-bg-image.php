@@ -8,9 +8,13 @@ $oDB = oOpenDBConnection();
 $teamID = intval($_REQUEST['T']);
 $teamTypeID = $oDB->DBLookup("TeamTypeID", "teams", "TeamID=$teamID", 1);
 
+// Check if image has been modified since browser cached it.
+$lastModified = strtotime($oDB->DBLookup("IFNULL(LastModified, '1/1/2000')", "team_images", "TeamID=$teamID", "1/1/2000"));
+CheckLastModified($lastModified);
+
 ob_start();   // buffer the output so it's sent as a single chunk
-$rs = $oDB->query("SELECT BodyBGColor, BodyImage FROM teams WHERE TeamID=$teamID", __FILE__, __LINE__);
-if(($record = $rs->fetch_array())==false || (is_null($record['BodyImage']) && (is_null($record['BodyBGColor']) || $record['BodyBGColor']==BODY_BG_COLOR)))
+$rs = $oDB->query("SELECT BodyBGColor, BodyBG FROM teams JOIN team_images USING (TeamID) WHERE TeamID=$teamID", __FILE__, __LINE__);
+if(($record = $rs->fetch_array())==false || (is_null($record['BodyBG']) && (is_null($record['BodyBGColor']) || $record['BodyBGColor']==BODY_BG_COLOR)))
 {
     // default background image depends on team type
     $bgFile = ($teamTypeID==2) ? "tdot.gif" : "ridenetbg.jpg";
@@ -19,11 +23,11 @@ if(($record = $rs->fetch_array())==false || (is_null($record['BodyImage']) && (i
     header("Content-type: image/jpeg");
     echo $picData;
 }
-elseif(!is_null($record['BodyImage']))
+elseif(!is_null($record['BodyBG']))
 {
     // display page background from database
     header("Content-type: image/jpeg");
-    echo $record['BodyImage'];
+    echo $record['BodyBG'];
 }
 else
 {

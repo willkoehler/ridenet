@@ -79,11 +79,6 @@ else
         $values['TeamName'] = SmartGetString("TeamName");
         $values['bRacing'] = SmartGetCheckbox("bRacing");
         $values['bCommuting'] = SmartGetCheckbox("bCommuting");
-        if($logoUploaded)
-        {
-            $logo->resizeToFit(300,70);  // make sure logo fits in correct dimensions
-            $values['Logo'] = "'" . addslashes($logo->getPNGImageData()) . "'";
-        }
         $values['Domain'] = SmartGetString("Domain");
         $values['TeamTypeID'] = SmartGetInt('TeamTypeID');
         $values['ZipCodeID'] = SmartGetInt('ZipCodeID');
@@ -93,15 +88,29 @@ else
         $values['BodyBGColor'] = str_replace("#", "", SmartGetString("BodyBGColor"));
         $values['PageBGColor'] = str_replace("#", "", SmartGetString("PageBGColor"));
         $values['LinkColor'] = str_replace("#", "", SmartGetString("LinkColor"));
-        if($bannerUploaded)
-        {
-            $values['Banner'] = "'" . addslashes($banner->getJPEGImageData()) . "'";
-        }
-        if($backgroundUploaded)
-        {
-            $values['BodyImage'] = "'" . addslashes($background->getJPEGImageData()) . "'";
-        }
         $result = InsertOrUpdateRecord2($oDB, "teams", "TeamID", $teamID, $values);
+        if($result['success'] && ($logoUploaded || $bannerUploaded || $backgroundUploaded))
+        {
+            $picvalues['TeamID'] = $result['TeamID'];
+            $picvalues['LastModified'] = "'" . date("Y-m-d H:i:s") . "'";
+            if($logoUploaded)
+            {
+                $logo->resizeToFit(300,70);  // make sure logo fits in correct dimensions
+                $picvalues['Logo'] = "'" . addslashes($logo->getPNGImageData()) . "'";
+            }
+            if($bannerUploaded)
+            {
+                $picvalues['Banner'] = "'" . addslashes($banner->getJPEGImageData()) . "'";
+            }
+            if($backgroundUploaded)
+            {
+                $picvalues['BodyBG'] = "'" . addslashes($background->getJPEGImageData()) . "'";
+            }
+            // search for existing pictures
+            $photoID = $oDB->DBLookup("PhotoID", "team_images", "TeamID={$result['TeamID']}", -1);
+            // insert/update photos
+            $result = InsertOrUpdateRecord2($oDB, "team_images", "PhotoID", $photoID, $picvalues);
+        }
     }
 }
 // --- Encode response and send back to form

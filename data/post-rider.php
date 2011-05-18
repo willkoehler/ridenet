@@ -80,6 +80,7 @@ else
         {
             $picvalues['RiderID'] = $result['RiderID'];
             $picvalues['TeamID'] = $teamID;
+            $picvalues['LastModified'] = "'" . date("Y-m-d H:i:s") . "'";
             if($actionPictureUploaded)
             {
                 $action->resizeToFit(600,600);  // make sure largest size is <= 600 pixels

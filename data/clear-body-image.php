@@ -20,8 +20,9 @@ else if(!isSystemAdmin() && !isDesigner() && !isTeamAdmin($oDB, $teamID))
 else
 {
     $values['TeamID'] = $teamID;
-    $values['BodyImage'] = "NULL";
-    $result = InsertOrUpdateRecord2($oDB, "teams", "TeamID", $teamID, $values);
+    $values['BodyBG'] = "NULL";
+    $values['LastModified'] = "'" . date("Y-m-d H:i:s") . "'";
+    $result = InsertOrUpdateRecord2($oDB, "team_images", "TeamID", $teamID, $values);
 }
 // --- Encode response and send back to form
 Echo json_encode($result);
