@@ -130,7 +130,7 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
           </tr>
           <? } ?>
           <tr>
-            <td class="label">Meet&nbsp;At:</td>
+            <td class="label" valign="top">Meet&nbsp;At:</td>
             <td class="text"><?=$record['Location']?></td>
           </tr>
           <tr>
