@@ -226,7 +226,6 @@ function InsertMemberMenu($oDB, $pt, $highlight="")
         <li><a href="/update-results" <?if($highlight=="UpdateResults") {?>id="active"<?}?>>YOUR RESULTS</a></li>
         <? if(isDesigner() || isSystemAdmin() || isTeamAdmin($oDB, $pt)) { ?>
           <li><a href="/manage" <?if($highlight=="SiteManager") {?>id="active"<?}?>>MANAGE TEAM</a></li>
-          <li><a href="/commute-report.php" <?if($highlight=="CommuteReport") {?>id="active"<?}?>>COMMUTING REPORT</a></li>
         <? } ?>
         <? if(isSystemAdmin()) { ?>
           <li><a href="/syslog" <?if($highlight=="SystemLog") {?>id="active"<?}?>>SYSTEM LOG</a></li>
