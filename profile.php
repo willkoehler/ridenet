@@ -94,10 +94,10 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
 <!-- Insert tracker for Google Analytics -->
   <?InsertGoogleAnalyticsTracker()?>
 <!-- facebook meta tags to provide information for the like button -->
-  <meta property="og:title" content="<?=htmlentities($riderName)?>'s Rider Bio | <?=htmlentities($riderInfo['RacingTeamName'])?>" />
+  <meta property="og:title" content="<?=htmlentities($riderName)?>'s Rider Bio on RideNet" />
   <meta property="og:image" content="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$ridersRacingTeamID?>/<?=$RiderID?>.jpg" />
   <meta property="og:site_name" content="RideNet" />
-  <meta property="og:description" content="Visit RideNet to see <?=htmlentities($riderName)?>'s rider bio including race results and ride log" />
+  <meta property="og:description" content="Visit RideNet to see <?=htmlentities($riderName)?>'s rider bio, including ride log and race results. Use RideNet to find cycling events and casual rides in your area. Signup to create your own rider profile." />
   <meta property="fb:app_id" content="147642135282357" />
 </head>
 
