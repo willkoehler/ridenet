@@ -52,6 +52,7 @@ function updateStatsAndLog(result, stats)
     if(result)
     {
         // without call to String(), 0s are converted to empty strings
+        Ext.fly('ytd-days').update(String(stats.YTDDays));
         Ext.fly('ytd-miles').update(String(stats.YTDMiles));
         Ext.fly('cedays-month').update(String(stats.CEDaysMonth));
     }

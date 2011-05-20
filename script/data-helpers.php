@@ -265,19 +265,29 @@ function UpdateRiderStats($oDB, $riderID)
             WHERE (Date BETWEEN '$startDate365' AND '$endDate') AND RiderID=$riderID";
     $rs = $oDB->query($sql, __FILE__, __LINE__);
     $record = $rs->fetch_array();
+    $rs->close();
     $CEDaysMonth365 = round($record['CEDays365']/(365/30.5));
     $CEDaysMonth180 = round($record['CEDays180']/(180/30.5));
     $CEDaysMonth60 = round($record['CEDays60']/(60/30.5));
     $CEDaysMonth30 = round($record['CEDays30']/(30/30.5));
     $CEDaysMonth = max($CEDaysMonth365, $CEDaysMonth180, $CEDaysMonth60, $CEDaysMonth30);
     $CMilesDay = ($record['CDays365']) ? round($record['CMiles365']/$record['CDays365']) : 0;
-    $YTDMiles = intval($oDB->DBLookup("IFNULL(SUM(Distance),0)", "ride_log", "RiderID=$riderID AND Year(Date) = Year(NOW())"));
+    // Calculate miles and # days YTD
+    $sql = "SELECT IFNULL(SUM(Distance),0) AS YTDMiles,
+                   COUNT(DISTINCT Date) AS YTDDays
+            FROM ride_log
+            WHERE RiderID=$riderID AND Year(Date) = Year(NOW())";
+    $rs = $oDB->query($sql, __FILE__, __LINE__);
+    $record = $rs->fetch_array();
+    $rs->close();
+    $YTDMiles = $record['YTDMiles'];
+    $YTDDays = $record['YTDDays'];
     // Store stats in rider record
     $sql = "UPDATE rider
-            SET CEDaysMonth=$CEDaysMonth, CMilesDay=$CMilesDay, YTDMiles=$YTDMiles
+            SET CEDaysMonth=$CEDaysMonth, CMilesDay=$CMilesDay, YTDMiles=$YTDMiles, YTDDays=$YTDDays
             WHERE RiderID=$riderID";
     $oDB->query($sql, __FILE__, __LINE__);
-    return(Array('YTDMiles' => $YTDMiles, 'CEDaysMonth' => $CEDaysMonth, 'CMilesDay' => $CMilesDay));
+    return(Array('YTDDays' => $YTDDays, 'YTDMiles' => $YTDMiles, 'CEDaysMonth' => $CEDaysMonth, 'CMilesDay' => $CMilesDay));
 }
 
 

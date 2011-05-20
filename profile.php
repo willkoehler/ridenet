@@ -34,7 +34,7 @@ else
 $rs = $oDB->query("SELECT RiderType, CONCAT(FirstName, ' ', LastName) AS RiderName, YearsCycling, Height, Weight,
                           BornIn, ResideIn, Occupation, FavoriteFood, FavoriteRide, FavoriteQuote, WhyIRide,
                           MyCommute, URL, CommuteMapURL, RacingTeamID, CommutingTeamID,
-                          IFNULL(YTDMiles, 0) AS YTDMiles, IFNULL(CEDaysMonth, 0) AS CEDaysMonth,
+                          IFNULL(YTDMiles, 0) AS YTDMiles, IFNULL(YTDDays, 0) AS YTDDays, IFNULL(CEDaysMonth, 0) AS CEDaysMonth,
                           tr.TeamID AS RacingTeamID, tr.TeamName AS RacingTeamName, tr.Domain AS RacingDomain,
                           tc.TeamID AS CommutingTeamID, tc.TeamName AS CommutingTeamName, tc.Domain AS CommutingDomain,   
                           FLOOR(DATEDIFF(NOW(), DateOfBirth) / 365.25) AS Age
@@ -203,6 +203,8 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
                         <td class=text id='cedays-month' width=30><?=$riderInfo['CEDaysMonth']?></td>
                         <td class=label width=65>Miles YTD:</td>
                         <td class=text id='ytd-miles'><?=($riderInfo['YTDMiles'])?></td>
+                        <td class=label width=75>Days YTD:</td>
+                        <td class=text id='ytd-days'><?=($riderInfo['YTDDays'])?></td>
                       </tr>
                     </table>
                   </td></tr>
