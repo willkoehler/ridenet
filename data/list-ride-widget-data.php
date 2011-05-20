@@ -8,7 +8,7 @@ $teamFilter = addslashes($_REQUEST['team']);
 $riderFilter = addslashes($_REQUEST['rider']);
 $maxAge = intval($_REQUEST['maxage']);
 
-$whereFilter = "Comment IS NOT NULL AND (DATEDIFF(NOW(), Date) BETWEEN 0 AND $maxAge)";
+$whereFilter = "Comment IS NOT NULL AND (DATEDIFF(NOW(), Date) BETWEEN 0 AND $maxAge AND rider.Archived=0)";
 $whereFilter .= ($teamFilter != '*') ? " AND (TeamName LIKE '%$teamFilter%')" : "";
 $whereFilter .= ($riderFilter != '*') ? " AND (CONCAT(FirstName, ' ', LastName) LIKE '%$riderFilter%')" : "";
 

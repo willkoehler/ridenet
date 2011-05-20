@@ -42,7 +42,7 @@ $rs = $oDB->query("SELECT RiderType, CONCAT(FirstName, ' ', LastName) AS RiderNa
                    LEFT JOIN teams tr ON (RacingTeamID = tr.TeamID)
                    LEFT JOIN teams tc ON (CommutingTeamID = tc.TeamID)
                    LEFT JOIN ref_rider_type USING (RiderTypeID)
-                   WHERE RiderID=$RiderID", __FILE__, __LINE__);
+                   WHERE RiderID=$RiderID AND rider.Archived=0", __FILE__, __LINE__);
 if(($riderInfo = $rs->fetch_array())==false)
 {
     exit("Invalid RiderID<br><br><br>");
