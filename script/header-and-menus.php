@@ -457,7 +457,7 @@ function AdSidebar()
         </a>
         <div style="height:4px"></div>
         <p style="margin:0">
-          Order by April 15th
+          Available @ Paradise Garage
         </p>
       </div>
       <script type="text/javascript">

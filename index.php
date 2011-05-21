@@ -89,7 +89,7 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
           <img style="margin:5px 0 0 0;" src="/images/clothing/ridenet-jersey1.png" Height=110 border=0>
         </a>
         <p style="margin:5px 0 0 0;font-size:12px;color:#888">
-          Order by April 15th
+          Available @ Paradise Garage
         </p>
       </div>
 
