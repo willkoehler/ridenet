@@ -10,23 +10,6 @@ Ext.onReady(function()
 });
 
 
-function updateStatsRollup(startDate, endDate)
-{
-    if(Ext.fly('stats-rollup'))
-    {
-        Ext.fly('stats-rollup').mask();
-        Ext.Ajax.request({
-            url: '/dynamic-sections/team-stats.php?pb&StartDate=' + startDate.format("n/j/Y") + '&EndDate=' + endDate.format("n/j/Y"),
-            success: function(response, options)
-            {
-                Ext.fly('stats-rollup').update(response.responseText);
-                Ext.fly('stats-rollup').unmask();
-            }
-        });
-    }
-}
-
-
 function C_ReportForm(parentElement)
 {
     this.holder = parentElement;    // div in center of form that holds form content
@@ -176,8 +159,6 @@ function C_ReportForm(parentElement)
                 startDate = new Date(2000, 0, 1);
                 break;
         }
-    // --- update stats rollup
-        updateStatsRollup(startDate, endDate)
     // --- reload list filtering by search term
         this.ds.baseParams.SearchFor = Ext.getCmp('SearchFor').getValue();
         this.ds.baseParams.StartDate = startDate.format('n/j/Y');

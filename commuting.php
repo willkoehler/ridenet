@@ -29,10 +29,10 @@ $RideBoardLength = 30;
 <!-- Insert tracker for Google Analytics -->
   <?InsertGoogleAnalyticsTracker()?>
 <!-- facebook meta tags to provide information for the like button -->
-  <meta property="og:title" content="Commuting on RideNet" />
-  <meta property="og:image" content="http://ridenet.net/images/2by2012-fb-logo3.png" />
+  <meta property="og:title" content="Riding and Commuting Scene on RideNet" />
+  <meta property="og:image" content="http://ridenet.net/images/ridenet-fb-logo3.png" />
   <meta property="og:site_name" content="RideNet" />
-  <meta property="og:description" content="Stay up to date with the Central Ohio commuting scene" />
+  <meta property="og:description" content="Stay up to date with the Central Ohio riding scene. Find cycling events and casual rides in your area. Signup to create a rider profile." />
   <meta property="fb:app_id" content="147642135282357" />
 </head>
 
@@ -55,26 +55,38 @@ $RideBoardLength = 30;
   </div>
 
   <div id="mainContent">
+
+<?  $riderCount = $oDB->DBCount("rider", "true");
+    $teamCount = $oDB->DBCount("teams", "true");
+    $starCount = $oDB->DBCount("rider", "CEDaysMonth>=2");
+    $totalMiles = $oDB->DBLookup("SUM(Distance)", "ride_log", "true");?>
+
     <div style="float:left">
-      <h1><a href="/bike-bus">Take a Ride on the Bike Bus</a></h1>
+      <h1>Riding and Commuting Scene</h1>
     </div>
     <div style="float:left;margin-left:10px;position:relative;left:0px;top:12px">
-      <?SocialMediaButtons("Stay up to date with the Central Ohio commuting scene on #RideNet")?>
+      <?SocialMediaButtons("Stay up to date with the Central Ohio riding scene on #RideNet")?>
     </div>
     <div class='clearfloat'></div>
+    <p class='text50' style="line-height:1.2em;font-size:.7em;margin-bottom:0px">
+      * STAR riders commute / run errands by bike 2 or more days a month
+    </p>
+    <div style="font:30px arial;line-height:21px;padding:25px 0 5px 0;text-align:center">
+      <table cellpadding=0 cellspacing=0 class="centered"><tr>
+        <td width=100><div><?=$teamCount?><div class="text50" style="font-size:13px">&nbsp;Teams</div></div></td>
+        <td width=110><?=$riderCount?><div class="text50" style="font-size:13px">&nbsp;Riders</div></td>
+        <td width=140><?=number_format($totalMiles)?><div class="text50" style="font-size:13px">&nbsp;Total Miles</div></td>
+        <td width=110><?=$starCount?><div class="text50" style="font-size:13px">&nbsp;STARs*</div></td>
+      </tr></table>
+    </div>
+
+    <h1><a href="/bike-bus">Take a Ride on the Bike Bus</a></h1>
     <p>
       To help new commuters coming on the scene, Consider Biking is coordinating "bike bus service"
       from the 4 quadrants of the city into downtown. We're looking for veteran commuters to "drive" the buses
       and show the newbies the ropes. <a href="/bike-bus">Read more...</a>
     </p>
-    <a href="/clothing">
-      <img style="float:right;margin:15px 20px 0 20px;" src="/images/clothing/ridenet-jersey1.png" Height=60 border=0>
-    </a>
-    <h1><a href="/clothing">RideNet Clothing</a></h1>
-    <p>
-      We're selling cycling clothing to promote RideNet. A portion of each order will be
-      donated to Consider Biking to support 2BY2012. <a href="/clothing" style="color:red">Details...</a>
-    </p>
+
 <?  // Get top 22 commuters sorted by Commute/Errand days in the last 30 days
     $sql = "SELECT CONCAT(FirstName, ' ', LastName) AS RiderName, RiderID, RacingTeamID, CEDaysMonth, Domain,
                    COUNT(DISTINCT IF(RideLogTypeID=1 OR RideLogTypeID=3, Date, NULL)) AS CEDays30
@@ -89,7 +101,7 @@ $RideBoardLength = 30;
     
     <div class="clearfloat" style="height:5px"></div>
     <div style="padding:5px;border-bottom:1px dotted #CCC;border-top:1px dotted #CCC">
-      <h2 style="margin:0px">Who's Commuting This Week</h2>
+      <h2 style="margin:0px">Who's Riding This Week</h2>
     </div>
     <div class="clearfloat" style="height:1px"></div>
     <div style="height:15px"></div>
