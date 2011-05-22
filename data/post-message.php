@@ -13,7 +13,7 @@ else
 // --- save the message
     $values['RiderID'] = GetUserID();
     $values['TeamID'] = $oDB->DBLookup("RacingTeamID", "rider", "RiderID=" . GetUserID());
-    $values['Date'] =  "'" . date("Y-m-d H:i") . "'";
+    $values['Date'] =  "'" . date("Y-m-d H:i:s") . "'";
     $values['PostType'] = 0;
     $values['Text'] = SmartGetString("Message");
     $values['PostedToID'] = SmartGetInt("PostedToID");

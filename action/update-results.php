@@ -29,7 +29,7 @@ if($record['Count'] == 0)
 {
     // There are no matching results, clear Where clause so a new result will be created
     $strWhere="";
-    $values['DateAdded'] = "NOW()";
+    $values['Created'] =  "'" . date("Y-m-d H:i:s") . "'";
 }
 InsertOrUpdateRecord($oDB, "results", $strWhere, $values);
 // record activity

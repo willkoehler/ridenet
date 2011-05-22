@@ -13,7 +13,7 @@ $values['Report'] = SmartGetString("Report");
 $values['DateFiled'] = "NOW()";
 
 // verify that the result was posted less than 14 days ago
-if($oDB->DBCount("results", "RiderID={$values['RiderID']} AND RaceID={$values['RaceID']} AND DATEDIFF(NOW(), DateAdded) <= 14") > 0)
+if($oDB->DBCount("results", "RiderID={$values['RiderID']} AND RaceID={$values['RaceID']} AND DATEDIFF(NOW(), Created) <= 14") > 0)
 {
     if($values['Report']=="NULL")
     {

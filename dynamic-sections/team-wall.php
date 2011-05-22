@@ -29,7 +29,7 @@ function RenderTeamWall($oDB, $teamID, $length)
     // Wrapping the components of the union into subqueries allow MySQL to use the best indexes
     // Obviously this could use some work. Joining these three distinctive tables together is a mess.
     $sql = "SELECT * FROM (
-                SELECT Date, tbt.Type, tbt.Image, RideLogID AS Sort2, 0 AS DeleteID,
+                SELECT Date, tbt.Type, tbt.Image, Created, 0 AS DeleteID,
                        RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RacingTeamID, CommutingTeamID, TeamName, Domain,
                        DATEDIFF(NOW(), Date) AS Age, Comment AS PostText, Link,
                        Distance, Duration, RideLogType, RideLogTypeImage, IFNULL(Weather, 'N/A') AS Weather, IFNULL(WeatherImage, 'none.png') AS WeatherImage,
@@ -41,17 +41,17 @@ function RenderTeamWall($oDB, $teamID, $length)
                 LEFT JOIN ref_weather USING (WeatherID)
                 LEFT JOIN ref_team_board_type tbt ON (TeamBoardTypeID=1)
                 WHERE (RacingTeamID=$teamID OR CommutingTeamID=$teamID)
-                ORDER BY Date DESC, Sort2 DESC
+                ORDER BY Date DESC, Created DESC
                 LIMIT $length) dt1
 
             UNION
         
             SELECT * FROM (
-                SELECT results.DateAdded AS Date, tbt.Type, tbt.Image, RiderID AS Sort2, 0 AS DeleteID,
+                SELECT DATE(Created) AS Date, tbt.Type, tbt.Image, Created, 0 AS DeleteID,
                        RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RacingTeamID, CommutingTeamID, TeamName, Domain,
-                       DATEDIFF(NOW(), results.DateAdded) AS Age, IF(LENGTH(Report)>140, CONCAT(SUBSTRING(Report, 1, 140),'...'), Report) AS PostText, NULL AS Link,
+                       DATEDIFF(NOW(), Created) AS Age, IF(LENGTH(Report)>140, CONCAT(SUBSTRING(Report, 1, 140),'...'), Report) AS PostText, NULL AS Link,
                        0 AS Distance, 0 AS Duration, '' AS RideLogType, '' AS RideLogTypeImage, '' AS Weather, '' AS WeatherImage,
-                       0 AS RideLogID, 0 AS Source, 0 AS HasMap, RaceID, EventName
+                       0 AS RideLogID, 0 AS Source, 0 AS HasMap, RaceID, CONCAT(DATE_FORMAT(RaceDate, '%b %e, %Y'), ' - ', EventName) AS EventName
                 FROM results
                 LEFT JOIN event USING (RaceID)
                 LEFT JOIN rider USING (RiderID)
@@ -61,13 +61,13 @@ function RenderTeamWall($oDB, $teamID, $length)
                 LEFT JOIN ref_race_category USING (CategoryID)
                 LEFT JOIN ref_team_board_type tbt ON (TeamBoardTypeID=2)
                 WHERE (results.TeamID=$teamID)
-                ORDER BY Date DESC, Sort2 DESC
+                ORDER BY Created DESC
                 LIMIT $length) dt2
 
             UNION
         
             SELECT * FROM (
-                SELECT Date, tbt.Type, tbt.Image, PostID AS Sort2, PostID as DeleteID,
+                SELECT DATE(Date) AS Date, tbt.Type, tbt.Image, Date AS Created, PostID as DeleteID,
                        RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, posts.TeamID AS RacingTeamID, posts.TeamID AS CommutingTeamID, TeamName, Domain,
                        DATEDIFF(NOW(), Date) AS Age, Text AS PostText, NULL AS Link,
                        0 AS Distance, 0 AS Duration, '' AS RideLogType, '' AS RideLogTypeImage, '' AS Weather, '' AS WeatherImage,
@@ -77,10 +77,10 @@ function RenderTeamWall($oDB, $teamID, $length)
                 LEFT JOIN teams USING (TeamID)
                 LEFT JOIN ref_team_board_type tbt ON (TeamBoardTypeID=3)
                 WHERE (PostType=0 AND PostedToID=$teamID)
-                ORDER BY Date DESC, Sort2 DESC
+                ORDER BY posts.Date DESC
                 LIMIT $length) dt3
 
-            ORDER BY Date Desc, Sort2 DESC
+            ORDER BY Date DESC, Created DESC
             LIMIT 0,$length";
 
     $rs = $oDB->query($sql, __FILE__, __LINE__);

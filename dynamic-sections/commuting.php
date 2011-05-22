@@ -36,7 +36,7 @@ function RenderCommutingWall($oDB, $length)
           LEFT JOIN ref_weather USING (WeatherID)
           LEFT JOIN ref_team_board_type tbt ON (TeamBoardTypeID=1)
           WHERE RideLogTypeID<>6
-          ORDER BY Date Desc, RideLogID Desc
+          ORDER BY Date Desc, Created Desc
           LIMIT $length";
 
   $rs = $oDB->query($sql, __FILE__, __LINE__);

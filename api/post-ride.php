@@ -70,7 +70,7 @@ else
     {
         $values['HasMap'] = $hasmap;
         $values['Source'] = $source;
-        $values['DateCreated'] =  "'" . date("Y-m-d") . "'";
+        $values['Created'] =  "'" . date("Y-m-d H:i:s") . "'";
     }
     // save the ride log
     $post = InsertOrUpdateRecord2($oDB, "ride_log", "RideLogID", $rideLogID, $values);

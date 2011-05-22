@@ -134,7 +134,7 @@ CheckLoginAndRedirect();
           <tr><td class="table-spacer" style="height:2px" colspan="5">&nbsp;</td></tr>
 <?        $sql = "SELECT PlaceName, CategoryID, CategoryName, RaceID,
                          RiderID, EventName, RaceDate, PlaceOrdinal, PlaceID, Report,
-                         DATEDIFF(NOW(), results.DateAdded) AS ResultsAge
+                         DATEDIFF(NOW(), Created) AS ResultsAge
                   FROM results
                   LEFT JOIN race_report USING (RaceID, RiderID)
                   LEFT JOIN event USING (RaceID)

@@ -38,12 +38,12 @@ function RenderRideLog($oDB, $riderID, $length, $editable)
 <?    $sql = "SELECT RideLogID, Date, RideLogType, RideLogTypeImage, Distance, Duration, Comment, Link, Source, HasMap,
                    DATE_SUB(Date, INTERVAL WEEKDAY(Date) DAY) AS FirstDayOfWeek,
                    IFNULL(Weather, 'N/A') AS Weather, IFNULL(WeatherImage, 'none.png') AS WeatherImage,
-                   DATEDIFF(NOW(), DateCreated) AS Age
+                   DATEDIFF(NOW(), Created) AS Age
               FROM ride_log rl
               LEFT JOIN ref_weather USING (WeatherID)
               LEFT JOIN ref_ride_log_type USING (RideLogTypeID)
               WHERE RiderID=$riderID
-              ORDER BY Date DESC, RideLogID DESC
+              ORDER BY Date DESC, Created DESC
               LIMIT $length";
       $rs = $oDB->query($sql, __FILE__, __LINE__);
       if($rs->num_rows==0) { ?>

@@ -28,7 +28,7 @@ else
     {
         $values['HasMap'] = 0;
         $values['Source'] = 1;  // 1 = ridenet.net website
-        $values['DateCreated'] =  "'" . date("Y-m-d") . "'";
+        $values['Created'] =  "'" . date("Y-m-d H:i:s") . "'";
     }
     // save the ride log
     $result = InsertOrUpdateRecord2($oDB, "ride_log", "RideLogID", $rideLogID, $values);
