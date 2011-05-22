@@ -46,7 +46,8 @@ function C_PostMessageDialog()
                         // === Comments ===
                             xtype: 'textarea',
                             name: 'Message',
-                            maxLength: 140,
+                            style: 'overflow:hidden',
+                            maxLength: 255,
                             allowBlank: false,
                             blankText: 'You must enter a message',
                             width: 465,

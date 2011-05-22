@@ -50,7 +50,8 @@ function C_PostUpdateDialog()
                         // === Comments ===
                             xtype: 'textarea',
                             name: 'Message',
-                            maxLength: 140,
+                            style: 'overflow:hidden',
+                            maxLength: 255,
                             allowBlank: false,
                             blankText: 'You must enter a ride update',
                             width: 465,

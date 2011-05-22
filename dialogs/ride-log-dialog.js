@@ -134,20 +134,13 @@ function C_RideLogDialog()
                         width: 570,
                         height: 40
                     }]
-/*                },{
-                    xtype: 'container', cls: 'form-spacer', height:4
-                },{
-                    xtype: 'displayfield',
-                    hideLabel: true,
-                    style: 'padding-left:65px; font: 11px arial;color:#666',
-                    html: '<b>Link to Something:</b> Garmin Connect, Training Peaks, Route Map, Power file, etc...'*/
                 },{
                     xtype:'container', layout:'form', labelWidth:60, items: [{
-                    // === Comments ===
+                    // === Link to Something ===
                         xtype: 'textfield',
                         fieldLabel: 'Link',
                         name: 'Link',
-                        maxLength: 140,
+                        maxLength: 255,
                         vtype: 'url',
                         emptyText: 'Link to something: Route map, Garmin Connect, TrainingPeaks, power file, etc.',
                         width: 570
