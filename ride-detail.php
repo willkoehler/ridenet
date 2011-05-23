@@ -1,7 +1,6 @@
 <?
 require("script/app-master.php");
-require("dynamic-sections/calendar-updates.php");
-require("dynamic-sections/calendar-wall.php");
+require("dynamic-sections/ride-detail-wall.php");
 require("dynamic-sections/calendar-attendance.php");
 require(SHAREDBASE_DIR . "ExtJSLoader.php");
 
@@ -207,52 +206,32 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
     <? } ?>
     <div style="height:25px"><!--vertical spacer--></div>
 
-    <?if($record['EventAgeHours'] < 2) { ?>
-    <!-- Ride Updates. Display ride updates until 2 hours after the ride -->
-      <div class="centered" style="width:550px">
+    <!-- Ride Wall (updates and ride-log entries) -->
+    <div class="centered" style="width:550px">
 <?      if(CheckLogin())
-        { 
-          $rs = $oDB->query("SELECT RiderID, RacingTeamID, CONCAT(FirstName, ' ', LastName) AS RiderName, TeamName
-                             FROM rider LEFT JOIN teams ON (RacingTeamID = TeamID)
-                             WHERE RiderID=" . GetUserID(), __FILE__, __LINE__);
-          $loggedInRider = $rs->fetch_array();
-          $rs->free();?>
-          <div style="float:right;position:relative;top:6px;" class='action-btn' id='post-message-btn' onclick="clickPostUpdate(this.id, { riderID:<?=$loggedInRider['RiderID']?>, racingTeamID: <?=$loggedInRider['RacingTeamID']?>, postedToID: <?=$calendarID?>, riderName: '<?=htmlentities(addslashes($loggedInRider['RiderName']))?>', teamName: '<?=htmlentities(addslashes($loggedInRider['TeamName']))?>', postingTo: '<?=htmlentities(addslashes($record['EventName']))?>' });">
-            + Post Update
-          </div>
-        <? } else { ?>
-          <div style="float:right;position:relative;top:6px;" class='action-btn' onclick="window.location.href='/login?Goto=<?=urlencode($_SERVER['REQUEST_URI'])?>'">&nbsp;Login To Post Update&nbsp;</div>
-        <? } ?>
-        <div style="padding:5px;border-bottom:1px dotted #CCC;border-top:1px dotted #CCC">
-          <h2 style="margin:0px">Ride Updates</h2>
-          <div class="team-board-instructions">
-            Ride updates will be emailed to everyone attending or watching this ride
-          </div>
+      { 
+        $rs = $oDB->query("SELECT RiderID, RacingTeamID, CONCAT(FirstName, ' ', LastName) AS RiderName, TeamName
+                           FROM rider LEFT JOIN teams ON (RacingTeamID = TeamID)
+                           WHERE RiderID=" . GetUserID(), __FILE__, __LINE__);
+        $loggedInRider = $rs->fetch_array();
+        $rs->free();?>
+        <div style="float:right;position:relative;top:6px;" class='action-btn' id='post-message-btn' onclick="clickPostUpdate(this.id, { riderID:<?=$loggedInRider['RiderID']?>, racingTeamID: <?=$loggedInRider['RacingTeamID']?>, postedToID: <?=$calendarID?>, riderName: '<?=htmlentities(addslashes($loggedInRider['RiderName']))?>', teamName: '<?=htmlentities(addslashes($loggedInRider['TeamName']))?>', postingTo: '<?=htmlentities(addslashes($record['EventName']))?>' });">
+          + Post Update
         </div>
-        <div class="clearfloat" style="height:1px"></div>
-        <div id='calendar-updates' class='ridenet-wall' style="padding:0 50px 0 25px ">
-          <? RenderCalendarUpdates($oDB, $calendarID, $CalendarUpdatesLength) ?>
+      <? } else { ?>
+        <div style="float:right;position:relative;top:6px;" class='action-btn' onclick="window.location.href='/login?Goto=<?=urlencode($_SERVER['REQUEST_URI'])?>'">&nbsp;Login To Post Update&nbsp;</div>
+      <? } ?>
+      <div style="padding:5px;border-bottom:1px dotted #CCC;border-top:1px dotted #CCC">
+        <h2 style="margin:0px">Ride Updates</h2>
+        <div class="team-board-instructions">
+          Ride updates will be emailed to everyone attending or watching this ride
         </div>
       </div>
-    <? } else { ?>
-    <!-- What people said about the ride. Make this visible 2 hours after the ride -->
-      <div class="centered" style="width:550px">
-        <div style="padding:5px;border-bottom:1px dotted #CCC;border-top:1px dotted #CCC">
-          <h2 style="margin:0px">What People Said About This Ride</h2>
-          <? if($attendanceOpen) { ?>
-            <div class="team-board-instructions">
-              To share a ride comment here&nbsp;&nbsp;1. Check "I'll be there" (above)
-              &nbsp;&nbsp;2. Go to <a href="/profile">Your Profile</a> and log a ride on <?=date_create($rideDate)->format("n/j/Y")?>
-            </div>
-          <? } ?>
-        </div>
-        <div class="clearfloat" style="height:1px"></div>
-        <div id='calendar-wall' class='ridenet-wall' style="padding:0 50px 0 25px ">
-          <? RenderCalendarWall($oDB, $calendarID, $CalendarWallLength) ?>
-        </div>
+      <div class="clearfloat" style="height:1px"></div>
+      <div id='ride-detail-wall' class='ridenet-wall' style="padding:0 50px 0 25px ">
+        <? RenderRideUpdates($oDB, $calendarID, $CalendarUpdatesLength) ?>
       </div>
-      <div style="height:25px"><!--vertical spacer--></div>
-    <? } ?>
+    </div>
 
     <div style="height:20px"><!--vertical spacer--></div>
     <?InsertRideClassKey()?>

@@ -28,7 +28,7 @@ function clickPostUpdate(id, params)
 {
     g_updateDialog.show({
         animateTarget: id,
-        callback: updateCalendarUpdates,
+        callback: updateRideDetailWall,
         riderID: params.riderID,
         racingTeamID: params.racingTeamID,
         postedToID: params.postedToID,
@@ -46,7 +46,7 @@ function clickDeleteMessage(messageID)
         msg: "Are you sure you want to delete this message?",
         fn: function(btn) { if(btn=='yes') {
         // --- Mask this page and post delete request
-            Ext.get('calendar-updates').mask("Deleting");
+            Ext.get('ride-detail-wall').mask("Deleting");
             Ext.Ajax.request({
                 url: '/data/delete-message.php',
                 params: {ID: messageID},
@@ -66,18 +66,18 @@ function handleDeleteSuccess(response, options)
     var result = Ext.decode(response.responseText);
     if(result.success == false)
     {
-        Ext.get('calendar-updates').unmask();
+        Ext.get('ride-detail-wall').unmask();
         Ext.Msg.alert("Delete Message Failed", "Error deleting message: " + result.message);
     }
     else
     {
-        updateCalendarUpdates();
+        updateRideDetailWall();
     }
 }
 
 function handleDeleteFailure(response)
 {
-    Ext.get('calendar-updates').unmask();
+    Ext.get('ride-detail-wall').unmask();
     Ext.Msg.alert("Delete Message Failed", "Error deleting message. Server did not respond");
 }
 
@@ -97,48 +97,25 @@ function addHoverListeners()
     })
 }
 
-function getMoreUpdates(length)
+function getMore(length)
 {
     g_calendarUpdatesLength += length;
-    updateCalendarUpdates();
+    updateRideDetailWall();
 }
 
-function updateCalendarUpdates()
+function updateRideDetailWall()
 {
-    Ext.get('calendar-updates').mask("Updating");
+    Ext.get('ride-detail-wall').mask("Updating");
     Ext.Ajax.request({
-        url: '/dynamic-sections/calendar-updates.php?pb&CalendarID=' + g_calendarID + '&l=' + g_calendarUpdatesLength,
+        url: '/dynamic-sections/ride-detail-wall.php?pb&CalendarID=' + g_calendarID + '&l=' + g_calendarUpdatesLength,
         success: function(response, options)
         {
-            Ext.get('calendar-updates').update(response.responseText);
+            Ext.get('ride-detail-wall').update(response.responseText);
             addHoverListeners();    // add listeners to hide/show delete buttons
-            Ext.get('calendar-updates').unmask();
+            Ext.get('ride-detail-wall').unmask();
         }
     });
 }
-
-function getMoreWall(length)
-{
-    g_calendarWallLength += length;
-    updateCalendarWall();
-}
-
-function updateCalendarWall()
-{
-    if(Ext.fly('calendar-wall'))
-    {
-        Ext.fly('calendar-wall').mask("Updating");
-        Ext.Ajax.request({
-            url: '/dynamic-sections/calendar-wall.php?pb&CalendarID=' + g_calendarID + '&l=' + g_calendarWallLength,
-            success: function(response, options)
-            {
-                Ext.fly('calendar-wall').update(response.responseText);
-                Ext.fly('calendar-wall').unmask();
-            }
-        });
-    }
-}
-
 
 function C_Attendance()
 {
@@ -236,7 +213,7 @@ function C_Attendance()
                 Ext.fly('attending-holder').up("tr").setStyle("display", (response.responseText) ? "table-row" : "none");
                 Ext.fly(this.holder).up(".block-table").unmask();
                 // change in attendance may also cause changes in the ride log entries listed
-                updateCalendarWall();
+                updateRideDetailWall();
             }
         });
     }
