@@ -130,7 +130,7 @@ function RenderWall($rs, $pt, $showTime=false, $showHeaders=true, $emptyMessage=
         <? case 'Message': ?>
         <!--====== Message detail ======-->
           <div class="body">
-              <?=htmlentities($record['PostText'])?><?if($showTime) { ?><span class="tag">&nbsp;<span class="bullet">&bull;</span> <?=date_create($record['Date'])->format("g:ia")?></span><? } ?>
+              <?=ParseURLs(htmlentities($record['PostText']))?><?if($showTime) { ?><span class="tag">&nbsp;<span class="bullet">&bull;</span> <?=date_create($record['Date'])->format("g:ia")?></span><? } ?>
           </div>
           <? break; ?>
         <? } ?>
