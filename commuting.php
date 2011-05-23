@@ -69,7 +69,7 @@ $RideBoardLength = 30;
     </div>
     <div class='clearfloat'></div>
     <p class='text50' style="line-height:1.2em;font-size:.7em;margin-bottom:0px">
-      * STAR riders commute / run errands by bike 2 or more days a month
+      * STAR riders replace a car trip with a bike trip at least two days/month.
     </p>
     <div style="font:30px arial;line-height:21px;padding:25px 0 5px 0;text-align:center">
       <table cellpadding=0 cellspacing=0 class="centered"><tr>
