@@ -87,7 +87,7 @@ $RideBoardLength = 30;
       and show the newbies the ropes. <a href="/bike-bus">Read more...</a>
     </p>
 
-<?  // Get top 22 commuters sorted by Commute/Errand days in the last 30 days
+<?  // Get top 22 commuters sorted by Commute/Errand days in the last 30 days (skip riders that don't have pictures)
     $sql = "SELECT CONCAT(FirstName, ' ', LastName) AS RiderName, RiderID, RacingTeamID, CEDaysMonth, Domain,
                    COUNT(DISTINCT IF(RideLogTypeID=1 OR RideLogTypeID=3, Date, NULL)) AS CEDays30
             FROM ride_log

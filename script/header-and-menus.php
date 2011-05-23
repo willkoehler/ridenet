@@ -56,7 +56,7 @@ function GetPresentedTeamID($oDB)
 //-----------------------------------------------------------------------------------
 function InsertPageBanner($oDB, $pt=0)
 {
-    $showLogo = $oDB->DBLookup("IF(ShowLogo=1 AND team_images.Logo IS NOT NULL, 1, 0)", "teams JOIN team_images USING (TeamID)", "TeamID=$pt", 0);?>
+    $showLogo = $oDB->DBLookup("IF(ShowLogo=1 AND Logo IS NOT NULL, 1, 0)", "teams JOIN team_images USING (TeamID)", "TeamID=$pt", 0);?>
     <div style="position:relative">
       <img id="page-banner" src="/imgstore/banner/<?=$pt?>.jpg" class="tight" />
       <? if($showLogo) { ?>

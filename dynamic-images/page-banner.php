@@ -6,7 +6,7 @@ require("../script/app-master-min.php");
 $oDB = oOpenDBConnection();
 $teamID = intval($_REQUEST['T']);
 $teamTypeID = $oDB->DBLookup("TeamTypeID", "teams", "TeamID=$teamID", 1);
-$showLogo = $oDB->DBLookup("IF(ShowLogo=1 AND team_images.Logo IS NOT NULL, 1, 0)", "teams JOIN team_images USING (TeamID)", "TeamID=$teamID", 0);
+$showLogo = $oDB->DBLookup("IF(ShowLogo=1 AND Logo IS NOT NULL, 1, 0)", "teams JOIN team_images USING (TeamID)", "TeamID=$teamID", 0);
 
 // Check if image has been modified since browser cached it.
 $lastModified = strtotime($oDB->DBLookup("IFNULL(LastModified, '1/1/2000')", "team_images", "TeamID=$teamID", "1/1/2000"));
