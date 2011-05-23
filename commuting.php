@@ -24,7 +24,7 @@ $RideBoardLength = 30;
   <?MinifyAndInclude("/commuting.js")?>
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
-    g_rideBoardLength = <?=$RideBoardLength?>;
+    g_rideWallLength = <?=$RideBoardLength?>;
   </script>
 <!-- Insert tracker for Google Analytics -->
   <?InsertGoogleAnalyticsTracker()?>

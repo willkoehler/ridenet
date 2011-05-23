@@ -10,15 +10,17 @@ Ext.onReady(function()
 
 function getMore(length)
 {
-    g_rideBoardLength += length;
-    updateRideBoard();
+    g_rideWallLength += length;
+    updateRideWall();
+    // log an event in Google Analytics
+    _gaq.push(['_trackEvent', 'Action', 'More', 'CommutingWall-'+g_rideWallLength]);
 }
 
-function updateRideBoard()
+function updateRideWall()
 {
     Ext.get('commuting-wall').mask("Updating");
     Ext.Ajax.request({
-        url: '/dynamic-sections/commuting.php?pb&l=' + g_rideBoardLength,
+        url: '/dynamic-sections/commuting.php?pb&l=' + g_rideWallLength,
         success: function(response, options)
         {
             Ext.get('commuting-wall').update(response.responseText);

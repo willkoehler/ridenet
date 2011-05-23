@@ -86,6 +86,8 @@ function getMore(length)
 {
     g_teamWallLength += length;
     updateTeamWall();
+    // log an event in Google Analytics
+    _gaq.push(['_trackEvent', 'Action', 'More', 'TeamWall-'+g_teamWallLength]);
 }
 
 function updateTeamWall()
