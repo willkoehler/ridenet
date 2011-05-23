@@ -119,8 +119,8 @@ $TeamWallLength = 30;
     <div style="padding:5px;border-bottom:1px dotted #CCC;border-top:1px dotted #CCC">
       <h2>What's happening @ <?=$team['TeamName']?></h2>
       <div class="team-board-instructions">
-        To Log a Ride or Post a Race Result, go to <a href="/profile">Your Profile</a>.
-        To leave a message for this team click "<b>Post Message</b>".
+        To log a ride or post a race result, go to <a href="/profile">Your Profile</a>.
+        To post a message on this page, click "<b>Post Message</b>".
       </div>
     </div>
     <div class="clearfloat" style="height:1px"></div>

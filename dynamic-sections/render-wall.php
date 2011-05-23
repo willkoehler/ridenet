@@ -101,7 +101,7 @@ function RenderWall($rs, $pt, $showTime=false, $showHeaders=true, $emptyMessage=
           <? } ?>
         </div>
         <div class="icon">
-          <img class="tight" width=30 src="/images/teamboard/<?=$record['Image']?>" title="<?=$record['Type']?>">
+          <img class="tight" width=30 src="/images/wall/<?=$record['Image']?>" title="<?=$record['Type']?>">
         </div>
         <? switch($record['Type']) { case 'Ride Log':?>
         <!--====== Ride Log Detail ======-->
