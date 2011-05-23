@@ -274,10 +274,10 @@ function InsertCommutingMenu($highlight="")
 { ?>
     <div id="submenu">
       <ul id="subnav">
-        <li><a href="commuting" <?if($highlight=="Commuting") {?>id="active"<?}?>>HOME</a></li>
-        <li><a href="/rider-stats" <?if($highlight=="Riders") {?>id="active"<?}?>>RIDERS</a></li>
+        <li><a href="/commuting" <?if($highlight=="Commuting") {?>id="active"<?}?>>HOME</a></li>
         <li><a href="/team-stats" <?if($highlight=="Teams") {?>id="active"<?}?>>TEAMS</a></li>
-        <li><a href="/rider-groups/1" <?if($highlight=="1") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star1.png' width=10>&nbsp;1 to 4</a></li>
+        <li><a href="/rider-stats" <?if($highlight=="Riders") {?>id="active"<?}?>>RIDERS</a></li>
+        <li><a href="/rider-groups/1" <?if($highlight=="1") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star1.png' width=10>&nbsp;2 to 4</a></li>
         <li><a href="/rider-groups/2" <?if($highlight=="2") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star2.png' width=10>&nbsp;5 to 9</a></li>
         <li><a href="/rider-groups/3" <?if($highlight=="3") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star3.png' width=10>&nbsp;10 to 14</a></li>
         <li><a href="/rider-groups/4" <?if($highlight=="4") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star4.png' width=10>&nbsp;15 to 19</a></li>

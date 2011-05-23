@@ -33,7 +33,7 @@ else
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title><?BuildPageTitle($oDB, 0, "Commute Rider Rankings")?></title>
+  <title><?BuildPageTitle($oDB, 0, "STAR Riders")?></title>
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
@@ -72,27 +72,27 @@ else
       case 5:
         $minDays = 20;
         $maxDays = 200;
-        $description = "<img src='/images/stars/star5.png'> Riders that commute / do errands 20+ days/month";
+        $description = "<img src='/images/stars/star5.png'> 20 or more";
         break;
       case 4:
         $minDays = 15;
         $maxDays = 19;
-        $description = "<img src='/images/stars/star4.png'> Riders that commute / do errands 15 to 19 days/month";
+        $description = "<img src='/images/stars/star4.png'> 15 to 19";
         break;
       case 3:
         $minDays = 10;
         $maxDays = 14;
-        $description = "<img src='/images/stars/star3.png'> Riders that commute / do errands 10 to 14 days/month";
+        $description = "<img src='/images/stars/star3.png'> 10 to 14";
         break;
       case 2:
         $minDays = 5;
         $maxDays = 9;
-        $description = "<img src='/images/stars/star2.png'> Riders that commute / do errands 5 to 9 days/month";
+        $description = "<img src='/images/stars/star2.png'> 5 to 9";
         break;
       case 1:
-        $minDays = 1;
+        $minDays = 2;
         $maxDays = 4;
-        $description = "<img src='/images/stars/star1.png'> Riders that commute / do errands 1 to 4 days/month";
+        $description = "<img src='/images/stars/star1.png'> 2 to 4";
         break;
       default:
         $minDays = 0;
@@ -102,23 +102,23 @@ else
     }
 
     $sql = "SELECT CONCAT(FirstName, ' ', LastName) AS RiderName, RiderID, RacingTeamID, CEDaysMonth, Domain
-            FROM rider LEFT JOIN teams ON (CommutingTeamID = TeamID)
+            FROM rider
+            LEFT JOIN teams ON (CommutingTeamID = TeamID)
+            JOIN rider_photos USING (RiderID)
             WHERE rider.Archived=0 AND CEDaysMonth BETWEEN $minDays AND $maxDays
+            GROUP BY RiderID
             ORDER BY CEDaysMonth DESC";
     $rs = $oDB->query($sql, __FILE__, __LINE__);
     $riderCount = $rs->num_rows;
-    // calculate lbs CO2 saved
-    $YTDCEMiles = $oDB->DBLookup("SUM(Distance)", "ride_log JOIN rider USING (RiderID)",
-                                 "(RideLogTypeID=1 OR RideLogTypeID=3) AND CEDaysMonth BETWEEN $minDays AND $maxDays AND Year(Date) = Year(NOW())");
-    $lbsCO2 = .96 * $YTDCEMiles;
 ?>
+    <h1>Every Commuter is a STAR</h1>
+    <h2>
+      <?=$description?>
+      <img class='tight' src='/images/ridelog/commute.png' style='position:relative;top:-2px' height=13><img class='tight' src='/images/ridelog/errand.png' style='position:relative;top:-2px' height=13>
+      days/month. Commutes and Errands
+    </h2>
+    <div style="height:5px"></div>
     <div class="commute-ride-group" style="width:550px">
-      <div class="header">
-        <table cellpadding=0 cellspacing=0 border=0 width=100%><tr>
-          <td class="text75" valign=center><?=$description?></td>
-          <td class="header-info" align=right valign=bottom># Riders: <b><?=$riderCount?></b><br>YTD CO<span class=sub>2</span>: <b><?=number_format($lbsCO2,0)?></b> lbs</td>
-        </tr></table>
-      </div>
 <?    if($riderCount==0)
       { ?>
         <p class="no-data">(No riders in this group)</p>
@@ -135,9 +135,6 @@ else
             <a href="<?=BuildTeamBaseURL($record['Domain'])?>/rider/<?=$record['RiderID']?>">
               <img class="tight" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['RacingTeamID']?>/<?=$record['RiderID']?>.jpg" height=<?=$picHeight?> width=<?=$picWidth?> border="0">
             </a>
-            <div class="countbox">
-              <?=$record['CEDaysMonth']?>
-            </div>
           </div><script type="text/javascript">riderInfoCallout(<?=$record['RiderID']?>, '')</script>
         <? } ?>
       <? } ?>

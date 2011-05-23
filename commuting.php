@@ -69,14 +69,14 @@ $RideBoardLength = 30;
     </div>
     <div class='clearfloat'></div>
     <p class='text50' style="line-height:1.2em;font-size:.7em;margin-bottom:0px">
-      * STAR riders replace a car trip with a bike trip at least two days/month.
+      * STAR riders use their bikes for commuting or errands two days a month.
     </p>
     <div style="font:30px arial;line-height:21px;padding:25px 0 5px 0;text-align:center">
       <table cellpadding=0 cellspacing=0 class="centered"><tr>
         <td width=100><div><?=$teamCount?><div class="text50" style="font-size:13px">&nbsp;Teams</div></div></td>
         <td width=110><?=$riderCount?><div class="text50" style="font-size:13px">&nbsp;Riders</div></td>
         <td width=140><?=number_format($totalMiles)?><div class="text50" style="font-size:13px">&nbsp;Total Miles</div></td>
-        <td width=110><?=$starCount?><div class="text50" style="font-size:13px">&nbsp;STARs*</div></td>
+        <td width=110><?=$starCount?><div class="text50" style="font-size:13px">&nbsp;STARs *</div></td>
       </tr></table>
     </div>
 
@@ -93,6 +93,7 @@ $RideBoardLength = 30;
             FROM ride_log
             LEFT JOIN rider USING (RiderID)
             LEFT JOIN teams ON (CommutingTeamID = TeamID)
+            JOIN rider_photos USING (RiderID)
             WHERE rider.Archived=0 AND DATEDIFF(NOW(), Date) < 30
             GROUP BY RiderID
             ORDER BY CEDays30 DESC
