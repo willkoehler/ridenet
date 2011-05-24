@@ -77,7 +77,7 @@ CheckLoginAndRedirect();
             </select></td>
             <td><select size="1" name="CategoryID">
                 <option value="0">select a field...</option>
-<?            $rs = $oDB->query("SELECT * FROM ref_race_category", __FILE__, __LINE__);
+<?            $rs = $oDB->query("SELECT * FROM ref_race_category ORDER BY Sort", __FILE__, __LINE__);
               while(($record=$rs->fetch_array())!=false) { ?>
                 <option value="<?=$record['CategoryID']?>"><?=$record['CategoryName']?></option>
               <? } ?>
