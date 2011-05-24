@@ -15,7 +15,7 @@ $distance = SmartGetInt('Distance');
 $duration = SmartGetInt('Duration');
 $comment = SmartGetString('Comment');
 $link = SmartGetString('Link');
-$hasmap = (isset($_REQUEST['Map']) && $_REQUEST['Map']!="") ? 1 : 0;
+$hasmap = (isset($_REQUEST['Map']) && $_REQUEST['Map']!="" && $_REQUEST['Map']!="{}") ? 1 : 0;
 
 $duration = round($duration / 60.0);
 $distance = round($distance / 1609.344);
