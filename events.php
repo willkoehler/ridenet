@@ -96,7 +96,7 @@ $ShowYear = (isset($_REQUEST['Year'])) ? SmartGetInt("Year") : date("Y");
     <div id='filter-holder'>
     <table cellpadding=0 cellspacing=0><tr>
       <td>
-        <h2 style="margin:0px">Showing</h2>
+        <h2 style="margin:0px">Show:</h2>
       </td>
 <?      $rs = $oDB->query("SELECT * FROM ref_event_type", __FILE__, __LINE__);
         while(($record=$rs->fetch_array())!=false)
