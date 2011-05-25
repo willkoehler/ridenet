@@ -62,16 +62,29 @@ function CalendarSidebarContent($oDB, $pt, $CalendarDate)
         }
       
         // Get rides from the calendar table (if there are multiple rides on a day, link to first ride only)
-        $sql = "SELECT CalendarDate, EventName, CalendarID,
+        $fromDate = $FirstDayOfMonth->format("Y-m-d");
+        $toDate = $LastDayOfMonth->format("Y-m-d") . "  23:59";
+        $sql = "SELECT CalendarDate AS Date, EventName AS Name, CalendarID AS ID, 'ride' AS URLBase,
                        COUNT(IF((CommutingTeamID=$pt OR RacingTeamID=$pt) AND (Attending=1 OR Notify=1), 1, NULL)) AS NumAttending
                 FROM calendar
                 JOIN calendar_attendance USING (CalendarID)
                 JOIN rider USING (RiderID)
-                WHERE calendar.Archived=0 AND
-                      CalendarDate Between '" . $FirstDayOfMonth->format("Y-m-d") . "' and '" . $LastDayOfMonth->format("Y-m-d") . " 23:59'
-                GROUP BY CalendarID
+                WHERE calendar.Archived=0 AND CalendarDate Between '$fromDate' AND '$toDate'
+                GROUP BY ID
                 HAVING NumAttending > 0
-                ORDER BY CalendarDate, NumAttending";
+                
+                UNION
+                
+                SELECT RaceDate AS Date, EventName AS Name, RaceID AS ID, 'event' AS URLBase,
+                       COUNT(IF((CommutingTeamID=$pt OR RacingTeamID=$pt) AND (Attending=1 OR Notify=1), 1, NULL)) AS NumAttending
+                FROM event
+                JOIN event_attendance USING (RaceID)
+                JOIN rider USING (RiderID)
+                WHERE event.Archived=0 AND RaceDate Between '$fromDate' AND '$toDate'
+                GROUP BY ID
+                HAVING NumAttending > 0
+                                
+                ORDER BY Date, NumAttending";
         $rs = $oDB->query($sql, __FILE__, __LINE__);
         $record=$rs->fetch_array();
         //  Loop through the days in the month
@@ -84,12 +97,10 @@ function CalendarSidebarContent($oDB, $pt, $CalendarDate)
           }
           $DayClass="cell day";
           $DayURL = $ThisDay->format("j");
-          $DayURL1 = "";
-          $DayURL2 = "";
       
           while($record!=false)
           {
-            if(strtotime($record['CalendarDate']) >= strtotime($ThisDay->format("n/j/Y")))
+            if(strtotime($record['Date']) >= strtotime($ThisDay->format("n/j/Y")))
             {
               break;
             }
@@ -97,11 +108,10 @@ function CalendarSidebarContent($oDB, $pt, $CalendarDate)
           }
           if($record!=false)
           {
-            if(date_create($record['CalendarDate'])->format("n/j/Y")==$ThisDay->format("n/j/Y"))
+            if(date_create($record['Date'])->format("n/j/Y")==$ThisDay->format("n/j/Y"))
             {
               $DayClass = "cell has-events";
-              $DayURL = "<a href='/ride/{$record['CalendarID']}' title='" . $record['EventName'] . "'>" .
-                        "<div>$DayURL</div></a>";
+              $DayURL = "<a href=\"/{$record['URLBase']}/{$record['ID']}\" title=\"" . htmlentities($record['Name']) . "\"><div>$DayURL</div></a>";
             }
           }?>
           <td class="<?=$DayClass?>"><?=$DayURL?></td>
@@ -123,15 +133,27 @@ function CalendarSidebarContent($oDB, $pt, $CalendarDate)
         <?}?>
       </table>
 <?  // Show upcoming rides
-      $sql = "SELECT CalendarID, CalendarDate, EventName,
+      $sql = "SELECT CalendarDate AS Date, EventName AS Name, CalendarID AS ID, 'ride' AS URLBase,
                      COUNT(IF((CommutingTeamID=$pt OR RacingTeamID=$pt) AND (Attending=1 OR Notify=1), 1, NULL)) AS NumAttending
               FROM calendar
               JOIN calendar_attendance USING (CalendarID)
               JOIN rider USING (RiderID)
-              WHERE calendar.Archived=0 AND CalendarDate >= CURDATE()
-              GROUP BY CalendarID
+              WHERE calendar.Archived=0 AND CalendarDate BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY)
+              GROUP BY ID
               HAVING NumAttending > 0
-              ORDER BY CalendarDate
+              
+              UNION
+              
+              SELECT RaceDate AS Date, EventName AS Name, RaceID AS ID, 'event' AS URLBase,
+                     COUNT(IF((CommutingTeamID=$pt OR RacingTeamID=$pt) AND (Attending=1 OR Notify=1), 1, NULL)) AS NumAttending
+              FROM event
+              JOIN event_attendance USING (RaceID)
+              JOIN rider USING (RiderID)
+              WHERE event.Archived=0 AND RaceDate BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY)
+              GROUP BY ID
+              HAVING NumAttending > 0
+                              
+              ORDER BY Date
               LIMIT 15";
       $rs = $oDB->query($sql, __FILE__, __LINE__);
       if(($record = $rs->fetch_array())!=false)
@@ -145,11 +167,11 @@ function CalendarSidebarContent($oDB, $pt, $CalendarDate)
       {?>
         <tr class="calendar-event-list">
           <td align=right style="padding:0px 2px 0px 2px">
-            <?=date("n/j", strtotime($record['CalendarDate'])) . ":"?>
+            <?=date("n/j", strtotime($record['Date'])) . ":"?>
           </td>
           <td style="padding:0px"><div class=ellipses style="width:125px">
-            <a href="/ride/<?=$record['CalendarID']?>" title="<?=$record['EventName']?>">
-              <?=$record['EventName']?>
+            <a href="/<?=$record['URLBase']?>/<?=$record['ID']?>" title="<?=htmlentities($record['Name'])?>">
+              <?=htmlentities($record['Name'])?>
             </a>
           </div></td>
         </tr>
@@ -176,13 +198,20 @@ function CalendarSidebar($oDB, $pt)
 {
     // --- Event calendar date. If not provided, default to current month
     $CalendarDate = (isset($_REQUEST['cd'])) ? date_create($_REQUEST['cd']) : FirstOfMonth(new DateTime);
-    // --- Is this team attending any rides in the next 70 days?
-    $sql = "SELECT CalendarID
+    // --- Is this team attending any rides in the next 30 days?
+    $sql = "(SELECT CalendarID AS ID
             FROM calendar
             JOIN calendar_attendance USING (CalendarID)
             JOIN rider USING (RiderID)
-            WHERE calendar.Archived=0 AND CalendarDate Between CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 70 DAY) AND
-                  (CommutingTeamID=$pt OR RacingTeamID=$pt) AND (Attending=1 OR Notify=1) LIMIT 1";
+            WHERE calendar.Archived=0 AND CalendarDate Between CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY) AND
+                  (CommutingTeamID=$pt OR RacingTeamID=$pt) AND (Attending=1 OR Notify=1) LIMIT 1)
+            UNION
+            (SELECT RaceID AS ID
+            FROM event
+            JOIN event_attendance USING (RaceID)
+            JOIN rider USING (RiderID)
+            WHERE event.Archived=0 AND RaceDate Between CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY) AND
+                  (CommutingTeamID=$pt OR RacingTeamID=$pt) AND (Attending=1 OR Notify=1) LIMIT 1)";
     $ride = $oDB->query($sql, __FILE__, __LINE__);
     if($ride->num_rows > 0) { ?>
       <div class="sidebarBlock">
@@ -191,7 +220,7 @@ function CalendarSidebar($oDB, $pt)
         </div>
         <div style="height:10px"><!--vertical spacer--></div>
         <p class="text75">
-          For a complete list of rides in the area, see the <a href="/rides">Community Ride Calendar</a>
+          For a complete listing of rides and events see the <a href="/rides">Ride Calendar</a> and <a href="/events">Event Schedule</a>.
         </p>
       </div>
     <? } ?>
