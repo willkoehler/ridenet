@@ -25,10 +25,11 @@ if(isset($_REQUEST['pb']))
 function CalendarSidebarContent($oDB, $pt, $CalendarDate)
 {
 ?>  
-    <h3 align=center>Local Rides</h3>
+    <h3 align=center>Meet Us On The Road</h3>
     <p class="text75">
-      Come ride with us. Click on a date for ride details.
+      Want to join us for a ride? Here's where we're riding this month.
     </p>
+    <div style="height:5px"></div>
     <!-- Calendar -->
       <table id=calendar cellspacing="0" cellpadding="0">
         <tr>
@@ -61,13 +62,16 @@ function CalendarSidebarContent($oDB, $pt, $CalendarDate)
         }
       
         // Get rides from the calendar table (if there are multiple rides on a day, link to first ride only)
-        $sql = "SELECT CalendarDate, EventName, CalendarID
+        $sql = "SELECT CalendarDate, EventName, CalendarID,
+                       COUNT(IF((CommutingTeamID=$pt OR RacingTeamID=$pt) AND (Attending=1 OR Notify=1), 1, NULL)) AS NumAttending
                 FROM calendar
-                WHERE Archived=0 AND
-                      CalendarDate Between '" . $FirstDayOfMonth->format("Y-m-d") . "' and '" . $LastDayOfMonth->format("Y-m-d") . " 23:59' AND
-                      TeamID = $pt
-                GROUP BY CalendarDate
-                ORDER BY CalendarDate";
+                JOIN calendar_attendance USING (CalendarID)
+                JOIN rider USING (RiderID)
+                WHERE calendar.Archived=0 AND
+                      CalendarDate Between '" . $FirstDayOfMonth->format("Y-m-d") . "' and '" . $LastDayOfMonth->format("Y-m-d") . " 23:59'
+                GROUP BY CalendarID
+                HAVING NumAttending > 0
+                ORDER BY CalendarDate, NumAttending";
         $rs = $oDB->query($sql, __FILE__, __LINE__);
         $record=$rs->fetch_array();
         //  Loop through the days in the month
@@ -119,18 +123,23 @@ function CalendarSidebarContent($oDB, $pt, $CalendarDate)
         <?}?>
       </table>
 <?  // Show upcoming rides
-      $sql = "SELECT CalendarID, CalendarDate, EventName, AddedBy, DATEDIFF(NOW(), CalendarDate) AS EventAge
+      $sql = "SELECT CalendarID, CalendarDate, EventName,
+                     COUNT(IF((CommutingTeamID=$pt OR RacingTeamID=$pt) AND (Attending=1 OR Notify=1), 1, NULL)) AS NumAttending
               FROM calendar
-              WHERE Archived=0 AND TeamID=$pt AND DATE(CalendarDate) >= DATE(NOW())
+              JOIN calendar_attendance USING (CalendarID)
+              JOIN rider USING (RiderID)
+              WHERE calendar.Archived=0 AND CalendarDate >= CURDATE()
+              GROUP BY CalendarID
+              HAVING NumAttending > 0
               ORDER BY CalendarDate
               LIMIT 15";
       $rs = $oDB->query($sql, __FILE__, __LINE__);
       if(($record = $rs->fetch_array())!=false)
       {?>
       <table border=0 cellpadding=0 cellspacing=0>
-        <tr><td class=table-spacer style="height:4px">&nbsp;</td></tr>
+        <tr><td class=table-spacer style="height:10px">&nbsp;</td></tr>
         <tr class="calendar-event-list"><td colspan=2>
-          <b>Upcoming Rides:</b>
+          <b>Upcoming rides we're attending:</b>
         </td></tr>
 <?    while($record!=false)
       {?>
@@ -166,73 +175,35 @@ function CalendarSidebarContent($oDB, $pt, $CalendarDate)
 function CalendarSidebar($oDB, $pt)
 {
     // --- Event calendar date. If not provided, default to current month
-    $CalendarDate = (isset($_REQUEST['cd'])) ? date_create($_REQUEST['cd']) : FirstOfMonth(new DateTime); ?>
-    <?// if($oDB->DBCount("calendar", "TeamID=$pt") > 0) { ?>
+    $CalendarDate = (isset($_REQUEST['cd'])) ? date_create($_REQUEST['cd']) : FirstOfMonth(new DateTime);
+    // --- Is this team attending any rides in the next 70 days?
+    $sql = "SELECT CalendarID
+            FROM calendar
+            JOIN calendar_attendance USING (CalendarID)
+            JOIN rider USING (RiderID)
+            WHERE calendar.Archived=0 AND CalendarDate Between CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 70 DAY) AND
+                  (CommutingTeamID=$pt OR RacingTeamID=$pt) AND (Attending=1 OR Notify=1) LIMIT 1";
+    $ride = $oDB->query($sql, __FILE__, __LINE__);
+    if($ride->num_rows > 0) { ?>
       <div class="sidebarBlock">
         <div id='calendar-sidebar'>
           <?CalendarSidebarContent($oDB, $pt, $CalendarDate);?>
         </div>
-        <?if(CheckLogin() && isMyTeam($oDB, $pt)) { ?>
-          <div style="height:10px"><!--vertical spacer--></div>
-          <div id='add-calendar-btn' align=center></div>
-          <div style="height:5px"><!--vertical spacer--></div>
-        <? } ?>
-          <div style="height:5px"><!--vertical spacer--></div>
+        <div style="height:10px"><!--vertical spacer--></div>
         <p class="text75">
           For a complete list of rides in the area, see the <a href="/rides">Community Ride Calendar</a>
         </p>
       </div>
-    <?// } ?>
+    <? } ?>
 
 <!-- Calendar sidebar javascript -->
     <script type="text/javascript">
       g_calendarDate = new Date('<?=$CalendarDate->format("n/j/Y")?>');
     
-      // This will be called when DOM is loaded and ready
-      Ext.onReady(function()
-      {
-      // --- Turn on validation errors beside the field globally and enable quick tips that will
-      // --- popup tooltip when mouse is hovered over field
-          Ext.form.Field.prototype.msgTarget = 'qtip';
-          Ext.QuickTips.init();
-      // --- create ride dialog
-          g_rideDialog = new C_RideDialog();
-          if(Ext.get('add-calendar-btn'))   // make sure button holder exists before creating
-          {
-          // --- create "Add Ride" button
-              var btn = new Ext.Button({
-                  text: '<span style="color:#94302E">&nbsp;Add A Ride</span>',
-                  icon: '/images/plus-icon.png',
-                  width: 90,
-                  id: 'btn-add-calendar',
-                  renderTo: 'add-calendar-btn',
-                  handler: clickAddRide
-              });
-          }
-      });
-
       function timeShift(interval)
       {
           g_calendarDate = g_calendarDate.add(Date.MONTH, interval);
           updateCalendarSidebar();
-      }
-
-      function clickAddRide()
-      {
-          g_rideDialog.show({
-              animateTarget: 'btn-add-calendar',
-              callback: updateCalendarSidebar
-          });
-      }
-
-      function clickEditRide(calendarID)
-      {
-          g_rideDialog.show({
-              calendarID: calendarID,
-              makeCopy: false,
-              animateTarget: 'edit-btn' + calendarID,
-              callback: updateCalendarSidebar
-          });
       }
 
       function updateCalendarSidebar()
