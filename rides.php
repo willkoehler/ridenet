@@ -17,9 +17,6 @@ $record = $rs->fetch_array();
 $CalendarLongitude = ($record==false) ? 0 : $record['Longitude'];
 $CalendarLatitude = ($record==false) ? 0 : $record['Latitude'];
 $ZipCodeText = ($record==false) ? "(unknown)" : $record['ZipCodeText'];
-// filter rides by team based on presence of 'tf' query parameter
-$teamFilter = isset($_REQUEST['tf']) ? $pt : 0;
-$teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -41,7 +38,6 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
   <script type="text/javascript">
     g_domainRoot="<?=GetDomainRoot()?>";
     g_calendarWeeks = <?=$CalendarWeeks?>;
-    g_teamFilter = "<?=$teamFilter?>";
     g_pt = <?=$pt?>
   </script>
 <!-- Insert tracker for Google Analytics -->
@@ -83,27 +79,12 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
         <div class="grid-button" style="margin:0px 0px 0px 10px;color:#5074AF" id='event-filters-btn' onclick="g_locationDialog.show({ ypos:100, animateTarget: 'event-filters-btn', zipCodeText: '<?=$ZipCodeText?>', zipCode: '<?=$CalendarFilterZip?>', range: '<?=$CalendarFilterRange?>' })">Set&nbsp;Location...</div>
       </td>
     </tr></table>
-
-    <?if($pt!=0) { ?>
-      <div style="height:3px"></div>
-      <table border=0 cellpadding=0 cellspacing=0><tr>
-        <td valign=center>
-          <h2 style="margin:0px">Showing rides posted by</h2>
-        </td>
-        <td valign=center style="padding: 2px 0 0 5px">
-          <SELECT onChange="window.location.href='/rides' + options[selectedIndex].value">
-            <OPTION value='' <?if($teamFilter==0) {?>selected<? } ?>>All RideNet Teams
-            <OPTION value='?tf' <?if($teamFilter > 0) {?>selected<? } ?>><?=$teamName?>
-          </SELECT>
-        </td>
-      </tr></table>
-    <? } ?>
     
   </div>
     
   <div id="extraWideContent">  
     <div id='ride-calendar-holder' align=center>
-      <?RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $CalendarLatitude, $CalendarWeeks, $teamFilter)?>
+      <?RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $CalendarLatitude, $CalendarWeeks)?>
     </div>
   </div>
   

@@ -2,10 +2,9 @@
 if(isset($_REQUEST['pb']))
 {
     require("../script/app-master.php");
-    CheckRequiredParameters(Array('w', 'tf', 'T'));
+    CheckRequiredParameters(Array('w', 'T'));
     $CalendarWeeks = intval($_REQUEST['w']);
     $oDB = oOpenDBConnection();
-    $teamFilter = $_REQUEST['tf'];
     $pt = $_REQUEST['T'];
 
     // --- Get calendar filter zip code and range from cookies.
@@ -18,7 +17,7 @@ if(isset($_REQUEST['pb']))
     $CalendarLongitude = ($record==false) ? 0 : $record['Longitude'];
     $CalendarLatitude = ($record==false) ? 0 : $record['Latitude'];
     // filter rides by team based on presence of 'tf' query parameter
-    RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $CalendarLatitude, $CalendarWeeks, $teamFilter);
+    RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $CalendarLatitude, $CalendarWeeks);
 }
 
 
@@ -33,11 +32,10 @@ if(isset($_REQUEST['pb']))
 //    CalendarLongitude   - Longitude of center point for calendar filter
 //    CalendarLatitude    - Latitude of center point for calendar filter
 //    CalendarWeeks       - number of weeks to show in calendar
-//    TeamFilter          - ID of team to filter ride calendar for (0 for no filter)
 //
 //  RETURN: none
 //-----------------------------------------------------------------------------------
-function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $CalendarLatitude, $CalendarWeeks, $TeamFilter)
+function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $CalendarLatitude, $CalendarWeeks)
 {?>
     <!-- If user is logged in shift table to the right so main body of table is still centered -->
     <div <?if(CheckLogin()) {?>style="margin-left:65px"<?}?>>
@@ -46,16 +44,7 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
       $EndDate = AddDays($StartDate, $CalendarWeeks*7 - 1);
       $whereClause = "c.Archived=0";
       $whereClause .= " AND CalendarDate Between '" . $StartDate->format("Y-m-d") . "' and '" . $EndDate->format("Y-m-d") . " 23:59'";
-      if($TeamFilter > 0)
-      {
-        // when filtering by team, show all rides regardless of location
-        $whereClause .= " AND TeamID=$TeamFilter";
-      }
-      else
-      {
-        // when not filtering by team, only show rides near the selected location
-        $whereClause .= " AND CalculateDistance(Longitude, Latitude, $CalendarLongitude, $CalendarLatitude) <= $CalendarFilterRange";
-      }
+      $whereClause .= " AND CalculateDistance(Longitude, Latitude, $CalendarLongitude, $CalendarLatitude) <= $CalendarFilterRange";
       $sql = "SELECT CalendarID, CalendarDate, EventName, Location, ClassX, ClassA, ClassB, ClassC, ClassD, AddedBy,
                      CONCAT(City, ', ', State, ' ', ZipCode) AS GeneralArea,
                      CalculateDistance(Longitude, Latitude, $CalendarLongitude, $CalendarLatitude) AS Distance,
@@ -82,7 +71,7 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
           <?if(CheckLogin()) { ?>
             <span class='action-btn' id='add-btn0' onclick="clickAddRide(this.id);">&nbsp;<b>+</b> Add Ride&nbsp;</span>
           <? } else { ?>
-            <span class='action-btn' onclick="window.location.href='/login?Goto=<?=urlencode("../rides" . ($TeamFilter ? "?tf" : ""))?>'">&nbsp;Login To Add a Ride&nbsp;</span>
+            <span class='action-btn' onclick="window.location.href='/login?Goto=<?=urlencode("../rides")?>'">&nbsp;Login To Add a Ride&nbsp;</span>
           <? } ?>
         </td></tr>
         <tr><td class="table-spacer" style="height:5px" colspan=2>&nbsp;</td></tr>
@@ -122,7 +111,7 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
                   <?if(CheckLogin()) { ?>
                     <span class='action-btn' id='add-btn<?=$eventDate->format("n-j")?>' onclick="clickAddRide(this.id);"><b>+</b> Add Ride</span>
                   <? } else { ?>
-                    <span class='action-btn' onclick="window.location.href='/login?Goto=<?=urlencode("../rides" . ($TeamFilter ? "?tf" : ""))?>'">&nbsp;Login To Edit&nbsp;</span>
+                    <span class='action-btn' onclick="window.location.href='/login?Goto=<?=urlencode("../rides")?>'">&nbsp;Login To Edit&nbsp;</span>
                   <? } ?>
                 </td>
               </tr></table>
