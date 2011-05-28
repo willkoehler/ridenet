@@ -75,7 +75,7 @@ function C_RideLogDialog()
                             blankText: 'You must select a ride type',
                             store: new Ext.data.ArrayStore({ fields: ['id', 'text', 'img', 'desc'], data: rideLogTypeLookup }),
                             tpl:'<tpl for="."><div class="x-combo-list-item"><table><tr>\
-                                   <td><img src="/images/ridelog/{img}"></td>\
+                                   <td><img src="/images/ridelog/{img}" height=25 width=25></td>\
                                    <td class="item-status-label" style="width:60px">{text}</td>\
                                    <td class="item-status-desc" style="width:160px">{desc}</td>\
                                  </tr></table>\

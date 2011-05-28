@@ -36,7 +36,7 @@ elseif(strtotime(SmartGet('Date'))==false)
     header("HTTP/1.1 400 Bad Request");
     $result['error'] = "Invalid date format";
 }
-elseif(($rideLogTypeID!=="NULL" && $rideLogTypeID < 1 || $rideLogTypeID > 6) || ($weatherID!=="NULL" && $weatherID < 1 || $weatherID > 8) ||
+elseif(($rideLogTypeID!=="NULL" && $rideLogTypeID < 1 || $rideLogTypeID > 7) || ($weatherID!=="NULL" && $weatherID < 1 || $weatherID > 8) ||
        $distance > 1000 || $duration > 2880 || strlen($comment) > 142)
 {
     header("HTTP/1.1 400 Bad Request");
