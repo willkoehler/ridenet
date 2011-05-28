@@ -16,11 +16,11 @@ function C_ReportForm(parentElement)
     this.form = null;
     this.firstLoad = true;
 
-    // Sort column and range filter can be specified in the hash tag (i.e. /rider-stats#s=CEDays&r=This%20Year&q=searchfor)
+    // Sort column and range filter can be specified in the hash tag (i.e. /rider-stats#s=CEDays&r=Y&q=searchfor)
     // If there's no hash tag, use defaults
     var hash = Ext.urlDecode((window.location.hash) ? window.location.hash.substr(1) : "");
     var sort = (hash.s) || "CEDays";
-    var range = (hash.r) || "A";
+    var range = (hash.r) || "Y0";
     var search = (hash.q) || ""; 
 
     Ext.fly('date-range').on('change', function() { this.filterList() }, this);
@@ -70,7 +70,7 @@ function C_ReportForm(parentElement)
                 id: 'SearchFor',
                 value: search,
                 emptyText: 'Find Rider or Team',
-                width: 150,
+                width: 162,
                 listeners: { scope: this, specialkey: function(ctrl, e) { if(e.getKey() == e.ENTER) { this.filterList() } } }
             } , ' ', {
                 cls: 'x-btn-icon',

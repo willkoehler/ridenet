@@ -19,7 +19,7 @@ function C_ReportForm(parentElement)
     // Sort column and range filter can be specified in the hash tag. If there's no hash tag, use defaults
     var hash = Ext.urlDecode((window.location.hash) ? window.location.hash.substr(1) : "");
     var sort = (hash.s) || "StarRiders";
-    var range = (hash.r) || "A";
+    var range = (hash.r) || "Y0";
     var search = (hash.q) || "";
     
     Ext.fly('date-range').on('change', function() { this.filterList() }, this);
