@@ -27,7 +27,8 @@ elseif($riderID!=$uid)
 }
 else
 {
-    $rs = $oDB->query("SELECT RideLogID, Date, RideLogTypeID, Distance, Duration, WeatherID, Comment, Link, DATE(Created) AS DateCreated
+    $rs = $oDB->query("SELECT RideLogID, Date, RideLogTypeID, Distance * 1609.344 AS Distance, Duration * 60 AS Duration,
+                              WeatherID, Comment, Link, DATE(Created) AS DateCreated
                        FROM ride_log
                        WHERE RiderID=$riderID
                        ORDER BY Date DESC
