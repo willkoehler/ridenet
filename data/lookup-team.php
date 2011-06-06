@@ -3,11 +3,11 @@
 require("../script/app-master-min.php");
 
 // Reject requests that are missing required parameters (to handle bots scanning this page)
-CheckRequiredParameters(Array('limit', 'start', 'query'));
+CheckRequiredParameters(Array('query'));
 
 // store query/post values in local variables
-$limit = intval($_REQUEST['limit']);   // Number of records to retrieve (used for paging)
-$start = intval($_REQUEST['start']);   // Starting record (used for paging)
+$limit = intval(SmartGet('limit', 10));   // Number of records to retrieve (used for paging)
+$start = intval(SmartGet('start',0));   // Starting record (used for paging)
 $query = $_REQUEST['query'];           // partial string typed into combo box
 
 // --- open connection to database
