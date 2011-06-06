@@ -51,7 +51,8 @@ function RenderTeamWall($oDB, $teamID, $length)
                        RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RacingTeamID, CommutingTeamID, TeamName, Domain,
                        DATEDIFF(NOW(), Created) AS Age, IF(LENGTH(Report)>140, CONCAT(SUBSTRING(Report, 1, 140),'...'), Report) AS PostText, NULL AS Link,
                        0 AS Distance, 0 AS Duration, '' AS RideLogType, '' AS RideLogTypeImage, '' AS Weather, '' AS WeatherImage,
-                       0 AS RideLogID, 0 AS Source, 0 AS HasMap, RaceID, CONCAT(DATE_FORMAT(RaceDate, '%b %e, %Y'), ' - ', EventName) AS EventName
+                       0 AS RideLogID, 0 AS Source, 0 AS HasMap, RaceID,
+                       CONCAT(DATE_FORMAT(RaceDate, '%b %e, %Y'), ' | ', PlaceName, ' - ', CategoryName, ' | ', EventName) AS EventName
                 FROM results
                 LEFT JOIN event USING (RaceID)
                 LEFT JOIN rider USING (RiderID)

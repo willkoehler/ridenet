@@ -124,6 +124,9 @@ function RenderWall($rs, $pt, $showTime=false, $showHeaders=true, $emptyMessage=
             <a href="/results/<?=$record['RaceID']?>?RiderID=<?=$record['RiderID']?>"><?=$record['EventName']?></a>
             <?if(!is_null($record['PostText'])) { ?>
               <span class="bullet">&bull;</span> <?=htmlentities($record['PostText'])?>
+              <?if(substr($record['PostText'], -3)=='...') { ?>
+                <a href="/results/<?=$record['RaceID']?>?RiderID=<?=$record['RiderID']?>">[read more]</a>
+              <? } ?>
             <? } ?>
           </div>
           <? break; ?>
