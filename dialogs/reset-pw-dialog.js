@@ -42,7 +42,7 @@ function C_ResetPWDialog()
                 },{
             // === Message Field (just above buttons) ===
                     xtype: 'container',
-                    id: 'status-msg',
+                    id: 'status-msg2',
                     style: 'display:none',   // start off hidden initially
                     cls: 'form-status'
                 },{
@@ -149,7 +149,7 @@ function C_ResetPWDialog()
 
     this.setMessage = function(message, color, loading)
     {
-        setFormMessage(message,color,loading);
+        setFormMessage(message,color,loading,'status-msg2');
         // recalculate window size to fit new contents (needed in IE)
         this.window.syncSize();
     }
