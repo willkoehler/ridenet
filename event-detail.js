@@ -105,7 +105,7 @@ function updateEventUpdates()
 {
     Ext.get('event-updates').mask("Updating");
     Ext.Ajax.request({
-        url: '/dynamic-sections/event-updates.php?pb&RaceID=' + g_raceID + '&l=' + g_eventUpdatesLength,
+        url: '/dynamic-sections/event-wall.php?pb&RaceID=' + g_raceID + '&l=' + g_eventUpdatesLength,
         success: function(response, options)
         {
             Ext.get('event-updates').update(response.responseText);

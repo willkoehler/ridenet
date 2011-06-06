@@ -1,6 +1,6 @@
 <?
 require("script/app-master.php");
-require("dynamic-sections/event-updates.php");
+require("dynamic-sections/event-wall.php");
 require("dynamic-sections/event-attendance.php");
 require(SHAREDBASE_DIR . "ExtJSLoader.php");
 
@@ -161,9 +161,9 @@ $notify = $oDB->DBLookup("Notify", "event_attendance", "AttendanceID=$attendance
         <div style="float:right;position:relative;top:6px;" class='action-btn' onclick="window.location.href='/login?Goto=<?=urlencode($_SERVER['REQUEST_URI'])?>'">&nbsp;Login To Post Update&nbsp;</div>
       <? } ?>
       <div style="padding:5px;border-bottom:1px dotted #CCC;border-top:1px dotted #CCC">
-        <h2 style="margin:0px">Event Updates</h2>
+        <h2 style="margin:0px">Event Updates / Results</h2>
         <div class="team-board-instructions">
-          Event updates will be emailed to everyone attending or watching this event
+          To post a race result, go to <a href="/update-results">Your Results</a>. To post an update to this event, click "<b>Post Update</b>".<br>
         </div>
       </div>
       <div class="clearfloat" style="height:1px"></div>
