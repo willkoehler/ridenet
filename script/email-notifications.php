@@ -144,7 +144,7 @@ function CalendarUpdateEmail($oDB, $postID)
                                FROM calendar_attendance
                                JOIN rider USING (RiderID)
                                JOIN teams ON (rider.RacingTeamID = teams.TeamID)
-                               WHERE CalendarID={$post['CalendarID']} AND Notify=1 AND RiderID<>{$post['RiderID']}", __FILE__, __LINE__);
+                               WHERE CalendarID={$post['CalendarID']} AND Notify=1", __FILE__, __LINE__);
     $subject = "Ride Update - {$post['EventName']}";
     while(($recipient = $recipients->fetch_array())!=false)
     {
@@ -190,7 +190,7 @@ function EventUpdateEmail($oDB, $postID)
                                FROM event_attendance
                                JOIN rider USING (RiderID)
                                JOIN teams ON (rider.RacingTeamID = teams.TeamID)
-                               WHERE RaceID={$post['RaceID']} AND Notify=1 AND RiderID<>{$post['RiderID']}", __FILE__, __LINE__);
+                               WHERE RaceID={$post['RaceID']} AND Notify=1", __FILE__, __LINE__);
     $subject = "Event Update - {$post['EventName']}";
     while(($recipient = $recipients->fetch_array())!=false)
     {
