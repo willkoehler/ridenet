@@ -6,9 +6,14 @@ function C_SignupDialog()
     //  Show signup dialog.
     //  params object has the following parameters:
     //      animateTarget   - id of HTML target to animate opening/closing window
+    //      teamID          - id of default team
+    //      teamName        - name of default team
     // -------------------------------------------------------------------------------------------
     this.show = function(params)
     {
+        this.teamID = params.teamID;
+        this.teamName = params.teamName;
+        
         if( ! this.window)
         {
             
@@ -138,6 +143,11 @@ function C_SignupDialog()
             // perform actions when window opens
             this.window.on('show', function() {
                 this.form.getForm().reset();            // clear form contents
+                if(this.teamID)
+                {
+                    this.form.getForm().findField("TeamID").setValue(this.teamID);
+                    this.form.getForm().findField("TeamID").setRawValue(this.teamName);
+                }
                 this.setMessage('', 'black');           // clear message area
             }, this);
         }

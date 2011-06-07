@@ -7,6 +7,8 @@ Ext.onReady(function()
     Ext.QuickTips.init();
 // --- Create dialogs
     g_messageDialog = new C_PostMessageDialog();
+    g_signupDialog = new C_SignupDialog();
+    g_resetPWDialog = new C_ResetPWDialog();
 // --- add listeners to show/hide delete buttons
     addHoverListeners();
 });

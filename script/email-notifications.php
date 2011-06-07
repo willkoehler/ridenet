@@ -45,7 +45,8 @@ function AccountCreatedEmail($oDB, $newRiderID, $createdByID)
                    "Welcome to RideNet. You are currently a member of the RideNet Sandbox. The Sandbox is a " .
                    "holding place for riders that are not yet a member of a RideNet team. You can login to " .
                    "RideNet using your email address and temporary password.\n\n" .
-                   "Homepage: $teamURL\n" .
+                   "Team Home: $teamURL\n" .
+                   "Your Profile: $teamURL/profile\n" .
                    "Email Address: {$newRiderInfo['RiderEmail']}\n" .
                    "Password: live2ride\n\n" .
                    "Some things you can do on RideNet:\n" .
@@ -72,7 +73,8 @@ function AccountCreatedEmail($oDB, $newRiderID, $createdByID)
                            "riding. Each 2 BY 2012 participating organization has a RideNet team where riders log " .
                            "their bicycling miles.\n\n $createdBy. You can login to your account using your email address " .
                            "and temporary password.\n\n" .
-                           "Homepage: $teamURL\n" .
+                           "Team Home: $teamURL\n" .
+                           "Your Profile: $teamURL/profile\n" .
                            "Email Address: {$newRiderInfo['RiderEmail']}\n" .
                            "Password: live2ride\n\n" .
                            "Some things you can do on RideNet:\n" .
@@ -92,7 +94,8 @@ function AccountCreatedEmail($oDB, $newRiderID, $createdByID)
                     $msg = "Hi {$newRiderInfo['Name']},\n\n" .
                            "Welcome to RideNet. $createdBy. You can login to RideNet using your email address and " .
                            "temporary password.\n\n" .
-                           "Homepage: $teamURL\n" .
+                           "Team Home: $teamURL\n" .
+                           "Your Profile: $teamURL/profile\n" .
                            "Email Address: {$newRiderInfo['RiderEmail']}\n" .
                            "Password: live2ride\n\n" .
                            "Some things you can do on RideNet:\n" .

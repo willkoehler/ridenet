@@ -429,7 +429,39 @@ function RideNetAdSidebar()
         <a href="http://ridenet.net" target="_blank"><img border=0 src="/images/ads/ridenetad.png" alt="RideNet" /><br></a>
       </p>
       <p style="text-align:center">
-        Free rider profiles and team pages. <a href="http://ridenet.net" target="_blank">Join RideNet Today!</a>
+        Free rider profiles and team pages. <a href="http://ridenet.net" target="_blank">Learn more...</a>
+      </p>
+    </div>
+
+<?
+}
+
+
+//----------------------------------------------------------------------------------
+//  SignupSidebar()
+//
+//  This function inserts the signup invitation sidebar block into the current page
+//
+//  PARAMETERS:
+//    teamID      - id of current team
+//    teamName    - name of current team
+//
+//  RETURN: none
+//-----------------------------------------------------------------------------------
+function SignupSidebar($teamID, $teamName)
+{
+?>
+    <div class="sidebarBlock">
+      <p style="padding-top:5px;text-align:center">
+        Sign up and join "<?=$teamName?>" on RideNet.
+      </p>
+      <div style="padding:8px 0;text-align:center">
+        <span class="action-btn2" style="font-size:13px" id='signup-btn' onclick="g_signupDialog.show({animateTarget:'signup-btn', teamID:<?=$teamID?> , teamName:'<?=htmlentities(addslashes($teamName))?>'})">
+          Join RideNet...
+        </span>
+      </div>
+      <p style="padding-top:3px;text-align:center">
+        <a href="http://ridenet.net" target="_blank">Learn more about RideNet...</a>
       </p>
     </div>
 

@@ -407,7 +407,7 @@ h3   {
     font: 11px 'Helvetica Neue', Arial, sans-serif;
 }
 
-.action-btn, .action-btn-sm {
+.action-btn, .action-btn2, .action-btn-sm {
     font: 11px Arial, Helvetica, sans-serif;
     text-align: center;
     border: 1px solid #BBB;
@@ -420,16 +420,16 @@ h3   {
     background-color: #E5E5E5;
     color: #<?=$PrimaryColor?>;
 }
-.action-btn:hover, .action-btn-sm:hover {
+.action-btn:hover, .action-btn2:hover, .action-btn-sm:hover {
     background-color: #<?=$SecondaryBGColor?>;
 }
-.action-btn.disabled, .action-btn-sm.disabled {
+.action-btn.disabled, .action-btn2.disabled, .action-btn-sm.disabled {
     cursor: default;
     background-color: #E5E5E5;
     opacity: .6;
     filter: alpha(opacity=60);
 }
-.action-btn:hover.disabled, .action-btn-sm:hover.disabled {
+.action-btn:hover.disabled, .action-btn2:hover.disabled, .action-btn-sm:hover.disabled {
     background-color: #E5E5E5;
 }
 .action-btn-sm {
@@ -437,6 +437,13 @@ h3   {
     border-radius: 6px;
     padding: 1px 3px;
     font: 9px Arial, Helvetica, sans-serif;
+}
+.action-btn2 {
+    padding: 1px 15px;
+    background-color: #FFF;
+}
+.action-btn2:hover {
+    background-color: #E0E0E0;
 }
 .ext-webkit .action-btn {
     padding: 1px 5px 2px 5px;

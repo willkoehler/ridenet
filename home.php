@@ -30,12 +30,15 @@ $TeamWallLength = 30;
   <?MinifyAndInclude("/home.js")?>
   <?MinifyAndInclude("/dialogs/post-message-dialog.js")?>
   <?MinifyAndInclude("/script/ridenet-helpers.js")?>
+  <?MinifyAndInclude("/dialogs/signup-dialog.js")?>
+  <?MinifyAndInclude("/dialogs/reset-pw-dialog.js")?>
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
     <?SessionToJS()?>
     g_teamWallLength = <?=$TeamWallLength?>;
     g_fullDomainRoot="<?=GetFullDomainRoot()?>";
     g_pt = <?=$pt?>;
+    g_signupSource = 'team';
   </script>
 <!-- Insert tracker for Google Analytics -->
   <?InsertGoogleAnalyticsTracker()?>
@@ -51,10 +54,9 @@ $TeamWallLength = 30;
   </div>
 
   <div id="sidebarHolderRight">
+    <?SignupSidebar($pt, $team['TeamName'])?>
     <?if($team['TeamTypeID']==2) { ?>
       <?ColumbusFoundationSidebar($oDB)?>
-    <? } else { ?>
-      <?RideNetAdSidebar()?>
     <? } ?>
     <?if($pt==2) { ?> <!--Team Echelon sponsors are hard-coded for now-->
       <?SponsorSidebar()?>
