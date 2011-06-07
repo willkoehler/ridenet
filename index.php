@@ -19,10 +19,11 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
   <!-- Code-behind modules for this page (minify before including)-->
     <?MinifyAndInclude("/dialogs/signup-dialog.js")?>
     <?MinifyAndInclude("/script/ridenet-helpers.js")?>
+    <?MinifyAndInclude("/dialogs/reset-pw-dialog.js")?>
   <!-- Build javascript arrays for local/static combobox lookups -->
     <script type="text/javascript">
       <?SessionToJS()?>
-      g_source = '<?=isset($_REQUEST['s']) ? $_REQUEST['s'] : 'direct'?>';
+      g_signupSource = '<?=isset($_REQUEST['s']) ? $_REQUEST['s'] : 'home'?>';
     </script>
   <!-- Insert tracker for Google Analytics -->
     <?InsertGoogleAnalyticsTracker()?>
@@ -157,6 +158,7 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
       Ext.QuickTips.init();
   // --- create signup dialog
       g_signupDialog = new C_SignupDialog();
+      g_resetPWDialog = new C_ResetPWDialog();
   });
 </script>
 

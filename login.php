@@ -41,6 +41,7 @@ $riderEmail = isset($_COOKIE['RiderEmail']) ? $_COOKIE['RiderEmail'] : "";
     <?MinifyAndInclude("/script/ridenet-helpers.js")?>
   <!-- Build javascript arrays for local/static combobox lookups -->
     <script type="text/javascript">
+      g_signupSource = 'login';
     </script>
   <!-- Insert tracker for Google Analytics -->
     <?InsertGoogleAnalyticsTracker()?>

@@ -12,61 +12,96 @@ function C_SignupDialog()
         if( ! this.window)
         {
             
+            this.dsTeamLookup = new Ext.data.JsonStore({
+                root: 'results',                // results array is returned in this property
+                totalProperty: 'rowcount',      // total number of rows is returned in this property
+                idProperty: 'TeamID',           // defines the primary key for the results
+                fields: [
+                    {name: 'TeamID', type: 'int'},
+                    {name: 'TeamName'},
+                    {name: 'TeamType'},
+                    {name: 'Domain'}
+                ],
+                proxy: new Ext.data.HttpProxy({ url: '/data/lookup-team.php' })
+            });
+
             this.form = new Ext.form.FormPanel({
                 baseCls: 'x-plain',     // (gives panel a gray background - by default panels have white backgrounds)
-                url:'/data/rider-signup.php',
+                url:'/data/signup.php',
                 labelAlign: 'right',
+                labelWidth: 40,
                 bodyStyle:'padding: 7px 15px 0px 15px',
                 buttonAlign:'center',
-                defaults: {hideLabel: true},
                 baseParams: { },    // additional parameters passed to post request
                 items: [{
-            // === Welcome Text ===
-                    xtype: 'displayfield',
-                    hideLabel: true,
-                    style: 'margin:0 0 2px 0; font: 13px "Helvetica Neue", Arial; color:#444',
-                    html: 'We just need a few pieces of information to create your profile.'
-                },{
                     xtype:'container', layout:'column', items: [{
-                        xtype:'container', layout:'form', width:170, hideLabels: true, items: [{
-                        // === Name ===
+                        xtype:'container', layout:'form', width:210, labelWidth: 40, items: [{
+                        // === First Name ===
                             xtype: 'textfield',
-                            emptyText: 'Full Name',
-                            name: 'RiderName',
+                            fieldLabel: 'Name',
+                            emptyText: 'First Name',
+                            name: 'FirstName',
                             width: 160,
                             allowBlank: false,
-                            blankText: 'You must enter your name'
+                            blankText: 'You must enter your first name'
                         }]
                     },{
-                        xtype:'container', layout:'form', width:230, hideLabels: true, items: [{
-                        // === Email ===
+                        xtype:'container', layout:'form', width:165, hideLabels: true, items: [{
+                        // === Last Name ===
                             xtype: 'textfield',
-                            emptyText: 'email (name@example.com)',
-                            name: 'RiderEmail',
-                            width: 230,
-                            vtype: 'email',
+                            emptyText: 'Last Name',
+                            name: 'LastName',
+                            width: 165,
                             allowBlank: false,
-                            blankText: 'You must enter your email'
+                            blankText: 'You must enter your last name'
                         }]
                     }]
                 },{
-                // === Rider Description ===
-                    xtype: 'textarea',
-                    name: 'RiderDescription',
-                    emptyText: 'Tell us what kind of riding you do',
-                    width: 400,
-                    height: 50
-                },{
-                    xtype: 'displayfield',
-                    hideLabel: true,
-                    style: 'margin:15px 0 0 0; font: 13px "Helvetica Neue", Arial; color:#444',
-                    html: 'Do you belong to a local cycling club or workplace commuting team?'
-                },{
-                // === Team Name ===
+                // === Email ===
                     xtype: 'textfield',
-                    emptyText: 'Team/Club Name',
-                    name: 'TeamName',
-                    width: 400
+                    fieldLabel: 'Email',
+                    emptyText: 'name@example.com',
+                    name: 'Email',
+                    width: 330,
+                    vtype: 'email',
+                    allowBlank: false,
+                    blankText: 'You must enter your email'
+                },{
+                // === Team ===
+                    xtype: 'remotecombobox',
+                    fieldLabel: 'Team',
+                    displayField: 'TeamName',
+                    valueField: 'TeamID',
+                    hiddenName: 'TeamID',
+                    forceSelection: true,
+                    maxHeight: 400,
+                    width: 330,
+                    listWidth: 350,
+                    pageSize: 50,
+                    triggerClass: 'x-form-search-trigger',
+                    emptyText: 'Type first few letters of your team name...',
+                    store: this.dsTeamLookup,
+                    tpl:'<tpl for="."><div class="x-combo-list-item" style="border-bottom:1px solid #ccc"><table cellpadding=0 cellspacing=0><tr>\
+                           <td><div class="ellipses" style="padding-left:5px;width:210px">\
+                             <div class="find-name">{TeamName}</div>\
+                             <div class="find-info">{TeamType}</div>\
+                           </div></td>\
+                           <td style="height:32px;width:120px;text-align:center"><img src="' + getFullDomainRoot() + '/imgstore/team-logo/fit/{TeamID}.png"></td>\
+                         </tr></table>\
+                         </div></tpl>'
+                },{
+                    xtype: 'container',
+                    style: 'padding:5px 0 5px 180px',
+                    html: 'OR...'
+                    
+                },{
+                    xtype: 'checkbox',
+                    name: 'NoTeam',
+                    boxLabel:'No team - just sign me up <span style="font-size:11px;line-height:12px;color:#888">(you can always join a team later)</span>'
+                },{
+                    xtype: 'checkbox',
+                    name: 'CreateTeam',
+                    boxLabel:'I want to create a new team <span style="font-size:11px;line-height:12px;color:#888">(we will contact you via email)</span>'
                 },{
                     xtype: 'container', cls: 'form-spacer', height:5
                 },{
@@ -76,24 +111,21 @@ function C_SignupDialog()
                     style: 'display:none',   // start off hidden initially
                     cls: 'form-status'
                 },{
-                    xtype: 'container', cls: 'form-spacer', height:5
+                    xtype: 'container', cls: 'form-spacer', height:2
                 }],
 
                 buttons: [{
-                    text: 'Request Membership',
+                    text: 'Sign Up!',
                     width: 140,
                     handler: this.saveButtonClick,
-                    scope: this
-                },{
-                    text: 'Cancel',
-                    handler: this.cancelButtonClick,
                     scope: this
                 }]
             });
 
             this.window = new Ext.Window({
                 title: 'RideNet Sign Up',
-                width: 460,             // (height will be calculated based on content)
+                width: 440,             // (height will be calculated based on content)
+                y: 150,
                 autoHeight: true,       // allows calls to syncSize() to resize the window based on content
                 forceLayout: true,      // force window to calculate layout (i.e. height) before opening
                 resizable: false,
@@ -114,23 +146,16 @@ function C_SignupDialog()
         this.window.show(params.animateTarget);
     }
 
-    this.cancelButtonClick = function()
-    {
-        this.window.hide();
-        // log an event in Google Analytics
-        _gaq.push(['_trackEvent', 'Signup', 'Cancel']);
-    }
-
     this.saveButtonClick = function()
     {
     // --- show sending message in message area
-        this.setMessage("Processing Membership Request...", "black", true);
+        this.setMessage("Creating Profile...", "black", true);
     // --- disable dialog
         this.window.getEl().mask();
     // --- submit form data
         this.form.getForm().submit({
             reset: false,
-            params: { Source: g_source },
+            params: { Source: g_signupSource },
             success: this.onPostSuccess,
             failure: this.onPostFailure,
             scope: this
@@ -141,14 +166,12 @@ function C_SignupDialog()
     {
         Ext.Msg.show({
             title: "RideNet Sign Up",
-            msg: "<span style='font-size:14px'>Thank you for signing up with RideNet! We will send you a welcome email with login information. This process may take up to 24 hours.</span>",
+            msg: "<span style='font-size:14px'>Thank you for signing up with RideNet! We will send you a welcome email with login information.</span>",
             closable: false,
             buttons: Ext.MessageBox.OK,
             fn: function(btn) { 
                 this.window.getEl().unmask();
                 this.window.hide();
-                // log an event in Google Analytics
-                _gaq.push(['_trackEvent', 'Signup', 'Request']);
             },
             scope: this
         });
@@ -164,7 +187,7 @@ function C_SignupDialog()
                 break;
             case Ext.form.Action.SERVER_INVALID:
             // --- failure message returned from code on the server
-                this.setMessage("Error requesting membership: " + action.result.message, "red");
+                this.setMessage(action.result.message, "red");
                 break;
             case Ext.form.Action.CONNECT_FAILURE:
             // --- Failed to connect to server
