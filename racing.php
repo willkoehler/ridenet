@@ -50,11 +50,11 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
   <?InsertResultsMenu($ShowYear, "Results")?>
 
   <div id="sidebarHolderRight">
-    <?SignupSidebar($oDB)?>
+    <?RideNetAdSidebar()?>
     <?if($pt==2) { ?> <!--Team Echelon sponsors are hard-coded for now-->
-      <?SponsorSidebar($oDB)?>
+      <?SponsorSidebar()?>
     <? } ?>
-    <?AdSidebar($oDB)?>
+    <?AdSidebar()?>
     <?CalendarSidebar($oDB, $pt)?>
     <?MostViewedRiderSidebar($oDB, $pt)?>
   </div>

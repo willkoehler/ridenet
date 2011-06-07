@@ -48,7 +48,7 @@ $range = (isset($_REQUEST['R'])) ? $_REQUEST['R'] : "L30";
 
   <div id="sidebarHolderRight">
     <?ColumbusFoundationSidebar($oDB)?>
-    <?AdSidebar($oDB)?>
+    <?AdSidebar()?>
     <?CalendarSidebar($oDB, $pt)?>
     <?MostViewedRiderSidebar($oDB, $pt)?>
   </div>

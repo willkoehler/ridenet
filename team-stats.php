@@ -46,7 +46,7 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
 
   <div id="sidebarHolderRight">
     <?ColumbusFoundationSidebar($oDB)?>
-    <?AdSidebar($oDB)?>
+    <?AdSidebar()?>
     <?CalendarSidebar($oDB, $pt)?>
     <?MostViewedRiderSidebar($oDB, $pt)?>
   </div>

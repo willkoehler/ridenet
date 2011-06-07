@@ -61,7 +61,7 @@ else
 
   <div id="sidebarHolderRight">
     <?ColumbusFoundationSidebar($oDB)?>
-    <?AdSidebar($oDB)?>
+    <?AdSidebar()?>
     <?CalendarSidebar($oDB, $pt)?>
     <?MostViewedRiderSidebar($oDB, $pt)?>
   </div>

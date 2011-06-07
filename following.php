@@ -38,8 +38,8 @@ CheckLoginAndRedirect();
   </div>
 
   <div id="sidebarHolderRight">
-    <?SignupSidebar($oDB)?>
-    <?AdSidebar($oDB)?>
+    <?RideNetAdSidebar()?>
+    <?AdSidebar()?>
     <?CalendarSidebar($oDB, $pt)?>
     <?MostViewedRiderSidebar($oDB, $pt)?>
   </div>

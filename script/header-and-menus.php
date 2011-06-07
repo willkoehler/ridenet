@@ -413,15 +413,15 @@ function MostViewedRiderSidebar($oDB, $pt=0)
 
 
 //----------------------------------------------------------------------------------
-//  SignupSidebar()
+//  RideNetAdSidebar()
 //
-//  This function inserts the signup invitation sidebar block into the current page
+//  This function inserts the RideNet ad sidebar block into the current page
 //
 //  PARAMETERS: none
 //
 //  RETURN: none
 //-----------------------------------------------------------------------------------
-function SignupSidebar()
+function RideNetAdSidebar()
 {
 ?>
     <div class="sidebarBlock">

@@ -54,12 +54,12 @@ $teamTypeID = $oDB->DBLookup("TeamTypeID", "teams", "TeamID=$pt");
     <? if($teamTypeID==2) { ?>
       <?ColumbusFoundationSidebar($oDB)?>
     <? } else { ?>
-      <?SignupSidebar($oDB)?>
+      <?RideNetAdSidebar()?>
     <? } ?>
     <?if($pt==2) { ?> <!--Team Echelon sponsors are hard-coded for now-->
-      <?SponsorSidebar($oDB)?>
+      <?SponsorSidebar()?>
     <? } ?>
-    <?AdSidebar($oDB)?>
+    <?AdSidebar()?>
     <?CalendarSidebar($oDB, $pt)?>
     <?MostViewedRiderSidebar($oDB, $pt)?>
   </div>
