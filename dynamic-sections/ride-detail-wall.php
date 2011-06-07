@@ -5,7 +5,7 @@ if(isset($_REQUEST['pb']))
 {
     require("../script/app-master.php");
     CheckRequiredParameters(Array('CalendarID', 'l'));
-    $length = $_REQUEST['l'];
+    $length = intval(SmartGet('l',0));
     $calendarID = SmartGetInt("CalendarID");
     $oDB = oOpenDBConnection();
     RenderRideUpdates($oDB, $calendarID, $length);
