@@ -66,7 +66,7 @@ function C_ChangeTeamsDialog()
                     maxHeight: 450,
                     width: 300,
                     listWidth: 350,
-                    pageSize: 0,    // disables paging toolbar
+                    pageSize: 100,
                     triggerClass: 'x-form-search-trigger',
                     emptyText: 'Type the first few letters of the team name...',
                     allowBlank: false,
@@ -100,7 +100,7 @@ function C_ChangeTeamsDialog()
                         maxHeight: 450,
                         width: 300,
                         listWidth: 350,
-                        pageSize: 0,    // disables paging toolbar
+                        pageSize: 100,
                         triggerClass: 'x-form-search-trigger',
                         emptyText: 'Type the first few letters of the team name...',
                         allowBlank: false,
