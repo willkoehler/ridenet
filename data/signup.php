@@ -69,8 +69,7 @@ if($result['success'])
     // send welcome email
     AccountCreatedEmail($oDB, $result['RiderID'], 0);
     // send notification email
-    $msg = "RideNet Signup:\n\n" .
-           "NAME: " . trim($firstName,"\"") . " " . trim($lastName,"\"") ."\n" .
+    $msg = "NAME: " . trim($firstName,"\"") . " " . trim($lastName,"\"") ."\n" .
            "EMAIL: " . trim($email,"\"") ."\n" .
            "TEAM: $teamName\n" .
            "SOURCE: $source\n" .

@@ -4,6 +4,7 @@ require(SHAREDBASE_DIR . "ExtJSLoader.php");
 
 $oDB = oOpenDBConnection();
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
+$teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
 
 if(isset($_REQUEST['logoff']))
 {
@@ -92,7 +93,7 @@ $riderEmail = isset($_COOKIE['RiderEmail']) ? $_COOKIE['RiderEmail'] : "";
             <tr><td colspan=2 class="table-spacer" style="height:14px">&nbsp;</td></tr>
             <tr>
               <td width="50%" align=center class="text50" colspan=2>
-                <a id="signup-btn" href="javascript:g_signupDialog.show({animateTarget:'signup-btn'})">Signup for RideNet</a>
+                <a id="signup-btn" href="javascript:g_signupDialog.show({animateTarget:'signup-btn', teamID:<?=$pt?> , teamName:'<?=htmlentities(addslashes($teamName))?>'})">Signup for RideNet</a>
                 &nbsp;&bull;&nbsp;
                 <a id="resetpw-btn" href="javascript:g_resetPWDialog.show({animateTarget:'resetpw-btn'})">Forgot Password</a>
               </td>
