@@ -23,7 +23,7 @@ if($teamID=="NULL" || $noTeam==1)
     switch($source) {
       case 'cb':
       case 'sbb':
-        $teamID = 122;  // Friends of Consider Biking
+        $teamID = 148;  // Friends of Consider Biking #2
         break;
       default:
         $teamID = 3;    // RideNet Sandbox
