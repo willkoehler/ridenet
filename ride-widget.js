@@ -173,19 +173,20 @@ function C_RideWidget(params)
         {
             var distanceText = r.RideLogType.toLowerCase();
         }
+        profile_href = (this.fullscreen) ? '' : 'href="http://'+r.Domain+'.ridenet.net/rider/' + r.RiderID + '" target="_blank"';   // don't create links in fullscreen mode
         html = '<div style="padding-top:.3em;font:'+this.size.font+'px helvetica, arial;line-height:1.25em;">';
         if(this.photos)
         {
             html+='<div style="margin-bottom:.1em;white-space:nowrap;color:#888"> \
-                     <a style="text-decoration:none;color:'+this.color.links+'" href="http://'+r.Domain+'.ridenet.net/rider/' + r.RiderID + '" target="_blank">' + r.RiderName + '</a> &bull; ' + r.TeamName + ' \
+                     <a style="text-decoration:none;color:'+this.color.links+'" ' + profile_href + '>' + r.RiderName + '</a> &bull; ' + r.TeamName + ' \
                    </div> \
                    <div style="float:left"> \
-                    <a href="http://'+r.Domain+'.ridenet.net/rider/' + r.RiderID + '" target="_blank"> \
+                    <a ' + profile_href + '> \
                       <img style="vertical-align:bottom;border:0;width:'+this.size.picWidth+'px;height:'+this.size.picHeight+'px" src="http://'+this.domainRoot+'/imgstore/rider-portrait/' + r.RacingTeamID + '/' + r.RiderID + '.jpg"> \
                     </a> \
                   </div>'
         }
-        html+='<div style="color:'+this.color.text+';margin-left:'+(this.photos ? this.size.picWidth+7 : 0 )+'px"> \
+        html+='<div style="color:'+this.color.text+';margin-left:'+(this.photos ? this.size.picWidth*1.10+4 : 0 )+'px"> \
                  <img style="vertical-align:-.2em" src="http://'+this.domainRoot+'/images/ridelog/' + r.RideLogTypeImage + '" height='+this.size.icon+' title="' + r.RideLogType + '"> \
                  <img style="vertical-align:-.2em" src="http://'+this.domainRoot+'/images/weather/' + r.WeatherImage + '" height='+this.size.icon+' title="' + r.Weather + '"> '
                  + r.Comment +
