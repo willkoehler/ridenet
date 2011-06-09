@@ -1,6 +1,5 @@
 <?
 require("../script/app-master.php");
-require("../script/email-notifications.php");
 require(SHAREDBASE_DIR . "SimpleImage.php");
 $oDB = oOpenDBConnection();
 $existingRiders = $oDB->DBCount("rider", "RiderEmail=" . SmartGetString('RiderEmail'));

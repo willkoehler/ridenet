@@ -27,8 +27,8 @@ else if($teamInfo['CommutingTeamID']!=$teamID && $teamInfo['RacingTeamID']!=$tea
 }
 else
 {
-    $newRacingTeamID = 3;         // move rider to sandbox team
-    $newCommutingTeamID = 3;      // move rider to sandbox team
+    $newRacingTeamID = SANDBOX_TEAM_ID;         // move rider to sandbox team
+    $newCommutingTeamID = SANDBOX_TEAM_ID;      // move rider to sandbox team
     if($teamInfo['CommutingTeamID']!=$teamInfo['RacingTeamID'])
     {
         // Rider has two teams, move them to the team that is not removing them

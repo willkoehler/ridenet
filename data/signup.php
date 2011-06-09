@@ -26,7 +26,7 @@ if($teamID=="NULL" || $noTeam==1)
         $teamID = 148;  // Friends of Consider Biking #2
         break;
       default:
-        $teamID = 3;    // RideNet Sandbox
+        $teamID = SANDBOX_TEAM_ID;    // RideNet Sandbox
         break;
     }
 }

@@ -37,7 +37,7 @@ function AccountCreatedEmail($oDB, $newRiderID, $createdByID)
     
     if($newRiderInfo)
     {
-        if($newRiderInfo['RacingTeamID']==3)
+        if($newRiderInfo['RacingTeamID']==SANDBOX_TEAM_ID)
         {
         // sandbox team has special welcome email
             $subject = "Welcome To RideNet";
