@@ -174,6 +174,9 @@ function C_SignupDialog()
 
     this.onPostSuccess = function(form, action)
     {
+        var team = this.form.getForm().findField("TeamID").getRawValue();
+        team = (this.form.getForm().findField("NoTeam").getValue()==true || this.form.getForm().findField("TeamID").getRawValue()=='') ? '(No Team)' : team;
+        _gaq.push(['_trackEvent', 'Signup', g_signupSource, team]);        // log an event in Google Analytics
         Ext.Msg.show({
             title: "RideNet Sign Up",
             msg: "<span style='font-size:14px'>Thank you for signing up with RideNet! We will send you a welcome email with login information.</span>",
