@@ -83,7 +83,7 @@ function RenderRideLog($oDB, $riderID, $length, $editable)
                 <td colspan=5 class="week-header">
                   Week of <?=date_create($record['FirstDayOfWeek'])->format("F j, Y")?>
                 </td>
-                <td class="week-header" style="text-align:right">
+                <td colspan=2 class="week-header" style="text-align:right">
                   <span class="summary">
                      <?=($totals['Rides']==1) ? "1 Ride" : "{$totals['Rides']} Rides"?>
                      <?=($totals['Distance']) ? "&nbsp;&bull;&nbsp;&nbsp;" . Plural($totals['Distance'], "Mile") : ""?>
@@ -111,15 +111,17 @@ function RenderRideLog($oDB, $riderID, $length, $editable)
               <td class="data" width="30" style="text-align:center">
                 <?=$record['Duration'] ? ($record['Duration'] <= 90) ? $record['Duration'] . "&nbsp;min" : number_format($record['Duration']/60, 1) . "&nbsp;hr" : "&nbsp;"?>
               </td>
-              <td class="data" width="55" style="text-align:center"><img src="<?=GetFullDomainRoot()?>/images/weather/<?=$record['WeatherImage']?>" title="<?=$record['Weather']?>"></td>
-              <td class="comment" width="355">
-                <?if($record['Source']==2) { ?>
-                  <div style="float:right;padding:4px 0 0 5px">
-                    <img src="/images/mobile.gif" title="via RideNet Mobile">
-                  </div>
-                <? } ?>
+              <td class="data" width="55" style="text-align:center">
+                <img src="<?=GetFullDomainRoot()?>/images/weather/<?=$record['WeatherImage']?>" title="<?=$record['Weather']?>">
+              </td>
+              <?if($record['Source']==2) { ?> <td class="comment" width="340"> <? } else { ?> <td class="comment" width="355" colspan=2> <? } ?>
                 <?=BuildRideLogComment(htmlentities($record['Comment']), $record['Link'], $record['HasMap'] ? $record['RideLogID'] : 0)?>&nbsp;
               </td>
+              <?if($record['Source']==2) { ?>
+                <td class="comment" width="13" style="text-align:right">
+                  <img src="/images/mobile.gif" title="via RideNet Mobile">
+                </td>
+              <? } ?>
               <?if($editable) { ?>
                 <td class="data" width="50" align=left style="padding-left:10px">
                   <span class='action-btn-sm' style="color:#009A00" id='copy-btn<?=$record['RideLogID']?>' onclick="clickCopyRide(<?=$record['RideLogID']?>);" title="Log a new ride based on this one">&nbsp;C&nbsp;</span>
