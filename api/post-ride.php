@@ -16,9 +16,9 @@ $duration = SmartGetInt('Duration');
 $comment = SmartGetString('Comment');
 $link = SmartGetString('Link');
 $hasmap = (isset($_REQUEST['Map']) && $_REQUEST['Map']!="" && $_REQUEST['Map']!="{}") ? 1 : 0;
-
-$duration = round($duration / 60.0);
-$distance = round($distance / 1609.344);
+// convert distance from meters, time from seconds. Set to NULL if zero
+$duration = ($duration==0) ? "NULL" : round($duration / 60.0);
+$distance = ($distance==0) ? "NULL" : round($distance / 1609.344);
 
 if(!isset($_REQUEST['ride-log-id']) || !isset($_REQUEST['id']) || !isset($_REQUEST['pw']) ||
           !isset($_REQUEST['Source']) || !isset($_REQUEST['Date']) || !isset($_REQUEST['RideLogTypeID']))

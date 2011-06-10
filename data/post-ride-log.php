@@ -21,8 +21,9 @@ else
     $values['Link'] = (SmartGet('Link')=="Link to something: Route map, Garmin Connect, TrainingPeaks, power file, etc.") ? "NULL" : SmartGetString('Link');
     // convert distance from kilometers to miles if distance value contains "k"
     $values['Distance'] = (SmartGet('Distance')=="opt.") ? "NULL" : (strpos(SmartGet('Distance'), "k") ? SmartGetInt('Distance') * .62 : SmartGetInt('Distance'));
-    // convert 0 distance to NULL
+    // convert 0 distance and time to NULL
     $values['Distance'] = ($values['Distance']==0) ? "NULL" : $values['Distance'];
+    $values['Duration'] = ($values['Duration']==0) ? "NULL" : $values['Duration'];
     // set source and date created for new ride log entries
     if($rideLogID==-1)
     {
