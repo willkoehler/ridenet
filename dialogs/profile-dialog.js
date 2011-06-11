@@ -475,10 +475,6 @@ function C_ProfileDialog()
     {
         var r = this.form.reader.jsonData.results;
         g_changeTeamsDialog.show({
-            racingTeamID: r.RacingTeamID,
-            racingTeamName: r.RacingTeamName,
-            commutingTeamID: r.CommutingTeamID,
-            commutingTeamName: r.CommutingTeamName,
             animateTarget: btn.el
         });
     }

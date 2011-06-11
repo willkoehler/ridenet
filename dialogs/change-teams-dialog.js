@@ -15,19 +15,11 @@ function C_ChangeTeamsDialog()
     // -------------------------------------------------------------------------------------------
     //  Show change team dialog.
     //  params object has the following parameters:
-    //      racingTeamID        - ID of rider's racing team
-    //      racingTeamName      - Name of rider's racing team
-    //      commutingTeamID     - ID of rider's commuting team
-    //      commutingTeamName   - Name of rider's commuting team
     //      animateTarget   - id of HTML target to animate opening/closing window
     // -------------------------------------------------------------------------------------------
     this.show = function(params)
     {
         this.riderID = params.riderID;
-        this.racingTeamID = params.racingTeamID;
-        this.racingTeamName = params.racingTeamName;
-        this.commutingTeamID = params.commutingTeamID;
-        this.commutingTeamName = params.commutingTeamName;
 
         if( ! this.window)
         {
@@ -128,7 +120,7 @@ function C_ChangeTeamsDialog()
                         hideLabel: true,
                         boxLabel: 'Share my profile between two teams',
                         width: 200,
-                        listeners: { scope: this, check: this.checkMutipleTeams }
+                        listeners: { scope: this, check: this.checkMultipleTeams }
                     },{
                         xtype: 'container',
                         style: 'padding-top:3px',
@@ -188,8 +180,7 @@ function C_ChangeTeamsDialog()
             // perform actions when window opens
             this.window.on('show', function() {
                 this.form.getForm().reset();
-                Ext.getCmp('two-teams-cb').setValue((this.racingTeamID==this.commutingTeamID) ? 0 : 1);
-                this.checkMutipleTeams();
+                this.checkMultipleTeams();
                 this.setMessage('', 'black');           // clear message area
             }, this);
         }
@@ -198,7 +189,7 @@ function C_ChangeTeamsDialog()
         this.window.show(params.animateTarget);
     }
     
-    this.checkMutipleTeams = function()
+    this.checkMultipleTeams = function()
     {
         if(Ext.getCmp('two-teams-cb').getValue())
         {
