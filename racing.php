@@ -68,7 +68,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
     </div>
     <div class='clearfloat'></div>
 
-    <?if($pt!=0) { ?>
+    <?if($pt!=0 && $pt!=SANDBOX_TEAM_ID) { ?>
       <table border=0 cellpadding=0 cellspacing=0><tr>
         <td valign=center>
           <h2 style="margin:0px">Showing Results For</h2>

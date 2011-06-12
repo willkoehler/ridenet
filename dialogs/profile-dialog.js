@@ -475,7 +475,8 @@ function C_ProfileDialog()
     {
         var r = this.form.reader.jsonData.results;
         g_changeTeamsDialog.show({
-            animateTarget: btn.el
+            animateTarget: btn.el,
+            ypos: 55
         });
     }
 

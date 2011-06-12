@@ -9,6 +9,7 @@ Ext.onReady(function()
     g_messageDialog = new C_PostMessageDialog();
     g_signupDialog = new C_SignupDialog();
     g_resetPWDialog = new C_ResetPWDialog();
+    g_changeTeamsDialog = new C_ChangeTeamsDialog();
 // --- add listeners to show/hide delete buttons
     addHoverListeners();
 });
@@ -103,5 +104,24 @@ function updateTeamWall()
             addHoverListeners();    // add listeners to hide/show delete buttons
             Ext.get('team-wall').unmask();
         }
+    });
+}
+
+function ChangeTeams(teamID, teamName, domain)
+{
+    Ext.Msg.show({
+        msg: 'Join the "' + teamName + '" RideNet team?',
+        fn: function(btn) { if(btn=='yes') {
+            Ext.fly('container').mask("Joining Team...");
+            Ext.Ajax.request({
+                url: '/data/change-teams.php?CommutingTeamID=' + teamID + '&RacingTeamID=' + teamID,
+                success: function(response, options)
+                {
+                    window.location.href = buildTeamBaseURL(domain);
+                }
+            });
+        } },
+        scope: this,
+        buttons: {yes:'&nbsp;Join Team&nbsp;', no:'Cancel'}
     });
 }

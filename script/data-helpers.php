@@ -106,6 +106,109 @@ function BuildRideLogComment($comment, $link, $mapid)
 
 
 //----------------------------------------------------------------------------------
+//  SandboxHomePage()
+//
+//  Generates contents of the sample home page
+//
+//  PARAMETERS:
+//    oDB   - the database connection object
+//
+//  RETURN: none
+//-----------------------------------------------------------------------------------
+function SandboxHomePage($oDB)
+{ ?>
+  <h1>Welcome to RideNet</h1>
+  <p>
+    You are currently in the RideNet Sandbox, a holding place for riders that are not yet a member of a RideNet team.
+    Although you're welcome to stay in the Sandbox as long as you like, one of RideNet's coolest features is the ability
+    to create and join teams. Below are some of the more popular RideNet teams in your area.
+  </p>
+  <div style="height:10px;clear:both"></div>
+<?$sql = "SELECT TeamID, Domain, TeamName, TeamType, CONCAT(City, ', ', State, ' ', ZipCode) AS Location
+          FROM teams
+          JOIN ref_team_type USING (TeamTypeID)
+          JOIN ref_zipcodes USING (ZipCodeID)
+          WHERE TeamID IN (120, 122, 86, 115, 135)
+          ORDER BY TeamName ASC";
+  $rs = $oDB->query($sql, __FILE__, __LINE__); ?>
+  <table cellpadding=0 cellspacing=0 class="centered" style="border:1px solid #CCC;background-color:#EEE">
+  <? while(($record = $rs->fetch_array())!=false) { ?>
+    <tr>
+      <td style="border-bottom:1px solid #CCC">
+        <div style="width:100px;overflow:hidden;text-align:center;margin:1px">
+          <a href="<?=BuildTeamBaseURL($record['Domain'])?>/" target="_blank">
+            <img class="tight" src="<?=getFullDomainRoot()?>/imgstore/team-logo/fit/<?=$record['TeamID']?>.png" border=0>
+          </a>
+        </div>
+      </td>
+      <td style="border-bottom:1px solid #CCC">
+        <div class="ellipses" style="padding:5px 5px;width:155px">
+          <a href="<?=BuildTeamBaseURL($record['Domain'])?>/" target="_blank">
+            <div class="find-name"><?=$record['TeamName']?></div>
+          </a>
+          <div class="find-info"><?=$record['TeamType']?></div>
+          <div class="find-info2"><?=$record['Location']?></div>
+        </div>
+      </td>
+      <td style="border-bottom:1px solid #CCC;text-align:center" valign=bottom width=160>
+        <?if(CheckLogin()) { ?>
+          <span class='action-btn' id='join-btn<?=$record['TeamID']?>' onclick="ChangeTeams(<?=$record['TeamID']?>, '<?=htmlentities(addslashes($record['TeamName']))?>', '<?=htmlentities(addslashes($record['Domain']))?>')">&nbsp;&nbsp;Join Team&nbsp;&nbsp;</span>
+        <? } else { ?>
+          <span class='action-btn' onclick="window.location.href='/login?Goto=<?=urlencode("/")?>'">&nbsp;&nbsp;Login to Join&nbsp;&nbsp;</span>
+        <? } ?>
+        <div style="margin:5px 0 5px 0" class="find-info2"><a href="<?=BuildTeamBaseURL($record['Domain'])?>/" target="_blank" style="color:#BBB">Learn more...</a></div>
+      </td>
+    </tr>
+  <? } ?>
+    <tr height=60>
+      <td style="padding:10px 40px;" colspan=2>
+        <p style="margin:0">
+          Search for other teams on RideNet
+        </p>
+      </td>
+      <td style="text-align:center">
+        <?if(CheckLogin()) { ?>
+          <span class="action-btn" id='ct-btn' onClick="g_changeTeamsDialog.show({ redirectToHome: true, animateTarget: 'ct-btn' })">&nbsp;&nbsp;Find a team...&nbsp;&nbsp;</span>
+        <? } else { ?>
+          <span class='action-btn' onclick="window.location.href='/login?Goto=<?=urlencode("/")?>'">&nbsp;&nbsp;Login to Find Teams&nbsp;&nbsp;</span>
+        <? } ?>
+      </td>
+    </tr>
+  </table>
+  <div style="height:40px"></div>
+  <div style="float:right;margin: 0px 0px 0px 20px">
+    <img src="images/sandbox-profile.jpg" style="width:280px"><br>
+  </div>
+  <h1 style="margin-top:0px">Change Teams Any Time</h1>
+  <p>
+    You can change teams at any time. From Your Profile page, click "Edit Profile...", then click
+    "Change Teams...".
+  </p>
+  <div style="clear:both;height:25px"></div>
+  <div style="float:left;margin: 5px 20px 0px 0px;border:1px solid #DDD">
+    <img src="images/sandbox-roster.jpg" style="width:200px"><br>
+  </div>
+  <h1 style="padding-top:0px">Start Something New</h1>
+  <p>
+     If you can't find a team on RideNet, why not create one? A RideNet team can be based
+     around a real-world cycling club or could be a loosely affiliated group of riders that just want to stay
+     connected. As a member of a team, you can see what everyone on your team is up to, track your team's race
+     results (if you race), and organize rides together.<br><br>
+     Creating a RideNet team is easy. Send us an email at <a href="mailto:info@ridenet.net">info@ridenet.net</a>
+     and we'll take care of the rest.
+  </p>
+  <div style="clear:both;height:10px"></div>
+<!--  <h1>Send Us Feedback</h1>
+  <p>
+    We are continually working to improve RideNet and add new features. If you have any comments, questions
+    or suggestions (or just want to tell us how much you love the site) send us an email:
+    <a href="mailto:info@ridenet.net">info@ridenet.net</a>
+  </p>-->
+<?  
+}
+
+
+//----------------------------------------------------------------------------------
 //  SampleHomePageText()
 //
 //  Generates sample text for teams that have not customized their Home Page yet

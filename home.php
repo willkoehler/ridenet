@@ -32,6 +32,7 @@ $TeamWallLength = 30;
   <?MinifyAndInclude("/script/ridenet-helpers.js")?>
   <?MinifyAndInclude("/dialogs/signup-dialog.js")?>
   <?MinifyAndInclude("/dialogs/reset-pw-dialog.js")?>
+  <?MinifyAndInclude("/dialogs/change-teams-dialog.js")?>
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
     <?SessionToJS()?>
@@ -54,21 +55,34 @@ $TeamWallLength = 30;
   </div>
 
   <div id="sidebarHolderRight">
-    <?SignupSidebar($pt, $team['TeamName'])?>
-    <?if($team['TeamTypeID']==2) { ?>
+    <?if($pt==SANDBOX_TEAM_ID) { ?>
+      <!-- Sandbox Sidebar -->
+      <?SignupSidebar(0, 'us')?>
       <?ColumbusFoundationSidebar($oDB)?>
+      <?AdSidebar()?>
+      <?MostViewedRiderSidebar($oDB, 0)?>
+    <? } else { ?>
+      <!-- Standard team Sidebar -->
+      <?SignupSidebar($pt, $team['TeamName'])?>
+      <?if($team['TeamTypeID']==2) { ?>
+        <?ColumbusFoundationSidebar($oDB)?>
+      <? } ?>
+      <?if($pt==2) { ?> <!--Team Echelon sponsors are hard-coded for now-->
+        <?SponsorSidebar()?>
+      <? } ?>
+      <?AdSidebar()?>
+      <?CalendarSidebar($oDB, $pt)?>
+      <?MostViewedRiderSidebar($oDB, $pt)?>
     <? } ?>
-    <?if($pt==2) { ?> <!--Team Echelon sponsors are hard-coded for now-->
-      <?SponsorSidebar()?>
-    <? } ?>
-    <?AdSidebar()?>
-    <?CalendarSidebar($oDB, $pt)?>
-    <?MostViewedRiderSidebar($oDB, $pt)?>
   </div><!-- end right sidebar -->
 
   <div class="team-home" id="mainContent">
-    
-    <?if($team['HomePageType']==1) { ?>
+    <?if($pt==SANDBOX_TEAM_ID)
+    {
+      //--=========== Sandbox Home Page ===========-->
+      SandboxHomePage($oDB);
+    }
+    elseif($team['HomePageType']==1) { ?>
       <!--=========== Simple Home Page ===========-->
       <h1>
         <?if(is_null($team['HomePageTitle'])) { ?>

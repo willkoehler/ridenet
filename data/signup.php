@@ -17,19 +17,8 @@ $source = SmartGet('Source');
 // --- open connection to database
 $oDB = oOpenDBConnection();
 
-// If Team ID is not provided, choose a team ID based on the source
-if($teamID=="NULL" || $noTeam==1)
-{
-    switch($source) {
-      case 'cb':
-      case 'sbb':
-        $teamID = 148;  // Friends of Consider Biking #2
-        break;
-      default:
-        $teamID = SANDBOX_TEAM_ID;    // RideNet Sandbox
-        break;
-    }
-}
+// Default to Sandbox team if no team is provided
+$teamID = ($teamID=="NULL" || $noTeam==1) ? SANDBOX_TEAM_ID : $teamID;
 
 $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$teamID");
 

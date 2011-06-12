@@ -17,7 +17,8 @@ $endDate = SmartGetDate('EndDate');
 $oDB = oOpenDBConnection();
 
 // -- build WHERE clause based on search terms
-$teamFilter = ($searchFor != "") ?  "TeamName LIKE \"%$searchFor%\"" : "1";
+$teamFilter = "TeamID<>" . SANDBOX_TEAM_ID;
+$teamFilter .= ($searchFor != "") ?  " AND TeamName LIKE \"%$searchFor%\"" : "";
 
 // --- Get team stats
 $sql = "SELECT TeamID, TeamName, TeamType, Domain, CONCAT(City, ', ', State, ' ', Zipcode) AS Location,

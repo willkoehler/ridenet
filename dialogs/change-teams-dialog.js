@@ -16,11 +16,14 @@ function C_ChangeTeamsDialog()
     //  Show change team dialog.
     //  params object has the following parameters:
     //      animateTarget   - id of HTML target to animate opening/closing window
+    //      ypos            - optional y position of window
+    //      redirectToHome  - redirect user to new team home page when they change teams
     // -------------------------------------------------------------------------------------------
     this.show = function(params)
     {
-        this.riderID = params.riderID;
-
+        this.redirectToHome = params.redirectToHome;
+        this.newTeamDomain = ""
+        
         if( ! this.window)
         {
             
@@ -71,6 +74,8 @@ function C_ChangeTeamsDialog()
                             this.form.getForm().findField('CommutingTeamID').setValue(r.data.TeamID);
                             this.form.getForm().findField('CommutingTeamID').setRawValue(r.data.TeamName);
                         }
+                        // cache value of team domain
+                        this.newTeamDomain = r.data.Domain;
                     }},
                     tpl:'<tpl for="."><div class="x-combo-list-item" style="border-bottom:1px solid #ccc"><table cellpadding=0 cellspacing=0><tr>\
                            <td><div class="ellipses" style="padding-left:5px;width:210px">\
@@ -167,7 +172,7 @@ function C_ChangeTeamsDialog()
             this.window = new Ext.Window({
                 title: 'Change Teams',
                 width: 460,             // (height will be calculated based on content)
-                y: 55,
+                y: params.ypos,         // if ypos is undefined, window will be centered vertically in browser
                 autoHeight: true,       // allows calls to syncSize() to resize the window based on content
                 forceLayout: true,      // force window to calculate layout (i.e. height) before opening
                 resizable: false,
@@ -236,8 +241,16 @@ function C_ChangeTeamsDialog()
 
     this.onPostSuccess = function(form, action)
     {
-        // reload page - this will redirect rider to their new team site
-        window.location.reload();
+        if(this.redirectToHome && this.newTeamDomain)
+        {
+            // go to new team home page
+            window.location.href = buildTeamBaseURL(this.newTeamDomain);
+        }
+        else
+        {
+            // reload page - this will redirect rider to their profile on the new team site
+            window.location.reload();
+        }
     }
 
     this.onPostFailure = function(form, action)

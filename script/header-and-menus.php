@@ -182,7 +182,9 @@ function InsertMainMenu($oDB, $pt, $highlight="")
         <? } else { ?>
         <!-- Team Site Menu -->
           <li><a href="/" <?if($highlight=="Home") {?>id="active"<?}?>>HOME</a></li>
-          <li><a href="/roster" <?if($highlight=="Roster") {?>id="active"<?}?>>ROSTER</a></li>
+          <?if($pt!=SANDBOX_TEAM_ID) { ?>
+            <li><a href="/roster" <?if($highlight=="Roster") {?>id="active"<?}?>>ROSTER</a></li>
+          <? } ?>
           <li><a href="/events" <?if($highlight=="Schedule") {?>id="active"<?}?>>EVENTS</a></li>
           <li><a href="/rides" <?if($highlight=="Calendar") {?>id="active"<?}?>>RIDES</a></li>
           <? if($bRacing) { ?>
@@ -453,7 +455,7 @@ function SignupSidebar($teamID, $teamName)
 ?>
     <div class="sidebarBlock">
       <p style="padding-top:5px;text-align:center">
-        Sign up and join "<?=$teamName?>" on RideNet.
+        Sign up and join <?=$teamName?> on RideNet.
       </p>
       <div style="padding:8px 0;text-align:center">
         <span class="action-btn2" style="font-size:13px" id='signup-btn' onclick="g_signupDialog.show({animateTarget:'signup-btn', teamID:<?=$teamID?> , teamName:'<?=htmlentities(addslashes($teamName))?>'})">
@@ -464,7 +466,6 @@ function SignupSidebar($teamID, $teamName)
         <a href="http://ridenet.net" target="_blank">Learn more about RideNet...</a>
       </p>
     </div>
-
 <?
 }
 
