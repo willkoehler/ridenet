@@ -25,6 +25,8 @@ function C_ProfileDialog()
                 {name: 'RiderID', type: 'int'},
                 {name: 'RacingTeamID', type: 'int'},
                 {name: 'CommutingTeamID', type: 'int'},
+                {name: 'FirstName'},
+                {name: 'LastName'},
                 {name: 'RacingTeamName'},
                 {name: 'CommutingTeamName'},
                 {name: 'RiderEmail'},
@@ -42,7 +44,6 @@ function C_ProfileDialog()
                 {name: 'Height'},
                 {name: 'Weight', type: 'int'},
                 {name: 'URL'},
-                {name: 'CommuteMapURL'},
                 {name: 'Archived', type: 'int'},
                 {name: 'RiderPictureID', mapping: 'RiderPictureID'},
                 {name: 'RiderActionPictureID', mapping: 'RiderPictureID'}
@@ -71,7 +72,7 @@ function C_ProfileDialog()
                                 width: 210,
                                 vtype: 'email',
                                 allowBlank: false,
-                                blankText: 'You must enter an email'
+                                blankText: 'You must enter your email'
                             }]
                         },{
                             xtype:'container', width: 120, items: [{
@@ -124,6 +125,29 @@ function C_ProfileDialog()
                             xtype: 'displayfield',
                             style: 'padding-top:3px; color:#666',
                             html: '(only your age will be shared publicly)'
+                        }]
+                    },{
+                        xtype:'container', layout:'column', items: [{
+                            xtype:'container', layout:'form', width:255, items: [{
+                            // === First Name ===
+                                xtype: 'textfield',
+                                fieldLabel: 'Full Name',
+                                emptyText: 'First Name',
+                                name: 'FirstName',
+                                width: 135,
+                                allowBlank: false,
+                                blankText: 'You must enter your first name'
+                            }]
+                        },{
+                            xtype:'container', layout:'form', hideLabels: true, items: [{
+                            // === Last Name ===
+                                xtype: 'textfield',
+                                emptyText: 'First Name',
+                                name: 'LastName',
+                                width: 180,
+                                allowBlank: false,
+                                blankText: 'You must enter your last name'
+                            }]
                         }]
                     },{
                         xtype:'container', layout:'form', items: [{
@@ -242,22 +266,6 @@ function C_ProfileDialog()
                             maxLength: 500,
                             width: 430,
                             height: 60
-                        }]
-                    },{
-                        xtype:'container', layout:'column', items: [{
-                            xtype:'container', layout:'form', items: [{
-                            // === Commute Route URL ===
-                                xtype: 'textfield',
-                                fieldLabel: 'Commute Map',
-                                name: 'CommuteMapURL',
-                                width: 280,
-                                vtype: 'url'
-                            }]
-                        },{
-                        // === Info ===
-                            xtype: 'displayfield',
-                            style: 'padding:3px 0 0 10px; color:#666',
-                            html: '(link to route on <a style="color:#6761BA" href="http://www.mapmyride.com" target="_blank">MapMyRide</a>)'
                         }]
                     },{
                         xtype:'container', layout:'form', items: [{

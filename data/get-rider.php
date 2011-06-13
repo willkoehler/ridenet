@@ -17,10 +17,10 @@ else if($riderID!=GetUserID())
 }
 else
 {   // (photo is always based on racing team ID)
-    $rs = $oDB->query("SELECT RiderID, RacingTeamID, CommutingTeamID, rt.TeamName AS RacingTeamName, ct.TeamName AS CommutingTeamName,
-                              RiderEmail, DateOfBirth, FavoriteQuote, FavoriteRide, FavoriteFood, WhyIRide, MyCommute, BornIn,
-                              ResideIn, Occupation, RiderTypeID, YearsCycling, Height, Weight, URL, CommuteMapURL,
-                              '********' AS PwUnencrypted, CONCAT(RiderID, \",\", RacingTeamID) AS RiderPictureID
+    $rs = $oDB->query("SELECT RiderID, FirstName, LastName, RacingTeamID, CommutingTeamID, rt.TeamName AS RacingTeamName,
+                              ct.TeamName AS CommutingTeamName, RiderEmail, DateOfBirth, FavoriteQuote, FavoriteRide,
+                              FavoriteFood, WhyIRide, MyCommute, BornIn, ResideIn, Occupation, RiderTypeID, YearsCycling,
+                              Height, Weight, URL, CONCAT(RiderID, \",\", RacingTeamID) AS RiderPictureID
                        FROM rider
                        LEFT JOIN teams rt ON (RacingTeamID = rt.TeamID)
                        LEFT JOIN teams ct ON (CommutingTeamID = ct.TeamID)

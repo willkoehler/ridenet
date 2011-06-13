@@ -32,7 +32,7 @@ $TeamWallLength = 30;
   <?MinifyAndInclude("/script/ridenet-helpers.js")?>
   <?MinifyAndInclude("/dialogs/signup-dialog.js")?>
   <?MinifyAndInclude("/dialogs/reset-pw-dialog.js")?>
-  <?MinifyAndInclude("/dialogs/change-teams-dialog.js")?>
+  <?MinifyAndInclude("/dialogs/change-teams-dialog.js") // (needed for Sandbox team) ?>
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
     <?SessionToJS()?>

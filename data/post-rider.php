@@ -33,10 +33,19 @@ else if($existingRiders > 0 && strtolower(SmartGet('RiderEmail'))!=strtolower($o
     $result['message'] = "There is another RideNet member with this email address.";
     $result['errors'][] = array('id' => 'RiderEmail', 'msg' => 'There is another RideNet rider with this email address' );
 }
+// TEMPORARY CHECK to make sure users don't have a cached version of profile dialog with name fields
+else if(!isset($_REQUEST['FirstName']) || !isset($_REQUEST['LastName']))
+{
+    $result['success'] = false;
+    $result['message'] = "Refresh this page. You are using an old version of the profile dialog.";
+    $result['errors'][] = array('id' => 'CtrlID', 'msg' => 'Error Msg' );     // needed so Ext returns failureType 'server'
+}
 else
 {
     // ==== Store Rider Record ====
     $values['RiderEmail'] = SmartGetString('RiderEmail');
+    $values['FirstName'] = SmartGetString('FirstName');
+    $values['LastName'] = SmartGetString('LastName');
     $values['FavoriteQuote'] = SmartGetString('FavoriteQuote');
     $values['FavoriteRide'] = SmartGetString('FavoriteRide');
     $values['FavoriteFood'] = SmartGetString('FavoriteFood');
@@ -51,7 +60,6 @@ else
     $values['YearsCycling'] = SmartGetInt('YearsCycling');
     $values['DateOfBirth'] = SmartGetDate('DateOfBirth');
     $values['URL'] = SmartGetString('URL');
-    $values['CommuteMapURL'] = SmartGetString('CommuteMapURL');
     $result = InsertOrUpdateRecord2($oDB, "rider", "RiderID", $riderID, $values);
 
     // ==== Store Uploaded Pictures ====
