@@ -81,9 +81,9 @@ $notify = $oDB->DBLookup("Notify", "event_attendance", "AttendanceID=$attendance
       <div class="block-table centered" id="ride-details" style="width:500px;position:relative">
         <!--- Edit button. Allow event to be edit for 1 day after the event -->
         <?if($record['EventAgeDays'] < 1 && ($record['AddedBy']==GetUserID() || isSystemAdmin())) {?>
-          <span class='action-btn' id='edit-btn<?=$record['RaceID']?>' style="position:absolute;width:60px;top:19px;left:470px" onclick="clickEditEvent(<?=$record['RaceID']?>);" title="Edit this event">Edit Event</span>
+          <span class='action-btn2' id='edit-btn<?=$record['RaceID']?>' style="position:absolute;width:30px;top:19px;left:500px" onclick="clickEditEvent(<?=$record['RaceID']?>);" title="Edit this event">Edit</span>
         <? } ?>
-        <div class="header">
+        <div class="header centered" style="width:90%"> <!-- leave space for the "edit" button -->
           <?=$record['EventName']?>
         </div>
         <table id="event-detail" cellpadding=0 cellspacing=0 width=100%>

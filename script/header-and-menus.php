@@ -459,7 +459,7 @@ function SignupSidebar($teamID, $teamName)
       </p>
       <div style="padding:8px 0;text-align:center">
         <span class="action-btn2" style="font-size:13px" id='signup-btn' onclick="g_signupDialog.show({animateTarget:'signup-btn', teamID:<?=$teamID?> , teamName:'<?=htmlentities(addslashes($teamName))?>'})">
-          Join RideNet...
+          &nbsp;&nbsp;&nbsp;Join RideNet...&nbsp;&nbsp;&nbsp;
         </span>
       </div>
       <p style="padding-top:3px;text-align:center">

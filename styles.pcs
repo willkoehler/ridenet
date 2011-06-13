@@ -438,8 +438,7 @@ h3   {
     padding: 1px 3px;
     font: 9px Arial, Helvetica, sans-serif;
 }
-.action-btn2 {
-    padding: 1px 15px;
+.action-btn2 {      /* action-btn2 works well in areas with secondary background color */
     background-color: #FFF;
 }
 .action-btn2:hover {
