@@ -69,7 +69,7 @@ function C_SearchBox()
                              <td><div class="ellipses" style="padding-left:10px;width:215px">\
                                <div class="find-name">{DisplayText}</div>\
                                <div class="find-info">{InfoText}</div>\
-                               <div class="find-info2">http://{Domain}.ridenet.net</div>\
+                               <div class="find-info2">{InfoText2}</div>\
                              </div></td>\
                            </tpl>\
                          </tr></table></div></tpl>'

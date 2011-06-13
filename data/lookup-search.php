@@ -29,9 +29,9 @@ $rs = $oDB->query("SELECT 'rider' AS Type, CONCAT(FirstName, ' ', LastName) AS D
                    FROM rider LEFT JOIN teams ON (RacingTeamID=TeamID) LEFT JOIN ref_rider_type USING (RiderTypeID)
                    WHERE $whereFilter1
                    UNION
-                   SELECT 'team' AS Type, TeamName AS DisplayText, TeamType AS InfoText,
-                          '' AS InfoText2, 0 AS RiderID, TeamID, Domain, TeamName AS Sort
-                   FROM teams LEFT JOIN ref_team_type USING (TeamTypeID)
+                   SELECT 'team' AS Type, TeamName AS DisplayText, TeamType AS InfoText, CONCAT(City, ', ', State, ' ', Zipcode) AS InfoText2,
+                          0 AS RiderID, TeamID, Domain, TeamName AS Sort
+                   FROM teams LEFT JOIN ref_team_type USING (TeamTypeID) LEFT JOIN ref_zipcodes USING (ZipCodeID)
                    WHERE $whereFilter2
                    ORDER BY Sort LIMIT 9", __FILE__, __LINE__);
 
