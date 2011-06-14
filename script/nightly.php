@@ -13,19 +13,14 @@ if(!isset($argv[1]))
 }
 
 $_SERVER['DOCUMENT_ROOT'] = $argv[1];
-
-// --- (don't use AppMaster.php here because we don't want to start a session)
-define("SHAREDBASE_DIR", $_SERVER['DOCUMENT_ROOT'] . "/Shared/");
-require(SHAREDBASE_DIR . "DBConnection.php");
-require(SHAREDBASE_DIR . "DateHelpers.php");
-require(dirname(__FILE__) . "/data-helpers.php");
+// --- (use app-master-min here so we don't start a session)
+require(dirname(__FILE__) . "/app-master-min.php");
 
 // --- open database connections
 $oDB=oOpenDBConnection();
 
 // --- update rider stats
 UpdateAllRiderStats($oDB);
-
 
 
 //----------------------------------------------------------------------------------
@@ -53,6 +48,5 @@ function UpdateAllRiderStats($oDB)
     $elapsedTime = microtime(true) - $startTime;
     trigger_error("NIGHTLY: Rider stats updated for $count riders (" . number_format($elapsedTime,2) . " sec)", E_USER_NOTICE);
 }
-
 
 ?>

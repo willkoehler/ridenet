@@ -22,10 +22,16 @@ $whereFilter .= ($searchFor != "") ? " AND (TeamName like \"%$searchFor%\")" : "
 $result['rowcount'] = $oDB->DBCount("teams", $whereFilter);;
 
 // --- Get User records
-$sql = "SELECT TeamID, TeamName, Domain, COUNT(RiderID) AS TotalRiders, SUM(IF(CEDaysMonth>0,1,0)) AS ActiveRiders,
-               SUM(CEDaysMonth) AS TotDaysMonth, AVG(CEDaysMonth) AS AvgDaysMonth, TIMESTAMPDIFF(WEEK, LastActivity, NOW()) AS LastActivity
-        FROM teams
-        LEFT JOIN rider ON (rider.CommutingTeamID=teams.TeamID)
+$sql = "SELECT TeamID, TeamName, Domain, COUNT(RiderID) AS TotalRiders, COUNT(IF(CEDaysMonth >= 2, RiderID, NULL)) AS StarRiders,
+               SUM(CERides) AS CERides, IFNULL(TIMESTAMPDIFF(WEEK, LastActivity, NOW()),1000) AS LastActivity
+        FROM (SELECT RacingTeamID AS TeamID, RiderID, CEDaysMonth, Y0_CERides AS CERides
+              FROM rider JOIN rider_stats USING (RiderID)
+              WHERE IFNULL(rider.Archived,0)=0
+              UNION
+              SELECT CommutingTeamID AS TeamID, RiderID, CEDaysMonth, Y0_CERides AS CERides
+              FROM rider JOIN rider_stats USING (RiderID)
+              WHERE IFNULL(rider.Archived,0)=0) d1
+        LEFT JOIN teams USING (TeamID)
         LEFT JOIN (SELECT CommutingTeamID, DATE(MAX(activity.Date)) AS LastActivity
                    FROM rider
                    JOIN logins USING(RiderID)

@@ -29,11 +29,10 @@ function C_ReportForm(parentElement)
                 {name: 'TeamID', type: 'int'},
                 {name: 'TeamName'},
                 {name: 'Domain'},
-                {name: 'TotalRiders', type: 'int'},
-                {name: 'ActiveRiders', type: 'int'},
-                {name: 'TotDaysMonth', type: 'int'},
-                {name: 'AvgDaysMonth', type: 'float'},
-                {name: 'LastActivity', type: 'int'}
+                {name: 'TotalRiders', type: 'int', sortDir: 'DESC'},
+                {name: 'StarRiders', type: 'int', sortDir: 'DESC'},
+                {name: 'CERides', type: 'int', sortDir: 'DESC'},
+                {name: 'LastActivity', type: 'int', sortDir: 'ASC'}
             ],
             proxy: new Ext.data.HttpProxy({ url: '/data/list-cbdb.php' }),
             sortInfo: { field: 'TeamName', direction: 'asc' }
@@ -56,33 +55,35 @@ function C_ReportForm(parentElement)
 
         // paging bar
         var paging = new Ext.PagingToolbar({
-                pageSize: 100,
+                pageSize: 150,
                 store: this.ds,
                 displayInfo: true,
                 displayMsg: 'Displaying {0} - {1} of {2} Teams',
                 emptyMsg: "No teams to display"
         })
 
+        var ceRidesHeader =  '<span style="line-height:13px;position:relative;top:-1px">\
+                                <img class="tight" src="/images/ridelog/commute.png" height=14><img class="tight" src="/images/ridelog/errand.png" height=14>\
+                                <span style="padding-left:2px">Trips</span>\
+                              </span>'
         var teamT = new Ext.XTemplate('<a href="{[buildTeamBaseURL(values.Domain)]}" target="_blank" style="color:#5260C1">{TeamName}</a>').compile();;
-        var activeT = new Ext.XTemplate('<tpl if="ActiveRiders">{ActiveRiders}</tpl><tpl if="ActiveRiders==0">-</tpl>').compile();
-        var totdmT = new Ext.XTemplate('<tpl if="TotDaysMonth">{TotDaysMonth}</tpl><tpl if="TotDaysMonth==0">-</tpl>').compile();
-        var avgdmT = new Ext.XTemplate('<tpl if="AvgDaysMonth">{AvgDaysMonth:number("0,000.00")}</tpl><tpl if="AvgDaysMonth==0">-</tpl>').compile();
-        var lastT = new Ext.XTemplate('<tpl if="LastActivity===\'\'">-</tpl><tpl if="LastActivity===0 | LastActivity===1 | LastActivity===2">RECENT</tpl><tpl if="LastActivity &gt; 2">{LastActivity} weeks</tpl>').compile();
+        var starT = new Ext.XTemplate('<tpl if="StarRiders">{StarRiders}</tpl><tpl if="StarRiders==0">-</tpl>').compile();
+        var ceRidesT = new Ext.XTemplate('<tpl if="CERides">{CERides}</tpl><tpl if="CERides==0">-</tpl>').compile();
+        var lastT = new Ext.XTemplate('<tpl if="LastActivity==1000">-</tpl><tpl if="LastActivity===0 | LastActivity===1 | LastActivity===2">RECENT</tpl><tpl if="LastActivity &gt; 2 && LastActivity &lt; 1000">{LastActivity} weeks</tpl>').compile();
 
         var columns = [
                 {xtype: 'templatecolumn', header: 'Team', width: 120, dataIndex: 'TeamName', tpl: teamT, sortable: true, id: 'autoexpand' },
-                {header: 'Riders', width: 50, dataIndex: 'TotalRiders', align: 'center', sortable: true},
-                {xtype: 'templatecolumn', header: 'Active', width: 60, dataIndex: 'ActiveRiders', tpl: activeT, align: 'center', sortable: true},
-                {xtype: 'templatecolumn', header: 'Tot D/M', width: 60, dataIndex: 'TotDaysMonth', tpl: totdmT, align: 'center', sortable: true},
-                {xtype: 'templatecolumn', header: 'Avg D/M', width: 60, dataIndex: 'AvgDaysMonth', tpl: avgdmT, align: 'center', sortable: true},
-                {xtype: 'templatecolumn', header: 'Last Activity', width: 70, dataIndex: 'LastActivity', tpl: lastT, align: 'center', sortable: true}
+                {header: 'Riders', width: 55, dataIndex: 'TotalRiders', align: 'center', sortable: true},
+                {xtype: 'templatecolumn', header: 'STARs', width: 60, dataIndex: 'StarRiders', tpl: starT, align: 'center', sortable: true},
+                {xtype: 'templatecolumn', header: ceRidesHeader, width: 90, dataIndex: 'CERides', tpl: ceRidesT, align: 'center', sortable: true},
+                {xtype: 'templatecolumn', header: 'Last Activity', width: 90, dataIndex: 'LastActivity', tpl: lastT, align: 'center', sortable: true}
             ]
         
         // create the grid
         this.report = new Ext.grid.GridPanel({
             frame: true,
             title: 'Consider Biking Dashboard',
-            width: 740,
+            width: 570,
             autoExpandColumn: 'autoexpand',
             height: 550,
             cls: 'centered',

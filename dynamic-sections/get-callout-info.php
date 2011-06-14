@@ -7,8 +7,10 @@ $riderID = SmartGetInt("RiderID");
 $riderType = SmartGetInt("rt");    // 0 = commuter  1 = racer
 
 // --- Get rider stats
-$sql = "SELECT CONCAT(FirstName, ' ', LastName) AS RiderName, RiderID, TeamName, CEDaysMonth, CMilesDay, YTDMiles
-        FROM rider LEFT JOIN teams ON (CommutingTeamID = TeamID)
+$sql = "SELECT CONCAT(FirstName, ' ', LastName) AS RiderName, RiderID, TeamName, CEDaysMonth, CMilesDay, Y0_Miles AS YTDMiles
+        FROM rider
+        LEFT JOIN rider_stats USING (RiderID)
+        LEFT JOIN teams ON (CommutingTeamID = TeamID)
         WHERE RiderID=$riderID";
 $rs = $oDB->query($sql, __FILE__, __LINE__);
 $stats = $rs->fetch_array();

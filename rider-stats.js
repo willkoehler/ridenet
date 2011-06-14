@@ -42,7 +42,7 @@ function C_ReportForm(parentElement)
                 {name: 'TeamID', type: 'int'},
                 {name: 'TeamName'},
                 {name: 'Domain'},
-                {name: 'Distance', type: 'int', sortDir: 'DESC'},
+                {name: 'Miles', type: 'int', sortDir: 'DESC'},
                 {name: 'Days', type: 'int', sortDir: 'DESC'},
                 {name: 'CEDays', type: 'int', sortDir: 'DESC'},
                 {name: 'CEDaysMonth', type: 'int', sortDir: 'DESC'}
@@ -98,14 +98,14 @@ function C_ReportForm(parentElement)
                                             <div class="find-info2">{RiderType}</div>\
                                           </div></td>\
                                         </tr></table>').compile();
-        var distanceT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{Distance}</div>').compile();
+        var milesT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{Miles}</div>').compile();
         var daysT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{Days}</div>').compile();
         var ceDaysT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{CEDays}</div>').compile();
         var ceDaysMonthT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{CEDaysMonth}</div>').compile();
 
         var columns = [
                 {header: 'Rider/Team', width: .47, dataIndex: 'RiderName', tpl: riderT },
-                {header: 'Total Miles', width: .13, dataIndex: 'Distance', align: 'center', tpl: distanceT },
+                {header: 'Total Miles', width: .13, dataIndex: 'Miles', align: 'center', tpl: milesT },
                 {header: 'Total Days', width: .13, dataIndex: 'Days', align: 'center', tpl: daysT },
                 {header: ceDaysHeader, width: .14, dataIndex: 'CEDays', align: 'center', tpl: ceDaysT },
                 {header: ceDaysMonthHeader, width: .12, dataIndex: 'CEDaysMonth', align: 'center', tpl: ceDaysMonthT }
@@ -138,33 +138,9 @@ function C_ReportForm(parentElement)
     
     this.filterList = function()
     {
-        var endDate = new Date();
-        var range = Ext.fly('date-range').dom.value;
-        var type = range.substring(0,1);             // A, Y, M
-        var offset = parseInt(range.substring(1));   // 0, -1, -2, etc
-        switch(type) {
-            case "A":
-                startDate = new Date(2000, 0, 1);
-                break;
-            case "Y":
-                var year = endDate.getFullYear() + offset;
-                startDate = new Date(year, 0, 1);
-                endDate = new Date(year, 11, 31);
-                break;
-            case "M":
-                month = endDate.getMonth();
-                year = endDate.getFullYear();
-                startDate = new Date(year, month+offset, 1);        // works even when month = 0
-                endDate = new Date(year, month+offset+1, 0);        // 0 ==> last day of the previous month
-                break;
-            default:
-                startDate = new Date(2000, 0, 1);
-                break;
-        }
     // --- reload list filtering by search term
         this.ds.baseParams.SearchFor = Ext.getCmp('SearchFor').getValue();
-        this.ds.baseParams.StartDate = startDate.format('n/j/Y');
-        this.ds.baseParams.EndDate = endDate.format('n/j/Y');
+        this.ds.baseParams.Range = Ext.fly('date-range').dom.value;
         this.mask = new Ext.LoadMask(this.report.getEl(), { store: this.ds, msg:"Please Wait..." });
         this.ds.load({params: {start:0, limit:100} });
     }

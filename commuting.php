@@ -58,7 +58,7 @@ $RideBoardLength = 30;
 
 <?  $riderCount = $oDB->DBCount("rider", "true");
     $teamCount = $oDB->DBCount("teams", "true");
-    $starCount = $oDB->DBCount("rider", "CEDaysMonth>=2");
+    $starCount = $oDB->DBCount("rider_stats", "CEDaysMonth>=2");
     $totalMiles = $oDB->DBLookup("SUM(Distance)", "ride_log", "true");?>
 
     <div style="float:left">
@@ -92,6 +92,7 @@ $RideBoardLength = 30;
                    COUNT(DISTINCT IF(RideLogTypeID=1 OR RideLogTypeID=3, Date, NULL)) AS CEDays30
             FROM ride_log
             LEFT JOIN rider USING (RiderID)
+            LEFT JOIN rider_stats USING (RiderID)
             LEFT JOIN teams ON (CommutingTeamID = TeamID)
             JOIN rider_photos USING (RiderID)
             WHERE rider.Archived=0 AND DATEDIFF(NOW(), Date) < 30

@@ -351,7 +351,7 @@ function SampleHomePageHTML($teamName)
 //-----------------------------------------------------------------------------------
 function UpdateRiderStats($oDB, $riderID)
 {
-    // Get Days/Month over several time ranges and pick the biggest value. For the purposes of this
+    // Get Days/Month over several date ranges and pick the biggest value. For the purposes of this
     // calculation a month is 30.5 days
     $startDate365 = AddDays(date_create(), -364)->format("Y-m-d");
     $startDate180 = AddDays(date_create(), -179)->format("Y-m-d");
@@ -375,22 +375,70 @@ function UpdateRiderStats($oDB, $riderID)
     $CEDaysMonth30 = round($record['CEDays30']/(30/30.5));
     $CEDaysMonth = max($CEDaysMonth365, $CEDaysMonth180, $CEDaysMonth60, $CEDaysMonth30);
     $CMilesDay = ($record['CDays365']) ? round($record['CMiles365']/$record['CDays365']) : 0;
-    // Calculate miles and # days YTD
-    $sql = "SELECT IFNULL(SUM(Distance),0) AS YTDMiles,
-                   COUNT(DISTINCT Date) AS YTDDays
-            FROM ride_log
-            WHERE RiderID=$riderID AND Year(Date) = Year(NOW())";
-    $rs = $oDB->query($sql, __FILE__, __LINE__);
-    $record = $rs->fetch_array();
-    $rs->close();
-    $YTDMiles = $record['YTDMiles'];
-    $YTDDays = $record['YTDDays'];
-    // Store stats in rider record
-    $sql = "UPDATE rider
-            SET CEDaysMonth=$CEDaysMonth, CMilesDay=$CMilesDay, YTDMiles=$YTDMiles, YTDDays=$YTDDays
-            WHERE RiderID=$riderID";
+    // Calculate rider stats over several different date ranges
+    $today = new DateTime();
+    $prevYear = intval($today->format("Y")) - 1;
+    $sets['A'] = CalculateStatsSet($oDB, $riderID, new DateTime("2000-1-1"), $today);
+    $sets['Y0'] = CalculateStatsSet($oDB, $riderID, FirstOfYear($today), $today);
+    $sets['Y1'] = CalculateStatsSet($oDB, $riderID, new DateTime("1/1/$prevYear"), new DateTime("12/31/$prevYear"));
+    $sets['M0'] = CalculateStatsSet($oDB, $riderID, FirstOfMonth($today), $today);
+    $sets['M1'] = CalculateStatsSet($oDB, $riderID, FirstOfMonth(AddMonths($today,-1)), LastOfMonth(AddMonths($today,-1)));
+    $sets['M2'] = CalculateStatsSet($oDB, $riderID, FirstOfMonth(AddMonths($today,-2)), LastOfMonth(AddMonths($today,-2)));
+    // create rider stats record if it doesn't exist yet
+    if($oDB->DBCount("rider_stats", "RiderID=$riderID")==0)
+    {
+        $oDB->query("INSERT INTO rider_stats (RiderID) VALUES($riderID)", __FILE__, __LINE__);
+    }
+    // Store stats in rider stats table.
+    $sql = "UPDATE rider_stats SET CEDaysMonth = $CEDaysMonth, CMilesDay = $CMilesDay, ";
+    foreach($sets as $range => $set)
+    {
+        foreach($set as $key => $value)
+        {
+            $sql .= "{$range}_$key = $value, ";
+        }
+    }
+    $sql = substr($sql, 0, -2) . " WHERE RiderID=$riderID";
     $oDB->query($sql, __FILE__, __LINE__);
-    return(Array('YTDDays' => $YTDDays, 'YTDMiles' => $YTDMiles, 'CEDaysMonth' => $CEDaysMonth, 'CMilesDay' => $CMilesDay));
+    // return a subset of the stats
+    return(Array('YTDDays' => $sets['Y0']['Days'], 'YTDMiles' => $sets['Y0']['Miles'], 'CEDaysMonth' => $CEDaysMonth));
+}
+
+
+//----------------------------------------------------------------------------------
+//  CalculateStatsSet()
+//
+//  Calculate set of rider stats over the given time range
+//
+//  PARAMETERS:
+//    oDB         - the database connection object
+//    $riderID    - ID of rider to calculate stats for
+//    $startDate  - start of date range to calculate stats over
+//    $endDate    - end of date range to calculate stats over
+//
+//  RETURN: Array with stats set
+//-----------------------------------------------------------------------------------
+function CalculateStatsSet($oDB, $riderID, $startDate, $endDate)
+{
+    $sql = "SELECT IFNULL(SUM(Distance),0) AS Miles,
+                   IFNULL(SUM(IF(RideLogTypeID=1 OR RideLogTypeID=3, Distance, 0)),0) AS CEMiles,
+                   COUNT(DISTINCT Date) AS Days,
+                   COUNT(DISTINCT IF(RideLogTypeID=1 OR RideLogTypeID=3, Date, NULL)) AS CEDays,
+                   COUNT(DISTINCT IF(RideLogTypeID=1 OR RideLogTypeID=3, RideLogID, NULL)) AS CERides
+            FROM ride_log
+            WHERE RiderID=$riderID AND Date BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "'
+            GROUP BY RiderID";
+    $rs = $oDB->query($sql, __FILE__, __LINE__);
+    if($rs->num_rows)
+    {
+        $record = $rs->fetch_array(MYSQLI_ASSOC);
+    }
+    else
+    {
+        $record = array('Miles'=>0, 'CEMiles'=>0, 'Days'=>0, 'CEDays'=>0, 'CERides'=>0);
+    }
+    $rs->close();
+    return($record);
 }
 
 

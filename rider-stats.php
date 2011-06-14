@@ -62,10 +62,10 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
       <select id="date-range">
         <option value='A'>All Time</option>
         <option value='Y0'><?=date("Y")?> YTD</option>
-        <option value='Y-1'>Last Year</option>
+        <option value='Y1'>Last Year</option>
         <option value='M0'>This Month</option>
-        <option value='M-1'><?=AddMonths(new DateTime,-1)->format("F Y")?></option>
-        <option value='M-2'><?=AddMonths(new DateTime,-2)->format("F Y")?></option>
+        <option value='M1'><?=AddMonths(new DateTime,-1)->format("F Y")?></option>
+        <option value='M2'><?=AddMonths(new DateTime,-2)->format("F Y")?></option>
       </select>
     </div>
     <div class='clearfloat'></div>

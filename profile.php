@@ -33,12 +33,13 @@ else
 // --- get rider information
 $rs = $oDB->query("SELECT RiderType, CONCAT(FirstName, ' ', LastName) AS RiderName, YearsCycling, Height, Weight,
                           BornIn, ResideIn, Occupation, FavoriteFood, FavoriteRide, FavoriteQuote, WhyIRide,
-                          MyCommute, URL, CommuteMapURL, RacingTeamID, CommutingTeamID,
-                          IFNULL(YTDMiles, 0) AS YTDMiles, IFNULL(YTDDays, 0) AS YTDDays, IFNULL(CEDaysMonth, 0) AS CEDaysMonth,
+                          MyCommute, URL, RacingTeamID, CommutingTeamID, IFNULL(Y0_Miles, 0) AS YTDMiles,
+                          IFNULL(Y0_Days, 0) AS YTDDays, IFNULL(CEDaysMonth, 0) AS CEDaysMonth,
                           tr.TeamID AS RacingTeamID, tr.TeamName AS RacingTeamName, tr.Domain AS RacingDomain,
                           tc.TeamID AS CommutingTeamID, tc.TeamName AS CommutingTeamName, tc.Domain AS CommutingDomain,   
                           FLOOR(DATEDIFF(NOW(), DateOfBirth) / 365.25) AS Age
                    FROM rider
+                   LEFT JOIN rider_stats USING (RiderID) 
                    LEFT JOIN teams tr ON (RacingTeamID = tr.TeamID)
                    LEFT JOIN teams tc ON (CommutingTeamID = tc.TeamID)
                    LEFT JOIN ref_rider_type USING (RiderTypeID)
@@ -251,14 +252,11 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
                       <td class=text><?=$riderInfo['WhyIRide']?></td>
                     </tr>
                   <? } ?>
-                  <?if(!is_null($riderInfo['MyCommute']) || !is_null($riderInfo['CommuteMapURL'])) { ?>
+                  <?if(!is_null($riderInfo['MyCommute'])) { ?>
                     <tr>
                       <td class=label valign=top>My Commute:</td>
                       <td class=text>
                         <?=$riderInfo['MyCommute']?>
-                        <?if(!is_null($riderInfo['CommuteMapURL'])) { ?>
-                          <a href="<?=$riderInfo['CommuteMapURL']?>" target="_blank">[Map]</a>
-                        <? } ?>
                       </td>
                     </tr>
                   <? } ?>

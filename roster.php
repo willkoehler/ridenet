@@ -32,9 +32,10 @@ $teamTypeID = $oDB->DBLookup("TeamTypeID", "teams", "TeamID=$pt");
                                         IFNULL(RiderTypeID,100) AS RiderTypeID, IFNULL(RiderType, '(unkown)') AS RiderType,
                                         FLOOR(DATEDIFF(NOW(), DateOfBirth) / 365.25) AS Age,
                                         (SELECT COUNT(*) FROM ride_log WHERE RiderID=rider.RiderID AND YEAR(Date)=YEAR(NOW())),
-                                        YTDMiles,
-                                        CEDaysMonth
-                                        FROM rider LEFT JOIN ref_rider_type USING (RiderTypeID)
+                                        Y0_Miles AS YTDMiles, CEDaysMonth
+                                        FROM rider
+                                        LEFT JOIN rider_stats USING (RiderID)
+                                        LEFT JOIN ref_rider_type USING (RiderTypeID)
                                         WHERE (RacingTeamID=$pt OR CommutingTeamID=$pt) AND Archived=false")?>
   </script>
 <!-- Insert tracker for Google Analytics -->

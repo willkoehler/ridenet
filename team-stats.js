@@ -42,8 +42,8 @@ function C_ReportForm(parentElement)
                 {name: 'Location'},
                 {name: 'StarRiders', type: 'int', sortDir: 'DESC'},
                 {name: 'CERides', type: 'int', sortDir: 'DESC'},
-                {name: 'CEDistance', type: 'int', sortDir: 'DESC'},
-                {name: 'Distance', type: 'int', sortDir: 'DESC'}
+                {name: 'CEMiles', type: 'int', sortDir: 'DESC'},
+                {name: 'Miles', type: 'int', sortDir: 'DESC'}
             ],
             proxy: new Ext.data.HttpProxy({ url: '/data/list-team-stats.php' }),
             sortInfo: { field: sort, direction: 'desc' },
@@ -82,10 +82,10 @@ function C_ReportForm(parentElement)
                                 <img class="tight" src="/images/ridelog/commute.png" height=14><img class="tight" src="/images/ridelog/errand.png" height=14>\
                                 <span style="padding-left:2px">Rides</span>\
                               </span>'
-        var ceDistanceHeader =  '<span style="line-height:13px;position:relative;top:-1px">\
-                                   <img class="tight" src="/images/ridelog/commute.png" height=14><img class="tight" src="/images/ridelog/errand.png" height=14>\
-                                   <span style="padding-left:2px">Miles</span>\
-                                 </span>'
+        var ceMilesHeader =  '<span style="line-height:13px;position:relative;top:-1px">\
+                                <img class="tight" src="/images/ridelog/commute.png" height=14><img class="tight" src="/images/ridelog/errand.png" height=14>\
+                                <span style="padding-left:2px">Miles</span>\
+                              </span>'
         var teamT = new Ext.XTemplate('<table cellpadding=0 cellspacing=0><tr>\
                                           <td><div style="width:100px;overflow:hidden;text-align:center;margin:1px">\
                                             <img class="tight" src="{[getFullDomainRoot()]}/imgstore/team-logo/fit/{TeamID}.png" border=0>\
@@ -96,15 +96,15 @@ function C_ReportForm(parentElement)
                                             <div class="find-info2">{Location}</div>\
                                           </div></td>\
                                         </tr></table>').compile();
-        var distanceT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{Distance}</div>').compile();
-        var ceDistanceT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{CEDistance}</div>').compile();
+        var milesT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{Miles}</div>').compile();
+        var ceMilesT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{CEMiles}</div>').compile();
         var ceRidesT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{CERides}</div>').compile();
         var starRidersT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{StarRiders}</div>').compile();
 
         var columns = [
                 {header: 'Team', width: .52, dataIndex: 'TeamName', tpl: teamT },
-                {header: 'Total Miles', width: .11, dataIndex: 'Distance', align: 'center', tpl: distanceT },
-                {header: ceDistanceHeader, width: .13, dataIndex: 'CEDistance', align: 'center', tpl: ceDistanceT },
+                {header: 'Total Miles', width: .11, dataIndex: 'Miles', align: 'center', tpl: milesT },
+                {header: ceMilesHeader, width: .13, dataIndex: 'CEMiles', align: 'center', tpl: ceMilesT },
                 {header: ceRidesHeader, width: .13, dataIndex: 'CERides', align: 'center', tpl: ceRidesT },
                 {header: '# STARs', width: .11, dataIndex: 'StarRiders', align: 'center', tpl: starRidersT }
             ]
@@ -136,33 +136,9 @@ function C_ReportForm(parentElement)
     
     this.filterList = function()
     {
-        var endDate = new Date();
-        var range = Ext.fly('date-range').dom.value;
-        var type = range.substring(0,1);             // A, Y, M
-        var offset = parseInt(range.substring(1));   // 0, -1, -2, etc
-        switch(type) {
-            case "A":
-                startDate = new Date(2000, 0, 1);
-                break;
-            case "Y":
-                var year = endDate.getFullYear() + offset;
-                startDate = new Date(year, 0, 1);
-                endDate = new Date(year, 11, 31);
-                break;
-            case "M":
-                month = endDate.getMonth();
-                year = endDate.getFullYear();
-                startDate = new Date(year, month+offset, 1);        // works even when month = 0
-                endDate = new Date(year, month+offset+1, 0);        // 0 ==> last day of the previous month
-                break;
-            default:
-                startDate = new Date(2000, 0, 1);
-                break;
-        }
     // --- reload list filtering by search term
         this.ds.baseParams.SearchFor = Ext.getCmp('SearchFor').getValue();
-        this.ds.baseParams.StartDate = startDate.format('n/j/Y');
-        this.ds.baseParams.EndDate = endDate.format('n/j/Y');
+        this.ds.baseParams.Range = Ext.fly('date-range').dom.value;
         this.mask = new Ext.LoadMask(this.report.getEl(), { store: this.ds, msg:"Please Wait..." });
         this.ds.load({params: {start:0, limit:100} });
     }
