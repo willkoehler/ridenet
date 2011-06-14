@@ -128,7 +128,7 @@ function SandboxHomePage($oDB)
           FROM teams
           JOIN ref_team_type USING (TeamTypeID)
           JOIN ref_zipcodes USING (ZipCodeID)
-          WHERE TeamID IN (120, 122, 86, 115, 135)
+          WHERE TeamID IN (120, 122, 86, 115, 135, 130)
           ORDER BY TeamName ASC";
   $rs = $oDB->query($sql, __FILE__, __LINE__); ?>
   <table cellpadding=0 cellspacing=0 class="centered" style="border:1px solid #CCC;background-color:#EEE">
