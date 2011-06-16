@@ -82,7 +82,7 @@ $ZipCodeText = ($record==false) ? "(unknown)" : $record['ZipCodeText'];
     
   </div>
     
-  <div id="extraWideContent">  
+  <div id="extraWideContent" style="margin:-2px 0;padding:2px 0">  <!-- margin+padding is a fix for mobile Safari div seam lines artifact -->
     <div id='ride-calendar-holder' align=center>
       <?RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $CalendarLatitude, $CalendarWeeks)?>
     </div>

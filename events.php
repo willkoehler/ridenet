@@ -122,7 +122,7 @@ $ShowYear = (isset($_REQUEST['Year'])) ? SmartGetInt("Year") : date("Y");
     
   </div>
 
-  <div id="extraWideContent">
+  <div id="extraWideContent" style="margin:-2px 0;padding:2px 0">  <!-- margin+padding is a fix for mobile Safari div seam lines artifact -->
     <div id='event-schedule-holder' align=center>
       <?RenderEventSchedule($oDB, $ScheduleFilterStates, $ScheduleFilterTypes, $ShowYear)?>
     </div>
