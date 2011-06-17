@@ -618,39 +618,6 @@ li.tm-list { margin-left: 20px; margin-top: 10px; padding-left: 0px; }
     padding:2px;
 }
 
-.commute-team-rank .rank
-{
-    font:14px Tahoma, Helvetica, Arial, sans-serif;
-    padding-right:10px;
-    color: #<?=$TextColor50?>;
-    text-align:right;
-}
-.commute-team-rank .data
-{
-    border-bottom:1px solid #<?=$BorderColor?>;
-    font:12px Tahoma, Helvetica, Arial, sans-serif;
-    padding:1px
-}
-.commute-team-rank .days-month
-{
-    font:bold 14px Tahoma, Helvetica, Arial, sans-serif;
-    padding-right:5px;
-}
-.commute-team-rank .days-month-label
-{
-    font:11px Tahoma, Helvetica, Arial, sans-serif;
-    color: #<?=$TextColor50?>;
-}
-.team-name-callout
-{
-    font:bold 13px Tahoma, Helvetica, Arial, sans-serif;
-    text-align:center
-}
-.commute-team-rank .no-data
-{
-    font:14px Verdana, Geneva, sans-serif;
-}
-
 .rider-callout .primary
 {
     font:bold 14px Tahoma, Helvetica, Arial, sans-serif;
