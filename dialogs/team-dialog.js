@@ -137,6 +137,7 @@ function C_TeamDialog()
                         xtype: 'container', layout: 'form', width: 135, hideLabels: true, items: [{
                         // === Racing Checkbox ===
                             xtype: 'checkbox',
+                            checked: true,
                             boxLabel: 'Show Racing Page',
                             name: 'bRacing'
                         }]
@@ -144,6 +145,7 @@ function C_TeamDialog()
                         xtype: 'container', layout: 'form', width: 150, hideLabels: true, items: [{
                         // === Commuting Checkbox ===
                             xtype: 'checkbox',
+                            checked: true,
                             boxLabel: 'Show Commuting Page',
                             name: 'bCommuting'
                         }]
