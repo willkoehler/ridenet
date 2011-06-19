@@ -6,6 +6,7 @@ require("dynamic-sections/rides.php");
 $oDB = oOpenDBConnection();
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
 $CalendarWeeks = 8;  // number of weeks to show in calendar
+$Editable = isset($_REQUEST['edit']) && CheckLogin();
 
 // --- Get calendar filter zip code and range from cookies.
 $defaultZipCode = $oDB->DBLookup("ZipCodeID", "teams", "TeamID=$pt", 43214);
@@ -66,11 +67,30 @@ $ZipCodeText = ($record==false) ? "(unknown)" : $record['ZipCodeText'];
     <div style="float:left;margin-left:10px;position:relative;left:0px;top:12px">
       <? SocialMediaButtons("Find bike rides in your area using the Community Ride Calendar on #RideNet") ?>
     </div>
-    <div style="float:right;text-align:right;position:relative;left:0px;top:15px">
-      <span id='help-btn' onclick="g_helpDialog.show({ ypos:100, animateTarget: 'help-btn' });">
-        What is this?
-      </span>
-    </div>
+    <? if(!$Editable) { ?>
+      <div style="float:right;text-align:right;position:relative;left:0px;top:15px">
+        <?if(CheckLogin()) { ?>
+          <a id='edit-btn' href="/rides?edit">
+        <? } else { ?>
+          <a id='edit-btn' href="/login?Goto=<?=urlencode("../rides?edit")?>">
+        <? } ?>
+          Edit Calendar
+        </a>
+        <script type="text/javascript">
+            new Ext.ToolTip({
+                target: 'edit-btn',
+                anchor: 'top',
+                xanchorOffset: 20,
+                dismissDelay: 0,
+                showDelay: 200,
+                width: 180,
+                html: "<b>Enable Editing:</b> Add rides to the calendar or \
+                       edit rides you've previously added.",
+                padding: 5
+              });
+        </script>
+      </div>
+    <? } ?>
     <div class='clearfloat'></div>
 
     <table cellpadding=0 cellspacing=0><tr>
@@ -84,7 +104,7 @@ $ZipCodeText = ($record==false) ? "(unknown)" : $record['ZipCodeText'];
     
   <div id="extraWideContent" style="margin:-2px 0;padding:2px 0">  <!-- margin+padding is a fix for mobile Safari div seam lines artifact -->
     <div id='ride-calendar-holder' align=center>
-      <?RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $CalendarLatitude, $CalendarWeeks)?>
+      <?RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $CalendarLatitude, $CalendarWeeks, $Editable)?>
     </div>
   </div>
   

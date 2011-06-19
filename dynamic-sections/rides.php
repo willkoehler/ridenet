@@ -4,6 +4,7 @@ if(isset($_REQUEST['pb']))
     require("../script/app-master.php");
     CheckRequiredParameters(Array('w', 'T'));
     $CalendarWeeks = intval($_REQUEST['w']);
+    $Editable = isset($_REQUEST['edit']) && CheckLogin();
     $oDB = oOpenDBConnection();
     $pt = $_REQUEST['T'];
 
@@ -17,7 +18,7 @@ if(isset($_REQUEST['pb']))
     $CalendarLongitude = ($record==false) ? 0 : $record['Longitude'];
     $CalendarLatitude = ($record==false) ? 0 : $record['Latitude'];
     // filter rides by team based on presence of 'tf' query parameter
-    RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $CalendarLatitude, $CalendarWeeks);
+    RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $CalendarLatitude, $CalendarWeeks, $Editable);
 }
 
 
@@ -32,15 +33,16 @@ if(isset($_REQUEST['pb']))
 //    CalendarLongitude   - Longitude of center point for calendar filter
 //    CalendarLatitude    - Latitude of center point for calendar filter
 //    CalendarWeeks       - number of weeks to show in calendar
+//    Editable            - true if ride calendar should be editable
 //
 //  RETURN: none
 //-----------------------------------------------------------------------------------
-function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $CalendarLatitude, $CalendarWeeks)
+function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $CalendarLatitude, $CalendarWeeks, $Editable)
 {?>
     <!-- If user is logged in shift table to the right so main body of table is still centered -->
-    <div <?if(CheckLogin()) {?>style="margin-left:65px"<?}?>>
     <table id='event-list' cellpadding=0 cellspacing=0>
-<?    $StartDate = AddDays(MondayOfWeek(new DateTime), -7);
+<?    $colspan = $Editable ? 6 : 5;
+      $StartDate = AddDays(MondayOfWeek(new DateTime), -7);
       $EndDate = AddDays($StartDate, $CalendarWeeks*7 - 1);
       $whereClause = "c.Archived=0";
       $whereClause .= " AND CalendarDate Between '" . $StartDate->format("Y-m-d") . "' and '" . $EndDate->format("Y-m-d") . " 23:59'";
@@ -68,10 +70,8 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
           No rides found in your area between <?=$StartDate->format("n/j/Y")?> and <?=$EndDate->format("n/j/Y")?>
         </td>
         <td align=right>
-          <?if(CheckLogin()) { ?>
+          <?if($Editable) { ?>
             <span class='action-btn' id='add-btn0' onclick="clickAddRide(this.id);">&nbsp;<b>+</b> Add Ride&nbsp;</span>
-          <? } else { ?>
-            <span class='action-btn' onclick="window.location.href='/login?Goto=<?=urlencode("../rides")?>'">&nbsp;Login To Add a Ride&nbsp;</span>
           <? } ?>
         </td></tr>
         <tr><td class="table-spacer" style="height:5px" colspan=2>&nbsp;</td></tr>
@@ -87,13 +87,13 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
           { 
             if($FirstWeek == false) { ?>
             <!-- End of week boundary - table divider and spacing below -->
-              <tr><td class="table-spacer" <?if($thisWeek) {?>id="highlight"<? } ?> style="height:5px" colspan=5>&nbsp;</td></tr>
-              <tr><td class="table-divider" colspan=5>&nbsp;</td></tr>
-              <tr><td class="table-spacer" style="height:20px" colspan=5>&nbsp;</td></tr>
+              <tr><td class="table-spacer" <?if($thisWeek) {?>id="highlight"<? } ?> style="height:5px" colspan=<?=$colspan?>>&nbsp;</td></tr>
+              <tr><td class="table-divider" colspan=<?=$colspan?>>&nbsp;</td></tr>
+              <tr><td class="table-spacer" style="height:20px" colspan=<?=$colspan?>>&nbsp;</td></tr>
             <? } ?>
             <?$thisWeek = ($eventDate->format("W")==date("W")) ? true : false;?>
           <!-- Beginning of week header and table header -->
-            <tr><td colspan=5 class="section-header">
+            <tr><td colspan=<?=$colspan?> class="section-header">
               <table cellpadding=0 cellspacing=0 border=0 width=100%><tr>
                 <td width=150>&nbsp;</td>
                 <td align=center>
@@ -108,10 +108,8 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
                   <? } ?>
                 </td>
                 <td width=150 align=right>
-                  <?if(CheckLogin()) { ?>
+                  <?if($Editable) { ?>
                     <span class='action-btn' id='add-btn<?=$eventDate->format("n-j")?>' onclick="clickAddRide(this.id);"><b>+</b> Add Ride</span>
-                  <? } else { ?>
-                    <span class='action-btn' onclick="window.location.href='/login?Goto=<?=urlencode("../rides")?>'">&nbsp;Login To Edit&nbsp;</span>
                   <? } ?>
                 </td>
               </tr></table>
@@ -121,20 +119,20 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
               <td class=header style="padding:1px 0px;" align=left>Class<a href="#class-key"><b>*</b></a></td>
               <td class=header style="padding:1px 0px;" align=left>Ride (click for more info)</td>
               <td class=header style="padding:1px 0px;" align=left>Location [miles from you]</td>
-              <?if(CheckLogin()) { ?>
-                <td class=data style="padding:1px 0px;" align=left>&nbsp;</td>
+              <?if($Editable) { ?>
+                <td class=header><span class="instructions">&nbsp;Copy/Edit</span></td>
               <? } ?>
             </tr>
-            <tr><td class="table-spacer" <?if($thisWeek) {?>id="highlight"<? } ?> style="height:5px" colspan=5>&nbsp;</td></tr>
+            <tr><td class="table-spacer" <?if($thisWeek) {?>id="highlight"<? } ?> style="height:5px" colspan=<?=$colspan?>>&nbsp;</td></tr>
 <?          $PrevWeek = $eventDate->format("W");
             $PrevDay = $eventDate->format("j");
             $FirstWeek = false;
           }
           if($eventDate->format("j")!=$PrevDay) { ?>
           <!-- End of Day. Table divider and spacing between days -->
-            <tr><td class="table-spacer" <?if($thisWeek) {?>id="highlight"<? } ?> style="height:5px" colspan=5>&nbsp;</td></tr>
-            <tr><td class="table-divider" colspan=5>&nbsp;</td></tr>
-            <tr><td class="table-spacer" <?if($thisWeek) {?>id="highlight"<? } ?> style="height:5px" colspan=5>&nbsp;</td></tr>
+            <tr><td class="table-spacer" <?if($thisWeek) {?>id="highlight"<? } ?> style="height:5px" colspan=<?=$colspan?>>&nbsp;</td></tr>
+            <tr><td class="table-divider" colspan=<?=$colspan?>>&nbsp;</td></tr>
+            <tr><td class="table-spacer" <?if($thisWeek) {?>id="highlight"<? } ?> style="height:5px" colspan=<?=$colspan?>>&nbsp;</td></tr>
             <? $PrevDay = $eventDate->format("j") ?>
           <? } ?>
           <!-- Ride Row -->
@@ -150,28 +148,27 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
             <td width="190" <?if($thisWeek) {?>id="highlight"<? } ?>><div class="ellipses text75" style="width:180px">
               <?=$record['GeneralArea']?> <span class="text50">[<?=number_format($record['Distance'],0)?>]</span>
             </div></td>
-            <?if(CheckLogin()) { ?>
-              <td width="65" align=left style="padding-left:5px">
+            <?if($Editable) { ?>
+              <td width="50" <?if($thisWeek) {?>id="highlight"<? } ?> align=left style="padding-left:5px">
+                <span class='action-btn-sm' style="color:#009A00" id='copy-btn<?=$record['CalendarID']?>' onclick="clickCopyRide(<?=$record['CalendarID']?>);" title="Create a new ride based on this one">&nbsp;C&nbsp;</span>
                 <?if($record['EventAge'] < 0 && ($record['AddedBy']==GetUserID() || isSystemAdmin())) {?>
-                  <span class='action-btn-sm' id='edit-btn<?=$record['CalendarID']?>' onclick="clickEditRide(<?=$record['CalendarID']?>);" title="Edit this ride">Edit</span>
+                  <span class='action-btn-sm' id='edit-btn<?=$record['CalendarID']?>' onclick="clickEditRide(<?=$record['CalendarID']?>);" title="Edit this ride">&nbsp;E&nbsp;</span>
                 <? } ?>
-                <span class='action-btn-sm' style="visibility:hidden;color:#009A00" copybtn=1 id='copy-btn<?=$record['CalendarID']?>' onclick="clickCopyRide(<?=$record['CalendarID']?>);" title="Create a new ride based on this one">Copy</span>
               </td>
             <? } ?>
           </tr>
         <?}?>
         <!-- Table footer -->
-          <tr><td class="table-spacer" style="height:5px" colspan=5>&nbsp;</td></tr>
-          <tr><td class="table-divider" colspan=5>&nbsp;</td></tr>
-          <tr><td class="table-spacer" style="height:10px" colspan=5>&nbsp;</td></tr>
+          <tr><td class="table-spacer" style="height:5px" colspan=<?=$colspan?>>&nbsp;</td></tr>
+          <tr><td class="table-divider" colspan=<?=$colspan?>>&nbsp;</td></tr>
+          <tr><td class="table-spacer" style="height:10px" colspan=<?=$colspan?>>&nbsp;</td></tr>
       <?}?>
       <tr>
-        <td colspan=5 align=center>
+        <td colspan=<?=$colspan?> align=center>
           <div class='more-btn' onclick="getMore(8)">NEXT 8 WEEKS</div>
         </td>
       </tr>
     </table>
-    </div>
 <?
 }
 ?>

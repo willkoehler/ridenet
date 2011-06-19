@@ -1,26 +1,12 @@
 // Entry point. Will be called when DOM is loaded and ready
 Ext.onReady(function()
 {
-    var helptext = "<div class=help-title>Regional Event Schedule</div>\
-                   <div class=help-body>\
-                   The Regional Event Schedule is shared and maintained by all the teams on RideNet. It\
-                   lists promoted events in your area, such as races and organized tours\
-                   <ul class=help>\
-                   <li class=help>To filter the schedule by region, click the \"Location...\" button.\
-                   <li class=help>To add an event to the schedule, click the \"+&nbsp;Add&nbsp;Event\"\
-                   link on this page. To edit an event, click the \"Edit\" link next to the event.\
-                   <li class=help>Prior to an event, click the \"Who's Going?\" link to indicate that you will be attending the\
-                   event and find other riders attending the event.\
-                   <li class=help>After an event, you can post your results and write a race report using the \"Your Results\"\
-                   page in your profile. Your results will appear on this page and on your Team Results page.\
-                   </ul></div>";
 // --- Turn on validation errors beside the field globally and enable quick tips that will
 // --- popup tooltip when mouse is hovered over field
     Ext.form.Field.prototype.msgTarget = 'qtip';
     Ext.QuickTips.init();
 // --- Create dialogs
     g_filterDialog = new C_FilterDialog();
-    g_helpDialog = new C_HelpDialog(helptext);
     g_eventDialog = new C_EventDialog();
 });
 
@@ -54,7 +40,18 @@ function clickEditEvent(raceID)
 {
     g_eventDialog.show({
         raceID: raceID,
+        makeCopy: false,
         animateTarget: 'edit-btn' + raceID,
+        callback: updateEventSchedule
+    });
+}
+
+function clickCopyEvent(raceID)
+{
+    g_eventDialog.show({
+        raceID: raceID,
+        makeCopy: true,
+        animateTarget: 'copy-btn' + raceID,
         callback: updateEventSchedule
     });
 }
@@ -95,7 +92,8 @@ function clickEventFilter(el)
 function updateEventSchedule(mask)
 {
     if(mask) Ext.get('container').mask("Updating");
-    Ext.Ajax.request( {url: '/dynamic-sections/events.php?pb&T=' + g_pt + '&Y=' + g_showYear, success: function(response, options) {
+    var editable = g_HTMLRequest['edit'] ? '&edit' : '';
+    Ext.Ajax.request( {url: '/dynamic-sections/events.php?pb&T=' + g_pt + '&Y=' + g_showYear + editable, success: function(response, options) {
         Ext.get('event-schedule-holder').update(response.responseText);
         if(mask) Ext.get('container').unmask();
     }});

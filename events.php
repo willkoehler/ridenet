@@ -5,6 +5,7 @@ require("dynamic-sections/events.php");
 
 $oDB = oOpenDBConnection();
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
+$Editable = isset($_REQUEST['edit']) && CheckLogin();
 
 // --- Get list of states and event types to filter schedule
 $ScheduleFilterStates = isset($_COOKIE['ScheduleFilterStates']) ? $_COOKIE['ScheduleFilterStates'] : 'All';
@@ -63,11 +64,30 @@ $ShowYear = (isset($_REQUEST['Year'])) ? SmartGetInt("Year") : date("Y");
     <div style="float:left;margin-left:10px;position:relative;left:0px;top:12px">
       <? SocialMediaButtons("Find bike tours, road races, criteriums and other cycling events in your area on #RideNet") ?>
     </div>
-    <div style="float:right;text-align:right;padding-top:15px">
-      <span id='help-btn' onclick="g_helpDialog.show({ ypos:100, animateTarget: 'help-btn' });">
-        What is this?
-      </span>
-    </div>
+    <? if(!$Editable) { ?>
+      <div style="float:right;text-align:right;position:relative;left:0px;top:15px">
+        <?if(CheckLogin()) { ?>
+          <a id='edit-btn' href="/events?Year=<?=$ShowYear?>&edit">
+        <? } else { ?>
+          <a id='edit-btn' href="/login?Goto=<?=urlencode("../events?Year=$ShowYear&edit")?>">
+        <? } ?>
+          Edit Events
+        </a>
+        <script type="text/javascript">
+            new Ext.ToolTip({
+                target: 'edit-btn',
+                anchor: 'top',
+                xanchorOffset: 20,
+                dismissDelay: 0,
+                showDelay: 200,
+                width: 180,
+                html: "<b>Enable Editing:</b> Add events to the schedule \
+                       or edit events you've previously added.",
+                padding: 5
+              });
+        </script>
+      </div>
+    <? } ?>
     <div class='clearfloat'></div>
 
 <?  // Build string describing event filters
@@ -124,7 +144,7 @@ $ShowYear = (isset($_REQUEST['Year'])) ? SmartGetInt("Year") : date("Y");
 
   <div id="extraWideContent" style="margin:-2px 0;padding:2px 0">  <!-- margin+padding is a fix for mobile Safari div seam lines artifact -->
     <div id='event-schedule-holder' align=center>
-      <?RenderEventSchedule($oDB, $ScheduleFilterStates, $ScheduleFilterTypes, $ShowYear)?>
+      <?RenderEventSchedule($oDB, $ScheduleFilterStates, $ScheduleFilterTypes, $ShowYear, $Editable)?>
     </div>
     <div style="height:20px"><!--vertical spacer--></div>
     <p align=center>

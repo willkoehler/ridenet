@@ -11,12 +11,14 @@ function C_EventDialog()
     //      scope       - scope in which to execute the callback function. (The callback function's
     //                    "this" context)
     //      animateTarget   - id of HTML target to animate opening/closing window
+    //      makeCopy    - set true to make a copy of an existing event
     // -------------------------------------------------------------------------------------------
     this.show = function(params)
     {
         this.raceID = params.raceID;
         this.callback = params.callback;
         this.callbackScope = params.scope;
+        this.makeCopy = params.makeCopy;
 
         if( ! this.window)
         {
@@ -142,6 +144,7 @@ function C_EventDialog()
 
                 buttons: [{
                     text: 'Save',
+                    id: 'save-btn',
                     handler: this.saveButtonClick,
                     scope: this
                 },{
@@ -169,7 +172,16 @@ function C_EventDialog()
                 listeners: {
                     scope: this,
                     // unmask form when load is completed
-                    actioncomplete: function(form, action) { if(action.type == "load") {this.window.getEl().unmask();} },
+                    actioncomplete: function(form, action) { if(action.type == "load") {
+                        if(this.makeCopy)
+                        {
+                        // we are making a copy, set RaceID to -1 so a new event is created and expand
+                        // date selection field drop-down
+                            this.form.getForm().findField('RaceDate').onTriggerClick();
+                            this.form.getForm().baseParams.RaceID = -1;
+                        }
+                        this.window.getEl().unmask();}
+                    },
                     // redirect to login page if load returns an error (session expired)
                     actionfailed: function(form, action) { if(action.type == "load") {window.location.href = '/login?expired=1' } }
                 }
@@ -195,8 +207,18 @@ function C_EventDialog()
                     this.form.getForm().baseParams.RaceID = this.raceID;
                     this.window.getEl().mask("Loading..."); // mask form while loading form data from server
                     this.form.getForm().load({url:"/data/get-schedule-event.php"});
-                    this.window.setTitle("Edit Event");
-                    Ext.get('delete-btn').show();
+                    if(this.makeCopy)
+                    {
+                        this.window.setTitle("Copy Event");
+                        Ext.get('delete-btn').hide();
+                        Ext.getCmp('save-btn').setText("Save Copy");
+                    }
+                    else
+                    {
+                        this.window.setTitle("Edit Event");
+                        Ext.get('delete-btn').show();
+                        Ext.getCmp('save-btn').setText("Save");
+                    }
                 }
                 else
                 {
@@ -205,6 +227,7 @@ function C_EventDialog()
                     this.form.getForm().baseParams.RaceID = -1;
                     this.window.setTitle("Add Event");
                     Ext.get('delete-btn').hide();
+                    Ext.getCmp('save-btn').setText("Save");
                 }
                 this.setMessage('', 'black');                              // clear message area
                 this.form.getForm().findField('RaceDate').focus(true, 200);  // set initial focus
@@ -274,7 +297,7 @@ function C_EventDialog()
             msg: "Are you sure you want to delete this event?",
             fn: function(btn) { if(btn=='yes') {
             // --- Mask this page and post delete request
-                this.window.getEl().mask("");
+                this.window.getEl().mask();
                 this.setMessage("Deleting Event...", "black", true);
                 Ext.Ajax.request({
                     url: '/data/archive-schedule-event.php',

@@ -364,7 +364,7 @@ function C_RideDialog()
             msg: "Are you sure you want to delete this ride?",
             fn: function(btn) { if(btn=='yes') {
             // --- Mask this page and post delete request
-                this.window.getEl().mask("");
+                this.window.getEl().mask();
                 this.setMessage("Deleting Ride...", "black", true);
                 Ext.Ajax.request({
                     url: '/data/archive-calendar-event.php',

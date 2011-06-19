@@ -450,6 +450,9 @@ h3   {
 .ext-ie .action-btn-sm {
     padding: 1px 3px 0px 3px;
 }
+.ext-gecko .action-btn-sm {
+    padding: 0px 3px 1px 3px;
+}
 
 .tm-banner-bg {     /* will show through transparent areas in banner sample in team manager page */
     background: url('/images/transparent.png') repeat;
@@ -747,9 +750,10 @@ table#event-list .section-header
     border-bottom: 1pt solid #<?=$BorderColor?>;
     padding: 1px 1px;
 }
-table#event-list .nav-buttons
+table#event-list .instructions
 {
-    font: 12px Arial, Helvetica, sans-serif;
+    font:11px Arial, Helvetica, sans-serif;
+    color: #<?=$TextColor65?>;
 }
 
 table#ride-log .header
@@ -1023,6 +1027,14 @@ li.help
     color:#5074AF;
     background: url('/images/help-icon.png') no-repeat;
     padding: 2px 0px 0px 20px;
+}
+#edit-btn
+{
+    font:12px 'Helvetica Neue', Arial, sans-serif;
+    cursor:pointer;
+    color:#<?=$TextColor50?>;
+    background: url('/images/edit-icon.png') no-repeat;
+    padding: 0px 0px 0px 17px;
 }
 
 .link-box
