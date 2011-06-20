@@ -365,8 +365,8 @@ form {
 
 p {
     font: 13px 'Helvetica Neue', Arial, sans-serif;
-    line-height: 18px;
-    margin: 0px 0px 15px;
+    line-height: 17px;
+    margin: 0px 0px 12px;
     color: #<?=$TextColor75?>;
 }
 p.newp {
@@ -493,7 +493,7 @@ li.tm-list { margin-left: 20px; margin-top: 10px; padding-left: 0px; }
 
 .team-home .text
 {
-    font:14px 'Helvetica Neue', Arial, sans-serif;
+    font:13px 'Helvetica Neue', Arial, sans-serif;
     line-height:17px;
     color: #<?=$TextColor75?>;
 }
