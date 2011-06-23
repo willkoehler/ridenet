@@ -57,26 +57,6 @@ function isDesigner()
 
 
 //----------------------------------------------------------------------------------
-//  isMyTeam()
-//
-//  This function checks to see whether the logged in rider is currently viewing
-//  their team site. Some controls (like the add ride button on the calendar
-//  sidebar are only visible when you're viewing your own team page)
-//
-//  PARAMETERS:
-//    oDB   - the database connection object
-//    pt    - ID of team currently being presented to the user
-//
-//  RETURN: true if user has designer rights
-//-----------------------------------------------------------------------------------
-function isMyTeam($oDB, $pt)
-{
-    $teamInfo = GetRiderTeamInfo($oDB, GetUserID());
-    return((CheckLogin() && ($teamInfo['CommutingTeamID']==$pt || $teamInfo['RacingTeamID']==$pt))  ? true : false);
-}
-
-
-//----------------------------------------------------------------------------------
 //  GetUserID()
 //
 //  This function returns the ID of the current logged in user, or zero if no user
