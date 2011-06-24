@@ -62,10 +62,7 @@ function RenderRideLog($oDB, $riderID, $length, $editable)
 <?        $rideCount = 0;
           $previousWeek = 0;
           $firstrow=true;
-          $teamInfo1 = GetRiderTeamInfo($oDB, $riderID);      // displayed user
-          $teamInfo2 = GetRiderTeamInfo($oDB, GetUserID());   // logged in user
           $mapPrivacy = $oDB->DBLookup("MapPrivacy", "rider", "RiderID=$riderID");
-          $mapVisible = IsMapVisible($mapPrivacy, Array($teamInfo1['CommutingTeamID'], $teamInfo1['RacingTeamID']), Array($teamInfo2['CommutingTeamID'], $teamInfo2['RacingTeamID']));
           while(($record = $rs->fetch_array())!=false)
           {
             $currentWeek = date_create($record['Date'])->format("W");
@@ -119,7 +116,7 @@ function RenderRideLog($oDB, $riderID, $length, $editable)
                 <img src="<?=GetFullDomainRoot()?>/images/weather/<?=$record['WeatherImage']?>" title="<?=$record['Weather']?>">
               </td>
                 <?if($record['Source']==2) { ?> <td class="comment" width="340"> <? } else { ?> <td class="comment" width="355" colspan=2> <? } ?>
-                <?=BuildRideLogComment(htmlentities($record['Comment']), $record['Link'], $record['MapID'], $mapVisible)?>&nbsp;
+                <?=BuildRideLogComment(htmlentities($record['Comment']), $record['Link'], $record['MapID'], IsMapVisible($mapPrivacy))?>&nbsp;
               </td>
               <?if($record['Source']==2) { ?>
                 <td class="comment" width="13" style="text-align:right">

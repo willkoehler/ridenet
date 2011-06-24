@@ -216,7 +216,7 @@ function C_ProfileDialog()
                                 width: 40
                             }]
                         },{
-                            xtype:'container', layout:'form', labelWidth:85, width: 205, items: [{
+                            xtype:'container', layout:'form', labelWidth:85, width: 175, items: [{
                             // === Map Privacy ===
                                 xtype: 'localcombobox',
                                 fieldLabel: 'Share Maps',
@@ -224,13 +224,13 @@ function C_ProfileDialog()
                                 valueField: 'id',
                                 hiddenName: 'MapPrivacy',
                                 forceSelection: true,
-                                width: 100,
+                                width: 70,
                                 listWidth: 380,
                                 allowBlank: false,
                                 blankText: 'You must select a map sharing option',
                                 store: new Ext.data.ArrayStore({ fields: ['id', 'text', 'desc'], data: this.mapPrivacyLookup }),
                                 tpl:'<tpl for="."><div class="x-combo-list-item">\
-                                       <div style="float:left;width:80px">{text}</div>\
+                                       <div style="float:left;width:60px">{text}</div>\
                                        <div style="color:#888">{desc}</div>\
                                      </div></tpl>'
                             }]
@@ -239,7 +239,7 @@ function C_ProfileDialog()
                             xtype: 'container',
                             style: 'height:19px',
                             html: '<a href="http://itunes.apple.com/us/app/ridenet/id444003332" target="_blank"><img src="/images/mobile.gif" style="position:relative;top:4px;"></a>&nbsp;\
-                                   <a href="http://itunes.apple.com/us/app/ridenet/id444003332" target="_blank" style="position:relative;top:0px;color:#AAA;">Mobile</a>'
+                                   <a href="http://itunes.apple.com/us/app/ridenet/id444003332" target="_blank" style="position:relative;top:0px;color:#AAA;">Mobile App</a>'
                         }]
                     },{
                         xtype:'container', layout:'form', items: [{
@@ -554,10 +554,9 @@ function C_ProfileDialog()
         this.setMessage("", 'black');    // clear status message
     }
     
-    this.mapPrivacyLookup = [[0, "Public", "everyone can see my maps"],
-                             [1, "RideNet Only", "only registered RideNet members can see my maps"],
-                             [2, "Team Only", "only my teammates can see my maps"],
-                             [3, "Private", "do not share my maps"]];
+    this.mapPrivacyLookup = [[0, "Public", "everyone can see my ride log maps"],
+                             [1, "RideNet", "only registered RideNet members can see my maps"],
+                             [2, "Private", "do not share my ride log maps"]];
 
 }
 

@@ -5,13 +5,12 @@ require(SHAREDBASE_DIR . "ExtJSLoader.php");
 $oDB = oOpenDBConnection();
 $rideLogID = SmartGetInt('RideLogID');
 
-$rs = $oDB->query("SELECT CONCAT(FirstName, ' ', LastName) AS Name, MapPrivacy, RacingTeamID, CommutingTeamID
+$rs = $oDB->query("SELECT CONCAT(FirstName, ' ', LastName) AS Name, MapPrivacy
                    FROM ride_log JOIN rider USING (RiderID)
                    WHERE RideLogID=$rideLogID", __FILE__, __LINE__);
 $mapOwner = $rs->fetch_array();
 $rs->close();
-$lirTeamInfo = GetRiderTeamInfo($oDB, GetUserID());
-$mapVisible = IsMapVisible($mapOwner['MapPrivacy'], Array($mapOwner['CommutingTeamID'], $mapOwner['RacingTeamID']), Array($lirTeamInfo['CommutingTeamID'], $lirTeamInfo['RacingTeamID']));
+$mapVisible = IsMapVisible($mapOwner['MapPrivacy']);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -48,10 +47,6 @@ $mapVisible = IsMapVisible($mapOwner['MapPrivacy'], Array($mapOwner['CommutingTe
       case 1:
         $reason = "<b>Sorry:</b> {$mapOwner['Name']} only shares maps with registered RideNet members. 
                    You must be logged in to RideNet to see this map.";
-        break;
-      case 2:
-        $reason = "<b>Sorry:</b> {$mapOwner['Name']} only shares maps with team members.
-                   You must be a member of {$mapOwner['Name']}'s team to view this map";
         break;
       default:
         $reason = "<b>Sorry:</b> {$mapOwner['Name']} does not allow other people to view his/her maps.";

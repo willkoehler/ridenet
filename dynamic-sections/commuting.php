@@ -40,7 +40,7 @@ function RenderCommutingWall($oDB, $length)
           LIMIT $length";
 
   $rs = $oDB->query($sql, __FILE__, __LINE__);
-  RenderWall($oDB, $rs, 0); ?>
+  RenderWall($rs, 0); ?>
   <?if($rs->num_rows==$length) { ?>
     <div class='more-btn' onclick="getMore(30)">GET MORE</div>
   <? } ?>

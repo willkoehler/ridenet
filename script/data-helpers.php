@@ -51,28 +51,19 @@ function CheckAndReportSQLError($oDB, $filename, $line)
 //
 //  PARAMETERS:
 //    mapPrivacy        - Map user's privacy selection.
-//    moTeamInfo        - array of teams that the map owner belongs to
-//    lirTeamInfo       - array of teams that logged in rider belongs to
 //
 //  RETURN: ride log comment with link appended
 //-----------------------------------------------------------------------------------
-function IsMapVisible($mapPrivacy, $moTeamInfo, $lirTeamInfo)
+function IsMapVisible($mapPrivacy)
 {
     $mapVisible = false;
-    if($mapPrivacy===0)  // publicly visible
+    if($mapPrivacy==0 && !is_null($mapPrivacy))  // publicly visible
     {
         $mapVisible=true;
     }
     elseif($mapPrivacy==1 && CheckLogin())  // visible to any RideNet user
     {
         $mapVisible=true;
-    }
-    elseif($mapPrivacy==2 && CheckLogin())   // visible to teammates
-    {
-        if(array_intersect($moTeamInfo, $lirTeamInfo))
-        {
-            $mapVisible=true;
-        }
     }
     return($mapVisible);
 }

@@ -85,7 +85,7 @@ function RenderTeamWall($oDB, $teamID, $length)
             LIMIT 0,$length";
 
     $rs = $oDB->query($sql, __FILE__, __LINE__);
-    RenderWall($oDB, $rs, $teamID);?>
+    RenderWall($rs, $teamID);?>
     <?if($rs->num_rows==$length) { ?>
       <div class='more-btn' onclick="getMore(30)">GET MORE</div>
     <? } ?>

@@ -64,7 +64,7 @@ function RenderRideUpdates($oDB, $calendarID, $length)
           LIMIT 0,$length";
 
   $rs = $oDB->query($sql, __FILE__, __LINE__);
-  RenderWall($oDB, $rs, 0, true, true, "");?>
+  RenderWall($rs, 0, true, true, "");?>
   <?if($rs->num_rows==$length) { ?>
     <div class='more-btn' onclick="getMore(30)">GET MORE</div>
   <? } ?>
