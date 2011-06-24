@@ -120,7 +120,9 @@ function RenderRideLog($oDB, $riderID, $length, $editable)
               </td>
               <?if($record['Source']==2) { ?>
                 <td class="comment" width="13" style="text-align:right">
-                  <img src="/images/mobile.gif" title="via RideNet Mobile">
+                  <a href="/mobile" target="_blank">
+                    <img src="/images/mobile.gif" title="RideNet Mobile">
+                  </a>
                 </td>
               <? } ?>
               <?if($editable) { ?>

@@ -85,12 +85,12 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
       </div>
 
       <div style="width:200px;margin-top:10px;-moz-border-radius: 8px;border-radius: 8px;border: 1px solid #CCC;background-color:#EEE;padding:15px 0 10px 0;text-align:center">
-        <div style="margin-top:0px;font:16px helvetica;color:#333">Buy RideNet Clothing.</div>
-        <a href="/clothing">
-          <img style="margin:5px 0 0 0;" src="/images/clothing/ridenet-jersey1.png" Height=110 border=0>
+        <div style="margin:0 0 5px 0;font:16px helvetica;color:#333">RideNet iPhone App.</div>
+        <a href="/mobile">
+          <img style="margin:5px 0 0 0;" src="/images/mobile/iphone-ad2.png" Height=110 border=0>
         </a>
-        <p style="margin:5px 0 0 0;font-size:12px;color:#888">
-          Available @ Paradise Garage
+        <p style="margin:8px 0 0 0;font-size:12px;color:#888">
+          Available in the App Store
         </p>
       </div>
 

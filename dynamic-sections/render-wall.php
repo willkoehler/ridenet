@@ -108,7 +108,9 @@ function RenderWall($rs, $pt, $showTime=false, $showHeaders=true, $emptyMessage=
           <div class="body">
             <?if($record['Source']==2) { ?>
               <div style="float:right;padding:6px 0 0 5px">
-                <img src="/images/mobile.gif" title="via RideNet Mobile">
+                <a href="/mobile" target="_blank">
+                  <img src="/images/mobile.gif" title="RideNet Mobile">
+                </a>
               </div>
             <? } ?>
             <img style="position:relative;top:3px" src="/images/ridelog/<?=$record['RideLogTypeImage']?>" height='14' title="<?=$record['RideLogType']?>">

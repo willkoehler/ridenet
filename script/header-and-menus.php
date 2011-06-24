@@ -483,6 +483,19 @@ function AdSidebar()
 {
 ?>
     <div class="sidebarBlock">
+      <h3 style="text-align:center">RideNet iPhone App</h3>
+      <div style="height:3px"></div>
+      <div style="text-align:center">
+        <a href = "/mobile">
+          <img src="/images/mobile/iphone-ad.png" border=0>
+        </a>
+        <div style="height:4px"></div>
+        <p style="margin:0">
+          Available in the App Store
+        </p>
+      </div>
+    </div>
+    <div class="sidebarBlock">
       <h3 style="text-align:center">RideNet Clothing</h3>
       <div style="text-align:center">
         <a href = "/clothing">
@@ -527,7 +540,7 @@ function ColumbusFoundationSidebar()
       <h3 style="text-align:center">Special Thanks To</h3>
       <div style="height:5px"></div>
       <p align="center" id='cfad'>
-        <a href="http://www.columbusfoundation.org"><img border=0 src="/images/ads/ColumbusFoundation.png" alt="The Columbus Foundation" /></a>
+        <a href="http://www.columbusfoundation.org" target="_blank"><img border=0 src="/images/ads/ColumbusFoundation.png" alt="The Columbus Foundation" /></a>
       </p>
       <script type="text/javascript">
           new Ext.ToolTip({

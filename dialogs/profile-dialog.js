@@ -238,8 +238,8 @@ function C_ProfileDialog()
                         // === Info ===
                             xtype: 'container',
                             style: 'height:19px',
-                            html: '<a href="http://itunes.apple.com/us/app/ridenet/id444003332" target="_blank"><img src="/images/mobile.gif" style="position:relative;top:4px;"></a>&nbsp;\
-                                   <a href="http://itunes.apple.com/us/app/ridenet/id444003332" target="_blank" style="position:relative;top:0px;color:#AAA;">Mobile App</a>'
+                            html: '<a href="/mobile" target="_blank"><img src="/images/mobile.gif" style="position:relative;top:4px;"></a>&nbsp;\
+                                   <a href="/mobile" target="_blank" style="position:relative;top:0px;color:#AAA;">Mobile App</a>'
                         }]
                     },{
                         xtype:'container', layout:'form', items: [{

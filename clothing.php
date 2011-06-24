@@ -13,7 +13,7 @@ $RideBoardLength = 30;
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title><?BuildPageTitle($oDB, 0, "Clothing")?></title>
 <!-- Include site stylesheets -->
-  <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+  <link href="/styles.pcs?T=0" rel="stylesheet" type="text/css" />
 <!-- Insert tracker for Google Analytics -->
   <?InsertGoogleAnalyticsTracker()?>
 <!-- facebook meta tags to provide information for the like button -->
@@ -29,7 +29,7 @@ $RideBoardLength = 30;
 
 <div id="container">
   <div id="header">
-    <?InsertPageBanner($oDB, $pt)?>
+    <?InsertPageBanner($oDB, 0)?>
     <?InsertMainMenu($oDB, $pt)?>
   </div>
 
