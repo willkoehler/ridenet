@@ -7,6 +7,7 @@
 //  posts. Other pages just display ride logs.
 //
 //  PARAMETERS:
+//    oDB           - database connection (mysqli object)
 //    rs            - mysqli result object containing data for the ride board
 //    pt            - ID of the presented team
 //    showTime      - true to show time of messages
@@ -15,7 +16,7 @@
 //
 //  RETURN: none
 //-----------------------------------------------------------------------------------
-function RenderWall($rs, $pt, $showTime=false, $showHeaders=true, $emptyMessage="Nothing happening yet...")
+function RenderWall($oDB, $rs, $pt, $showTime=false, $showHeaders=true, $emptyMessage="Nothing happening yet...")
 {
   if($rs->num_rows==0) { 
     if($emptyMessage) { ?>
@@ -28,6 +29,7 @@ function RenderWall($rs, $pt, $showTime=false, $showHeaders=true, $emptyMessage=
   }
   else
   {
+    $lirTeamInfo = GetRiderTeamInfo($oDB, GetUserID());
     $previousDate = '';
     while(($record = $rs->fetch_array())!=false)
     {
@@ -115,7 +117,8 @@ function RenderWall($rs, $pt, $showTime=false, $showHeaders=true, $emptyMessage=
             <?if($record['Weather']!="N/A") { ?>
               <img style="position:relative;top:3px" src="/images/weather/<?=$record['WeatherImage']?>" height='14' title="<?=$record['Weather']?>">
             <? } ?>
-            <?=BuildRideLogComment(htmlentities($record['PostText']), $record['Link'], $record['HasMap'] ? $record['RideLogID'] : 0)?><span class="tag">&nbsp;<span class="bullet">&bull;</span> <?=$distanceText?></span>
+            <?$mapVisible = $record['MapID'] && IsMapVisible($record['MapPrivacy'], Array($record['CommutingTeamID'], $record['RacingTeamID']), Array($lirTeamInfo['CommutingTeamID'], $lirTeamInfo['RacingTeamID']));?>
+            <?=BuildRideLogComment(htmlentities($record['PostText']), $record['Link'], $record['MapID'], $mapVisible)?><span class="tag">&nbsp;<span class="bullet">&bull;</span> <?=$distanceText?></span>
           </div>
           <? break; ?>
         <? case 'Race Result': ?>

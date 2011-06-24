@@ -35,8 +35,8 @@ if(isset($_REQUEST['pb']))
 //-----------------------------------------------------------------------------------
 function RenderRideLog($oDB, $riderID, $length, $editable)
 {?>
-<?    $sql = "SELECT RideLogID, Date, RideLogType, RideLogTypeImage, Distance, Duration, Comment, Link, Source, HasMap,
-                   DATE_SUB(Date, INTERVAL WEEKDAY(Date) DAY) AS FirstDayOfWeek,
+<?    $sql = "SELECT RideLogID, Date, RideLogType, RideLogTypeImage, Distance, Duration, Comment, Link, Source,
+                   IF(HasMap, RideLogID, 0) AS MapID, DATE_SUB(Date, INTERVAL WEEKDAY(Date) DAY) AS FirstDayOfWeek,
                    IFNULL(Weather, 'N/A') AS Weather, IFNULL(WeatherImage, 'none.png') AS WeatherImage,
                    DATEDIFF(NOW(), Created) AS Age
               FROM ride_log rl
@@ -62,6 +62,10 @@ function RenderRideLog($oDB, $riderID, $length, $editable)
 <?        $rideCount = 0;
           $previousWeek = 0;
           $firstrow=true;
+          $teamInfo1 = GetRiderTeamInfo($oDB, $riderID);      // displayed user
+          $teamInfo2 = GetRiderTeamInfo($oDB, GetUserID());   // logged in user
+          $mapPrivacy = $oDB->DBLookup("MapPrivacy", "rider", "RiderID=$riderID");
+          $mapVisible = IsMapVisible($mapPrivacy, Array($teamInfo1['CommutingTeamID'], $teamInfo1['RacingTeamID']), Array($teamInfo2['CommutingTeamID'], $teamInfo2['RacingTeamID']));
           while(($record = $rs->fetch_array())!=false)
           {
             $currentWeek = date_create($record['Date'])->format("W");
@@ -114,8 +118,8 @@ function RenderRideLog($oDB, $riderID, $length, $editable)
               <td class="data" width="55" style="text-align:center">
                 <img src="<?=GetFullDomainRoot()?>/images/weather/<?=$record['WeatherImage']?>" title="<?=$record['Weather']?>">
               </td>
-              <?if($record['Source']==2) { ?> <td class="comment" width="340"> <? } else { ?> <td class="comment" width="355" colspan=2> <? } ?>
-                <?=BuildRideLogComment(htmlentities($record['Comment']), $record['Link'], $record['HasMap'] ? $record['RideLogID'] : 0)?>&nbsp;
+                <?if($record['Source']==2) { ?> <td class="comment" width="340"> <? } else { ?> <td class="comment" width="355" colspan=2> <? } ?>
+                <?=BuildRideLogComment(htmlentities($record['Comment']), $record['Link'], $record['MapID'], $mapVisible)?>&nbsp;
               </td>
               <?if($record['Source']==2) { ?>
                 <td class="comment" width="13" style="text-align:right">

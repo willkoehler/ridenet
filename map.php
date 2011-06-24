@@ -1,6 +1,17 @@
 <?
 require("script/app-master.php");
 require(SHAREDBASE_DIR . "ExtJSLoader.php");
+
+$oDB = oOpenDBConnection();
+$rideLogID = SmartGetInt('RideLogID');
+
+$rs = $oDB->query("SELECT CONCAT(FirstName, ' ', LastName) AS Name, MapPrivacy, RacingTeamID, CommutingTeamID
+                   FROM ride_log JOIN rider USING (RiderID)
+                   WHERE RideLogID=$rideLogID", __FILE__, __LINE__);
+$mapOwner = $rs->fetch_array();
+$rs->close();
+$lirTeamInfo = GetRiderTeamInfo($oDB, GetUserID());
+$mapVisible = IsMapVisible($mapOwner['MapPrivacy'], Array($mapOwner['CommutingTeamID'], $mapOwner['RacingTeamID']), Array($lirTeamInfo['CommutingTeamID'], $lirTeamInfo['RacingTeamID']));
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -17,7 +28,7 @@ require(SHAREDBASE_DIR . "ExtJSLoader.php");
   <script type="text/javascript"src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <!-- pass ride log ID to javascript -->
   <script type="text/javascript">
-    g_rideLogID = <?=SmartGetInt('RideLogID')?>;
+    g_rideLogID = <?=$rideLogID?>;
   </script>
   
 
@@ -30,6 +41,23 @@ require(SHAREDBASE_DIR . "ExtJSLoader.php");
 
 
 <body>
-  <div id="map_canvas" style="width:100%; height:100%"></div>
+  <?if($mapVisible) { ?>
+    <div id="map_canvas" style="width:100%; height:100%"></div>
+  <? } else { ?>
+<?  switch($mapOwner['MapPrivacy']) {
+      case 1:
+        $reason = "<b>Sorry:</b> {$mapOwner['Name']} only shares maps with registered RideNet members. 
+                   You must be logged in to RideNet to see this map.";
+        break;
+      case 2:
+        $reason = "<b>Sorry:</b> {$mapOwner['Name']} only shares maps with team members.
+                   You must be a member of {$mapOwner['Name']}'s team to view this map";
+        break;
+      default:
+        $reason = "<b>Sorry:</b> {$mapOwner['Name']} does not allow other people to view his/her maps.";
+        break;
+    }?>
+    <?=$reason?>
+  <? } ?>
 </body>
 </html>

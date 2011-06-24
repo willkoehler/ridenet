@@ -45,6 +45,40 @@ function CheckAndReportSQLError($oDB, $filename, $line)
 
 
 //----------------------------------------------------------------------------------
+//  IsMapVisible()
+//
+//  Determines weather a map should be visible for the current site visitor
+//
+//  PARAMETERS:
+//    mapPrivacy        - Map user's privacy selection.
+//    moTeamInfo        - array of teams that the map owner belongs to
+//    lirTeamInfo       - array of teams that logged in rider belongs to
+//
+//  RETURN: ride log comment with link appended
+//-----------------------------------------------------------------------------------
+function IsMapVisible($mapPrivacy, $moTeamInfo, $lirTeamInfo)
+{
+    $mapVisible = false;
+    if($mapPrivacy===0)  // publicly visible
+    {
+        $mapVisible=true;
+    }
+    elseif($mapPrivacy==1 && CheckLogin())  // visible to any RideNet user
+    {
+        $mapVisible=true;
+    }
+    elseif($mapPrivacy==2 && CheckLogin())   // visible to teammates
+    {
+        if(array_intersect($moTeamInfo, $lirTeamInfo))
+        {
+            $mapVisible=true;
+        }
+    }
+    return($mapVisible);
+}
+
+
+//----------------------------------------------------------------------------------
 //  BuildRideLogComment()
 //
 //  Builds the text for a ride log comment, inserting a link at the end of the
@@ -52,13 +86,14 @@ function CheckAndReportSQLError($oDB, $filename, $line)
 //  on the URL.
 //
 //  PARAMETERS:
-//    comment   - ride log comment
-//    link      - link URL associated with the ride log
-//    mapid     - id of map to display (zero indicates there isn't a map)
+//    comment     - ride log comment
+//    link        - link URL associated with the ride log
+//    mapid       - id of map to display (zero indicates there isn't a map)
+//    mapVisible  - true if map is visible to current user
 //
 //  RETURN: ride log comment with link appended
 //-----------------------------------------------------------------------------------
-function BuildRideLogComment($comment, $link, $mapid)
+function BuildRideLogComment($comment, $link, $mapid, $mapVisible)
 {
     $result = $comment;
     if(preg_match('/garmin/i', $link))
@@ -99,7 +134,14 @@ function BuildRideLogComment($comment, $link, $mapid)
     }
     if($mapid)
     {
-        $result .= " <a onClick=\"window.open('/map/$mapid', 'report_window', 'resizable')\">[Map]</a>";
+        if($mapVisible)
+        {
+            $result .= " <a onClick=\"window.open('/map/$mapid', 'map_window', 'resizable')\">[Map]</a>";
+        }
+        else
+        {
+            $result .= " <span class=text50>[Map]</span>";
+        }
     }
     return($result);
 }
@@ -452,7 +494,8 @@ function CalculateStatsSet($oDB, $riderID, $startDate, $endDate)
 //    oDB   - the database connection object
 //    riderID   - rider ID
 //
-//  RETURN: Array containing rider's commuting and racing team ID
+//  RETURN: Array containing rider's commuting and racing team ID. Returns false
+//          If rider record is not found.
 //-----------------------------------------------------------------------------------
 function GetRiderTeamInfo($oDB, $riderID)
 {

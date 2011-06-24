@@ -43,6 +43,7 @@ else
     $values['sCommutingTeamAdmin'] = 0;
     $values['sRacingTeamAdmin'] = 0;
     $values['MustChangePW'] = 1;
+    $values['MapPrivacy'] = 1;
     $values['CreatedByID'] = 0;
     $values['DateCreated'] =  "'" . date("Y-m-d") . "'";
     $values['Password'] = chr(34) . MakePasswordHash('live2ride') . chr(34);

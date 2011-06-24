@@ -46,6 +46,7 @@ else
     if($riderID==-1)
     {
         $values['Archived'] = 0;
+        $values['MapPrivacy'] = 1;
         // only store teamID when rider is first created
         $values['RacingTeamID'] = $teamID;
         $values['CommutingTeamID'] = $teamID;

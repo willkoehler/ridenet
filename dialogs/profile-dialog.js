@@ -44,7 +44,7 @@ function C_ProfileDialog()
                 {name: 'Height'},
                 {name: 'Weight', type: 'int'},
                 {name: 'URL'},
-                {name: 'Archived', type: 'int'},
+                {name: 'MapPrivacy', type: 'int'},
                 {name: 'RiderPictureID', mapping: 'RiderPictureID'},
                 {name: 'RiderActionPictureID', mapping: 'RiderPictureID'}
             ]);
@@ -64,7 +64,7 @@ function C_ProfileDialog()
                     xtype:'container', layout:'column', items: [{
                     xtype:'container', width: 555, style:"padding-top:7px", items: [{
                         xtype:'container', layout:'column', items: [{
-                            xtype:'container', layout:'form', width: 330, items: [{
+                            xtype:'container', layout:'form', width: 335, items: [{
                             // === Email ===
                                 xtype: 'textfield',
                                 fieldLabel: 'Email',
@@ -75,11 +75,11 @@ function C_ProfileDialog()
                                 blankText: 'You must enter your email'
                             }]
                         },{
-                            xtype:'container', width: 120, items: [{
+                            xtype:'container', width: 115, items: [{
                             // === Info ===
                                 xtype: 'displayfield',
                                 style: 'padding-top:3px; color:#666',
-                                html: '(not shared publicly)'
+                                html: 'not shared publicly'
                             }]
                         },{
                             xtype:'container', width: 100, items: [{    // extra layer needed for IE7
@@ -124,7 +124,8 @@ function C_ProfileDialog()
                         // === Info ===
                             xtype: 'displayfield',
                             style: 'padding-top:3px; color:#666',
-                            html: '(only your age will be shared publicly)'
+                            html: 'only your age will be shared publicly',
+                            width: 225
                         }]
                     },{
                         xtype:'container', layout:'column', items: [{
@@ -207,13 +208,38 @@ function C_ProfileDialog()
                                 width: 40
                             }]
                         },{
-                            xtype:'container', layout:'form', labelWidth:55, width: 290, items: [{
+                            xtype:'container', layout:'form', labelWidth:55, width: 110, items: [{
                             // === Weight ===
                                 xtype: 'numberfield',
                                 fieldLabel: 'Weight',
                                 name: 'Weight',
                                 width: 40
                             }]
+                        },{
+                            xtype:'container', layout:'form', labelWidth:85, width: 205, items: [{
+                            // === Map Privacy ===
+                                xtype: 'localcombobox',
+                                fieldLabel: 'Share Maps',
+                                displayField: 'text',
+                                valueField: 'id',
+                                hiddenName: 'MapPrivacy',
+                                forceSelection: true,
+                                width: 100,
+                                listWidth: 380,
+                                allowBlank: false,
+                                blankText: 'You must select a map sharing option',
+                                store: new Ext.data.ArrayStore({ fields: ['id', 'text', 'desc'], data: this.mapPrivacyLookup }),
+                                tpl:'<tpl for="."><div class="x-combo-list-item">\
+                                       <div style="float:left;width:80px">{text}</div>\
+                                       <div style="color:#888">{desc}</div>\
+                                     </div></tpl>'
+                            }]
+                        },{
+                        // === Info ===
+                            xtype: 'container',
+                            style: 'height:19px',
+                            html: '<a href="http://itunes.apple.com/us/app/ridenet/id444003332" target="_blank"><img src="/images/mobile.gif" style="position:relative;top:4px;"></a>&nbsp;\
+                                   <a href="http://itunes.apple.com/us/app/ridenet/id444003332" target="_blank" style="position:relative;top:0px;color:#AAA;">Mobile</a>'
                         }]
                     },{
                         xtype:'container', layout:'form', items: [{
@@ -412,8 +438,7 @@ function C_ProfileDialog()
                         var team = (racingTeam==commutingTeam) ? racingTeam : racingTeam + ' | ' + commutingTeam;
                         this.form.getForm().findField('TeamName').setValue(team);
                         this.form.getEl().unmask();
-                    }},
-                    // redirect to login page if load returns an error (session expired)
+                    }},                    // redirect to login page if load returns an error (session expired)
                     actionfailed: function(form, action) { if(action.type == "load") {window.location.href = '/login?expired=1' } }
                 }
             });
@@ -528,6 +553,11 @@ function C_ProfileDialog()
     {
         this.setMessage("", 'black');    // clear status message
     }
+    
+    this.mapPrivacyLookup = [[0, "Public", "everyone can see my maps"],
+                             [1, "RideNet Only", "only registered RideNet members can see my maps"],
+                             [2, "Team Only", "only my teammates can see my maps"],
+                             [3, "Private", "do not share my maps"]];
 
 }
 

@@ -28,10 +28,10 @@ function RenderEventUpdates($oDB, $raceID, $length)
 {
   $sql = "SELECT * FROM (
               SELECT RaceDate AS Date, tbt.Type, tbt.Image, Created, 0 AS DeleteID,
-                     RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RacingTeamID, CommutingTeamID, TeamName, Domain,
+                     RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RacingTeamID, CommutingTeamID, MapPrivacy, TeamName, Domain,
                      DATEDIFF(NOW(), Created) AS Age, IF(LENGTH(Report)>140, CONCAT(SUBSTRING(Report, 1, 140),'...'), Report) AS PostText, NULL AS Link,
                      0 AS Distance, 0 AS Duration, '' AS RideLogType, '' AS RideLogTypeImage, '' AS Weather, '' AS WeatherImage,
-                     0 AS RideLogID, 0 AS Source, 0 AS HasMap, RaceID,
+                     0 AS RideLogID, 0 AS Source, 0 AS MapID, RaceID,
                      CONCAT(PlaceName, ' - ', CategoryName) AS EventName
               FROM results
               LEFT JOIN event USING (RaceID)
@@ -49,10 +49,10 @@ function RenderEventUpdates($oDB, $raceID, $length)
 
           SELECT * FROM (
               SELECT Date, tbt.Type, tbt.Image, DATE AS Created, PostID as DeleteID,
-                     RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, posts.TeamID AS RacingTeamID, posts.TeamID AS CommutingTeamID, TeamName, Domain,
+                     RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, posts.TeamID AS RacingTeamID, posts.TeamID AS CommutingTeamID, MapPrivacy, TeamName, Domain,
                      DATEDIFF(NOW(), Date) AS Age, Text AS PostText, NULL AS Link,
                      0 AS Distance, 0 AS Duration, '' AS RideLogType, '' AS RideLogTypeImage, '' AS Weather, '' AS WeatherImage,
-                     0 AS RideLogID, 0 AS Source, 0 AS HasMap, 0 AS RaceID, '' AS EventName
+                     0 AS RideLogID, 0 AS Source, 0 AS MapID, 0 AS RaceID, '' AS EventName
               FROM posts
               LEFT JOIN rider USING (RiderID)
               LEFT JOIN teams USING (TeamID)
@@ -65,7 +65,7 @@ function RenderEventUpdates($oDB, $raceID, $length)
           LIMIT 0,$length";
 
   $rs = $oDB->query($sql, __FILE__, __LINE__);
-  RenderWall($rs, 0, true, true, "");?>
+  RenderWall($oDB, $rs, 0, true, true, "");?>
   <?if($rs->num_rows==$length) { ?>
     <div class='more-btn' onclick="getMoreUpdates(30)">GET MORE</div>
   <? } ?>

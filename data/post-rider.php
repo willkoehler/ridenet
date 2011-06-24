@@ -60,6 +60,7 @@ else
     $values['YearsCycling'] = SmartGetInt('YearsCycling');
     $values['DateOfBirth'] = SmartGetDate('DateOfBirth');
     $values['URL'] = SmartGetString('URL');
+    $values['MapPrivacy'] = SmartGetString('MapPrivacy');
     $result = InsertOrUpdateRecord2($oDB, "rider", "RiderID", $riderID, $values);
 
     // ==== Store Uploaded Pictures ====

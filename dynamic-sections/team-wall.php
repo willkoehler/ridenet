@@ -30,10 +30,10 @@ function RenderTeamWall($oDB, $teamID, $length)
     // Obviously this could use some work. Joining these three distinctive tables together is a mess.
     $sql = "SELECT * FROM (
                 SELECT Date, tbt.Type, tbt.Image, Created, 0 AS DeleteID,
-                       RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RacingTeamID, CommutingTeamID, TeamName, Domain,
+                       RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RacingTeamID, CommutingTeamID, MapPrivacy, TeamName, Domain,
                        DATEDIFF(NOW(), Date) AS Age, Comment AS PostText, Link,
                        Distance, Duration, RideLogType, RideLogTypeImage, IFNULL(Weather, 'N/A') AS Weather, IFNULL(WeatherImage, 'none.png') AS WeatherImage,
-                       RideLogID, Source, HasMap, 0 AS RaceID, '' AS EventName
+                       RideLogID, Source, IF(HasMap, RideLogID, 0) AS MapID, 0 AS RaceID, '' AS EventName
                 FROM ride_log
                 LEFT JOIN rider USING (RiderID)
                 LEFT JOIN teams ON (TeamID=$teamID)
@@ -48,10 +48,10 @@ function RenderTeamWall($oDB, $teamID, $length)
         
             SELECT * FROM (
                 SELECT DATE(Created) AS Date, tbt.Type, tbt.Image, Created, 0 AS DeleteID,
-                       RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RacingTeamID, CommutingTeamID, TeamName, Domain,
+                       RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RacingTeamID, CommutingTeamID, MapPrivacy, TeamName, Domain,
                        DATEDIFF(NOW(), Created) AS Age, IF(LENGTH(Report)>140, CONCAT(SUBSTRING(Report, 1, 140),'...'), Report) AS PostText, NULL AS Link,
                        0 AS Distance, 0 AS Duration, '' AS RideLogType, '' AS RideLogTypeImage, '' AS Weather, '' AS WeatherImage,
-                       0 AS RideLogID, 0 AS Source, 0 AS HasMap, RaceID,
+                       0 AS RideLogID, 0 AS Source, 0 AS MapID, RaceID,
                        CONCAT(DATE_FORMAT(RaceDate, '%b %e, %Y'), ' | ', PlaceName, ' - ', CategoryName, ' | ', EventName) AS EventName
                 FROM results
                 LEFT JOIN event USING (RaceID)
@@ -69,10 +69,10 @@ function RenderTeamWall($oDB, $teamID, $length)
         
             SELECT * FROM (
                 SELECT DATE(Date) AS Date, tbt.Type, tbt.Image, Date AS Created, PostID as DeleteID,
-                       RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, posts.TeamID AS RacingTeamID, posts.TeamID AS CommutingTeamID, TeamName, Domain,
+                       RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, posts.TeamID AS RacingTeamID, posts.TeamID AS CommutingTeamID, MapPrivacy, TeamName, Domain,
                        DATEDIFF(NOW(), Date) AS Age, Text AS PostText, NULL AS Link,
                        0 AS Distance, 0 AS Duration, '' AS RideLogType, '' AS RideLogTypeImage, '' AS Weather, '' AS WeatherImage,
-                       0 AS RideLogID, 0 AS Source, 0 AS HasMap, 0 AS RaceID, '' AS EventName
+                       0 AS RideLogID, 0 AS Source, 0 AS MapID, 0 AS RaceID, '' AS EventName
                 FROM posts
                 LEFT JOIN rider USING (RiderID)
                 LEFT JOIN teams USING (TeamID)
@@ -85,7 +85,7 @@ function RenderTeamWall($oDB, $teamID, $length)
             LIMIT 0,$length";
 
     $rs = $oDB->query($sql, __FILE__, __LINE__);
-    RenderWall($rs, $teamID);?>
+    RenderWall($oDB, $rs, $teamID);?>
     <?if($rs->num_rows==$length) { ?>
       <div class='more-btn' onclick="getMore(30)">GET MORE</div>
     <? } ?>
