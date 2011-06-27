@@ -56,6 +56,12 @@ $MenuTextColor = $darkMenuText ? "333333" : "EEEEEE";
 $PrimaryHSV['v'] = ($PrimaryHSV['v'] > .5) ? $PrimaryHSV['v'] * .85 : $PrimaryHSV['v'] * 1.5;
 $PrimaryHighlightColor=rgbToHex(hsvToRGB($PrimaryHSV));
 
+// --- Calculate striping color
+$PageBGHSV = rgbToHSV(hexToRGB($PageBGColor));
+$SripingHSV = Array('h'=>0, 's'=>0, 'v'=>0);
+$SripingHSV['v'] = $PageBGHSV['v'] * .3758 + .5042;
+$StripingBGColor=rgbToHex(hsvToRGB($SripingHSV));
+
 // --- Calculate text color
 $TextColor = "333";
 $TextColor40 = "999";
@@ -423,6 +429,9 @@ h3   {
 .action-btn:hover, .action-btn2:hover, .action-btn-sm:hover {
     background-color: #<?=$SecondaryBGColor?>;
 }
+.action-btn.highlight {
+    background-color: #FF0;
+}
 .action-btn.disabled, .action-btn2.disabled, .action-btn-sm.disabled {
     cursor: default;
     background-color: #E5E5E5;
@@ -740,9 +749,13 @@ table#event-list .data
     font: 12px 'Helvetica Neue', Arial, sans-serif;
     text-align: left;
 }
-table#event-list #highlight
+table#event-list .thisweek
 {
-    background-color: #F4F282;
+    background-color: #F6EB46;
+}
+table#event-list .striping
+{
+    background-color: #<?=$StripingBGColor?>;
 }
 table#event-list .section-header
 {

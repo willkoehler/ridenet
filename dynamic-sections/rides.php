@@ -59,7 +59,7 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
       $PrevWeek = 0;
       $PrevDay = 0;
       $FirstWeek = true;
-      $thisWeek = false;
+      $highlightClass = "";
       if($rs->num_rows==0)
       { ?>
         <!-- No Rides Found -->
@@ -87,17 +87,17 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
           { 
             if($FirstWeek == false) { ?>
             <!-- End of week boundary - table divider and spacing below -->
-              <tr><td class="table-spacer" <?if($thisWeek) {?>id="highlight"<? } ?> style="height:5px" colspan=<?=$colspan?>>&nbsp;</td></tr>
+              <tr><td class="table-spacer <?=$highlightClass?>" style="height:5px" colspan=<?=$colspan?>>&nbsp;</td></tr>
               <tr><td class="table-divider" colspan=<?=$colspan?>>&nbsp;</td></tr>
               <tr><td class="table-spacer" style="height:20px" colspan=<?=$colspan?>>&nbsp;</td></tr>
             <? } ?>
-            <?$thisWeek = ($eventDate->format("W")==date("W")) ? true : false;?>
+            <?$highlightClass = ($eventDate->format("W")==date("W")) ? "thisweek" : ""?>
           <!-- Beginning of week header and table header -->
             <tr><td colspan=<?=$colspan?> class="section-header">
               <table cellpadding=0 cellspacing=0 border=0 width=100%><tr>
                 <td width=150>&nbsp;</td>
                 <td align=center>
-                  <?if($thisWeek) { ?>
+                  <?if($eventDate->format("W")==date("W")) { ?>
                     This Week
                   <? } elseif(AddDays($mondayOfWeek, 7) == MondayOfWeek(new DateTime)) {?>
                     Last Week
@@ -123,33 +123,33 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
                 <td class=header><span class="instructions">&nbsp;Copy/Edit</span></td>
               <? } ?>
             </tr>
-            <tr><td class="table-spacer" <?if($thisWeek) {?>id="highlight"<? } ?> style="height:5px" colspan=<?=$colspan?>>&nbsp;</td></tr>
+            <tr><td class="table-spacer <?=$highlightClass?>" style="height:5px" colspan=<?=$colspan?>>&nbsp;</td></tr>
 <?          $PrevWeek = $eventDate->format("W");
             $PrevDay = $eventDate->format("j");
             $FirstWeek = false;
           }
           if($eventDate->format("j")!=$PrevDay) { ?>
           <!-- End of Day. Table divider and spacing between days -->
-            <tr><td class="table-spacer" <?if($thisWeek) {?>id="highlight"<? } ?> style="height:5px" colspan=<?=$colspan?>>&nbsp;</td></tr>
+            <tr><td class="table-spacer <?=$highlightClass?>" style="height:5px" colspan=<?=$colspan?>>&nbsp;</td></tr>
             <tr><td class="table-divider" colspan=<?=$colspan?>>&nbsp;</td></tr>
-            <tr><td class="table-spacer" <?if($thisWeek) {?>id="highlight"<? } ?> style="height:5px" colspan=<?=$colspan?>>&nbsp;</td></tr>
+            <tr><td class="table-spacer <?=$highlightClass?>" style="height:5px" colspan=<?=$colspan?>>&nbsp;</td></tr>
             <? $PrevDay = $eventDate->format("j") ?>
           <? } ?>
           <!-- Ride Row -->
           <tr class=data riderow=1>
-            <td width="65" <?if($thisWeek) {?>id="highlight"<? } ?> style="padding:0px 2px;"><b><?=$eventDate->format("D n/j")?></b></td>
-            <td width="60" <?if($thisWeek) {?>id="highlight"<? } ?>><?=$eventDate->format("g:i a")?></td>
-            <td width="50" <?if($thisWeek) {?>id="highlight"<? } ?> style="font-weight:bold;font-family:courier new;"><?=BuildRideClass($record)?></td>
-            <td width="255" <?if($thisWeek) {?>id="highlight"<? } ?>><div class=ellipses style="width:245px">
+            <td width="65" class="<?=$highlightClass?>" style="padding:0px 2px;"><b><?=$eventDate->format("D n/j")?></b></td>
+            <td width="60" class="<?=$highlightClass?>"><?=$eventDate->format("g:i a")?></td>
+            <td width="50" class="<?=$highlightClass?>" style="font-weight:bold;font-family:courier new;"><?=BuildRideClass($record)?></td>
+            <td width="255" class="<?=$highlightClass?>"><div class=ellipses style="width:245px">
               <a href="/ride/<?=$record['CalendarID']?>">
                 <?=$record['EventName']?>
               </a>
             </div></td>
-            <td width="190" <?if($thisWeek) {?>id="highlight"<? } ?>><div class="ellipses text75" style="width:180px">
+            <td width="190" class="<?=$highlightClass?>"><div class="ellipses text75" style="width:180px">
               <?=$record['GeneralArea']?> <span class="text50">[<?=number_format($record['Distance'],0)?>]</span>
             </div></td>
             <?if($Editable) { ?>
-              <td width="50" <?if($thisWeek) {?>id="highlight"<? } ?> align=left style="padding-left:5px">
+              <td width="50" class="<?=$highlightClass?>" align=left style="padding-left:5px">
                 <span class='action-btn-sm' style="color:#009A00" id='copy-btn<?=$record['CalendarID']?>' onclick="clickCopyRide(<?=$record['CalendarID']?>);" title="Create a new ride based on this one">&nbsp;C&nbsp;</span>
                 <?if($record['EventAge'] < 0 && ($record['AddedBy']==GetUserID() || isSystemAdmin())) {?>
                   <span class='action-btn-sm' id='edit-btn<?=$record['CalendarID']?>' onclick="clickEditRide(<?=$record['CalendarID']?>);" title="Edit this ride">&nbsp;E&nbsp;</span>

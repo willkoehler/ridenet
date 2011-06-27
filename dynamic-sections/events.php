@@ -2,13 +2,15 @@
 if(isset($_REQUEST['pb']))
 {
     require("../script/app-master.php");
-    CheckRequiredParameters(Array('Y'));
-    $showYear = $_REQUEST['Y'];
+    CheckRequiredParameters(Array('y', 's', 'e'));
+    $year = $_REQUEST['y'];
+    $start = $_REQUEST['s'];
+    $end = $_REQUEST['e'];
     $Editable = isset($_REQUEST['edit']) && CheckLogin();
     $oDB = oOpenDBConnection();
     $ScheduleFilterStates = isset($_COOKIE['ScheduleFilterStates']) ? $_COOKIE['ScheduleFilterStates'] : 'All';
     $ScheduleFilterTypes = isset($_COOKIE['ScheduleFilterTypes']) ? $_COOKIE['ScheduleFilterTypes'] : 'All';
-    RenderEventSchedule($oDB, $ScheduleFilterStates, $ScheduleFilterTypes, $showYear, $Editable);
+    RenderEventSchedule($oDB, $ScheduleFilterStates, $ScheduleFilterTypes, $year, $start, $end, $Editable);
 }
 
 //----------------------------------------------------------------------------------
@@ -20,29 +22,22 @@ if(isset($_REQUEST['pb']))
 //    oDB   - database connection (mysqli object)
 //    ScheduleFilterStates  - comma-separated list of state IDs to include in list
 //    ScheduleFilterTypes   - comma-separated list of event types to include in list
-//    ShowYear              - Calendar year to show schedule for
+//    Year                  - Calendar year to show schedule for
+//    Start                 - Start month of event listings
+//    End                   - End month of event listings
 //    Editable              - true if event Schedule should be editable
 //
 //  RETURN: none
 //-----------------------------------------------------------------------------------
-function RenderEventSchedule($oDB, $ScheduleFilterStates, $ScheduleFilterTypes, $ShowYear, $Editable)
+function RenderEventSchedule($oDB, $ScheduleFilterStates, $ScheduleFilterTypes, $Year, $Start, $End, $Editable)
 {
     $colspan = $Editable ? 7 : 6;
+    $startDate = new DateTime("$Start/1/$Year");
+    $endDate = LastOfMonth(new DateTime("$End/1/$Year"));
     // Build where clause to filter schedule based on user preferences
-    $strWhere = "WHERE YEAR(RaceDate)=$ShowYear AND Archived=0";
+    $strWhere = "WHERE RaceDate BETWEEN '" . $startDate->format("Y-m-d") . "' AND '" . $endDate->format("Y-m-d") . "' AND Archived=0";
     $strWhere .= ($ScheduleFilterStates=="All") ? "" : " AND (StateID IN $ScheduleFilterStates)";
-    $strWhere .= ($ScheduleFilterTypes=="All") ? "" : " AND (RideTypeID IN $ScheduleFilterTypes)";
-    // Show list of months at the top of the schedule with links to jump to each month
-    $rs = $oDB->query("SELECT DISTINCT MONTH(RaceDate) AS Month, MONTHNAME(RaceDate) AS MonthName FROM event $strWhere ORDER BY RaceDate", __FILE__, __LINE__);
-    if($rs->num_rows > 0) { ?>
-      <p align=center class="text50" style="font:bold arial 11px">Go To:&nbsp;
-        <? while(($record=$rs->fetch_array())!=false) { ?>
-          <span class='action-btn linkcolor' onclick="scrollToMonth(<?=$record['Month']?>)"><?=$record['MonthName']?></span>&nbsp;
-        <? } ?>
-      </p>
-      <div style="height:10px"><!--vertical spacer--></div>
-    <? } ?>
-
+    $strWhere .= ($ScheduleFilterTypes=="All") ? "" : " AND (RideTypeID IN $ScheduleFilterTypes)";?>
     <!-- The Schedule -->
     <table id='event-list' border=0 cellpadding=0 cellspacing=0>
 <?    // List the Events
@@ -61,7 +56,9 @@ function RenderEventSchedule($oDB, $ScheduleFilterStates, $ScheduleFilterTypes, 
               ORDER BY RaceDate, RaceID";
       $rs = $oDB->query($sql, __FILE__, __LINE__);
       $PrevMonth = 0;
+      $PrevDay = 0;
       $PrevWeek = 0;
+      $stripeCount = 1;
       $FirstMonth = true;
       if($rs->num_rows==0)
       { ?>
@@ -69,7 +66,7 @@ function RenderEventSchedule($oDB, $ScheduleFilterStates, $ScheduleFilterTypes, 
         <tr><td class="table-divider" colspan=<?=$colspan?>>&nbsp;</td></tr>
         <tr><td class="table-spacer" style="height:5px" colspan=<?=$colspan?>>&nbsp;</td></tr>
         <tr><td class=data colspan=<?=$colspan-1?> width=525 style="font:13px arial">
-          No events found matching your selections in <?=$ShowYear?>
+          No events found matching your selections in <?=$Year?>
         </td>
         <td align=right>
           <?if($Editable) { ?>
@@ -84,15 +81,37 @@ function RenderEventSchedule($oDB, $ScheduleFilterStates, $ScheduleFilterTypes, 
         while(($record = $rs->fetch_array())!=false)
         {
           $eventDate = new DateTime($record['RaceDate']);
-          $thisWeek = ($eventDate->format("WY")==date_format(new DateTime(), "WY")) ? true : false;
-          if($eventDate->format("n")!=$PrevMonth && $FirstMonth == false)
+          $newDay = ($eventDate->format("j")!=$PrevDay);
+          $newWeek = ($eventDate->format("W")!=$PrevWeek);
+          $newMonth = ($eventDate->format("n")!=$PrevMonth);
+          if($newDay)
+          {
+            $daysFirstEvent=true;
+            $PrevDay = $eventDate->format("j");
+          }
+          if($newWeek)
+          {
+            $stripeCount++;
+            $PrevWeek = $eventDate->format("W");
+          }
+          if($newMonth)
+          {
+            $daysFirstEvent=true;
+            $PrevMonth = $eventDate->format("n");
+          }
+          $dayDivider = ($newDay && !$newMonth);
+          $dividerHeight = ($newWeek & ($stripeCount%2)) ? 2 : 1;
+          $monthHeader = ($newMonth);
+          $highlight = ($stripeCount%2) ? "class='striping'" : "";
+          $highlight = ($eventDate->format("WY")==date_format(new DateTime(), "WY")) ? "class='thisweek'" : $highlight;
+          if($monthHeader && $FirstMonth == false)
           { ?>
-          <!-- End of month. Table divider and spacing below -->
+          <!-- End of previous month. Table divider and spacing below -->
             <tr><td class="table-spacer" style="height:1px" colspan=<?=$colspan?>>&nbsp;</td></tr>
             <tr><td class="table-divider" colspan=<?=$colspan?>>&nbsp;</td></tr>
             <tr><td class="table-spacer" style="height:25px" colspan=<?=$colspan?>>&nbsp;</td></tr>
 <?        }
-          if($eventDate->format("n")!=$PrevMonth)
+          if($monthHeader)
           { ?>
           <!-- Beginning of Month. Month Header -->
             <tr><td colspan=<?=$colspan?> class="section-header">
@@ -120,34 +139,36 @@ function RenderEventSchedule($oDB, $ScheduleFilterStates, $ScheduleFilterTypes, 
               <? } ?>
             </tr>
             <tr><td class="table-spacer" style="height:1px" colspan=<?=$colspan?>>&nbsp;</td></tr>
-<?          $PrevMonth = $eventDate->format("n");
-            $PrevWeek = $eventDate->format("W");
-            $FirstMonth = false;
-          }
-          if($eventDate->format("W")!=$PrevWeek) { ?>
-          <!-- End of Week. Table divider and spacing between weeks -->
+            <? $FirstMonth = false; ?>
+          <? } ?>
+          <? if($dayDivider) { ?>
+          <!-- Table divider and spacing between days / weeks -->
             <tr><td class="table-spacer" style="height:1px" colspan=<?=$colspan?>>&nbsp;</td></tr>
-            <tr><td class="table-divider" colspan=<?=$colspan?>>&nbsp;</td></tr>
+            <tr><td class="table-divider" style="height:<?=$dividerHeight?>px" colspan=<?=$colspan?>>&nbsp;</td></tr>
             <tr><td class="table-spacer" style="height:1px" colspan=<?=$colspan?>>&nbsp;</td></tr>
-            <? $PrevWeek = $eventDate->format("W") ?>
           <? } ?>
           <!-- Event Row -->
           <tr class=data>
-            <td width="65" <?if($thisWeek) {?>id="highlight"<? } ?> style="padding:0px 2px;" align=left><b><?=$eventDate->format("D n/j")?></b></td>
-            <td width="320" <?if($thisWeek) {?>id="highlight"<? } ?> align=left><div class=ellipses style="width:310px">
+            <td width="65" <?=$highlight?> style="padding:0px 2px;" align=left>
+              <? if($daysFirstEvent) { ?>
+                <?$daysFirstEvent=false?>
+                <?=$eventDate->format("D n/j")?>
+              <? } ?>
+            </td>
+            <td width="320" <?=$highlight?> align=left><div class="ellipses" style="width:310px">
               <a href="/event/<?=$record['RaceID']?>" title="<?=$record['EventName']?>"><?=$record['EventName']?></a>
               <?if($record['AddedAge'] < 14) { ?>
                 <img border=0 src="/images/redstar2.png" title="Added <?=$record['DateAdded'] ?>">
               <? } ?>
             </div></td>
-            <td width="45" <?if($thisWeek) {?>id="highlight"<? } ?> align="left"><img border=0 style="padding:0px 0px" src='/images/event-types/<?=$record['Picture']?>' title='<?=$record['RideType']?>'></td>
-            <td width="120" <?if($thisWeek) {?>id="highlight"<? } ?> align=left><div class=ellipses style="width:110px">
+            <td width="45" <?=$highlight?> align="left"><img border=0 style="padding:0px 0px" src='/images/event-types/<?=$record['Picture']?>' title='<?=$record['RideType']?>'></td>
+            <td width="120" <?=$highlight?> align=left><div class="ellipses" style="width:110px">
               <?=$record['City']?>
             </div></td>
-            <td width="30" <?if($thisWeek) {?>id="highlight"<? } ?> align=left><div class=ellipses style="width:25px">
+            <td width="30" <?=$highlight?> align=left><div class="ellipses" style="width:25px">
               <?=$record['StateAbbr']?>
             </div></td>
-            <td width="70" <?if($thisWeek) {?>id="highlight"<? } ?> align=left>
+            <td width="70" <?=$highlight?> align=left>
               <?// --- Show link for race attendance or link for results ?>
               <?if($record['EventAge'] < 0) {?>
                 <a href="/event/<?=$record['RaceID']?>" title="Click here if you are planning on going" class="results-btn">Who's&nbsp;Going?</a>
@@ -156,7 +177,7 @@ function RenderEventSchedule($oDB, $ScheduleFilterStates, $ScheduleFilterTypes, 
               <? } ?>
             </td>
             <?if($Editable) { ?>
-              <td width="50" <?if($thisWeek) {?>id="highlight"<? } ?> style="padding-left:5px">
+              <td width="50" <?=$highlight?> style="padding-left:5px">
                 <span class='action-btn-sm' style="color:#009A00" id='copy-btn<?=$record['CalendarID']?>' onclick="clickCopyEvent(<?=$record['RaceID']?>);" title="Create a new event based on this one">&nbsp;C&nbsp;</span>
                 <?if(($record['EventAge'] < 0 || $record['AddedAge'] < 7) && ($record['AddedBy']==GetUserID() || isSystemAdmin()) && !$record['HasResults']) {?>
                 <!-- it's possible to edit an event if no results are posted and a) it was created less than 7 days ago or

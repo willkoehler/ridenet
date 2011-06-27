@@ -74,7 +74,7 @@ $ZipCodeText = ($record==false) ? "(unknown)" : $record['ZipCodeText'];
         <? } else { ?>
           <a id='edit-btn' href="/login?Goto=<?=urlencode("../rides?edit")?>">
         <? } ?>
-          Edit Calendar
+          Add/Edit Rides
         </a>
         <script type="text/javascript">
             new Ext.ToolTip({

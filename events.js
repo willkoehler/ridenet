@@ -11,23 +11,6 @@ Ext.onReady(function()
 });
 
 
-function scrollToMonth(month)
-{
-    var body = Ext.getBody();
-    var scrollMax = body.getHeight() - body.getViewSize().height;
-    var scrollTo = Math.min(Ext.get('M' + month).getY() - 100, scrollMax);
-    if (scrollTo > 0)
-    {
-        body.animate(
-            { scroll: {to: [0, scrollTo]} },
-            1.2,             // animation duration
-            null,
-            'easeOutStrong', 
-            'scroll'
-        );
-    }
-}
-
 function clickAddEvent(id)
 {
     g_eventDialog.show({
@@ -93,7 +76,7 @@ function updateEventSchedule(mask)
 {
     if(mask) Ext.get('container').mask("Updating");
     var editable = g_HTMLRequest['edit'] ? '&edit' : '';
-    Ext.Ajax.request( {url: '/dynamic-sections/events.php?pb&T=' + g_pt + '&Y=' + g_showYear + editable, success: function(response, options) {
+    Ext.Ajax.request( {url: '/dynamic-sections/events.php?pb&T=' + g_pt + '&y=' + g_showYear + '&s=' + g_startMonth + '&e=' + g_endMonth + editable, success: function(response, options) {
         Ext.get('event-schedule-holder').update(response.responseText);
         if(mask) Ext.get('container').unmask();
     }});
