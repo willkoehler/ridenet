@@ -178,7 +178,7 @@ function RenderEventSchedule($oDB, $ScheduleFilterStates, $ScheduleFilterTypes, 
             </td>
             <?if($Editable) { ?>
               <td width="50" <?=$highlight?> style="padding-left:5px">
-                <span class='action-btn-sm' style="color:#009A00" id='copy-btn<?=$record['CalendarID']?>' onclick="clickCopyEvent(<?=$record['RaceID']?>);" title="Create a new event based on this one">&nbsp;C&nbsp;</span>
+                <span class='action-btn-sm' style="color:#009A00" id='copy-btn<?=$record['RaceID']?>' onclick="clickCopyEvent(<?=$record['RaceID']?>);" title="Create a new event based on this one">&nbsp;C&nbsp;</span>
                 <?if(($record['EventAge'] < 0 || $record['AddedAge'] < 7) && ($record['AddedBy']==GetUserID() || isSystemAdmin()) && !$record['HasResults']) {?>
                 <!-- it's possible to edit an event if no results are posted and a) it was created less than 7 days ago or
                      b) the event is still in the future -->
