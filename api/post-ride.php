@@ -37,7 +37,7 @@ elseif(strtotime(SmartGet('Date'))==false)
     $result['error'] = "Invalid date format";
 }
 elseif(($rideLogTypeID!=="NULL" && $rideLogTypeID < 1 || $rideLogTypeID > 7) || ($weatherID!=="NULL" && $weatherID < 1 || $weatherID > 8) ||
-       $distance > 1000 || $duration > 2880 || strlen($comment) > 142)
+       $distance > 600 || $duration > 1500 || strlen($comment) > 142)
 {
     header("HTTP/1.1 400 Bad Request");
     $result['error'] = "Parameter out of range";
@@ -63,8 +63,9 @@ else
     $values['Comment'] = $comment;
     $values['Link'] = $link;
     $values['Distance'] = $distance;
-    // convert 0 distance to NULL
-    $values['Distance'] = ($values['Distance']==0) ? "NULL" : $values['Distance'];
+    // convert 0 distance and time to NULL
+    $values['Distance'] = ($values['Distance']<=0) ? "NULL" : $values['Distance'];
+    $values['Duration'] = ($values['Duration']<=0) ? "NULL" : $values['Duration'];
     // set source and date created for new ride log entries
     if($rideLogID==-1)
     {
