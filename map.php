@@ -29,13 +29,14 @@ $mapVisible = IsMapVisible($mapOwner['MapPrivacy']);
   <script type="text/javascript">
     g_rideLogID = <?=$rideLogID?>;
   </script>
-  
-
+<!-- local styles -->
   <style type="text/css">
     html { height: 100% }
     body { height: 100%; margin: 0px; padding: 0px }
     #map_canvas { height: 100% }
   </style>
+<!-- Insert tracker for Google Analytics -->
+  <?InsertGoogleAnalyticsTracker()?>
 </head>
 
 
