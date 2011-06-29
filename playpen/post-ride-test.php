@@ -10,16 +10,16 @@
           <td align=right>Source:&nbsp;</td><td><input style="width:200px" name="Source" value="2"></td>
         </tr>
         <tr>
-          <td align=right>Date:&nbsp;</td><td><input style="width:200px" name="Date" value="5/6/2011"></td>
+          <td align=right>Date:&nbsp;</td><td><input style="width:200px" name="Date" value="<?=date("n/j/Y")?>"></td>
         </tr>
         <tr>
           <td align=right>Type:&nbsp;</td><td><input style="width:200px" name="RideLogTypeID" value="1"></td>
         </tr>
         <tr>
-          <td align=right>Distance:&nbsp;</td><td><input style="width:200px" name="Distance" value="15"></td>
+          <td align=right>Distance:&nbsp;</td><td><input style="width:200px" name="Distance" value="24140"></td>
         </tr>
         <tr>
-          <td align=right>Duration:&nbsp;</td><td><input style="width:200px" name="Duration" value="45"></td>
+          <td align=right>Duration:&nbsp;</td><td><input style="width:200px" name="Duration" value="2700"></td>
         </tr>
         <tr>
           <td align=right>Weather:&nbsp;</td><td><input style="width:200px" name="WeatherID" value="2"></td>
