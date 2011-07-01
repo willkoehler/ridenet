@@ -42,7 +42,7 @@ $TeamWallLength = 30;
     g_signupSource = 'team';
   </script>
 <!-- Insert tracker for Google Analytics -->
-  <?InsertGoogleAnalyticsTracker()?>
+  <?InsertGoogleAnalyticsTracker("/home")?>
 </head>
 
 <body class="twoColFixHdr">

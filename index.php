@@ -26,7 +26,7 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
       g_signupSource = '<?=isset($_REQUEST['s']) ? $_REQUEST['s'] : 'home'?>';
     </script>
   <!-- Insert tracker for Google Analytics -->
-    <?InsertGoogleAnalyticsTracker()?>
+    <?InsertGoogleAnalyticsTracker("/index")?>
   <!-- facebook meta tags to link this site with the RideNet Facebook app -->
     <meta property="fb:app_id" content="147642135282357" />
   </head>

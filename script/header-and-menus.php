@@ -103,11 +103,13 @@ function BuildPageTitle($oDB, $pt=0, $page="")
 //  custom root domains to ridenet.net. But we will not get cross-domain referrals
 //  when visitors stay within subdomains of ridenet.net
 //
-//  PARAMETERS: none
+//  PARAMETERS:
+//    url   - optional URL of the page. If this is omitted the URL in the address
+//            bar of the browser will be used
 //
 //  RETURN: none
 //-----------------------------------------------------------------------------------
-function InsertGoogleAnalyticsTracker()
+function InsertGoogleAnalyticsTracker($url="")
 {
 ?>
   <script type="text/javascript">
@@ -115,7 +117,7 @@ function InsertGoogleAnalyticsTracker()
     _gaq.push(['_setAccount', 'UA-18436859-1']);
     _gaq.push(['_setDomainName', '.<?=GetDomainRoot()?>']);   // use domain root to treat all subdomains as a single site
     _gaq.push(['_setAllowHash', false]);  // treat all subdomains as part of a single ridenet.net site
-    _gaq.push(['_trackPageview']);
+    _gaq.push(['_trackPageview'<?=($url ? ", '$url'" : "")?>]);
     (function() {
       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
