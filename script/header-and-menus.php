@@ -317,10 +317,10 @@ function BuildTeamBaseURL($subdomain)
         // this is a custom domain root and it contains $subdomain, stay on the custom domain root
         return($strProtocol . "www." . $root);
     }
-    elseif(strpos($root, ".local"))
+    elseif(strpos($root, ".dev"))
     {
-        // we are linking to a different sub-domain, go to team.ridenet.local
-        return($strProtocol . $subdomain . "." . "ridenet.local");
+        // we are linking to a different sub-domain, go to team.ridenet.dev
+        return($strProtocol . $subdomain . "." . "ridenet.dev");
     }
     else
     {

@@ -18,5 +18,5 @@ echo "GetFullDomainRoot() = " . GetFullDomainRoot() . "\n";
 echo "GetFullURL() = " . GetFullURL() . "\n";
 echo "</pre>";
 ?>
-<a href='http://considerbiking.ridenet.local/temp-tests/serverinfo2.php'>Refer ME</a><br>
-<span onclick="window.location.href='http://considerbiking.ridenet.local/temp-tests/serverinfo2.php'">Refer ME 2</span>
+<a href='http://considerbiking.ridenet.dev/temp-tests/serverinfo2.php'>Refer ME</a><br>
+<span onclick="window.location.href='http://considerbiking.ridenet.dev/temp-tests/serverinfo2.php'">Refer ME 2</span>

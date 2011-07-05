@@ -28,7 +28,7 @@
           <td align=right>Comment:&nbsp;</td><td><input style="width:200px" name="Comment" value="This is my comment"></td>
         </tr>
         <tr>
-          <td align=right>Link:&nbsp;</td><td><input style="width:200px" name="Link" value="http://echeloncycling.ridenet.local"></td>
+          <td align=right>Link:&nbsp;</td><td><input style="width:200px" name="Link" value="http://echeloncycling.ridenet.dev"></td>
         </tr>
         <tr>
           <td align=right>Map:&nbsp;</td><td><textarea name="Map" rows=20 cols=100></textarea></td>

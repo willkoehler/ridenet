@@ -16,7 +16,7 @@ RewriteCond %{HTTP_HOST} ^(.*)velobug.com$
 RewriteRule ^(.*)$ http://%1ridenet.net/$1 [R=301,L]
 
 # Remove www from ridenet.net domains
-RewriteCond %{HTTP_HOST} ^www.ridenet.(local|net)$
+RewriteCond %{HTTP_HOST} ^www.ridenet.(dev|net)$
 RewriteRule ^(.*)$ http://ridenet.%1/$1 [R=301,L]
 
 # Consider Biking Landing page
@@ -76,9 +76,9 @@ RewriteRule ^contact$ contact.php [L,QSA]
 RewriteRule ^about$ about.php [L,QSA]
 
 # If there is a team sub-domain or team domain, route "/" requests to home.php
-RewriteCond %{HTTP_HOST} !^(www\.)?ridenet.(local|net)$
+RewriteCond %{HTTP_HOST} !^(www\.)?ridenet.(dev|net)$
 RewriteRule ^/?$ home.php [L,QSA]
 
 # for ridenet.net, route "/" requests to index.php
-RewriteCond %{HTTP_HOST} ^(www\.)?ridenet.(local|net)$
+RewriteCond %{HTTP_HOST} ^(www\.)?ridenet.(dev|net)$
 RewriteRule ^/?$ index.php [L,QSA]

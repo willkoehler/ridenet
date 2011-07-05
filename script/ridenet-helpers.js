@@ -213,8 +213,8 @@ function buildTeamBaseURL(subdomain)
     }
     else if(root.search(/local/i)!==-1)
     {
-        // we are local and linking to a different sub-domain, go to team.ridenet.local
-        return("http://" + subdomain + "." + "ridenet.local");
+        // we are local and linking to a different sub-domain, go to team.ridenet.dev
+        return("http://" + subdomain + "." + "ridenet.dev");
     }
     else
     {
@@ -226,5 +226,5 @@ function buildTeamBaseURL(subdomain)
 
 function getFullDomainRoot()
 {
-    return(document.domain.search(/local/i)!==-1) ? "http://ridenet.local" : "http://ridenet.net";
+    return(document.domain.search(/local/i)!==-1) ? "http://ridenet.dev" : "http://ridenet.net";
 } 
