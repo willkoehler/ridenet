@@ -498,6 +498,29 @@ function AdSidebar()
       </div>
     </div>
     <div class="sidebarBlock">
+      <h3 style="text-align:center">Incentives and Prizes</h3>
+      <div style="height:5px"></div>
+      <div style="text-align:center">
+        <a href = "http://www.2by2012.com/discounts-prizes/" target="_blank">
+          <img src="/images/ads/sbb-card.png" id="ad-sbb" border=0>
+        </a>
+        <div style="height:4px"></div>
+      </div>
+      <script type="text/javascript">
+          new Ext.ToolTip({
+              target: 'ad-sbb',
+              anchor: 'top',
+              dismissDelay: 0,
+              showDelay: 200,
+              width: 200,
+              html: "<b>SBB Bike Card:</b> Earn incentives and prizes from Consider Biking \
+                     by logging your rides on RideNet. Click to learn more. ",
+              padding: 5
+            });
+      </script>
+        <div style="height:2px"></div>
+    </div>
+    <div class="sidebarBlock">
       <h3 style="text-align:center">RideNet Clothing</h3>
       <div style="text-align:center">
         <a href = "/clothing">
@@ -508,19 +531,6 @@ function AdSidebar()
           Available @ Paradise Garage
         </p>
       </div>
-      <script type="text/javascript">
-          new Ext.ToolTip({
-              target: 'ad-clothing',
-              anchor: 'top',
-              anchorOffset: 50,
-              dismissDelay: 0,
-              showDelay: 200,
-              width: 250,
-              html: "<b>RideNet Cycling Kits:</b> We're selling cycling clothing to promote RideNet.\
-                     A portion of each order will be donated to Consider Biking to support 2BY2012. ",
-              padding: 5
-            });
-      </script>
     </div>
 <?
 }
