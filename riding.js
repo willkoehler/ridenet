@@ -13,18 +13,18 @@ function getMore(length)
     g_rideWallLength += length;
     updateRideWall();
     // log an event in Google Analytics
-    _gaq.push(['_trackEvent', 'Action', 'More', 'CommutingWall-'+g_rideWallLength]);
+    _gaq.push(['_trackEvent', 'Action', 'More', 'RidingWall-'+g_rideWallLength]);
 }
 
 function updateRideWall()
 {
-    Ext.get('commuting-wall').mask("Updating");
+    Ext.get('riding-wall').mask("Updating");
     Ext.Ajax.request({
-        url: '/dynamic-sections/commuting.php?pb&l=' + g_rideWallLength,
+        url: '/dynamic-sections/riding.php?pb&l=' + g_rideWallLength,
         success: function(response, options)
         {
-            Ext.get('commuting-wall').update(response.responseText);
-            Ext.get('commuting-wall').unmask();
+            Ext.get('riding-wall').update(response.responseText);
+            Ext.get('riding-wall').unmask();
         }
     });
 }

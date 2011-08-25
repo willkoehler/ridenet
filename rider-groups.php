@@ -57,7 +57,7 @@ else
     <?InsertMainMenu($oDB, $pt, "Ranking")?>
   </div>
   <!-- This submenu is outside the header div so it floats side by side with the right column -->
-  <?InsertCommutingMenu($group)?>
+  <?InsertRidingMenu($group)?>
 
   <div id="sidebarHolderRight">
     <?ColumbusFoundationSidebar($oDB)?>

@@ -7,14 +7,14 @@ if(isset($_REQUEST['pb']))
     CheckRequiredParameters(Array('l'));
     $length = intval(SmartGet('l',0));
     $oDB = oOpenDBConnection();
-    RenderCommutingWall($oDB, $length);
+    RenderRidingWall($oDB, $length);
 }
 
 
 //----------------------------------------------------------------------------------
-//  RenderCommutingWall()
+//  RenderRidingWall()
 //
-//  This function renders the content of the commuting home wall
+//  This function renders the content of the riding home wall
 //
 //  PARAMETERS:
 //    oDB       - database connection (mysqli object)
@@ -22,7 +22,7 @@ if(isset($_REQUEST['pb']))
 //
 //  RETURN: none
 //-----------------------------------------------------------------------------------
-function RenderCommutingWall($oDB, $length)
+function RenderRidingWall($oDB, $length)
 {
   $sql = "SELECT Date, tbt.Type, tbt.Image, 0 AS DeleteID,
                  RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RacingTeamID, CommutingTeamID, MapPrivacy, TeamName, Domain,

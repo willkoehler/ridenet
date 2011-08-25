@@ -42,7 +42,7 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
     <?InsertMainMenu($oDB, $pt, "Ranking")?>
   </div>
   <!-- This submenu is outside the header div so it floats side by side with the right column -->
-  <?InsertCommutingMenu("Teams")?>
+  <?InsertRidingMenu("Teams")?>
 
   <div id="sidebarHolderRight">
     <?ColumbusFoundationSidebar($oDB)?>

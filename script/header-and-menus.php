@@ -180,7 +180,7 @@ function InsertMainMenu($oDB, $pt, $highlight="")
           <li><a href="/events" <?if($highlight=="Schedule") {?>id="active"<?}?>>EVENTS</a></li>
           <li><a href="/rides" <?if($highlight=="Calendar") {?>id="active"<?}?>>RIDES</a></li>
           <li><a href="/racing" <?if($highlight=="Results") {?>id="active"<?}?>>RACING</a></li>
-          <li><a href="/commuting" <?if($highlight=="Ranking") {?>id="active"<?}?>>COMMUTING</a></li>
+          <li><a href="/riding" <?if($highlight=="Riding") {?>id="active"<?}?>>RIDING</a></li>
         <? } else { ?>
         <!-- Team Site Menu -->
           <li><a href="/" <?if($highlight=="Home") {?>id="active"<?}?>>HOME</a></li>
@@ -193,7 +193,7 @@ function InsertMainMenu($oDB, $pt, $highlight="")
             <li><a href="/racing" <?if($highlight=="Results") {?>id="active"<?}?>>RACING</a></li>
           <? } ?>
           <? if($bCommuting) { ?>
-            <li><a href="/commuting" <?if($highlight=="Ranking") {?>id="active"<?}?>>COMMUTING</a></li>
+            <li><a href="/riding" <?if($highlight=="Riding") {?>id="active"<?}?>>RIDING</a></li>
           <? } ?>
         <? } ?>
         <li><a href="/profile" <?if($highlight=="YourProfile") {?>id="active"<?}?>>YOUR PROFILE</a></li>
@@ -265,7 +265,7 @@ function InsertResultsMenu($year, $highlight="")
 
 
 //----------------------------------------------------------------------------------
-//  InsertCommutingMenu()
+//  InsertRidingMenu()
 //
 //  This function inserts the rankings sub-menu onto the page
 //
@@ -274,11 +274,11 @@ function InsertResultsMenu($year, $highlight="")
 //
 //  RETURN: none
 //-----------------------------------------------------------------------------------
-function InsertCommutingMenu($highlight="")
+function InsertRidingMenu($highlight="")
 { ?>
     <div id="submenu">
       <ul id="subnav">
-        <li><a href="/commuting" <?if($highlight=="Commuting") {?>id="active"<?}?>>HOME</a></li>
+        <li><a href="/riding" <?if($highlight=="Riding") {?>id="active"<?}?>>HOME</a></li>
         <li><a href="/team-stats" <?if($highlight=="Teams") {?>id="active"<?}?>>TEAMS</a></li>
         <li><a href="/rider-stats" <?if($highlight=="Riders") {?>id="active"<?}?>>RIDERS</a></li>
         <li><a href="/rider-groups/1" <?if($highlight=="1") {?>id="active"<?}?>>&nbsp;<img src='/images/stars/star1.png' width=10>&nbsp;2 to 4</a></li>

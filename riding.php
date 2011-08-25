@@ -1,6 +1,6 @@
 <?
 require("script/app-master.php");
-require("dynamic-sections/commuting.php");
+require("dynamic-sections/riding.php");
 require("dynamic-sections/calendar-sidebar.php");
 require(SHAREDBASE_DIR . "ExtJSLoader.php");
 
@@ -13,7 +13,7 @@ $RideBoardLength = 30;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title><?BuildPageTitle($oDB, 0, "Commuting Home")?></title>
+  <title><?BuildPageTitle($oDB, 0, "Riding and Commuting Home")?></title>
 <!-- Include common code and stylesheets -->
   <? IncludeExtJSFiles() ?>
 <!-- Include site stylesheets -->
@@ -21,7 +21,7 @@ $RideBoardLength = 30;
 <!-- Code-behind modules for this page (minify before including)-->
   <?MinifyAndInclude("/dialogs/calendar-event-dialog.js")?>
   <?MinifyAndInclude("/script/ridenet-helpers.js")?>
-  <?MinifyAndInclude("/commuting.js")?>
+  <?MinifyAndInclude("/riding.js")?>
 <!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
     g_rideWallLength = <?=$RideBoardLength?>;
@@ -42,10 +42,10 @@ $RideBoardLength = 30;
 <div id="container">
   <div id="header">
     <?InsertPageBanner($oDB, $pt)?>
-    <?InsertMainMenu($oDB, $pt, "Ranking")?>
+    <?InsertMainMenu($oDB, $pt, "Riding")?>
   </div>
   <!-- This submenu is outside the header div so it floats side by side with the right column -->
-  <?InsertCommutingMenu("Commuting")?>
+  <?InsertRidingMenu("Riding")?>
 
   <div id="sidebarHolderRight">
     <?ColumbusFoundationSidebar($oDB)?>
@@ -122,8 +122,8 @@ $RideBoardLength = 30;
     </div>
     <div class="clearfloat" style="height:10px"></div>
 
-    <div id='commuting-wall' class='ridenet-wall' style="padding:0 50px 0 25px ">
-      <? RenderCommutingWall($oDB, $RideBoardLength) ?>
+    <div id='riding-wall' class='ridenet-wall' style="padding:0 50px 0 25px ">
+      <? RenderRidingWall($oDB, $RideBoardLength) ?>
     </div>
   
 
