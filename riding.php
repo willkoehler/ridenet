@@ -80,43 +80,71 @@ $RideBoardLength = 30;
       </tr></table>
     </div>
 
-    <h1><a href="/bike-bus">Take a Ride on the Bike Bus</a></h1>
-    <p>
-      To help new commuters coming on the scene, Consider Biking is coordinating "bike bus service"
-      from the 4 quadrants of the city into downtown. We're looking for veteran commuters to "drive" the buses
-      and show the newbies the ropes. <a href="/bike-bus">Read more...</a>
-    </p>
-
 <?  // Get top 22 commuters sorted by Commute/Errand days in the last 30 days (skip riders that don't have pictures)
-    $sql = "SELECT CONCAT(FirstName, ' ', LastName) AS RiderName, RiderID, RacingTeamID, CEDaysMonth, Domain,
+    $sql = "SELECT CONCAT(FirstName, ' ', LastName) AS RiderName, rider.RiderID, RacingTeamID, CEDaysMonth, Domain,
                    COUNT(DISTINCT IF(RideLogTypeID=1 OR RideLogTypeID=3, Date, NULL)) AS CEDays30
             FROM ride_log
             LEFT JOIN rider USING (RiderID)
             LEFT JOIN rider_stats USING (RiderID)
-            LEFT JOIN teams ON (CommutingTeamID = TeamID)
-            JOIN rider_photos USING (RiderID)
+            LEFT JOIN teams ON (CommutingTeamID = teams.TeamID)
+            JOIN rider_photos ON (rider_photos.RiderID=rider.RiderID and rider_photos.TeamID=RacingTeamID)
             WHERE rider.Archived=0 AND DATEDIFF(NOW(), Date) < 30
             GROUP BY RiderID
-            ORDER BY CEDays30 DESC
+            ORDER BY CEDaysMonth DESC
             LIMIT 22";
     $rs = $oDB->query($sql, __FILE__, __LINE__); ?>
     
     <div class="clearfloat" style="height:5px"></div>
     <div style="padding:5px;border-bottom:1px dotted #CCC;border-top:1px dotted #CCC">
-      <h2 style="margin:0px">Who's Riding This Week</h2>
+      <h2 style="margin:0px">Top Commuters, days/month</h2>
     </div>
     <div class="clearfloat" style="height:1px"></div>
-    <div style="height:15px"></div>
+    <div style="height:5px"></div>
     <div class="commute-ride-group" style="width:550px">
-<?    while(($record=$rs->fetch_array())!=false) { ?>
-        <div id="R<?=$record['RiderID']?>" class="photobox">
+      <? while(($record=$rs->fetch_array())!=false) { ?>
+        <div id="R<?=$record['RiderID']?>C" class="photobox">
           <a href="<?=BuildTeamBaseURL($record['Domain'])?>/rider/<?=$record['RiderID']?>">
             <img class="tight" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['RacingTeamID']?>/<?=$record['RiderID']?>.jpg" height=58 width=46 border="0">
           </a>
           <div class="countbox">
             <?=$record['CEDaysMonth']?>
           </div>
-        </div><script type="text/javascript">riderInfoCallout(<?=$record['RiderID']?>, '')</script>
+        </div><script type="text/javascript">riderInfoCallout(<?=$record['RiderID']?>, 'C')</script>
+      <? } ?>
+      <br class="clearfloat" /> 
+    </div>
+    <div class="clearfloat" style="height:10px"></div>
+
+<?  // Get top 22 riders sorted by miles in the last 30 days (skip riders that don't have pictures)
+    $sql = "SELECT CONCAT(FirstName, ' ', LastName) AS RiderName, rider.RiderID, RacingTeamID, Y0_Miles, Domain,
+                   SUM(Distance) AS Miles30
+            FROM ride_log
+            LEFT JOIN rider USING (RiderID)
+            LEFT JOIN rider_stats USING (RiderID)
+            LEFT JOIN teams ON (RacingTeamID = teams.TeamID)
+            JOIN rider_photos ON (rider_photos.RiderID=rider.RiderID and rider_photos.TeamID=RacingTeamID)
+            WHERE rider.Archived=0 AND DATEDIFF(NOW(), Date) < 30
+            GROUP BY RiderID
+            ORDER BY Miles30 DESC
+            LIMIT 22";
+    $rs = $oDB->query($sql, __FILE__, __LINE__); ?>
+    
+    <div class="clearfloat" style="height:5px"></div>
+    <div style="padding:5px;border-bottom:1px dotted #CCC;border-top:1px dotted #CCC">
+      <h2 style="margin:0px">Top Mileage, last 30 days</h2>
+    </div>
+    <div class="clearfloat" style="height:1px"></div>
+    <div style="height:5px"></div>
+    <div class="commute-ride-group" style="width:550px">
+      <? while(($record=$rs->fetch_array())!=false) { ?>
+        <div id="R<?=$record['RiderID']?>R" class="photobox">
+          <a href="<?=BuildTeamBaseURL($record['Domain'])?>/rider/<?=$record['RiderID']?>">
+            <img class="tight" src="<?=GetFullDomainRoot()?>/imgstore/rider-portrait/<?=$record['RacingTeamID']?>/<?=$record['RiderID']?>.jpg" height=58 width=46 border="0">
+          </a>
+          <div class="countbox">
+            <?=$record['Miles30']?>
+          </div>
+        </div><script type="text/javascript">riderInfoCallout(<?=$record['RiderID']?>, 'R')</script>
       <? } ?>
       <br class="clearfloat" /> 
     </div>
