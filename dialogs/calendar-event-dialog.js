@@ -189,7 +189,7 @@ function C_RideDialog()
             // === Tips ===
                     xtype: 'displayfield',
                     hideLabel: true,
-                    style: 'padding-left:5px; font: 11px arial;color:#555',
+                    style: 'padding-left:5px; font: 11px arial,helvetica;color:#555',
                     html: '<b>NOTE:</b> This ride will be listed on the Community Ride Calendar and will be\
                            seen by many other riders. Please ensure the accuracy of the ride information and\
                            search existing rides before adding a new ride to avoid duplicates.<br>'

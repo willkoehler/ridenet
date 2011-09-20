@@ -530,7 +530,7 @@ li.tm-list { margin-left: 20px; margin-top: 10px; padding-left: 0px; }
 {
     width: 80px;
     text-align: center;
-    font:9px arial;
+    font:9px arial,helvetica;
 }
 .ridenet-mini-ad a
 {

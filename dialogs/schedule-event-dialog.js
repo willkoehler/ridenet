@@ -130,7 +130,7 @@ function C_EventDialog()
             // === Tips ===
                     xtype: 'displayfield',
                     hideLabel: true,
-                    style: 'padding-left:5px; font: 11px arial;color:#555',
+                    style: 'padding-left:5px; font: 11px arial,helvetica;color:#555',
                     html: '<b>NOTE:</b> This event will be listed on the Regional Event Schedule and will be\
                            seen by many other riders. Please ensure the accuracy of the event information and\
                            search existing events before adding a new event to avoid duplicates.<br>'

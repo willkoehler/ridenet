@@ -183,7 +183,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
                 <td colspan=3 class="header-sm"><div class=ellipses style="width:440px">
                   <?=date_create($record['RaceDate'])->format("D n/j")?>: <?=$record['EventName']?>
                 </div></td>
-                <td class="header-sm text40" style="font:11px arial;text-align:right">(Click for details)</td>
+                <td class="header-sm text40" style="font:11px arial,helvetica;text-align:right">(Click for details)</td>
               </tr>
               <tr><td colspan=4 class="table-spacer" style="height:2px">&nbsp;</td></tr>
               <? $lastEventID = $record['RaceID'];?>

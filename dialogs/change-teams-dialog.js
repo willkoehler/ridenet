@@ -137,7 +137,7 @@ function C_ChangeTeamsDialog()
                     xtype: 'fieldset', title: 'Create New Team', style: 'margin-bottom:5px', items: [{
                         xtype: 'displayfield',
                         hideLabel: true,
-                        style: 'xmargin:20px 0px 10px 15px; font: 12px arial;color:#666',
+                        style: 'font: 12px arial,helvetica;color:#666',
                         html: 'If your team is not on RideNet yet, send as an email <a href="mailto:info@ridenet.net" style="color:blue"> \
                                info@ridenet.net</a> and we\'ll create a team for you.'
                     }]

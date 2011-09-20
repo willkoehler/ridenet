@@ -65,7 +65,7 @@ function RenderEventSchedule($oDB, $ScheduleFilterStates, $ScheduleFilterTypes, 
         <!-- No Events Found -->
         <tr><td class="table-divider" colspan=<?=$colspan?>>&nbsp;</td></tr>
         <tr><td class="table-spacer" style="height:5px" colspan=<?=$colspan?>>&nbsp;</td></tr>
-        <tr><td class=data colspan=<?=$colspan-1?> width=525 style="font:13px arial">
+        <tr><td class=data colspan=<?=$colspan-1?> width=525 style="font:13px arial,helvetica">
           No events found matching your selections in <?=$Year?>
         </td>
         <td align=right>

@@ -66,7 +66,7 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
         <tr><td class="table-spacer" style="height:10px" colspan=2>&nbsp;</td></tr>
         <tr><td class="table-divider" colspan=2>&nbsp;</td></tr>
         <tr><td class="table-spacer" style="height:5px" colspan=2>&nbsp;</td></tr>
-        <tr><td class=data width=475 style="font:13px arial">
+        <tr><td class=data width=475 style="font:13px arial,helvetica">
           No rides found in your area between <?=$StartDate->format("n/j/Y")?> and <?=$EndDate->format("n/j/Y")?>
         </td>
         <td align=right>
