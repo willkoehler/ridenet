@@ -277,7 +277,7 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
     <!-- RACE RESULTS (only show for riders with at least 1 race result posted) -->
     <?if($oDB->DBCount("results", "RiderID=$RiderID") > 0) { ?>
       <div style="height:30px"><!--vertical spacer--></div>
-      <div class="text50" style="float:right;padding-top:2px;font:12px arial,helvetica">
+      <div class="text50" style="float:right;padding-top:2px;font:12px arial, 'helvetica neue', sans-serif">
         Other Years:
   <?   // Show list of other years
         $rs = $oDB->query("SELECT DISTINCT(YEAR(RaceDate)) AS Year

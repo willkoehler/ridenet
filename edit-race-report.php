@@ -41,7 +41,7 @@ $RiderID = SmartGetInt("RiderID");
             <table border="0" cellpadding="0" cellspacing="5" width="100%" height="105">
             <tr>
               <td align="center">
-                <textarea name="Report" style="height:300px;width:600px;font:10pt arial,helvetica"><?=$oDB->DBLookup("Report", "race_report", "RaceID=$RaceID AND RiderID=$RiderID")?></textarea>
+                <textarea name="Report" style="height:300px;width:600px;font:10pt arial, 'helvetica neue', sans-serif"><?=$oDB->DBLookup("Report", "race_report", "RaceID=$RaceID AND RiderID=$RiderID")?></textarea>
               </td>
             </tr>
             <tr><td class="table-spacer" style="height:5px">&nbsp;</td></tr>

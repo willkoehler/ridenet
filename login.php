@@ -82,7 +82,7 @@ $riderEmail = isset($_COOKIE['RiderEmail']) ? $_COOKIE['RiderEmail'] : "";
               <td colspan=2 align=center>
                 <table cellpadding=0 cellspacing=0 border=0><tr>
                   <td valign=bottom><input type="checkbox" name="StayLoggedIn" style="position:relative;top:-1px"></td>
-                  <td style="font:13px arial,helvetica;">&nbsp;&nbsp;Keep me logged in on this machine</td>
+                  <td style="font:13px arial, 'helvetica neue', sans-serif;">&nbsp;&nbsp;Keep me logged in on this machine</td>
                 </tr></table>
               </td>
             </tr>

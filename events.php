@@ -112,7 +112,7 @@ $EndMonth = (isset($_REQUEST['e'])) ? SmartGetInt("e") : min($StartMonth+2, 12);
     }
 ?>
     <table cellpadding=0 cellspacing=0 id="filter-holder"><tr>
-      <td style="font:13px arial,helvetica;color:#888">Show:</td>
+      <td style="font:13px arial, 'helvetica neue', sans-serif;color:#888">Show:</td>
 <?    $rs = $oDB->query("SELECT * FROM ref_event_type", __FILE__, __LINE__);
       while(($record=$rs->fetch_array())!=false)
       { 
@@ -134,7 +134,7 @@ $EndMonth = (isset($_REQUEST['e'])) ? SmartGetInt("e") : min($StartMonth+2, 12);
       </td>
     </tr></table>
     <div style="height:20px"><!--vertical spacer--></div>
-    <div style="font:13px arial,helvetica;color:#888;text-align:center">
+    <div style="font:13px arial, 'helvetica neue', sans-serif;color:#888;text-align:center">
       Months:
       <a class='action-btn linkcolor<?if($StartMonth==1 && $EndMonth==12) { ?> highlight<? } ?>' href="/events?Year=<?=$ShowYear?>&s=1&e=12<?=($Editable ? "&edit" : "")?>">
       Entire Year</a>

@@ -24,7 +24,7 @@ function C_ResetPWDialog()
             // === Instructions ===
                     xtype: 'displayfield',
                     hideLabel: true,
-                    style: 'margin:0 0 10px 0; font: 13px "Helvetica Neue", Arial; color:#444',
+                    style: 'margin:0 0 10px 0; font: 13px \'Helvetica Neue\', Arial; color:#444',
                     html: 'Enter your email address and we will send you a new password. If you \
                            continue to have trouble logging in, send us an email at \
                            <a href="mailto:info@ridenet.net">info@ridenet.net</a>'

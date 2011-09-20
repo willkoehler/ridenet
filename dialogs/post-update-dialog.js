@@ -44,7 +44,7 @@ function C_PostUpdateDialog()
                     },{
                         xtype:'container', layout:'form', hideLabels: true, items: [{
                             xtype: 'container',
-                            style: 'font:13px "Helvetica Neue", Arial, sans-serif; color: #888; padding-bottom:3px',
+                            style: 'font:13px \'Helvetica Neue\', Arial, sans-serif; color: #888; padding-bottom:3px',
                             html: '<a><b>' + params.riderName + '</b></a> - ' + params.teamName
                         },{
                         // === Comments ===

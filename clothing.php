@@ -49,7 +49,7 @@ $RideBoardLength = 30;
       clothing@ridenet.net</a>
     </p>
     <div style="float:right;margin:0px 0px 0 0;text-align:center">
-      <a style="color:#e85e0b;font: 16px arial,helvetica" href="http://www.paradisegarage.com/" target="_blank">
+      <a style="color:#e85e0b;font: 16px arial, 'helvetica neue', sans-serif" href="http://www.paradisegarage.com/" target="_blank">
         Clothing Available At:<br>
       </a>
       <div style="margin-top:5px;padding:7px;border:1px solid #BBB;background-color:#DDD">
@@ -59,7 +59,7 @@ $RideBoardLength = 30;
       </div>
     </div>
 <!--    <div style="float:right;margin:0px 0px 0 0;text-align:center">
-      <a style="color:#B42A37;font: 16px arial,helvetica" href="https://www.bikereg.com/events/register.asp?eventid=13099" target="_blank">
+      <a style="color:#B42A37;font: 16px arial, 'helvetica neue', sans-serif" href="https://www.bikereg.com/events/register.asp?eventid=13099" target="_blank">
         Click to Order Now!<br>
       </a>
       <a href="https://www.bikereg.com/events/register.asp?eventid=13099" target="_blank">

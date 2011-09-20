@@ -101,7 +101,7 @@
   
 </head>
 
-<body style="font:14px arial,helvetica" onload='updateSavings()'>
+<body style="font:14px arial, 'helvetica neue', sans-serif" onload='updateSavings()'>
   Number of Employees <input id='employees' onkeyup='updateSavings()'> Participation Rate <input id='participation' onkeyup='updateSavings()'>%
   <br>
   Per Employee Costs:

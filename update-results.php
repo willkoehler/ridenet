@@ -95,7 +95,7 @@ CheckLoginAndRedirect();
           </tr>
           <tr>
             <td colspan=3 align="center">
-              <textarea name="Report" style="width:650px;height:175px"></textarea>
+              <textarea name="Report" style="width:650px;height:175px;font:10pt arial, 'helvetica neue', sans-serif"></textarea>
             </td>
           </tr>
           <tr>

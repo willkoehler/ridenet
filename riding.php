@@ -71,7 +71,7 @@ $RideBoardLength = 30;
     <p class='text50' style="line-height:1.2em;font-size:.7em;margin-bottom:0px">
       * STAR riders use their bikes for commuting or errands two days a month.
     </p>
-    <div style="font:30px arial,helvetica;line-height:21px;padding:25px 0 5px 0;text-align:center">
+    <div style="font:30px arial, 'helvetica neue', sans-serif;line-height:21px;padding:25px 0 5px 0;text-align:center">
       <table cellpadding=0 cellspacing=0 class="centered"><tr>
         <td width=100><div><?=$teamCount?><div class="text50" style="font-size:13px">&nbsp;Teams</div></div></td>
         <td width=110><?=$riderCount?><div class="text50" style="font-size:13px">&nbsp;Riders</div></td>

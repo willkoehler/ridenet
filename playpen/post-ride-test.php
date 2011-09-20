@@ -3,7 +3,7 @@
   <head>
     <title>Post Ride Test</title>
   </head>
-  <body style="font: 14px arial,helvetica">
+  <body style="font: 14px arial, 'helvetica neue', sans-serif">
     <form action="/api/ride/-1?id=15&pw=3c8f35e2b2a5cec6a8ab544bdd3e99be5ac249594d746ce1f33055.74629575" method="post">
       <table cellpadding=0 cellspacing=0>
         <tr>
