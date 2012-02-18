@@ -42675,7 +42675,7 @@ CREATE TABLE `rider` (
   PRIMARY KEY (`RiderID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1723 DEFAULT CHARSET=utf8;
 
-# Sample user password = 'ridenet'
+# Sample user. Password = 'ridenet'
 insert into `rider` values('1','1','1','3','Sample','Rider','1967-10-11','sample@ridenet.net','0',null,null,null,null,'6\'3\"','160',null,null,null,null,null,null,null,null,'5e604f0c016067574560c7d862cff5a5f1f738094f3ed941a35581.03771600','0','0','1','0','1','0',null,null);
 
 DROP TABLE IF EXISTS `rider_photos`;
@@ -42797,7 +42797,8 @@ CREATE TABLE `teams` (
   PRIMARY KEY (`TeamID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=163 DEFAULT CHARSET=latin1;
 
-insert into `teams` values('1','0','1','1','1','0','Sample Team','sample','43215','1',null,'286baa','195D8D','FFFFFF','47597A','3D6CC4','1',null,'','<b>Welcome to RideNet!</b> Get started by going to \'Your Profile\' and updating your rider bio. While you\'re there you can log rides and post race results.<br>\r\n<br>\r\nBe sure to check out the Events page to find tours and races in your region. Check out the Rides page to find out where other cyclists are riding in your area.<br>\r\n<br>\r\nBrand your RideNet site with custom colors are graphics. Upload your own photo for the home page and use this space to tell the world something interesting about your team. What\'s your mission? Why do you ride?','Sample Team is on RideNet');
+# Sample team
+insert into `teams` values('1','0','1','1','1','0','Sample Team','sample','43215','0',null,null,null,null,null,null,'1',null,null,'<b>Welcome to RideNet!</b> Get started by going to \'Your Profile\' and updating your rider bio. While you\'re there you can log rides and post race results.<br>\r\n<br>\r\nBe sure to check out the Events page to find tours and races in your region. Check out the Rides page to find out where other cyclists are riding in your area.<br>\r\n<br>\r\nBrand your RideNet site with custom colors are graphics. Upload your own photo for the home page and use this space to tell the world something interesting about your team. What\'s your mission? Why do you ride?','Sample Team is on RideNet');
 
 SET FOREIGN_KEY_CHECKS = 1;
 
