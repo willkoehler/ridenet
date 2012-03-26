@@ -4,7 +4,7 @@ define("SANDBOX_TEAM_ID", 3);
 
 // --- Year to start data
 define("START_YEAR", 2001);
-define("CURRENT_YEAR", 2011);
+define("CURRENT_YEAR", 2012);
 
 // --- default RideNet colors
 define("PRIMARY_COLOR", '286baa');
