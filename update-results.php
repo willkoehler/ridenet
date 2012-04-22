@@ -1,5 +1,7 @@
 <?
 require("script/app-master.php");
+require(SHAREDBASE_DIR . "ExtJSLoader.php");
+
 $oDB = oOpenDBConnection();
 $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently being presented
 CheckLoginAndRedirect();
@@ -10,37 +12,22 @@ CheckLoginAndRedirect();
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title><?BuildPageTitle($oDB, $pt, "Edit Your Results")?></title>
+<!-- Include site stylesheets -->
   <link href="/styles.pcs?T=<?=$pt?>" rel="stylesheet" type="text/css" />
+<!-- Code-behind modules for this page (minify before including)-->
+  <?MinifyAndInclude("/update-results.js")?>
+<!-- Build javascript arrays for local/static combobox lookups -->
   <script type="text/javascript">
-  function checkFields() 
-  {
-      var form = document.getElementById('results-form');
-      if(form.RaceID.value==0)
-      {
-          alert("You must select an event");
-          form.RaceID.focus();
-          return(false);
-      }
-      if(form.CategoryID.value==0)
-      {
-          alert("You must select a field");
-          form.CategoryID.focus();
-          return(false);
-      }
-      if(form.PlaceID.value==0)
-      {
-          alert("You must select a place");
-          form.PlaceID.focus();
-          return(false);
-      }
-      return(true);
-  }
+    selectCategories = <?$oDB->DumpToJSArray("SELECT CategoryID, CategoryName, Tour, Race FROM ref_race_category ORDER BY Sort")?>
+    selectCategories.unshift([0, 'select a field...', 1, 1]);
+    selectPlacings = <?$oDB->DumpToJSArray("SELECT PlaceID, PlaceName, Tour, Race FROM ref_placing ORDER BY PlaceOrdinal")?>
+    selectPlacings.unshift([0, 'select...', 1, 1]);
   </script>
 <!-- Insert tracker for Google Analytics -->
   <?InsertGoogleAnalyticsTracker()?>
 </head>
 
-<body class="oneColFixHdr">
+<body class="oneColFixHdr" onload="updateCategoryAndPlacingOptions()">
 <?IE6Check();?>   <!--Display warning message for IE6 and older -->
 
 <div id="container">
@@ -62,33 +49,23 @@ CheckLoginAndRedirect();
             <td class="header">Place</td>
           </tr>
           <tr align=left>
-            <td><select name="RaceID" style="width:420px">
+            <td><select name="RaceID" style="width:420px" onchange="updateCategoryAndPlacingOptions(this)">
               <option value="0">select an event...</option>
-<?            $sql = "SELECT RaceID, RaceDate, EventName, City, StateAbbr
-                      FROM event LEFT JOIN ref_states USING (StateID) 
-                      WHERE DATEDIFF(RaceDate,NOW()) BETWEEN -365 AND 0 AND RideTypeID NOT IN (4,5) AND Archived=0
+<?            $sql = "SELECT RaceID, RideTypeID, RideType, RaceDate, EventName, City, StateAbbr
+                      FROM event
+                      LEFT JOIN ref_states USING (StateID)
+                      LEFT JOIN ref_event_type USING (RideTypeID)
+                      WHERE DATEDIFF(RaceDate,NOW()) BETWEEN -365 AND 0 AND RideTypeID NOT IN (5) AND Archived=0
                       ORDER BY RaceDate DESC";
               $rs = $oDB->query($sql, __FILE__, __LINE__);
               while(($record=$rs->fetch_array())!=false) { ?>
-                <option value="<?=$record['RaceID']?>">
-                  <?=date_create($record['RaceDate'])->format("M j")?> | <?=LimitString($record['City'],25)?>, <?=$record['StateAbbr']?> | <?=LimitString($record['EventName'],60)?>
+                <option value="<?=$record['RaceID']?>" ridetype="<?=$record['RideTypeID']?>">
+                  <?=date_create($record['RaceDate'])->format("M j")?> &bull; <?=LimitString($record['EventName'],60)?> | <?=LimitString($record['City'],25)?>, <?=$record['StateAbbr']?> -- <?=$record['RideType']?>
                 </option>
               <? } ?>
             </select></td>
-            <td><select size="1" name="CategoryID">
-                <option value="0">select a field...</option>
-<?            $rs = $oDB->query("SELECT * FROM ref_race_category ORDER BY Sort", __FILE__, __LINE__);
-              while(($record=$rs->fetch_array())!=false) { ?>
-                <option value="<?=$record['CategoryID']?>"><?=$record['CategoryName']?></option>
-              <? } ?>
-            </select></td>
-            <td><select size="1" name="PlaceID">
-                <option value="0">select...</option>
-<?            $rs = $oDB->query("SELECT * FROM ref_placing WHERE PlaceID NOT IN (26,23) ORDER BY PlaceOrdinal", __FILE__, __LINE__);
-              while(($record=$rs->fetch_array())!=false) { ?>
-                <option value="<?=$record['PlaceID']?>"><?=$record['PlaceName']?></option>
-              <? } ?>
-            </select></td>
+            <td><select size="1" name="CategoryID" id="select_category" style="width:120px"></select></td>
+            <td><select size="1" name="PlaceID" id="select_place" style="width:100px"></select></td>
           </tr>
           <tr>
             <td class="header" style="padding-top:10px;text-align:center" colspan=3>Race Report</td>
