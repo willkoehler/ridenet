@@ -30,9 +30,8 @@ function updateOptions(id, new_options, include_race, include_tour)
     }
 }
 
-function checkFields() 
+function checkFields(form) 
 {
-    var form = document.getElementById('results-form');
     if(form.RaceID.value==0)
     {
         alert("You must select an event");

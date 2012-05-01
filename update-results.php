@@ -41,7 +41,7 @@ CheckLoginAndRedirect();
     <h1>Your Results</h1>
     <h2>You may edit results and race reports up to 14 days after you post them</h2>
     <div align="center">
-      <form method="post" action="action/update-results.php" onsubmit="return(checkFields())" id="results-form">
+      <form method="post" action="action/update-results.php" onsubmit="return checkFields(this)" id="results-form">
         <table id=post-results border="0" cellpadding="0" cellspacing="2">
           <tr>
             <td class="header">Event</td>
