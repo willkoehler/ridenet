@@ -8,3 +8,6 @@
 
 # Ignore minified javascript cache
 /minjs/
+
+# Ingnore AWS credentials
+/script/aws-credentials.php

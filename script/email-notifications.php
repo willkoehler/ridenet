@@ -1,4 +1,5 @@
 <?
+require(dirname(__FILE__) . "/aws-credentials.php");
 require(SHAREDBASE_DIR . "SendMail.php");
 
 //----------------------------------------------------------------------------------

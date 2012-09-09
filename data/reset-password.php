@@ -1,5 +1,6 @@
 <?
 require("../script/app-master.php");
+require("../script/aws-credentials.php");
 require(SHAREDBASE_DIR . "SendMail.php");
 $oDB = oOpenDBConnection();
 
