@@ -85,7 +85,7 @@ function C_TeamForm(parentElement)
 
         // column definitions
         var columns = [
-                {header: "Team", width: 140, dataIndex: 'TeamName', id: 'autoexpand', sortable: true},
+                {header: "Team", width: 217, dataIndex: 'TeamName', sortable: true},
                 {header: "Type", width: 110, dataIndex: 'TeamType', sortable: true},
                 {header: "Domain", width: 110, dataIndex: 'Domain', sortable: true},
                 {header: "Site Level", width: 100, dataIndex: 'SiteLevel', sortable: false},
@@ -100,7 +100,6 @@ function C_TeamForm(parentElement)
             frame: true,
             title: 'Team Manager',
             width: 740,
-            autoExpandColumn: 'autoexpand',
             height: 500,
             margins:'3 3 3 3',
             cls: 'centered',

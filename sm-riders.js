@@ -59,7 +59,7 @@ function C_RiderTab()
         var columns = [
                 {header: "Last Name", width: 120, dataIndex: 'LastName', sortable: true},
                 {header: "First Name", width: 120, dataIndex: 'FirstName', sortable: true},
-                {header: "Email", width: 90, dataIndex: 'RiderEmail', sortable: true, id: 'autoexpand'},
+                {header: "Email", width: 195, dataIndex: 'RiderEmail', sortable: true},
                 {header: "Type", width: 120, dataIndex: 'RiderType', sortable: true},
                 {xtype: 'booleancolumn', header: "Admin", width: 40, dataIndex: 'sTeamAdmin', trueText: '<span style="color:red">Y</span>', falseText: '', fixed:true, menuDisabled:true, align:'center'},
                 {header: "Edit/Del", width: 70, renderer: this.drawButtons, align:'center', fixed:true, menuDisabled:true}
@@ -70,7 +70,6 @@ function C_RiderTab()
             frame: true,
             title: 'Rider Accounts',
             width: 700,
-            autoExpandColumn: 'autoexpand',
             height: 450,
             margins:'3 3 3 3',
             stripeRows: true,
