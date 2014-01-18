@@ -124,7 +124,7 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
         <a href="<?=BuildTeamBaseURL('echeloncycling')?>/">
           <img style="border:1px solid #555;margin-top:5px" src="/images/featured-echelon.jpg">
         </a>
-        <a href="<?=BuildTeamBaseURL('teamawesome')?>/">
+        <a href="<?=BuildTeamBaseURL('teamjenis')?>/">
           <img style="border:1px solid #555;margin-top:10px" src="/images/featured-teamawesome.jpg">
         </a>
         <a href="<?=BuildTeamBaseURL('pattycake')?>/">
