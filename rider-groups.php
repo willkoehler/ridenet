@@ -105,7 +105,7 @@ else
             FROM rider
             LEFT JOIN rider_stats USING (RiderID)
             LEFT JOIN teams ON (CommutingTeamID = TeamID)
-            JOIN rider_photos USING (RiderID)
+            LEFT JOIN rider_photos USING (RiderID)
             WHERE rider.Archived=0 AND CEDaysMonth BETWEEN $minDays AND $maxDays
             GROUP BY RiderID
             ORDER BY CEDaysMonth DESC";
