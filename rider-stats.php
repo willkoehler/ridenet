@@ -71,6 +71,13 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
     <div class='clearfloat'></div>
     <div style="height:10px"></div>
     <div id='report-form'></div>
+    <p style='margin-top:5px'>
+      * Each day with a
+      <img class="inline_ce_image_pair" src="/images/ridelog/commute.png"><img class="inline_ce_image_pair" src="/images/ridelog/errand.png">
+      ride is 5 points. Each
+      <img class="inline_ce_image_pair" src="/images/ridelog/commute.png"><img class="inline_ce_image_pair" src="/images/ridelog/errand.png">
+      mile is an additional 1 point.
+    </p>
     <div style="height:20px"></div>
   </div><!-- end #mainContent -->
 

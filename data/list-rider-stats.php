@@ -31,7 +31,8 @@ if($searchFor != "")
 
 // --- Get rider stats
 $sql = "SELECT RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RiderType, t1.TeamID, t1.TeamName, t1.Domain,
-               {$range}_Miles AS Miles, {$range}_Days AS Days, CEDaysMonth, {$range}_CEDays AS CEDays
+               {$range}_Miles AS Miles, {$range}_Days AS Days, CEDaysMonth, {$range}_CEDays AS CEDays,
+               {$range}_CEDays * 5 + {$range}_CEMiles AS CEPoints
         FROM rider
         LEFT JOIN rider_stats USING (RiderID)
         LEFT JOIN ref_rider_type USING (RiderTypeID)

@@ -1300,4 +1300,16 @@ table#calendar a
     background-color: #DDD;
     border: 1px solid #999;
     padding: 4px 8px;
-}    
+}
+
+.inline_ce_image_pair {
+    height: 14px;
+    width: 14px;
+    vertical-align:bottom;  /* required in IE6 / IE7 to remove 3px bottom padding below image */
+    border: 0;
+    position: relative;
+    top: -2px;
+}
+.ext-gecko .inline_ce_image_pair {
+    top: -1px;
+}

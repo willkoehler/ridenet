@@ -45,7 +45,8 @@ function C_ReportForm(parentElement)
                 {name: 'Miles', type: 'int', sortDir: 'DESC'},
                 {name: 'Days', type: 'int', sortDir: 'DESC'},
                 {name: 'CEDays', type: 'int', sortDir: 'DESC'},
-                {name: 'CEDaysMonth', type: 'int', sortDir: 'DESC'}
+                {name: 'CEDaysMonth', type: 'int', sortDir: 'DESC'},
+                {name: 'CEPoints', type: 'int', sortDir: 'DESC'}
             ],
             proxy: new Ext.data.HttpProxy({ url: '/data/list-rider-stats.php' }),
             sortInfo: { field: sort, direction: 'desc' },
@@ -102,19 +103,21 @@ function C_ReportForm(parentElement)
         var daysT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{Days}</div>').compile();
         var ceDaysT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{CEDays}</div>').compile();
         var ceDaysMonthT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{CEDaysMonth}</div>').compile();
+        var cePointsT = new Ext.XTemplate('<div style="font-size:1.3em;padding-top:10px">{CEPoints}</div>').compile();
 
         var columns = [
-                {header: 'Rider/Team', width: .47, dataIndex: 'RiderName', tpl: riderT },
-                {header: 'Total Miles', width: .13, dataIndex: 'Miles', align: 'center', tpl: milesT },
-                {header: 'Total Days', width: .13, dataIndex: 'Days', align: 'center', tpl: daysT },
-                {header: ceDaysHeader, width: .14, dataIndex: 'CEDays', align: 'center', tpl: ceDaysT },
-                {header: ceDaysMonthHeader, width: .12, dataIndex: 'CEDaysMonth', align: 'center', tpl: ceDaysMonthT }
+                {header: 'Rider/Team', width: .41, dataIndex: 'RiderName', tpl: riderT },
+                {header: 'Total Miles', width: .12, dataIndex: 'Miles', align: 'center', tpl: milesT },
+                {header: 'Total Days', width: .12, dataIndex: 'Days', align: 'center', tpl: daysT },
+                {header: ceDaysHeader, width: .13, dataIndex: 'CEDays', align: 'center', tpl: ceDaysT },
+                {header: ceDaysMonthHeader, width: .12, dataIndex: 'CEDaysMonth', align: 'center', tpl: ceDaysMonthT },
+                {header: 'Points*', width: .10, dataIndex: 'CEPoints', align: 'center', tpl: cePointsT }
             ]
         
         // create the grid
         this.report = new Ext.Panel({
             xframe: true,
-            width: 500,
+            width: 560,
             cls: 'centered',
             tbar: toolbar,
             items: [{
