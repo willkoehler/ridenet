@@ -26,16 +26,17 @@ if($searchFor != "")
     $firstName = $names[0];
     $lastName = isset($names[1]) ? trim($names[1]) : "";
     $whereFilter .= " AND (((FirstName LIKE \"$firstName%\" OR LastName LIKE \"$firstName%\") AND LastName LIKE \"$lastName%\")";
-    $whereFilter .= " OR TeamName LIKE \"%$searchFor%\")";
+    $whereFilter .= " OR t1.TeamName LIKE \"%$searchFor%\" OR t2.TeamName LIKE \"%$searchFor%\")";
 }
 
 // --- Get rider stats
-$sql = "SELECT RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RiderType, TeamID, TeamName, Domain,
+$sql = "SELECT RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RiderType, t1.TeamID, t1.TeamName, t1.Domain,
                {$range}_Miles AS Miles, {$range}_Days AS Days, CEDaysMonth, {$range}_CEDays AS CEDays
         FROM rider
         LEFT JOIN rider_stats USING (RiderID)
         LEFT JOIN ref_rider_type USING (RiderTypeID)
-        LEFT JOIN teams ON (TeamID = RacingTeamID)
+        LEFT JOIN teams t1 ON (t1.TeamID = RacingTeamID)
+        LEFT JOIN teams t2 ON (t2.TeamID = CommutingTeamID)
         WHERE $whereFilter
         GROUP BY RiderID
         ORDER BY $sort $dir LIMIT $start, $limit";
