@@ -1,0 +1,22 @@
+# Taken from http://millercenter.org/robots.txt
+
+# They totally overwhelm servers with traffic.
+# http://www.nameprotect.com/botinfo.html
+User-agent: NPBot
+Disallow: /
+
+# Proprietary German backlinks service.
+User-agent: SEOkicks-Robot
+Disallow: /
+
+# http://en.wikipedia.org/wiki/DotBot
+User-agent: DotBot
+Disallow: /
+
+# Chinese search engine
+User-agent: Baiduspider
+Disallow: /
+
+# Majestic-12 search engine (UK) http://www.majestic12.co.uk/projects/dsearch/mj12bot.php
+User-agent: MJ12bot
+Disallow: /
