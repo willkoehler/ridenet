@@ -9,7 +9,7 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
 // Get team information for this page
 $sql = "SELECT IFNULL(HomePageType,1) AS HomePageType, IFNULL(HomePageMoreWrap, 1) AS HomePageMoreWrap,
                HomePageTitle, HomePageText, HomePageHTML, TeamName, TeamTypeID
-        FROM Teams
+        FROM teams
         WHERE TeamID=$pt";
 $rs = $oDB->query($sql, __FILE__, __LINE__);
 $team = $rs->fetch_array();
