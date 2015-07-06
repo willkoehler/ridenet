@@ -1,5 +1,9 @@
 RewriteEngine on
 
+# Uncomment to put app into maintenace mode
+# RewriteCond %{REQUEST_URI} !^/maintenance\.html$
+# RewriteRule ^(.*)$ http://ridenet.net/maintenance.html [R=307,L]
+
 # Reject requests that don't have an HTTP_HOST header
 RewriteCond %{HTTP_HOST} ^$
 RewriteRule ^.* - [L,F]
