@@ -3,9 +3,6 @@
 /ExtCore3
 /Shared
 
-# Ignore directory holding uploaded pictures
-/imgstore/
-
 # Ignore minified javascript cache
 /minjs/
 
