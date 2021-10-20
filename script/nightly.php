@@ -103,12 +103,12 @@ function CheckDuplicateWayPoints($oDB)
 function RemoveDuplicateWayPoints($oDB, $rideLogID)
 {
     $lastPoint = array('Longitude' => 0, 'Latitude' => 0);
-    $rs = $oDB->query("SELECT DateTime, Longitude, Latitude FROM ride_log_map WHERE RideLogID=$rideLogID ORDER BY DateTime", __FILE__, __LINE__);
+    $rs = $oDB->query("SELECT DateTime, Longitude, Latitude FROM ride_log_map WHERE RideLogID=$rideLogID ORDER BY DateTime");
     while(($wayPoint=$rs->fetch_array())!=false)
     {
         if($wayPoint['Longitude']==$lastPoint['Longitude'] && $wayPoint['Latitude']==$lastPoint['Latitude'])
         {
-            $oDB->query("DELETE FROM ride_log_map WHERE RideLogID=$rideLogID AND DateTime='{$wayPoint['DateTime']}'", __FILE__, __LINE__);
+            $oDB->query("DELETE FROM ride_log_map WHERE RideLogID=$rideLogID AND DateTime='{$wayPoint['DateTime']}'");
         }
         else
         {

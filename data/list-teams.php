@@ -26,7 +26,7 @@ else
     $oDB = oOpenDBConnection();
 
     // --- Count total records in table. "rowcount" tells the grid object the total number of rows available in recordset
-    $rs = $oDB->query("SELECT count(*) as TotalRows FROM teams WHERE 1 $whereFilter", __FILE__, __LINE__);
+    $rs = $oDB->query("SELECT count(*) as TotalRows FROM teams WHERE 1 $whereFilter");
     $record = $rs->fetch_array();
     $result['rowcount'] = $record['TotalRows'];
     $rs->free();
@@ -37,7 +37,7 @@ else
                        FROM teams
                        LEFT JOIN ref_site_level USING (SiteLevelID)
                        LEFT JOIN ref_team_type USING (TeamTypeID)
-                       WHERE 1 $whereFilter ORDER BY $sort $dir LIMIT $start, $limit", __FILE__, __LINE__);
+                       WHERE 1 $whereFilter ORDER BY $sort $dir LIMIT $start, $limit");
 
     // --- Loop through all the records and add the contents of each record to the output array
     $result['results'] = array();

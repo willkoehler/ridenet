@@ -54,7 +54,7 @@ function RenderEventSchedule($oDB, $ScheduleFilterStates, $ScheduleFilterTypes, 
               $strWhere
               GROUP BY e.RaceID
               ORDER BY RaceDate, RaceID";
-      $rs = $oDB->query($sql, __FILE__, __LINE__);
+      $rs = $oDB->query($sql);
       $PrevMonth = 0;
       $PrevDay = 0;
       $PrevWeek = 0;

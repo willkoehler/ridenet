@@ -21,7 +21,7 @@ else
                               ZipCodeID, CONCAT(City, ', ', State, ' ', ZipCode) AS ZipCodeText,
                               IFNULL(Domain, CONCAT('club', TeamID)) AS Domain
                        FROM teams LEFT JOIN ref_zipcodes USING (ZipCodeID)
-                       WHERE TeamID=$teamID", __FILE__, __LINE__);
+                       WHERE TeamID=$teamID");
     $result['results'] = $rs->fetch_object();
     $result['success'] = true;
 }

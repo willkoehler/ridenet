@@ -28,7 +28,7 @@ else
     $sql= "SELECT RiderID, Password, FirstName, LastName, CommutingTeamID, RacingTeamID, IFNULL(MustChangePW,0) AS MustChangePW,
                   sSystemAdmin, sDesigner
            FROM rider WHERE RiderEmail=$email AND Archived=0";
-    $rs = $oDB->query($sql, __FILE__, __LINE__);
+    $rs = $oDB->query($sql);
     if(($record = $rs->fetch_array())==false)
     {
         // No matches, login failed
@@ -53,7 +53,7 @@ else
                     "'" . substr($_SERVER['HTTP_USER_AGENT'], 0, 200) . "', " .
                     "'" . GetBrowserString($_SERVER['HTTP_USER_AGENT']) . "', " .
                     $record['RiderID'] . ", " .
-                    "NOW())", __FILE__, __LINE__);
+                    "NOW())");
         $_SESSION['loginTableID'] = $oDB->insert_id;
 
         // --- store user info in session

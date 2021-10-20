@@ -23,7 +23,7 @@ if($values['RaceID']==0 || $values['CategoryID']==0 || $values['PlaceID']==0)
 
 $strWhere = "RaceID={$values['RaceID']} AND RiderID={$values['RiderID']} AND CategoryID={$values['CategoryID']}";
 // --- has result already been entered for this rider, race, & category?
-$rs = $oDB->query("SELECT COUNT(*) AS Count FROM results WHERE $strWhere", __FILE__, __LINE__);
+$rs = $oDB->query("SELECT COUNT(*) AS Count FROM results WHERE $strWhere");
 $record=$rs->fetch_array();
 if($record['Count'] == 0)
 {

@@ -5,7 +5,7 @@ require("../script/app-master.php");
 $raceID = SmartGetInt('RaceID');
 
 $oDB = oOpenDBConnection();
-$rs = $oDB->query("SELECT * FROM event WHERE RaceID=$raceID", __FILE__, __LINE__);
+$rs = $oDB->query("SELECT * FROM event WHERE RaceID=$raceID");
 $result['results'] = $rs->fetch_object();
 $result['success'] = true;
 

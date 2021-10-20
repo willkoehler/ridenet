@@ -7,7 +7,7 @@ $rideLogID = SmartGetInt('RideLogID');
 
 $rs = $oDB->query("SELECT CONCAT(FirstName, ' ', LastName) AS Name, MapPrivacy
                    FROM ride_log JOIN rider USING (RiderID)
-                   WHERE RideLogID=$rideLogID", __FILE__, __LINE__);
+                   WHERE RideLogID=$rideLogID");
 $mapOwner = $rs->fetch_array();
 $rs->close();
 $mapVisible = IsMapVisible($mapOwner['MapPrivacy']);

@@ -9,7 +9,7 @@ $teamTypeID = $oDB->DBLookup("TeamTypeID", "teams", "TeamID=$pt", 1);
 header("Content-Type: text/css");
 
 $rs=$oDB->query("SELECT PrimaryColor, SecondaryColor, PageBGColor, BodyBGColor, LinkColor
-                 FROM teams WHERE TeamID=$pt", __FILE__, __LINE__);
+                 FROM teams WHERE TeamID=$pt");
 $record=$rs->fetch_array();
 $rs->free();
 

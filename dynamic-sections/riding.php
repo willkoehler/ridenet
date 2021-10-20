@@ -39,7 +39,7 @@ function RenderRidingWall($oDB, $length)
           ORDER BY Date Desc, Created Desc
           LIMIT $length";
 
-  $rs = $oDB->query($sql, __FILE__, __LINE__);
+  $rs = $oDB->query($sql);
   RenderWall($rs, 0); ?>
   <?if($rs->num_rows==$length) { ?>
     <div class='more-btn' onclick="getMore(30)">GET MORE</div>

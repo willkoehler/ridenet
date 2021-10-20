@@ -20,7 +20,7 @@ elseif($eventInPast || ($addedBy!=GetUserID() && !isSystemAdmin()))
 }
 else
 {
-    $oDB->query("UPDATE calendar SET Archived=1 WHERE CalendarID=$calendarID", __FILE__, __LINE__);
+    $oDB->query("UPDATE calendar SET Archived=1 WHERE CalendarID=$calendarID");
     $oDB->RecordActivityIfOK("Archive [calendar]", $calendarID);
     if($oDB->errno!=0)
     {

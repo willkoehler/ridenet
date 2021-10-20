@@ -12,7 +12,7 @@ $lastModified = strtotime($oDB->DBLookup("IFNULL(LastModified, '1/1/2000')", "ri
 CheckLastModified($lastModified);
 
 ob_start();   // buffer the output so it's sent as a single chunk
-$rs = $oDB->query("SELECT ActionPicture FROM rider_photos WHERE RiderID=$riderID AND TeamID=$teamID", __FILE__, __LINE__);
+$rs = $oDB->query("SELECT ActionPicture FROM rider_photos WHERE RiderID=$riderID AND TeamID=$teamID");
 if(($record = $rs->fetch_array())!=false && ($record['ActionPicture']!=""))
 {
     // display rider picture from database

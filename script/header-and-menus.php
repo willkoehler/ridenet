@@ -387,7 +387,7 @@ function MostViewedRiderSidebar($oDB, $pt=0)
           GROUP BY RiderID
           ORDER BY Count(*) DESC
           LIMIT 0,1";
-    $rs = $oDB->query($sql, __FILE__, __LINE__);
+    $rs = $oDB->query($sql);
     if(($record = $rs->fetch_array())==false)
     {
     // --- No riders have been viewed in the last 7 days. Select random rider.
@@ -397,7 +397,7 @@ function MostViewedRiderSidebar($oDB, $pt=0)
               WHERE rider.Archived=0 $teamFilter
               ORDER BY RAND()
               LIMIT 0,1";
-        $rs = $oDB->query($sql, __FILE__, __LINE__);
+        $rs = $oDB->query($sql);
         $record = $rs->fetch_array();
         $rs->free();
     }?>

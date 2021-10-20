@@ -103,7 +103,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
       <tr>
 <?      $rs = $oDB->query("SELECT COUNT(DISTINCT RaceID) AS NumEvents
                            FROM results LEFT JOIN event USING (RaceID)
-                           WHERE Year(RaceDate)=$ShowYear $teamFilter", __FILE__, __LINE__);
+                           WHERE Year(RaceDate)=$ShowYear $teamFilter");
         $record = $rs->fetch_array() ?>
         <td class=data><?=$record['NumEvents']?></td>
 <?      $rs->free();
@@ -111,7 +111,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
                            FROM results LEFT JOIN event USING (RaceID)
                            WHERE PlaceID BETWEEN 1 and 10 AND Year(RaceDate)=$ShowYear AND RideTypeID NOT IN (4,5) $teamFilter
                            GROUP BY PlaceID
-                           ORDER BY PlaceID", __FILE__, __LINE__);
+                           ORDER BY PlaceID");
         $results = array();
         while(($record=$rs->fetch_array())!=false)
         {
@@ -136,7 +136,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
             GROUP BY RiderID
             ORDER BY ResultCount DESC
             LIMIT 30";
-    $rs = $oDB->query($sql, __FILE__, __LINE__); ?>
+    $rs = $oDB->query($sql); ?>
     <div class="commute-ride-group" style="margin-left:5px;width:550px">
       <? while(($rider=$rs->fetch_array())!=false) { ?>
         <div id="R<?=$rider['RiderID']?>B" class="photobox">
@@ -163,7 +163,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
                 LEFT JOIN teams ON (results.TeamID = teams.TeamID) 
                 WHERE Year(RaceDate)=$ShowYear AND event.Archived=0 $teamFilter
                 ORDER by RaceDate DESC, RaceID, PlaceOrdinal";
-        $rs = $oDB->query($sql, __FILE__, __LINE__);
+        $rs = $oDB->query($sql);
         if($rs->num_rows==0)
         { ?>
           <p style="font:14px verdana">No results have been entered for <?=$ShowYear?></p>
@@ -212,7 +212,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
     <p align=center>
       <b>Other Years:</b>
 <?   // Show list of other years
-      $rs = $oDB->query("SELECT DISTINCT(YEAR(RaceDate)) AS Year FROM event WHERE RaceDate IS NOT NULL AND Archived=0 ORDER BY RaceDate", __FILE__, __LINE__);
+      $rs = $oDB->query("SELECT DISTINCT(YEAR(RaceDate)) AS Year FROM event WHERE RaceDate IS NOT NULL AND Archived=0 ORDER BY RaceDate");
       while(($record=$rs->fetch_array())!=false) { ?>
         <?if($record['Year']!=$ShowYear) { ?>
           <a href="/racing?Year=<?=$record['Year']?><?=($tf) ? "&tf" : ""?>">[<?=$record['Year']?>]</a>&nbsp;

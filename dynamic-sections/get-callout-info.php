@@ -12,7 +12,7 @@ $sql = "SELECT CONCAT(FirstName, ' ', LastName) AS RiderName, RiderID, TeamName,
         LEFT JOIN rider_stats USING (RiderID)
         LEFT JOIN teams ON (CommutingTeamID = TeamID)
         WHERE RiderID=$riderID";
-$rs = $oDB->query($sql, __FILE__, __LINE__);
+$rs = $oDB->query($sql);
 $stats = $rs->fetch_array();
 $rs->free();
 // --- Get most recent ride log entry within the last 30 days
@@ -25,7 +25,7 @@ $sql = "SELECT RideLogID, Date, RideLogType, RideLogTypeImage, Distance, Duratio
         WHERE RiderID=$riderID AND DATEDIFF(NOW(), Date) < 365
         ORDER BY Date DESC
         LIMIT 1";
-$rs = $oDB->query($sql, __FILE__, __LINE__);
+$rs = $oDB->query($sql);
 $logEntry = $rs->fetch_array();
 $rs->free();
 // generate age text
@@ -105,7 +105,7 @@ else
             FROM results LEFT JOIN event USING (RaceID)
             WHERE Year(RaceDate)=YEAR(NOW()) AND event.Archived=0 AND RiderID=$riderID
             GROUP BY RiderID";
-    $rs = $oDB->query($sql, __FILE__, __LINE__);
+    $rs = $oDB->query($sql);
     if(($results = $rs->fetch_array())==false) { ?>
       <span class="ridetext text50">No results have been entered this year</span>
     <? } else { ?>

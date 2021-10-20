@@ -12,7 +12,7 @@ $RaceYear=$oDB->DBLookup("YEAR(RaceDate)", "event", "RaceID=$RaceID");
 $teamFilter = isset($_REQUEST['tf']) ? " AND results.TeamID=$pt" : "";
 $tf = isset($_REQUEST['tf']) ? "&tf" : "";
 // get event information
-$rs = $oDB->query("SELECT EventName, RaceDate FROM event WHERE RaceID = $RaceID", __FILE__, __LINE__);
+$rs = $oDB->query("SELECT EventName, RaceDate FROM event WHERE RaceID = $RaceID");
 $eventInfo = $rs->fetch_array();
 $rs->free()
 ?>
@@ -90,7 +90,7 @@ $rs->free()
                 LEFT JOIN teams currentteam ON (rider.RacingTeamID = currentteam.TeamID)
                 WHERE RaceID=$RaceID $teamFilter
                 ORDER by PlaceOrdinal";
-        $rs = $oDB->query($sql, __FILE__, __LINE__);
+        $rs = $oDB->query($sql);
         while(($record=$rs->fetch_array())!=false) { ?>
           <tr>
             <td class="data" width=20 style="text-align:center">
@@ -131,7 +131,7 @@ $rs->free()
             LEFT JOIN race_report USING (RaceID, RiderID)
             WHERE RaceID=$RaceID
             GROUP BY RiderID";
-    $rs = $oDB->query($sql, __FILE__, __LINE__);
+    $rs = $oDB->query($sql);
     while(($record=$rs->fetch_array())!=false) { ?>
       <div align="center">
       <table id="race-report" width="600" cellpadding="0">
@@ -164,7 +164,7 @@ $rs->free()
                     FROM event_photos
                     WHERE RaceID=$RaceID AND RiderID={$record['RiderID']}
                     ORDER BY PhotoID";
-            $rs2 = $oDB->query($sql, __FILE__, __LINE__);
+            $rs2 = $oDB->query($sql);
             while(($photo=$rs2->fetch_array())!=false) { ?>
                 <a href="imgstore/full/<?=$photo['Filename']?>" rel="photos" title="Posted by <?=htmlentities($record['RiderName']) . " - " . $record['PhotoTeamName']?>">
                   <img class="event-thumbnail" src="imgstore/thumb/<?=$photo['Filename']?>">
@@ -196,7 +196,7 @@ $rs->free()
             WHERE RaceID=$RaceID AND IFNULL(HideRaceReports,0)=0 $teamFilter
             GROUP BY RiderID
             ORDER BY PlaceOrdinal";
-    $rs = $oDB->query($sql, __FILE__, __LINE__);
+    $rs = $oDB->query($sql);
     while(($record=$rs->fetch_array())!=false)
     { 
       if($record['Report']!="")

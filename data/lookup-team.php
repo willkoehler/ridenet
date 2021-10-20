@@ -17,7 +17,7 @@ $oDB = oOpenDBConnection();
 $whereFilter = "(TeamName LIKE \"%$query%\") AND IFNULL(Archived,0)=0";
 
 // --- Count total records in table. "rowcount" tells the combo-box the total number of rows available in recordset
-$rs = $oDB->query("SELECT count(*) as TotalRows FROM teams WHERE $whereFilter", __FILE__, __LINE__);
+$rs = $oDB->query("SELECT count(*) as TotalRows FROM teams WHERE $whereFilter");
 $record = $rs->fetch_array();
 $result['rowcount'] = $record['TotalRows'];
 $rs->free();
@@ -25,7 +25,7 @@ $rs->free();
 // --- Get User records
 $rs = $oDB->query("SELECT TeamID, TeamName, Domain, TeamType
                    FROM teams LEFT JOIN ref_team_type USING (TeamTypeID)
-                   WHERE $whereFilter ORDER BY TeamName LIMIT $start, $limit", __FILE__, __LINE__);
+                   WHERE $whereFilter ORDER BY TeamName LIMIT $start, $limit");
 
 // --- Loop through all the records and add the contents of each record to the output array
 $result['results'] = array();

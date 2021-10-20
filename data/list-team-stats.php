@@ -38,7 +38,7 @@ $sql = "SELECT TeamID, TeamName, TeamType, Domain, CONCAT(City, ', ', State, ' '
         WHERE $teamFilter
         GROUP BY TeamID
         ORDER BY $sort $dir LIMIT $start, $limit";
-$rs = $oDB->query($sql, __FILE__, __LINE__);
+$rs = $oDB->query($sql);
 
 // --- Loop through all the records and add the contents of each record to the output array
 $result['results'] = array();

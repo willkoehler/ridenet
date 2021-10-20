@@ -32,7 +32,7 @@ else
                        FROM ride_log
                        WHERE RiderID=$riderID
                        ORDER BY Date DESC, Created DESC
-                       LIMIT $start, $limit", __FILE__, __LINE__);
+                       LIMIT $start, $limit");
     $result= array();
     while($row = $rs->fetch_object())
     {

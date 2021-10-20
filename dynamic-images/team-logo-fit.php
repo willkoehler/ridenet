@@ -12,7 +12,7 @@ $lastModified = strtotime($oDB->DBLookup("IFNULL(LastModified, '1/1/2000')", "te
 CheckLastModified($lastModified);
 
 ob_start();   // buffer the output so it's sent as a single chunk
-$rs = $oDB->query("SELECT Logo FROM team_images WHERE TeamID=$teamID AND Logo IS NOT NULL", __FILE__, __LINE__);
+$rs = $oDB->query("SELECT Logo FROM team_images WHERE TeamID=$teamID AND Logo IS NOT NULL");
 if(($record = $rs->fetch_array())!=false)
 {
     // resize and display team logo from database

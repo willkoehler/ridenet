@@ -100,7 +100,7 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
             LEFT JOIN ref_intensity USING (IntensityID)
             LEFT JOIN ref_zipcodes ON (ref_zipcodes.ZipCodeID = c.ZipCodeID) 
             WHERE CalendarID=$calendarID";
-    $rs = $oDB->query($sql, __FILE__, __LINE__);
+    $rs = $oDB->query($sql);
     if(($record=$rs->fetch_array())==false)
     {
       exit ("Invalid Ride ID");
@@ -212,7 +212,7 @@ $notify = $oDB->DBLookup("Notify", "calendar_attendance", "AttendanceID=$attenda
       { 
         $rs = $oDB->query("SELECT RiderID, RacingTeamID, CONCAT(FirstName, ' ', LastName) AS RiderName, TeamName
                            FROM rider LEFT JOIN teams ON (RacingTeamID = TeamID)
-                           WHERE RiderID=" . GetUserID(), __FILE__, __LINE__);
+                           WHERE RiderID=" . GetUserID());
         $loggedInRider = $rs->fetch_array();
         $rs->free();?>
         <div style="float:right;position:relative;top:6px;" class='action-btn' id='post-message-btn' onclick="clickPostUpdate(this.id, { riderID:<?=$loggedInRider['RiderID']?>, racingTeamID: <?=$loggedInRider['RacingTeamID']?>, postedToID: <?=$calendarID?>, riderName: '<?=htmlentities(addslashes($loggedInRider['RiderName']))?>', teamName: '<?=htmlentities(addslashes($loggedInRider['TeamName']))?>', postingTo: '<?=htmlentities(addslashes($record['EventName']))?>' });">

@@ -18,7 +18,7 @@ function AccountCreatedEmail($oDB, $newRiderID, $createdByID)
 {
     $rs=$oDB->query("SELECT CONCAT(FirstName, ' ', LastName) AS Name, RiderEmail, TeamTypeID, RacingTeamID, TeamName, Domain
                      FROM rider JOIN teams ON (RacingTeamID = TeamID)
-                     WHERE RiderID=$newRiderID", __FILE__, __LINE__);
+                     WHERE RiderID=$newRiderID");
     $newRiderInfo = $rs->fetch_array();
     $rs->free();
     $teamURL =  "http://" . $newRiderInfo['Domain'] . "." . GetDomainRoot();
@@ -141,14 +141,14 @@ function CalendarUpdateEmail($oDB, $postID)
                           FROM posts
                           JOIN calendar ON (PostedToID = CalendarID)
                           JOIN rider USING (RiderID)
-                          WHERE PostID=$postID", __FILE__, __LINE__);
+                          WHERE PostID=$postID");
     $post = $posts->fetch_array();
     $posts->free();
     $recipients = $oDB->query("SELECT CONCAT(FirstName, ' ', LastName) AS RiderName, RiderEmail, Domain
                                FROM calendar_attendance
                                JOIN rider USING (RiderID)
                                JOIN teams ON (rider.RacingTeamID = teams.TeamID)
-                               WHERE CalendarID={$post['CalendarID']} AND Notify=1", __FILE__, __LINE__);
+                               WHERE CalendarID={$post['CalendarID']} AND Notify=1");
     $subject = "Ride Update - {$post['EventName']}";
     while(($recipient = $recipients->fetch_array())!=false)
     {
@@ -187,14 +187,14 @@ function EventUpdateEmail($oDB, $postID)
                           FROM posts
                           JOIN event ON (PostedToID = RaceID)
                           JOIN rider USING (RiderID)
-                          WHERE PostID=$postID", __FILE__, __LINE__);
+                          WHERE PostID=$postID");
     $post = $posts->fetch_array();
     $posts->free();
     $recipients = $oDB->query("SELECT CONCAT(FirstName, ' ', LastName) AS RiderName, RiderEmail, Domain
                                FROM event_attendance
                                JOIN rider USING (RiderID)
                                JOIN teams ON (rider.RacingTeamID = teams.TeamID)
-                               WHERE RaceID={$post['RaceID']} AND Notify=1", __FILE__, __LINE__);
+                               WHERE RaceID={$post['RaceID']} AND Notify=1");
     $subject = "Event Update - {$post['EventName']}";
     while(($recipient = $recipients->fetch_array())!=false)
     {

@@ -29,7 +29,7 @@ else
     $rs = $oDB->query("SELECT RiderID, FirstName, LastName, RiderEmail, '********' AS PwUnencrypted,
                        (IF(CommutingTeamID=$teamID, sCommutingTeamAdmin, 0) OR IF(RacingTeamID=$teamID, sRacingTeamAdmin, 0)) AS sTeamAdmin
                        FROM rider
-                       WHERE RiderID=$riderID", __FILE__, __LINE__);
+                       WHERE RiderID=$riderID");
     $result['results'] = $rs->fetch_object();
     $result['success'] = true;
 }

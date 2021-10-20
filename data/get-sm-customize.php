@@ -34,7 +34,7 @@ else
                               IFNULL(BodyBGColor, '$defaultBodyBGColor') AS BodyBGColor,
                               IFNULL(LinkColor, '$defaultLinkColor') AS LinkColor
                        FROM teams LEFT JOIN ref_zipcodes USING (ZipCodeID)
-                       WHERE TeamID=$teamID", __FILE__, __LINE__);
+                       WHERE TeamID=$teamID");
     $result['results'] = $rs->fetch_object();
     $result['success'] = true;
 }

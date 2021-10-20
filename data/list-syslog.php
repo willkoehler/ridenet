@@ -28,7 +28,7 @@ else
                        LEFT JOIN logins ON (LoginID = LoginTableID)
                        LEFT JOIN rider USING (RiderID)
                        LEFT JOIN teams ON (TeamID = RacingTeamID)
-                       ORDER BY $sort $dir LIMIT $start, $limit", __FILE__, __LINE__);
+                       ORDER BY $sort $dir LIMIT $start, $limit");
 
     // --- Loop through all the records and add the contents of each record to the output array
     $result['results'] = array();

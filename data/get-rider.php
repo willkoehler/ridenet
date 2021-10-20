@@ -24,7 +24,7 @@ else
                        FROM rider
                        LEFT JOIN teams rt ON (RacingTeamID = rt.TeamID)
                        LEFT JOIN teams ct ON (CommutingTeamID = ct.TeamID)
-                       WHERE RiderID=$riderID", __FILE__, __LINE__);
+                       WHERE RiderID=$riderID");
     $result['results'] = $rs->fetch_object();
     $result['success'] = true;
 }

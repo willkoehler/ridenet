@@ -164,7 +164,7 @@ function SandboxHomePage($oDB)
           JOIN ref_zipcodes USING (ZipCodeID)
           WHERE TeamID IN (120, 122, 86, 115, 135, 130)
           ORDER BY TeamName ASC";
-  $rs = $oDB->query($sql, __FILE__, __LINE__); ?>
+  $rs = $oDB->query($sql); ?>
   <table cellpadding=0 cellspacing=0 class="centered" style="border:1px solid #CCC;background-color:#EEE">
   <? while(($record = $rs->fetch_array())!=false) { ?>
     <tr>
@@ -400,7 +400,7 @@ function UpdateRiderStats($oDB, $riderID)
                    COUNT(DISTINCT IF(Date BETWEEN '$startDate30' AND '$endDate' AND (RideLogTypeID=1 OR RideLogTypeID=3), Date, NULL)) AS CEDays30
             FROM ride_log
             WHERE (Date BETWEEN '$startDate365' AND '$endDate') AND RiderID=$riderID";
-    $rs = $oDB->query($sql, __FILE__, __LINE__);
+    $rs = $oDB->query($sql);
     $record = $rs->fetch_array();
     $rs->close();
     $CEDaysMonth365 = round($record['CEDays365']/(365/30.5));
@@ -421,7 +421,7 @@ function UpdateRiderStats($oDB, $riderID)
     // create rider stats record if it doesn't exist yet
     if($oDB->DBCount("rider_stats", "RiderID=$riderID")==0)
     {
-        $oDB->query("INSERT INTO rider_stats (RiderID) VALUES($riderID)", __FILE__, __LINE__);
+        $oDB->query("INSERT INTO rider_stats (RiderID) VALUES($riderID)");
     }
     // Store stats in rider stats table.
     $sql = "UPDATE rider_stats SET CEDaysMonth = $CEDaysMonth, CMilesDay = $CMilesDay, ";
@@ -433,7 +433,7 @@ function UpdateRiderStats($oDB, $riderID)
         }
     }
     $sql = substr($sql, 0, -2) . " WHERE RiderID=$riderID";
-    $oDB->query($sql, __FILE__, __LINE__);
+    $oDB->query($sql);
     // return a subset of the stats
     return(Array('YTDDays' => $sets['Y0']['Days'], 'YTDMiles' => $sets['Y0']['Miles'], 'CEDaysMonth' => $CEDaysMonth));
 }
@@ -462,7 +462,7 @@ function CalculateStatsSet($oDB, $riderID, $startDate, $endDate)
             FROM ride_log
             WHERE RiderID=$riderID AND Date BETWEEN '" . $startDate->format('Y-m-d') . "' AND '" . $endDate->format('Y-m-d') . "'
             GROUP BY RiderID";
-    $rs = $oDB->query($sql, __FILE__, __LINE__);
+    $rs = $oDB->query($sql);
     if($rs->num_rows)
     {
         $record = $rs->fetch_array(MYSQLI_ASSOC);
@@ -493,7 +493,7 @@ function GetRiderTeamInfo($oDB, $riderID)
 {
     $rs = $oDB->query("SELECT CommutingTeamID, RacingTeamID, sCommutingTeamAdmin, sRacingTeamAdmin
                        FROM rider
-                       WHERE RiderID=$riderID", __FILE__, __LINE__);
+                       WHERE RiderID=$riderID");
     $record = $rs->fetch_array(MYSQLI_ASSOC);
     $rs->free();
     return($record);
@@ -530,7 +530,7 @@ function ChangeRiderTeam($oDB, $riderID, $newRacingTeamID, $newCommutingTeamID)
         $updateCmds .= ", sCommutingTeamAdmin=0";
     }
     // execute the commands to change teams
-    $oDB->query("UPDATE rider $updateCmds WHERE RiderID=$riderID", __FILE__, __LINE__);
+    $oDB->query("UPDATE rider $updateCmds WHERE RiderID=$riderID");
     if($oDB->errno==0)
     {
         // Copy rider photo to new team if rider does not already have a photo for that team
@@ -540,7 +540,7 @@ function ChangeRiderTeam($oDB, $riderID, $newRacingTeamID, $newCommutingTeamID)
             $oDB->query("INSERT rider_photos (RiderID, TeamID, Picture, ActionPicture, LastModified)
                          SELECT $riderID, $newRacingTeamID, Picture, ActionPicture, LastModified
                          FROM rider_photos
-                         WHERE RiderID=$riderID AND TeamID={$oldTeamInfo['RacingTeamID']}", __FILE__, __LINE__);
+                         WHERE RiderID=$riderID AND TeamID={$oldTeamInfo['RacingTeamID']}");
         }
     }
     // Build response array
@@ -657,8 +657,8 @@ function InsertOrUpdateRecord($oDB, $tableName, $whereClause, $values)
     }
 // --- execute query
 //    exit($sql);
-    $oDB->query($sql, __FILE__, __LINE__);
-    CheckAndReportSQLError($oDB, __FILE__, __LINE__);
+    $oDB->query($sql);
+    CheckAndReportSQLError($oDB);
 }
 
 

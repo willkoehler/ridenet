@@ -19,7 +19,7 @@ elseif($riderID!=GetUserID())
 }
 else
 {
-    $oDB->query("DELETE FROM posts WHERE PostID=$itemID", __FILE__, __LINE__);
+    $oDB->query("DELETE FROM posts WHERE PostID=$itemID");
     $oDB->RecordActivityIfOK("Delete [post] ID=$itemID", $riderID);
     $result['success'] = true;
 }

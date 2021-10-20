@@ -34,7 +34,7 @@ $whereFilter = "(City LIKE \"$city%\" AND State LIKE \"$state%\") OR ZipCode LIK
 // --- Count total records in table. "rowcount" tells the combo-box the total number of rows available in recordset
 //if($paging)
 {
-    $rs = $oDB->query("SELECT count(*) as TotalRows FROM ref_zipcodes WHERE $whereFilter", __FILE__, __LINE__);
+    $rs = $oDB->query("SELECT count(*) as TotalRows FROM ref_zipcodes WHERE $whereFilter");
     $record = $rs->fetch_array();
     $result['rowcount'] = $record['TotalRows'];
     $rs->free();
@@ -44,7 +44,7 @@ $whereFilter = "(City LIKE \"$city%\" AND State LIKE \"$state%\") OR ZipCode LIK
 $rs = $oDB->query("SELECT ZipCodeID as id, CONCAT(City, ', ', State, ' ', ZipCode) as text
                    FROM ref_zipcodes
                    WHERE $whereFilter
-                   ORDER BY ZipCodeID LIMIT $start, $limit", __FILE__, __LINE__);
+                   ORDER BY ZipCodeID LIMIT $start, $limit");
 
 // --- Loop through all the records and add the contents of each record to the output array
 $result['results'] = array();

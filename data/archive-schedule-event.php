@@ -34,7 +34,7 @@ elseif(($raceID!=-1 && $addedBy!=GetUserID() && !isSystemAdmin()))
 }
 else
 {
-    $oDB->query("UPDATE event SET Archived=1 WHERE RaceID=$raceID", __FILE__, __LINE__);
+    $oDB->query("UPDATE event SET Archived=1 WHERE RaceID=$raceID");
     $oDB->RecordActivityIfOK("Archive [event]", $raceID);
     if($oDB->errno!=0)
     {

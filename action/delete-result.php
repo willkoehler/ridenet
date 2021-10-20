@@ -14,7 +14,7 @@ $RiderID = GetUserID();
 // verify that the result was posted less than 14 days ago
 if($oDB->DBCount("results", "RiderID=$RiderID AND RaceID=$RaceID AND DATEDIFF(NOW(), Created) <= 14") > 0)
 {
-    $oDB->query("DELETE FROM results WHERE RaceID=$RaceID AND RiderID=$RiderID AND CategoryID=$CategoryID", __FILE__, __LINE__);
+    $oDB->query("DELETE FROM results WHERE RaceID=$RaceID AND RiderID=$RiderID AND CategoryID=$CategoryID");
     $oDB->RecordActivityIfOK("Delete [results] C=$CategoryID", $RaceID);
 }
 else

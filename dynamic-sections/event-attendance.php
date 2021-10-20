@@ -28,7 +28,7 @@ function RenderAttendingRiders($oDB, $raceID)
             LEFT JOIN teams ON (RacingTeamID=TeamID)
             WHERE RaceID=$raceID AND (Notify=1 OR Attending=1)
             ORDER BY LastName, FirstName";
-    $rs = $oDB->query($sql, __FILE__, __LINE__);
+    $rs = $oDB->query($sql);
     while(($record = $rs->fetch_array())!=false) { ?>
       <div id="R<?=$record['RiderID']?>" class="photobox">
         <a href="<?=BuildTeamBaseURL($record['Domain'])?>/rider/<?=$record['RiderID']?>">

@@ -92,7 +92,7 @@ $RideBoardLength = 30;
             GROUP BY RiderID
             ORDER BY CEDaysMonth DESC
             LIMIT 22";
-    $rs = $oDB->query($sql, __FILE__, __LINE__); ?>
+    $rs = $oDB->query($sql); ?>
     
     <div class="clearfloat" style="height:5px"></div>
     <div style="padding:5px;border-bottom:1px dotted #CCC;border-top:1px dotted #CCC">
@@ -127,7 +127,7 @@ $RideBoardLength = 30;
             GROUP BY RiderID
             ORDER BY Miles30 DESC
             LIMIT 22";
-    $rs = $oDB->query($sql, __FILE__, __LINE__); ?>
+    $rs = $oDB->query($sql); ?>
     
     <div class="clearfloat" style="height:5px"></div>
     <div style="padding:5px;border-bottom:1px dotted #CCC;border-top:1px dotted #CCC">

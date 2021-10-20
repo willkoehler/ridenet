@@ -45,7 +45,7 @@ function RenderRideLog($oDB, $riderID, $length, $editable)
               WHERE RiderID=$riderID
               ORDER BY Date DESC, Created DESC
               LIMIT $length";
-      $rs = $oDB->query($sql, __FILE__, __LINE__);
+      $rs = $oDB->query($sql);
       if($rs->num_rows==0) { ?>
           <div class=no-data-rp style="width:625px;text-align:left">
             No rides have been logged
@@ -76,7 +76,7 @@ function RenderRideLog($oDB, $riderID, $length, $editable)
               $sql = "SELECT Count(*) AS Rides, SUM(Distance) AS Distance, SUM(Duration) AS Duration
                       FROM ride_log
                       WHERE RiderID=$riderID AND Date BETWEEN '$weekStart' AND '$weekEnd'";
-              $rs2 = $oDB->query($sql, __FILE__, __LINE__);
+              $rs2 = $oDB->query($sql);
               $totals = $rs2->fetch_array();
               $rs2->free(); ?>
               <!--Output week header-->

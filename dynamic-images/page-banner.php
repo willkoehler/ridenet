@@ -13,7 +13,7 @@ $lastModified = strtotime($oDB->DBLookup("IFNULL(LastModified, '1/1/2000')", "te
 CheckLastModified($lastModified);
 
 ob_start();   // buffer the output so it's sent as a single chunk
-$rs = $oDB->query("SELECT Banner FROM team_images WHERE TeamID=$teamID", __FILE__, __LINE__);
+$rs = $oDB->query("SELECT Banner FROM team_images WHERE TeamID=$teamID");
 if(($record = $rs->fetch_array())!=false && !is_null($record['Banner']))
 {
     // display page banner from database

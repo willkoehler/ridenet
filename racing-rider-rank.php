@@ -103,7 +103,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
             WHERE Year(RaceDate)=$ShowYear AND event.Archived=0 $teamFilter
             GROUP BY RiderID
             ORDER BY Points DESC";
-    $rs = $oDB->query($sql, __FILE__, __LINE__);
+    $rs = $oDB->query($sql);
     if($rs->num_rows==0)
     { ?>
       <div style="height:15px"><!--vertical spacer--></div>
@@ -183,7 +183,7 @@ $teamName = $oDB->DBLookup("TeamName", "teams", "TeamID=$pt");
     <p align=center>
       <b>Other Years:</b>
 <?   // Show list of other years
-      $rs = $oDB->query("SELECT DISTINCT(YEAR(RaceDate)) AS Year FROM event WHERE RaceDate IS NOT NULL AND Archived=0 ORDER BY RaceDate", __FILE__, __LINE__);
+      $rs = $oDB->query("SELECT DISTINCT(YEAR(RaceDate)) AS Year FROM event WHERE RaceDate IS NOT NULL AND Archived=0 ORDER BY RaceDate");
       while(($record=$rs->fetch_array())!=false) { ?>
         <?if($record['Year']!=$ShowYear) { ?>
           <a href="/racing-rider-rank?Year=<?=$record['Year']?> ">[<?=$record['Year']?>]</a>&nbsp;

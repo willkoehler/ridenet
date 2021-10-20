@@ -41,7 +41,7 @@ $roadCategory = $oDB->DBLookup("RiderType", "rider LEFT JOIN ref_rider_type USIN
           LEFT JOIN ref_race_category USING (CategoryID)
           WHERE RiderID=$riderID
           ORDER by RaceDate";
-    $rs = $oDB->query($sql, __FILE__, __LINE__);
+    $rs = $oDB->query($sql);
     $previousYear = 0;
     while(($record=$rs->fetch_array())!=false)
     {

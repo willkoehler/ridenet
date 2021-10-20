@@ -13,7 +13,7 @@ $oDB = oOpenDBConnection();
 $sql = "SELECT DateTime, Longitude, Latitude, Altitude
         FROM ride_log_map
         WHERE RideLogID=$rideLogID AND Altitude>0";
-$rs = $oDB->query($sql, __FILE__, __LINE__);
+$rs = $oDB->query($sql);
 
 $result = array();
 while($row = $rs->fetch_object())

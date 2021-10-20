@@ -57,7 +57,7 @@ CheckLoginAndRedirect();
                       LEFT JOIN ref_event_type USING (RideTypeID)
                       WHERE DATEDIFF(RaceDate,NOW()) BETWEEN -365 AND 0 AND RideTypeID NOT IN (5) AND Archived=0
                       ORDER BY RaceDate DESC";
-              $rs = $oDB->query($sql, __FILE__, __LINE__);
+              $rs = $oDB->query($sql);
               while(($record=$rs->fetch_array())!=false) { ?>
                 <option value="<?=$record['RaceID']?>" ridetype="<?=$record['RideTypeID']?>">
                   <?=date_create($record['RaceDate'])->format("M j")?> &bull; <?=LimitString($record['EventName'],60)?> | <?=LimitString($record['City'],25)?>, <?=$record['StateAbbr']?> -- <?=$record['RideType']?>
@@ -119,7 +119,7 @@ CheckLoginAndRedirect();
                   LEFT JOIN ref_race_category USING (CategoryID)
                   WHERE Year(RaceDate) = $ShowYear AND RiderID=" . GetUserID() . " AND event.Archived=0
                   ORDER by RaceDate DESC";
-          $rs = $oDB->query($sql, __FILE__, __LINE__);
+          $rs = $oDB->query($sql);
           if($rs->num_rows==0) { ?>
             <tr class="data"><td colspan=5>No results found for <?=$ShowYear?></td></tr>          
 <?        }

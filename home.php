@@ -11,7 +11,7 @@ $sql = "SELECT IFNULL(HomePageType,1) AS HomePageType, IFNULL(HomePageMoreWrap, 
                HomePageTitle, HomePageText, HomePageHTML, TeamName, TeamTypeID
         FROM teams
         WHERE TeamID=$pt";
-$rs = $oDB->query($sql, __FILE__, __LINE__);
+$rs = $oDB->query($sql);
 $team = $rs->fetch_array();
 $rs->free();
 $TeamWallLength = 30;
@@ -122,7 +122,7 @@ $TeamWallLength = 30;
     { 
       $rs = $oDB->query("SELECT RiderID, RacingTeamID, CONCAT(FirstName, ' ', LastName) AS RiderName, TeamName
                          FROM rider LEFT JOIN teams ON (RacingTeamID = TeamID)
-                         WHERE RiderID = " . GetUserID(), __FILE__, __LINE__);
+                         WHERE RiderID = " . GetUserID());
       $loggedInRider = $rs->fetch_array();
       $rs->free();?>
       <div style="float:right;position:relative;top:6px;" class='action-btn' id='post-message-btn' onclick="clickPostMessage(this.id, { riderID:<?=$loggedInRider['RiderID']?>, racingTeamID: <?=$loggedInRider['RacingTeamID']?>, riderName: '<?=htmlentities(addslashes($loggedInRider['RiderName']))?>', teamName: '<?=htmlentities(addslashes($loggedInRider['TeamName']))?>', postingTo: '<?=htmlentities(addslashes($team['TeamName']))?>' });">

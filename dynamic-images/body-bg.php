@@ -12,7 +12,7 @@ $lastModified = strtotime($oDB->DBLookup("IFNULL(LastModified, '1/1/2000')", "te
 CheckLastModified($lastModified);
 
 ob_start();   // buffer the output so it's sent as a single chunk
-$rs = $oDB->query("SELECT BodyBGColor, BodyBG FROM teams JOIN team_images USING (TeamID) WHERE TeamID=$teamID", __FILE__, __LINE__);
+$rs = $oDB->query("SELECT BodyBGColor, BodyBG FROM teams JOIN team_images USING (TeamID) WHERE TeamID=$teamID");
 if(($record = $rs->fetch_array())==false || (is_null($record['BodyBG']) && (is_null($record['BodyBGColor']) || $record['BodyBGColor']==BODY_BG_COLOR)))
 {
     // This team has not customized their background color & background image yet

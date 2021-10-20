@@ -43,7 +43,7 @@ $rs = $oDB->query("SELECT RiderType, CONCAT(FirstName, ' ', LastName) AS RiderNa
                    LEFT JOIN teams tr ON (RacingTeamID = tr.TeamID)
                    LEFT JOIN teams tc ON (CommutingTeamID = tc.TeamID)
                    LEFT JOIN ref_rider_type USING (RiderTypeID)
-                   WHERE RiderID=$RiderID AND rider.Archived=0", __FILE__, __LINE__);
+                   WHERE RiderID=$RiderID AND rider.Archived=0");
 if(($riderInfo = $rs->fetch_array())==false)
 {
     exit("Invalid RiderID<br><br><br>");
@@ -56,7 +56,7 @@ $riderName = $riderInfo['RiderName'];
 // exclude visits from web bots, multiple visits per session, and don't count self views
 if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUserID())
 {
-  $oDB->query("INSERT INTO rider_view_log (RiderID, DateViewed) VALUES ($RiderID, NOW())", __FILE__, __LINE__);
+  $oDB->query("INSERT INTO rider_view_log (RiderID, DateViewed) VALUES ($RiderID, NOW())");
   $_SESSION['RiderView' . $RiderID] = true;
 }
 ?>
@@ -283,7 +283,7 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
         $rs = $oDB->query("SELECT DISTINCT(YEAR(RaceDate)) AS Year
                            FROM results LEFT JOIN event USING (RaceID)
                            WHERE RaceDate IS NOT NULL AND Archived=0 AND RiderID=$RiderID
-                           ORDER BY RaceDate", __FILE__, __LINE__);
+                           ORDER BY RaceDate");
         while(($record=$rs->fetch_array())!=false) { ?>
           <?if($record['Year']!=$ShowYear) { ?>
             <?if($editable) { ?>
@@ -306,7 +306,7 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
                 LEFT JOIN ref_race_category USING (CategoryID)
                 WHERE Year(RaceDate) = $ShowYear AND RiderID=$RiderID
                 ORDER by RaceDate DESC";
-        $rs = $oDB->query($sql, __FILE__, __LINE__);
+        $rs = $oDB->query($sql);
         if($rs->num_rows==0) { ?>
           <div style="height:5px"><!--vertical spacer--></div>
           <div class=no-data-rp>
@@ -375,7 +375,7 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
             
             ORDER BY Date
             LIMIT 50";
-    $rs = $oDB->query($sql, __FILE__, __LINE__);
+    $rs = $oDB->query($sql);
     if($rs->num_rows > 0) {?>
       <div style="height:30px"><!--vertical spacer--></div>
       <h3>Upcoming Rides and Events</h3>
@@ -432,7 +432,7 @@ if(!DetectBot() && !isset($_SESSION['RiderView' . $RiderID]) && $RiderID!=GetUse
             GROUP BY RiderID
             ORDER BY Comments DESC
                LIMIT 0,35";
-      $rs = $oDB->query($sql, __FILE__, __LINE__); ?>
+      $rs = $oDB->query($sql); ?>
       <div class="commute-ride-group" style="margin-left:35px;width:160px">
         <? while(($rider=$rs->fetch_array())!=false) { ?>
           <div id="R<?=$rider['RiderID']?>" class="photobox">

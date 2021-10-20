@@ -21,7 +21,7 @@ else
 {
     $newPW = GeneratePassword(8,1);
     $newPWHash = MakePasswordHash($newPW);
-    $oDB->query("UPDATE rider SET Password='$newPWHash', MustChangePW=1 WHERE RiderID=$riderID", __FILE__, __LINE__);
+    $oDB->query("UPDATE rider SET Password='$newPWHash', MustChangePW=1 WHERE RiderID=$riderID");
     $msg = "We received a request to reset your RideNet password. Below is your login information and temporary " .
            "password. Once you are logged in, you will be asked to choose a new password\n\n" .
            "Login Page: " . GetFullDomainRoot() . "/login\n" .

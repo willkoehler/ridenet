@@ -5,7 +5,7 @@ require("../script/app-master-min.php");
 $oDB = oOpenDBConnection();
 $riderEmail = SmartGetString('email');
 
-$rs = $oDB->query("SELECT RiderID, Password FROM rider WHERE RiderEmail=$riderEmail", __FILE__, __LINE__);
+$rs = $oDB->query("SELECT RiderID, Password FROM rider WHERE RiderEmail=$riderEmail");
 if(($record = $rs->fetch_array())==false)
 {
     header("HTTP/1.1 404 Not Found");

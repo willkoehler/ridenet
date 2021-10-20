@@ -64,7 +64,7 @@ function RenderEventUpdates($oDB, $raceID, $length)
           ORDER BY Date DESC, Created DESC
           LIMIT 0,$length";
 
-  $rs = $oDB->query($sql, __FILE__, __LINE__);
+  $rs = $oDB->query($sql);
   RenderWall($rs, 0, true, true, "");?>
   <?if($rs->num_rows==$length) { ?>
     <div class='more-btn' onclick="getMoreUpdates(30)">GET MORE</div>

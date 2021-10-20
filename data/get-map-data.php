@@ -12,7 +12,7 @@ $sql = "SELECT Longitude, Latitude
         FROM ride_log_map
         WHERE RideLogID=$rideLogID AND Altitude>0
         ORDER BY DateTime ASC";
-$rs = $oDB->query($sql, __FILE__, __LINE__);
+$rs = $oDB->query($sql);
 
 $result = array();
 while($row = $rs->fetch_object())

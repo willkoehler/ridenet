@@ -55,7 +55,7 @@ function RenderRideCalendar($oDB, $CalendarFilterRange, $CalendarLongitude, $Cal
               LEFT JOIN ref_zipcodes USING (ZipCodeID) 
               WHERE $whereClause
               ORDER BY CalendarDate";
-      $rs = $oDB->query($sql, __FILE__, __LINE__);
+      $rs = $oDB->query($sql);
       $PrevWeek = 0;
       $PrevDay = 0;
       $FirstWeek = true;

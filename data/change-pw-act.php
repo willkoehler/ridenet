@@ -4,7 +4,7 @@ require("../script/app-master.php");
 $oDB = oOpenDBConnection();
 
 // --- Verify old password is correct
-$rs = $oDB->query("SELECT * FROM rider WHERE RiderID=" . GetUserID(), __FILE__, __LINE__);
+$rs = $oDB->query("SELECT * FROM rider WHERE RiderID=" . GetUserID());
 
 if(($record=$rs->fetch_array())==false)
 {

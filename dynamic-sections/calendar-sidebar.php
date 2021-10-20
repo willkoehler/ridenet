@@ -85,7 +85,7 @@ function CalendarSidebarContent($oDB, $pt, $CalendarDate)
                 HAVING NumAttending > 0
                                 
                 ORDER BY Date, NumAttending";
-        $rs = $oDB->query($sql, __FILE__, __LINE__);
+        $rs = $oDB->query($sql);
         $record=$rs->fetch_array();
         //  Loop through the days in the month
         $ThisDay = $FirstDayOfMonth;
@@ -155,7 +155,7 @@ function CalendarSidebarContent($oDB, $pt, $CalendarDate)
                               
               ORDER BY Date
               LIMIT 15";
-      $rs = $oDB->query($sql, __FILE__, __LINE__);
+      $rs = $oDB->query($sql);
       if(($record = $rs->fetch_array())!=false)
       {?>
       <table border=0 cellpadding=0 cellspacing=0>
@@ -212,7 +212,7 @@ function CalendarSidebar($oDB, $pt)
             JOIN rider USING (RiderID)
             WHERE event.Archived=0 AND RaceDate Between CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 30 DAY) AND
                   (CommutingTeamID=$pt OR RacingTeamID=$pt) AND (Attending=1 OR Notify=1) LIMIT 1)";
-    $ride = $oDB->query($sql, __FILE__, __LINE__);
+    $ride = $oDB->query($sql);
     if($ride->num_rows > 0) { ?>
       <div class="sidebarBlock">
         <div id='calendar-sidebar'>

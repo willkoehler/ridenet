@@ -63,7 +63,7 @@ CheckLoginAndRedirect();
               WHERE FollowerID=$riderID
               ORDER BY Date DESC
               LIMIT $offset, $pageSize";
-      $rs = $oDB->query($sql, __FILE__, __LINE__);
+      $rs = $oDB->query($sql);
       if($rs->num_rows==0) { ?>
           <div class=no-data-rp style="width:625px;text-align:left">
             No rides have been logged

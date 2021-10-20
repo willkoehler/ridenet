@@ -103,7 +103,7 @@ $EndMonth = (isset($_REQUEST['e'])) ? SmartGetInt("e") : min($StartMonth+2, 12);
     }
     else
     {
-        $rs = $oDB->query("SELECT StateAbbr FROM ref_states WHERE StateID IN $ScheduleFilterStates", __FILE__, __LINE__);
+        $rs = $oDB->query("SELECT StateAbbr FROM ref_states WHERE StateID IN $ScheduleFilterStates");
         while(($record=$rs->fetch_array())!=false)
         {
             $states .= $record['StateAbbr'] . ", ";
@@ -113,7 +113,7 @@ $EndMonth = (isset($_REQUEST['e'])) ? SmartGetInt("e") : min($StartMonth+2, 12);
 ?>
     <table cellpadding=0 cellspacing=0 id="filter-holder"><tr>
       <td style="font:13px arial, 'helvetica neue', sans-serif;color:#888">Show:</td>
-<?    $rs = $oDB->query("SELECT * FROM ref_event_type", __FILE__, __LINE__);
+<?    $rs = $oDB->query("SELECT * FROM ref_event_type");
       while(($record=$rs->fetch_array())!=false)
       { 
         $checked = ($ScheduleFilterTypes=="All" OR strstr($ScheduleFilterTypes, $record['RideTypeID'])) ? "checked" : ""?>
@@ -154,7 +154,7 @@ $EndMonth = (isset($_REQUEST['e'])) ? SmartGetInt("e") : min($StartMonth+2, 12);
     <p align=center>
       <b>Other Years:</b>
 <?   // Show list of other years
-      $rs = $oDB->query("SELECT DISTINCT(YEAR(RaceDate)) AS Year FROM event WHERE RaceDate IS NOT NULL AND Archived=0 ORDER BY RaceDate", __FILE__, __LINE__);
+      $rs = $oDB->query("SELECT DISTINCT(YEAR(RaceDate)) AS Year FROM event WHERE RaceDate IS NOT NULL AND Archived=0 ORDER BY RaceDate");
       while(($record=$rs->fetch_array())!=false) { ?>
         <?if($record['Year']!=$ShowYear) { ?>
           <a href="/events?Year=<?=$record['Year']?>&s=1&e=12">[<?=$record['Year']?>]</a>&nbsp;

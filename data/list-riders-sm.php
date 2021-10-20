@@ -26,7 +26,7 @@ else
     $whereFilter .= ($nameFilter != "") ? " AND (FirstName like \"%$nameFilter%\" OR LastName like \"%$nameFilter%\" OR RiderEmail like \"%$nameFilter%\")" : "";
 
     // --- Count total records in table. "rowcount" tells the grid object the total number of rows available in recordset
-    $rs = $oDB->query("SELECT count(*) as TotalRows FROM rider WHERE $whereFilter", __FILE__, __LINE__);
+    $rs = $oDB->query("SELECT count(*) as TotalRows FROM rider WHERE $whereFilter");
     $record = $rs->fetch_array();
     $result['rowcount'] = $record['TotalRows'];
     $rs->free();
@@ -35,7 +35,7 @@ else
     $rs = $oDB->query("SELECT RiderID, RiderEmail, LastName, FirstName, rider.Archived, RiderType,
                        (IF(CommutingTeamID=$teamID, sCommutingTeamAdmin, 0) OR IF(RacingTeamID=$teamID, sRacingTeamAdmin, 0)) AS sTeamAdmin
                        FROM rider LEFT JOIN ref_rider_type USING (RiderTypeID)
-                       WHERE $whereFilter ORDER BY $sort $dir LIMIT $start, $limit", __FILE__, __LINE__);
+                       WHERE $whereFilter ORDER BY $sort $dir LIMIT $start, $limit");
 
     // --- Loop through all the records and add the contents of each record to the output array
     $result['results'] = array();

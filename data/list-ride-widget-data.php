@@ -28,7 +28,7 @@ $sql = "SELECT RiderID, CONCAT(FirstName, ' ', LastName) AS RiderName, RideLogID
         WHERE $whereFilter
         ORDER BY HasComment Desc, RAND() Desc
         LIMIT 0,50";
-$rs = $oDB->query($sql, __FILE__, __LINE__);
+$rs = $oDB->query($sql);
 
 $result = array();
 while($row = $rs->fetch_object())

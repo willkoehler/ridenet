@@ -17,7 +17,7 @@ elseif(!isSystemAdmin())
 }
 else
 {
-    $oDB->query("UPDATE teams SET Archived=1 WHERE TeamID=$teamID", __FILE__, __LINE__);
+    $oDB->query("UPDATE teams SET Archived=1 WHERE TeamID=$teamID");
     $oDB->RecordActivityIfOK("Archive [team]", $teamID);
     if($oDB->errno!=0)
     {

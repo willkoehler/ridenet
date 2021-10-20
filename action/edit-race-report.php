@@ -18,7 +18,7 @@ if($oDB->DBCount("results", "RiderID={$values['RiderID']} AND RaceID={$values['R
     if($values['Report']=="NULL")
     {
         // Delete report record if user enters a blank report
-        $oDB->query("DELETE FROM race_report WHERE RaceID={$values['RaceID']} AND RiderID={$values['RiderID']}", __FILE__, __LINE__);
+        $oDB->query("DELETE FROM race_report WHERE RaceID={$values['RaceID']} AND RiderID={$values['RiderID']}");
         // record activity
         $oDB->RecordActivityIfOK("Delete [race_report]", $values['RaceID']);
     }

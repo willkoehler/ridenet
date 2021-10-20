@@ -33,7 +33,7 @@ $rs = $oDB->query("SELECT 'rider' AS Type, CONCAT(FirstName, ' ', LastName) AS D
                           0 AS RiderID, TeamID, Domain, TeamName AS Sort
                    FROM teams LEFT JOIN ref_team_type USING (TeamTypeID) LEFT JOIN ref_zipcodes USING (ZipCodeID)
                    WHERE $whereFilter2
-                   ORDER BY Sort LIMIT 9", __FILE__, __LINE__);
+                   ORDER BY Sort LIMIT 9");
 
 // --- Loop through all the records and add the contents of each record to the output array
 $result['results'] = array();

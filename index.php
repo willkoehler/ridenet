@@ -105,7 +105,7 @@ $pt = GetPresentedTeamID($oDB);   // determine the ID of the team currently bein
             GROUP BY RiderID
             ORDER BY Comments DESC
             LIMIT 0,24";
-    $rs = $oDB->query($sql, __FILE__, __LINE__); ?>
+    $rs = $oDB->query($sql); ?>
       <div class="commute-ride-group" style="margin-left:5px;width:195px">
         <? while(($rider=$rs->fetch_array())!=false) { ?>
           <div id="R<?=$rider['RiderID']?>" class="photobox">

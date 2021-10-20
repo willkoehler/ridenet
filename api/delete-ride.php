@@ -25,8 +25,8 @@ elseif($rideLogID!=-1 && $oDB->DBLookup("RiderID", "ride_log", "RideLogID=$rideL
 else
 {
     // delete the ride log entry
-    $oDB->query("DELETE FROM ride_log WHERE RideLogID=$rideLogID", __FILE__, __LINE__);
-    $oDB->query("DELETE FROM ride_log_map WHERE RideLogID=$rideLogID", __FILE__, __LINE__);
+    $oDB->query("DELETE FROM ride_log WHERE RideLogID=$rideLogID");
+    $oDB->query("DELETE FROM ride_log_map WHERE RideLogID=$rideLogID");
     $oDB->RecordActivityIfOK("Delete [ride_log] ID=$rideLogID", $uid);
     UpdateRiderStats($oDB, $uid);   // update rider stats
     $result=null;

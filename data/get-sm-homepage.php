@@ -18,7 +18,7 @@ elseif(!isDesigner() && !isSystemAdmin() && !isTeamAdmin($oDB, $teamID))
 else
 {
     $rs = $oDB->query("SELECT TeamID, TeamName, IFNULL(HomePageType,1) AS HomePageType, HomePageText, HomePageHTML, HomePageTitle, TeamTypeID
-                       FROM teams WHERE TeamID=$teamID", __FILE__, __LINE__);
+                       FROM teams WHERE TeamID=$teamID");
     $result['results'] = $rs->fetch_object();
     if(is_null($result['results']->HomePageHTML))
     {

@@ -109,7 +109,7 @@ else
             WHERE rider.Archived=0 AND CEDaysMonth BETWEEN $minDays AND $maxDays
             GROUP BY RiderID
             ORDER BY CEDaysMonth DESC";
-    $rs = $oDB->query($sql, __FILE__, __LINE__);
+    $rs = $oDB->query($sql);
     $riderCount = $rs->num_rows;
 ?>
     <h1>Every Commuter is a STAR</h1>
