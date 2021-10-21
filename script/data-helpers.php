@@ -30,17 +30,15 @@ function oOpenDBConnection()
 //
 //  PARAMETERS:
 //    oDB   - the database connection object
-//    file  - the file where the error occurred (use __FILE__)
-//    line  - the line # where the error occurred (use __LINE__)
 //
 //  RETURN: none
 //-----------------------------------------------------------------------------------
-function CheckAndReportSQLError($oDB, $filename, $line)
+function CheckAndReportSQLError($oDB)
 {
     if($oDB->errno)
     {
         exit("Problem running query. If you were submitting data, it may not have been saved<br><br>
-              Please report this error: SQL Error [" . $oDB->errno . "] Line $line of " . basename($filename) . "<br><br>");
+              Please report this error: SQL Error [" . $oDB->errno . "]");
     }
 }
 
