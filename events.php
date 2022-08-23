@@ -11,10 +11,10 @@ $Editable = isset($_REQUEST['edit']) && CheckLogin();
 $ScheduleFilterStates = isset($_COOKIE['ScheduleFilterStates']) ? $_COOKIE['ScheduleFilterStates'] : 'All';
 $ScheduleFilterTypes = isset($_COOKIE['ScheduleFilterTypes']) ? $_COOKIE['ScheduleFilterTypes'] : 'All';
 // --- if year is passed in use it. Otherwise default to current year
-$ShowYear = (isset($_REQUEST['Year'])) ? SmartGetInt("Year") : date("Y");
+$ShowYear = (SmartGetInt("Year") == "NULL") ? date("Y") : SmartGetInt("Year");
 // --- if start/end months are passed in, use them. Otherwise default to next three months
-$StartMonth = (isset($_REQUEST['s'])) ? SmartGetInt("s") : intval(date("n"));
-$EndMonth = (isset($_REQUEST['e'])) ? SmartGetInt("e") : min($StartMonth+2, 12);
+$StartMonth = (SmartGetInt("s") == "NULL") ? intval(date("n")) : SmartGetInt("s");
+$EndMonth = (SmartGetInt("e") == "NULL") ? min($StartMonth + 2, 12) : SmartGetInt("e");
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
