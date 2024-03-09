@@ -1,0 +1,349 @@
+/* ============== Common Helper Styles ============== */
+.centered {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.session-message {
+    font: 11pt arial, helvetica, sans-serif;
+    color: #6F0000;
+    text-align: center;
+    margin-bottom: 20pt;
+}
+
+.form-spacer {
+    line-height: 1px;
+    font-size: 1px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.form-divider {
+    height: 1px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-top: solid gray 1px;
+    font-size: 1pt;
+}
+
+.form-divider-thin {
+    height: 1px;
+    margin-top: 0px;
+    margin-bottom: 3px;
+    border-top: solid #CCCCCC 1px;
+    font-size: 1pt;
+}
+
+.grid-button {
+    font: bold 9px arial, 'helvetica neue', helvetica, sans-serif;
+    border: 2px outset #EEEEEE;
+    padding: 1px 5px;
+    background-color: #DDD;
+    text-decoration: none;
+    margin: 0px;
+    cursor: pointer;
+}
+.ext-ie .grid-button {
+    padding: 0px 6px 2px 4px;
+}
+.grid-button:link { color: rgb(0, 0, 153) }
+.grid-button:visited { color: rgb(0, 0, 153) }
+
+.form-status {
+    padding:5px 0px 1px 0px;
+    font: 9pt arial, helvetica, sans-serif;
+    text-align: center;
+}
+
+.form-status-loading {
+    padding:1px 0px 2px 21px;
+    background: url(images/loading.gif) no-repeat;
+}
+
+.item-status-label {
+    font: bold 8pt arial, helvetica, sans-serif;
+    padding: 1px 1px 1px 4px;
+}
+
+.item-status-desc {
+    font: 8pt arial, helvetica, sans-serif;
+    padding: 2px;
+    white-space: normal;
+}
+
+.security-description {
+    font: 8pt arial, helvetica, sans-serif;
+    padding-top: 4px;
+}
+.ext-gecko .security-description {
+    padding-top: 5px;
+}
+
+/* --- This style is needed to fix a problem in IE where the load mask is solid gray
+       (no transparancy) when masking an element rendered inside a table cell. Apply
+       this style to the table element */
+.ie-table-cell-opacity-fix {
+    table-layout:fixed;
+}
+
+/* --- Use this style to tighten up the top padding of a fieldset in IE. In IE the padding-top
+       appears above the fieldset border instead of inside the border like all the other browsers.
+       So in IE, ExtJS sets padding-top to 0px and uses the legend margin-bottom to pad the top of
+       the fieldset. Because of this we can't change the top padding using a style element in the fieldset
+       definition. This style allows us to shrink that padding from 10px to 5px. */
+.tighten-fieldset-legend {
+    padding-top:6px;
+}
+.ext-ie .tighten-fieldset-legend {
+    padding-top:0px;
+}
+.ext-ie .tighten-fieldset-legend legend {
+    margin-bottom: 6px;
+}
+
+/* ============== Additions to Ext stylesheet ============== */
+
+
+/* --- COMPACT FORM --- */
+/* --- reduce vertical padding below elements */
+.compact-form .x-form-item { margin-bottom:2px!important; }
+
+/* --- COMPACT GRID --- */
+/* --- reduce padding in grid rows and use smaller font */
+.compact-grid .x-grid3-cell-inner, .compact-grid .x-grid3-hd-inner { padding:0pt;padding-left:4pt;font-size:8pt }
+/* --- make grid row headers shorter */
+.compact-grid .x-grid3-hd-inner { padding: 2px 4px 2px 5px }
+/* --- make grid row checker fit in tighter area */
+.compact-grid .x-grid3-row .x-grid3-row-checker {width:100%;height:13px;background-position:5px -1px;}
+.compact-grid .x-grid3-row-selected .x-grid3-row-checker {background-position:-20px -1px}
+/* --- make header checker smaller to fit in smaller header row */
+.compact-grid .x-grid3-hd-checker {background-position:5px 1px;}
+.compact-grid .x-grid3-hd-checker-on .x-grid3-hd-checker {background-position:-20px 1px}
+
+/* --- BIG GROUP HEADERS --- */
+/* --- enlarge the size of the group headers in the grid GroupingView */
+.big-group-headers .x-grid-group-hd div.x-grid-group-title {
+    background-position: 3px 5px;
+    font-size:14px;
+}
+
+/* --- MEDIUM GROUP HEADERS --- */
+/* --- enlarge the size of the group headers in the grid GroupingView */
+.medium-group-headers .x-grid-group-hd div.x-grid-group-title {
+    background-position: 3px 5px;
+    font-size:12px;
+}
+
+/* --- BLUE GROUP BORDER --- */
+/* --- create a subtle blue border below the group header in the grid GroupingView */
+.blue-group-border .x-grid-group-hd {
+    border-bottom: 1px dotted #3764A0;
+}
+
+/* --- SUBTLE GREY GROUP BORDER --- */
+/* --- create a subtle grey border below the group header in the grid GroupingView */
+.subtle-grey-group-border .x-grid-group-hd {
+    border-bottom: 1px dotted #AAA;
+}
+
+/* --- FINE GRID LINES --- */
+/* --- add fine lines to the bottom of each grid row */
+.fine-grid-lines .x-grid3-row {
+border-color:#FFF #FFF #DDD #FFF;
+}
+
+/* --- NO GRID LINES --- */
+/* --- render grid lines in white (preserving space but making them invisible) */
+.no-grid-lines .x-grid3-row {
+border-color:#FFF #FFF #FFF #FFF;
+}
+
+/* --- GROUP SUMMARY SHADING --- */
+/* --- add subtle shading to the group summary row */
+.shade-group-summary .x-grid3-summary-table {
+    background-color: #EBEBEB;
+}   
+
+
+/* ============== Fixes to Ext stylesheet ============== */
+
+/* --- make IE behave like other browsers - scrollbars hidden in textarea until needed */
+textarea {
+    overflow-y:auto;
+}
+
+/* --- Ext sets list-style to none (i.e. no bullet). Among other things this is required for correct rendering of
+   --- the calendar control. Make special list classes to override this when needed */
+ul.list { list-style: disc; }
+ol.list { list-style: decimal; }
+li.list { margin-left: 20px; padding-left: 5px; }
+
+/* --- make disabled items a little more visible */
+.x-item-disabled {
+    color: black;
+    opacity: .6;
+    -moz-opacity: .6;
+    filter: alpha(opacity=60);
+}
+.x-item-disabled *{
+    cursor:default!important;
+    color: black!important;
+}
+
+/* --- When grid panels are disabled, their mask element also masks menus and combo-box
+   --- drop downs that overlap the grid. Apply this style to grid panels to lower the
+   --- z-order of the mask so that it does not mask the combo boxes and menus */
+.mask-below-menu .ext-el-mask {z-index: 11000;}
+
+/* --- Resolves problem with vertical scrollbars appearing in checkbox fields, radio button
+/* --- fields, and file upload fields in Firefox */
+/*.ext-gecko .x-window-body .x-form-item { 
+    overflow:hidden;
+}*/
+
+/* --- Safari/Chrome: Give listview cells a little extra height to match other browsers */
+.ext-webkit .x-list-body dt em {
+    line-height: 13px;
+}
+
+/* --- Safari/Chrome: raise checkbox and box-label slightly */
+.ext-webkit .x-form-check-wrap { line-height:16px }
+/* --- IE8: lower checkbox box-label slightly */
+.ext-ie8 .x-form-cb-label { top: 2px }
+/* --- IE7: lower checkbox and box-label slightly */
+.ext-ie7 .x-form-check-wrap { padding-top: 3px; line-height:16px }
+.ext-ie7 .x-form-cb-label { top: 0px }
+/* --- IE6: lower checkbox and box-label slightly */
+.ext-ie6 .x-form-check-wrap { padding-top: 2px; line-height:16px }
+.ext-ie6 .x-form-cb-label { top: 1px }
+/* --- IE: make checkbox smaller (needed in IE8) */
+.ext-ie .x-form-check-wrap input { height: 13px; width: 13px; }
+
+/* --- IE6: move label closer to field in IE (works in conjunction with Ext.Container override in helpers.js) */
+.ext-ie6 .x-form-item label {
+    padding: 3px 0px;
+}
+
+/* --- IE8: reduce bottom margin of form items so field spacing matches other browsers */
+.ext-ie8 .x-form-item {
+    margin-bottom: 3px;
+}
+
+/* --- ALL: line up text in toolbars*/
+.x-toolbar div.xtb-text {
+    padding: 2px 3px 2px 4px;
+}
+.ext-gecko .x-toolbar div.xtb-text {
+    padding: 1px 3px 2px 4px;
+}
+
+/* --- IE: move button text up so it is centered relative to button image */
+.ext-ie .x-btn button {
+    padding-top: 0px;
+}
+/* --- Firefox: move button text up to center with button image */
+.ext-gecko .x-btn-text {
+    padding-bottom: 2px;
+}
+/* --- Safari (not chrome): move button text down to center with button image */
+.ext-safari .x-btn-text {
+    padding-top: 2px;
+}
+
+/* --- Safari/Chrome: Use smaller font for text fields in toolbars, grid, and tree */
+.ext-webkit .x-small-editor .x-form-text {
+    font:normal 11px arial, helvetica, sans-serif;
+    height: 14px !important;
+}
+.ext-webkit .x-small-editor .x-form-field-wrap .x-form-trigger {
+    height: 19px;
+}
+
+/* --- Firefox: Mac doesn't center input text. But first we need to override ExtJS which 
+       corrects all versions of Firefox including Windows which doesn't need correction */
+.ext-gecko .x-form-text {
+    padding-top: 1px;       /* override ExtJS - this should be the default */
+    padding-bottom: 1px;
+}
+.ext-gecko.ext-mac .x-form-text {
+    padding-top:2px;        /* FF Mac doesn't center the text vertically */
+    padding-bottom:0;
+}
+.ext-gecko.ext-mac .x-small-editor .x-form-text {
+    padding-top:3px;        /* FF Mac doesn't center the text vertically */
+    padding-bottom:0px;
+    height: 15px !important;
+}
+
+/* --- IE7: raise input fields in editor grid so entire field border is visible */
+.ext-ie7 .x-small-editor .x-form-text {
+    vertical-align: top;
+}
+/* --- IE6: raise input fields in editor grid so entire field border is visible */
+.ext-ie6 .x-small-editor .x-form-text {
+    vertical-align: top;
+}
+
+/* --- IE7: shift trigger fields (combo, date) down 1px to line up with other toolbar items */
+/*.ext-ie7 .x-toolbar-cell .x-form-field-trigger-wrap {
+    margin-top: 1px;
+}*/
+/* --- IE6: shift trigger fields (combo, date) down 1px to line up with other toolbar items */
+/*.ext-ie6 .x-toolbar-cell .x-form-field-trigger-wrap {
+    margin-top: 1px;
+}*/
+
+/* --- IE8: move page number field up slightly */
+.ext-strict .ext-ie8 .x-toolbar-cell .x-tbar-page-number {
+    top:-1px;
+}
+
+/* --- ALL: make page number field smaller (in standards mode it is wider for some reason) */
+.x-tbar-page-number { width: 22px }    
+
+/* --- define style for alternate rows when striping grid rows */
+.x-grid3-row-alt {
+	background-color:#E8E9EA;
+}
+
+
+/* ============== Fixes to Row editor stylesheet ============== */
+
+/* --- ALL: Center checkbox in grid column */
+.x-row-editor .x-form-check-wrap  {
+    text-align: center;
+}
+/* --- Safari: Center checkbox in grid column */
+.ext-safari .x-row-editor .x-form-check-wrap input  {
+    margin-bottom: 1px;
+    margin-left: 12px;  /* compensate for checkbox boxlabel width */
+}
+/* --- Chrome: Center checkbox in grid column */
+.ext-chrome .x-row-editor .x-form-check-wrap input  {
+    margin-left: 12px;  /* compensate for checkbox boxlabel width */
+}
+/* --- Firefox: Center checkbox in grid column */
+.ext-gecko .x-row-editor .x-form-check-wrap input  {
+    vertical-align: top;
+    margin-top: 2px;
+    margin-left: 12px;  /* compensate for checkbox boxlabel width */
+}
+/* --- IE8: Center checkbox in grid column */
+.ext-ie8 .x-row-editor .x-form-check-wrap input  {
+    vertical-align: top;
+    margin-top: 4px;
+    margin-left: 15px;  /* compensate for checkbox boxlabel width */
+}
+/* --- IE7: Center checkbox in grid column */
+.ext-ie7 .x-row-editor .x-form-check-wrap input  {
+    vertical-align: top;
+    margin-top: 2px;
+    margin-left: 15px;  /* compensate for checkbox boxlabel width */
+}
+/* --- IE6: Center checkbox in grid column */
+.ext-ie6 .x-row-editor .x-form-check-wrap input  {
+    vertical-align: top;
+    margin-top: 2px;
+    margin-left: 15px;  /* compensate for checkbox boxlabel width */
+}
+
