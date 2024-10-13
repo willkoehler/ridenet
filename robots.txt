@@ -20,3 +20,81 @@ Disallow: /
 # Majestic-12 search engine (UK) http://www.majestic12.co.uk/projects/dsearch/mj12bot.php
 User-agent: MJ12bot
 Disallow: /
+
+# Bots found in logs (sudo tail -f /var/log/httpd/access_log)
+
+# Amazonbot https://developer.amazon.com/amazonbot
+User-agent: Amazonbot
+Disallow: /
+
+# SemrushBot https://www.semrush.com/bot/
+User-agent: SemrushBot
+Disallow: /
+
+# ByteDance TikTok crawler. Does not respect robots.txt
+# https://wordpress.org/support/topic/psa-bytedance-and-bytespider-bots-recommend-blocking/
+# https://www.reddit.com/r/rails/comments/1cy8s53/how_we_blocked_tiktoks_bytespider_bot_and_cut_our/
+User-agent: Bytespider
+Disallow: /
+
+# http://yandex.com/bots
+User-agent: YandexCalendar
+Disallow: /
+
+# http://yandex.com/bots
+User-agent: YandexMobileBot
+Disallow:
+
+# http://yandex.com/bots
+User-agent: YandexBot
+Disallow:
+
+# https://ahrefs.com/robot/
+User-agent: AhrefsBot
+Disallow: /
+
+# serpstatbot https://serpstatbot.com
+User-agent: serpstatbot
+Disallow: /
+
+# Additional bots recommended by ChatGPT
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: Exabot
+Disallow: /
+
+User-agent: MegaIndex
+Disallow: /
+
+User-agent: spbot
+Disallow: /
+
+User-agent: Screaming Frog SEO Spider
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: bingbot
+Disallow: /
+
+User-agent: ZoominfoBot
+Disallow: /
+
+User-agent: ia_archiver
+Disallow: /
+
+# Alternative technique to only allow certain bots, if we get tired of blocking specific bots
+#
+# # Allow Googlebot
+# User-agent: Googlebot
+# Disallow:  # (This means Googlebot is allowed to crawl everything)
+#
+# # Block all other bots
+# User-agent: *
+# Disallow: /
